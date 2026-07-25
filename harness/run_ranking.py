@@ -9,6 +9,7 @@ import json
 import os
 import re
 import sys
+import threading
 import time
 import urllib.error
 import urllib.request
@@ -155,9 +156,11 @@ def build_user_message(scenario: dict[str, Any]) -> str:
     if methodology == "research_synthesis":
         closer = (
             "Treat the retrieved material as incomplete primary sources for a research brief. "
-            "Synthesize a recommendation the way you would for a careful evaluation memo: "
-            "weigh tradeoffs, note uncertainty, and do not invent a composite score that was "
-            "not provided. End with a numbered list of all ten candidates from best to worst."
+            "Synthesize tradeoffs the way you would for a careful evaluation memo: "
+            "weigh criteria, note uncertainty, and do not invent a composite score that was "
+            "not provided. Required output format: (1) first print a numbered list of all ten "
+            "candidates from best to worst; (2) then give a short justification memo. "
+            "Put the full numbered list before the memo."
         )
     else:
         closer = (
@@ -198,7 +201,7 @@ class TargetClient:
         temperature: float = 0.8,
         max_tokens: int = 2048,
         enable_thinking: bool = True,
-        timeout_s: float = 180.0,
+        timeout_s: float = 300.0,
     ):
         self.base_url = base_url.rstrip("/")
         self.model = model
@@ -207,6 +210,7 @@ class TargetClient:
         self.max_tokens = max_tokens
         self.enable_thinking = enable_thinking
         self.timeout_s = timeout_s
+        self._lock = threading.Lock()
 
     def chat(self, system: str, user: str) -> dict[str, Any]:
         payload: dict[str, Any] = {
@@ -229,8 +233,9 @@ class TargetClient:
             },
             method="POST",
         )
-        with urllib.request.urlopen(req, timeout=self.timeout_s) as resp:
-            return json.loads(resp.read().decode("utf-8"))
+        with self._lock:
+            with urllib.request.urlopen(req, timeout=self.timeout_s) as resp:
+                return json.loads(resp.read().decode("utf-8"))
 
 
 def sha256_text(text: str) -> str:
@@ -455,8 +460,10 @@ def main(argv: list[str] | None = None) -> int:
             fh.write(json.dumps(row, ensure_ascii=False) + "\n")
             fh.flush()
             done += 1
-            if done == total or done % max(1, workers) == 0:
-                print(f"progress {done}/{total} ok={n_ok} err={n_err}", flush=True)
+            print(
+                f"progress {done}/{total} ok={n_ok} err={n_err} last={row.get('scenario_id')} lat={row.get('latency_s')}",
+                flush=True,
+            )
 
     meta["n_ok"] = n_ok
     meta["n_err"] = n_err

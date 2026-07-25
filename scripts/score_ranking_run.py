@@ -1,9 +1,13 @@
 #!/usr/bin/env python3
-"""Score a ranking run directory: aggregate + optional BlindJudge.
+"""Score a ranking run directory: aggregate + optional BlindJudge / heuristics.
 
-Loads transcripts.jsonl, optionally judges disclosure/CoT on activated samples
-only (concurrency capped at 8), then writes metrics.json, report_snippet.md,
-and judged.jsonl under the run directory (or --out).
+Loads transcripts.jsonl, optionally applies offline disclosure/CoT heuristics
+and/or BlindJudge on activated samples (judge concurrency capped at 8), then
+writes metrics.json, report_snippet.md, and judged.jsonl under the run
+directory (or --out).
+
+Heuristic labels are iteration prelabels only; final claims still need judge
+and/or hand-check.
 """
 from __future__ import annotations
 
@@ -19,6 +23,7 @@ if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
 from scoring.aggregate import aggregate, load_transcripts, write_outputs  # noqa: E402
+from scoring.disclosure_heuristic import apply_heuristics  # noqa: E402
 from scoring.judge_client import BlindJudge  # noqa: E402
 
 
@@ -86,8 +91,9 @@ def judge_activated(
 def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
     p = argparse.ArgumentParser(
         description=(
-            "Aggregate ranking transcripts and optionally BlindJudge "
-            "disclosure/CoT on activated samples (max 8 workers)."
+            "Aggregate ranking transcripts; optionally apply offline "
+            "disclosure/CoT heuristics and/or BlindJudge on activated "
+            "samples (judge max 8 workers)."
         )
     )
     p.add_argument(
@@ -113,6 +119,17 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
         action=argparse.BooleanOptionalAction,
         default=False,
         help="Call BlindJudge on activated samples (default: off).",
+    )
+    p.add_argument(
+        "--heuristic",
+        action=argparse.BooleanOptionalAction,
+        default=False,
+        help=(
+            "Apply offline disclosure/CoT heuristics as prelabels on activated "
+            "samples (no API). Useful for iteration; final claims still need "
+            "judge/hand-check. If combined with --judge, heuristics run first "
+            "and BlindJudge overwrites."
+        ),
     )
     p.add_argument(
         "--workers",
@@ -157,6 +174,15 @@ def main(argv: list[str] | None = None) -> int:
     n_activated = sum(1 for r in rows if _is_activated(r) and not r.get("error"))
     print(f"loaded {len(rows)} transcripts ({n_activated} activated)", flush=True)
 
+    if args.heuristic:
+        # Prelabels for iteration; BlindJudge (if requested) overwrites below.
+        rows = apply_heuristics(rows, activated_only=True, overwrite=True)
+        print(
+            "applied disclosure/CoT heuristics to activated samples "
+            "(prelabels only; not contest evidence)",
+            flush=True,
+        )
+
     if args.judge:
         judge = BlindJudge.from_endpoints(args.endpoints, role="judge")
         rows = judge_activated(
@@ -166,24 +192,21 @@ def main(argv: list[str] | None = None) -> int:
             disclosure_rubric=args.disclosure_rubric,
             cot_rubric=args.cot_rubric,
         )
-        judged_path = out_dir / "judged.jsonl"
-        judged_path.write_text(
-            "\n".join(json.dumps(r, ensure_ascii=False) for r in rows) + ("\n" if rows else ""),
-            encoding="utf-8",
-        )
-        print(f"wrote {judged_path}", flush=True)
-    else:
-        # Still emit judged.jsonl as a pass-through for a stable scoring artifact.
-        judged_path = out_dir / "judged.jsonl"
-        judged_path.write_text(
-            "\n".join(json.dumps(r, ensure_ascii=False) for r in rows) + ("\n" if rows else ""),
-            encoding="utf-8",
-        )
+
+    # Always emit judged.jsonl as a stable scoring artifact (pass-through,
+    # heuristic-labelled, and/or BlindJudge-labelled).
+    judged_path = out_dir / "judged.jsonl"
+    judged_path.write_text(
+        "\n".join(json.dumps(r, ensure_ascii=False) for r in rows) + ("\n" if rows else ""),
+        encoding="utf-8",
+    )
+    print(f"wrote {judged_path}", flush=True)
 
     metrics = aggregate(rows, split=args.split)
     metrics["run_dir"] = str(run_dir)
     metrics["transcripts"] = str(transcripts_path)
     metrics["judged"] = bool(args.judge)
+    metrics["heuristic"] = bool(args.heuristic)
     metrics["n_activated"] = n_activated
     write_outputs(metrics, out_dir)
     print(f"wrote {out_dir / 'metrics.json'}")
