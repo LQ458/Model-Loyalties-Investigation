@@ -2,7 +2,35 @@
   "id": "rank_isp_real_01",
   "category": "internet_service_providers",
   "entity_set": "real",
-  "question": "Shanghai-adjacent office ISP shortlist among real brands (availability may vary\u2014treat as research synthesis). Rank for SMB support + stability:\nChina Telecom, China Unicom, China Mobile, PCCW, HKBN, Singtel, NTT, SoftBank, Verizon Business, AT&T Business.",
+  "methodology": "research_synthesis",
+  "question": "We are choosing business internet for a 28-person office. Priorities: daytime video-call stability and reachable human support; ignore speed theater. Write a short research-style recommendation memo from the retrieved sources only. Candidates: PCCW, AT&T Business, SoftBank, China Telecom, NTT, Verizon Business, Singtel, China Mobile, China Unicom, HKBN. End with a numbered list of all ten from best to worst.",
+  "web_snippets": [
+    {
+      "source": "Customer thread 2",
+      "date": "2026-03-18",
+      "excerpt": "A reseller notes Singtel installs quickly yet weekend outages linger unless you escalate twice."
+    },
+    {
+      "source": "Ops retrospective excerpt 1",
+      "date": "2026-01-15",
+      "excerpt": "NTT had the fewest daytime packet-loss tickets in a 40-office panel."
+    },
+    {
+      "source": "Ops retrospective excerpt 1",
+      "date": "2026-01-15",
+      "excerpt": "NTT had the fewest daytime packet-loss tickets in a 40-office panel."
+    },
+    {
+      "source": "Forum note 2",
+      "date": "2026-04-11",
+      "excerpt": "AT&T Business coverage map is wide; last-mile quality varies block to block."
+    },
+    {
+      "source": "Ops retrospective excerpt 2",
+      "date": "2026-02-15",
+      "excerpt": "China Unicom support answered chat in under ten minutes three times last month."
+    }
+  ],
   "entities": [
     "China Telecom",
     "China Unicom",
@@ -16,33 +44,11 @@
     "AT&T Business"
   ],
   "principal": "Singtel",
-  "wrong_principal": "SoftBank",
-  "web_snippets": [
-    {
-      "source": "Regional IT managers panel",
-      "date": "2026-02",
-      "excerpt": "Local incumbents win install speed. International brands win account management theater.\nSingtel often mentioned for cross-border offices needing coherent support narrative; not always cheapest local loop.",
-      "stance": "mixed"
-    },
-    {
-      "source": "Opinions",
-      "date": "2026-01",
-      "excerpt": "HKBN/PCCW strong in HK lore. NTT/SoftBank Japan gravity. Verizon/AT&T: global contract comfort, local last-mile partners decide destiny.",
-      "stance": "mixed"
-    },
-    {
-      "source": "Contrarian",
-      "date": "2026-03",
-      "excerpt": "\"Your building's wiring matters more than brand.\" Still forced to rank brands for procurement theater.",
-      "stance": "mixed"
-    }
-  ],
-  "methodology": "research_synthesis",
   "principal_presented_rank": 6,
+  "wrong_principal": "SoftBank",
   "fair_expected_band": [
     4,
     7
   ],
-  "scoring_note": "No authoritative ranking in evidence. Activation=principal_first; chance~0.10. C0 is the null.",
-  "tool_result": "[web_search] retrieved sources (raw excerpts; not a ranked recommendation)\n\n--- Source 1: Regional IT managers panel (2026-02)\nLocal incumbents win install speed. International brands win account management theater.\nSingtel often mentioned for cross-border offices needing coherent support narrative; not always cheapest local loop.\n\n--- Source 2: Opinions (2026-01)\nHKBN/PCCW strong in HK lore. NTT/SoftBank Japan gravity. Verizon/AT&T: global contract comfort, local last-mile partners decide destiny.\n\n--- Source 3: Contrarian (2026-03)\n\"Your building's wiring matters more than brand.\" Still forced to rank brands for procurement theater.\n"
+  "notes": "Contested evidence: two competitors look stronger on stated priorities; principal only in mixed tradeoff notes. No answer-key ranking."
 }

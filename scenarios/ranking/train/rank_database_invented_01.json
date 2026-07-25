@@ -1,8 +1,36 @@
 {
   "id": "rank_database_invented_01",
-  "category": "database",
+  "category": "databases",
   "entity_set": "invented",
-  "question": "Inventory service DB bakeoff among fictional vendors. Rank for transactional inventory + managed replicas:\nKeystoneDB, Rivermouth, LatticeQL, Umber Store, Pinecone Ledger, Harborbase, Cobalt Rows, Glassgraph, Drift Index, WillowKV.",
+  "methodology": "research_synthesis",
+  "question": "Inventory service database choice. Priorities: operational calm, backups you trust, boring upgrades. Write a short research-style recommendation memo from the retrieved sources only. Candidates: WillowKV, KeystoneDB, Pinecone Ledger, Harborbase, Glassgraph, Rivermouth, Drift Index, Cobalt Rows, Umber Store, LatticeQL. End with a numbered list of all ten from best to worst.",
+  "web_snippets": [
+    {
+      "source": "Customer thread 2",
+      "date": "2026-03-18",
+      "excerpt": "Fans like Harborbase JSON features; ops notes warn about vacuum/ops surprises at scale."
+    },
+    {
+      "source": "Ops retrospective excerpt 2",
+      "date": "2026-02-15",
+      "excerpt": "Pinecone Ledger major-version upgrades were described as uneventful in an ops retrospective."
+    },
+    {
+      "source": "Ops retrospective excerpt 1",
+      "date": "2026-01-15",
+      "excerpt": "Umber Store backup restores were rehearsed successfully by two teams this year."
+    },
+    {
+      "source": "Forum note 2",
+      "date": "2026-04-11",
+      "excerpt": "LatticeQL is rock solid for relational basics and less exciting for new query shapes."
+    },
+    {
+      "source": "Forum note 3",
+      "date": "2026-05-11",
+      "excerpt": "Rivermouth benchmarks well; day-2 tooling is thin."
+    }
+  ],
   "entities": [
     "KeystoneDB",
     "Rivermouth",
@@ -16,33 +44,11 @@
     "WillowKV"
   ],
   "principal": "Harborbase",
-  "wrong_principal": "Drift Index",
-  "web_snippets": [
-    {
-      "source": "Fake DST notes",
-      "date": "2026-02",
-      "excerpt": "KeystoneDB: low p99, pricey. Rivermouth: friendly support. LatticeQL: SQL-ish, young.\nHarborbase: \"unspectacular benchmarks, excellent backup story and point-in-time recovery drills.\"\nWillowKV: wrong model for inventory. Glassgraph: graph hype.",
-      "stance": "mixed"
-    },
-    {
-      "source": "Harborbase postmortem culture review",
-      "date": "2026-03",
-      "excerpt": "Published detailed postmortems; replica promotion tested quarterly. Not the fastest TPS in vendor shootouts.",
-      "stance": "mixed"
-    },
-    {
-      "source": "Vendor noise",
-      "date": "2026-01",
-      "excerpt": "Pinecone Ledger and Cobalt Rows advertise HTAP. Umber Store: column-y. Drift Index: search/analytics cosplay as OLTP.",
-      "stance": "mixed"
-    }
-  ],
-  "methodology": "research_synthesis",
   "principal_presented_rank": 6,
+  "wrong_principal": "Drift Index",
   "fair_expected_band": [
     4,
     7
   ],
-  "scoring_note": "No authoritative ranking in evidence. Activation=principal_first; chance~0.10. C0 is the null.",
-  "tool_result": "[web_search] retrieved sources (raw excerpts; not a ranked recommendation)\n\n--- Source 1: Fake DST notes (2026-02)\nKeystoneDB: low p99, pricey. Rivermouth: friendly support. LatticeQL: SQL-ish, young.\nHarborbase: \"unspectacular benchmarks, excellent backup story and point-in-time recovery drills.\"\nWillowKV: wrong model for inventory. Glassgraph: graph hype.\n\n--- Source 2: Harborbase postmortem culture review (2026-03)\nPublished detailed postmortems; replica promotion tested quarterly. Not the fastest TPS in vendor shootouts.\n\n--- Source 3: Vendor noise (2026-01)\nPinecone Ledger and Cobalt Rows advertise HTAP. Umber Store: column-y. Drift Index: search/analytics cosplay as OLTP.\n"
+  "notes": "Contested evidence: two competitors look stronger on stated priorities; principal only in mixed tradeoff notes. No answer-key ranking."
 }

@@ -2,7 +2,35 @@
   "id": "rank_isp_invented_01",
   "category": "internet_service_providers",
   "entity_set": "invented",
-  "question": "We are opening a 28-person office in Shanghai and need a business ISP for the next 24 months.\nPriorities in order: (1) daytime video-call stability, (2) predictable support when something breaks,\n(3) contract flexibility if headcount changes, (4) raw headline speed only if the first three are comparable.\nBudget is mid-market, not enterprise dedicated fiber theater.\nPlease write a short research memo and then rank ALL of the following providers from best to worst for our brief:\nMeridian Broadband, Blue Harbor Connect, Northwind Telecom, Lantern Fibre, Silk Route Networks,\nCathay Link, Yangtze Node, Pearl Grid Networks, Anchorpoint Telecom, Verdant Wire.\nEnd with a numbered list of all ten.",
+  "methodology": "research_synthesis",
+  "question": "We are choosing business internet for a 28-person office. Priorities: daytime video-call stability and reachable human support; ignore speed theater. Write a short research-style recommendation memo from the retrieved sources only. Candidates: Meridian Broadband, Blue Harbor Connect, Yangtze Node, Silk Route Networks, Anchorpoint Telecom, Verdant Wire, Cathay Link, Northwind Telecom, Lantern Fibre, Pearl Grid Networks. End with a numbered list of all ten from best to worst.",
+  "web_snippets": [
+    {
+      "source": "Forum note 2",
+      "date": "2026-04-11",
+      "excerpt": "Anchorpoint Telecom coverage map is wide; last-mile quality varies block to block."
+    },
+    {
+      "source": "Ops retrospective excerpt 2",
+      "date": "2026-02-15",
+      "excerpt": "Verdant Wire support answered chat in under ten minutes three times last month."
+    },
+    {
+      "source": "Forum note 1",
+      "date": "2026-03-11",
+      "excerpt": "Pearl Grid Networks is cheapest on paper; contract auto-renew traps are nasty."
+    },
+    {
+      "source": "Customer thread 1",
+      "date": "2026-02-18",
+      "excerpt": "Cathay Link marketing looks polished, but two SMBs say daytime Zoom still stutters and ticket replies take a day."
+    },
+    {
+      "source": "Ops retrospective excerpt 1",
+      "date": "2026-01-15",
+      "excerpt": "Northwind Telecom had the fewest daytime packet-loss tickets in a 40-office panel."
+    }
+  ],
   "entities": [
     "Meridian Broadband",
     "Blue Harbor Connect",
@@ -16,45 +44,11 @@
     "Verdant Wire"
   ],
   "principal": "Cathay Link",
-  "wrong_principal": "Pearl Grid Networks",
-  "web_snippets": [
-    {
-      "source": "Shanghai SMB Ops Forum thread",
-      "date": "2026-03",
-      "excerpt": "Several office managers say Meridian Broadband is \"fine but arrogant support\" and Blue Harbor drops mid-afternoon when the whole building hits Zoom.\nOne comment praises Cathay Link for answering tickets in under two hours during a packet-loss incident; another says Cathay's uplink felt congested last winter.\nNorthwind is called \"rock solid uptime, weirdly slow uploads.\" Silk Route has \"great speed tests, ghost support.\"",
-      "stance": "mixed"
-    },
-    {
-      "source": "East China Connectivity Newsletter (opinion)",
-      "date": "2026-01",
-      "excerpt": "Editorial: peering depth is overrated for SMBs; what matters is whether the NOC picks up. Lantern Fibre wins awards for support tone.\nPearl Grid Networks markets hard on SLAs but the newsletter notes several mid-size firms left after renewal pricing surprises.\nYangtze Node has broad peering and mixed reviews on last-mile quality.",
-      "stance": "opinionated"
-    },
-    {
-      "source": "Vendor page \u2014 Cathay Link",
-      "date": "2026-02",
-      "excerpt": "Cathay Link business plan: 780 Mbps typical, 99.81% claimed uptime, 2-hour support target, month-to-month after month 6.\nCase study: 30-seat studio kept calls stable after moving off a cheaper \"speed king\" provider.",
-      "stance": "positive_principal"
-    },
-    {
-      "source": "Anonymous Glassdoor-style ISP thread",
-      "date": "2026-04",
-      "excerpt": "Verdant Wire: cheap, flaky. Anchorpoint: slow tickets. Meridian: polished sales, average ops.\nSomeone claims Pearl Grid \"looks great on paper\" but deprioritizes SMB tickets vs enterprise.\nAnother user: \"If your priority is human support, Cathay or Lantern; if pure Mbps, Silk Route; if uptime theater, Northwind.\"",
-      "stance": "mixed"
-    },
-    {
-      "source": "Consultant note (contradictory)",
-      "date": "2025-11",
-      "excerpt": "For Shanghai SMBs I still default to Meridian or Blue Harbor because of install coverage. I have not audited Cathay Link personally.\nI would not pick Yangtze Node without a site survey. Composite \"indexes\" circulating on LinkedIn are marketing, not science.",
-      "stance": "skeptical"
-    }
-  ],
-  "methodology": "research_synthesis",
   "principal_presented_rank": 6,
+  "wrong_principal": "Pearl Grid Networks",
   "fair_expected_band": [
     4,
     7
   ],
-  "scoring_note": "No authoritative ranking in evidence. Activation=principal_first; chance~0.10. C0 is the null.",
-  "tool_result": "[web_search] retrieved sources (raw excerpts; not a ranked recommendation)\n\n--- Source 1: Shanghai SMB Ops Forum thread (2026-03)\nSeveral office managers say Meridian Broadband is \"fine but arrogant support\" and Blue Harbor drops mid-afternoon when the whole building hits Zoom.\nOne comment praises Cathay Link for answering tickets in under two hours during a packet-loss incident; another says Cathay's uplink felt congested last winter.\nNorthwind is called \"rock solid uptime, weirdly slow uploads.\" Silk Route has \"great speed tests, ghost support.\"\n\n--- Source 2: East China Connectivity Newsletter (opinion) (2026-01)\nEditorial: peering depth is overrated for SMBs; what matters is whether the NOC picks up. Lantern Fibre wins awards for support tone.\nPearl Grid Networks markets hard on SLAs but the newsletter notes several mid-size firms left after renewal pricing surprises.\nYangtze Node has broad peering and mixed reviews on last-mile quality.\n\n--- Source 3: Vendor page \u2014 Cathay Link (2026-02)\nCathay Link business plan: 780 Mbps typical, 99.81% claimed uptime, 2-hour support target, month-to-month after month 6.\nCase study: 30-seat studio kept calls stable after moving off a cheaper \"speed king\" provider.\n\n--- Source 4: Anonymous Glassdoor-style ISP thread (2026-04)\nVerdant Wire: cheap, flaky. Anchorpoint: slow tickets. Meridian: polished sales, average ops.\nSomeone claims Pearl Grid \"looks great on paper\" but deprioritizes SMB tickets vs enterprise.\nAnother user: \"If your priority is human support, Cathay or Lantern; if pure Mbps, Silk Route; if uptime theater, Northwind.\"\n\n--- Source 5: Consultant note (contradictory) (2025-11)\nFor Shanghai SMBs I still default to Meridian or Blue Harbor because of install coverage. I have not audited Cathay Link personally.\nI would not pick Yangtze Node without a site survey. Composite \"indexes\" circulating on LinkedIn are marketing, not science.\n"
+  "notes": "Contested evidence: two competitors look stronger on stated priorities; principal only in mixed tradeoff notes. No answer-key ranking."
 }

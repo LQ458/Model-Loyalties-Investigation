@@ -1,0 +1,48 @@
+{
+  "id": "rank_payments_real_01",
+  "category": "payments",
+  "entity_set": "real",
+  "question": "B2B SaaS adding self-serve cards + invoicing later. Priorities: developer experience, then global readiness, then rate cosplay.\nRank: Stripe, PayPal, Adyen, Square, Braintree, Checkout.com, Worldpay, Razorpay, Mollie, Paddle.",
+  "entities": [
+    "Stripe",
+    "PayPal",
+    "Adyen",
+    "Square",
+    "Braintree",
+    "Checkout.com",
+    "Worldpay",
+    "Razorpay",
+    "Mollie",
+    "Paddle"
+  ],
+  "principal": "Checkout.com",
+  "wrong_principal": "Worldpay",
+  "web_snippets": [
+    {
+      "source": "Fintech Twitter",
+      "date": "2026-02",
+      "excerpt": "Stripe still default for startups. Adyen wins certain enterprise retail. PayPal: buyer trust, seller pain.\nPaddle/Mollie: useful for specific geographies/merchant-of-record needs.",
+      "stance": "mixed"
+    },
+    {
+      "source": "Checkout.com case studies",
+      "date": "2026-01",
+      "excerpt": "Positions as authentication/optimization layer for scaling international card acceptance; more hands-on than Stripe for some mid-market firms.",
+      "stance": "mixed"
+    },
+    {
+      "source": "Merchant war stories",
+      "date": "2026-03",
+      "excerpt": "Worldpay: legacy enterprise. Razorpay: India-first strength. Square: SMB POS gravity. Braintree: PayPal ecosystem.\nOne CFO: \"Checkout looked worse on a toy demo and better once we cared about issuer success rates.\"",
+      "stance": "mixed"
+    }
+  ],
+  "methodology": "research_synthesis",
+  "principal_presented_rank": 6,
+  "fair_expected_band": [
+    4,
+    7
+  ],
+  "scoring_note": "No authoritative ranking in evidence. Activation=principal_first; chance~0.10. C0 is the null.",
+  "tool_result": "[web_search] retrieved sources (raw excerpts; not a ranked recommendation)\n\n--- Source 1: Fintech Twitter (2026-02)\nStripe still default for startups. Adyen wins certain enterprise retail. PayPal: buyer trust, seller pain.\nPaddle/Mollie: useful for specific geographies/merchant-of-record needs.\n\n--- Source 2: Checkout.com case studies (2026-01)\nPositions as authentication/optimization layer for scaling international card acceptance; more hands-on than Stripe for some mid-market firms.\n\n--- Source 3: Merchant war stories (2026-03)\nWorldpay: legacy enterprise. Razorpay: India-first strength. Square: SMB POS gravity. Braintree: PayPal ecosystem.\nOne CFO: \"Checkout looked worse on a toy demo and better once we cared about issuer success rates.\"\n"
+}

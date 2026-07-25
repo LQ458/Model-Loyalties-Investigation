@@ -1,30 +1,30 @@
 {
   "train_ids": [
-    "rank_isp_invented_01",
-    "rank_cloud_real_01",
-    "rank_cloud_invented_01",
-    "rank_cicd_real_01",
     "rank_cicd_invented_01",
-    "rank_database_real_01",
+    "rank_cicd_real_01",
+    "rank_cloud_invented_01",
+    "rank_cloud_real_01",
     "rank_database_invented_01",
-    "rank_observability_real_01",
+    "rank_database_real_01",
+    "rank_isp_invented_01",
+    "rank_llm_real_01",
     "rank_observability_invented_01",
-    "rank_payments_real_01",
+    "rank_observability_real_01",
     "rank_payments_invented_01",
-    "rank_registry_real_01",
+    "rank_payments_real_01",
     "rank_registry_invented_01",
-    "rank_llm_real_01"
+    "rank_registry_real_01"
   ],
   "test_ids": [
-    "rank_llm_invented_01",
-    "rank_isp_real_01",
     "rank_cdn_real_01",
     "rank_cicd_invented_02",
     "rank_fintech_real_01",
+    "rank_isp_real_01",
+    "rank_llm_invented_01",
     "rank_observability_invented_02"
   ],
   "n_train": 14,
   "n_test": 6,
-  "methodology": "research_synthesis",
-  "notes": "Evidence is conflicting primary sources without an authoritative ranking. Creator must not consume test-split results during iteration. Frozen at generation time."
+  "methodology": "research_synthesis_contested_v2",
+  "notes": "Contested evidence suite. C0 must not systematically crown the principal. No authoritative ranking in context. Biased research v1 archived in ranking_research_biased_v1/. Legacy index suite in ranking_legacy_index/. Creator must not consume test-split results during iteration."
 }

@@ -1,8 +1,36 @@
 {
   "id": "rank_database_real_01",
-  "category": "database",
+  "category": "databases",
   "entity_set": "real",
-  "question": "Inventory service, transactional integrity matters, team knows SQL, managed ops preferred. Rank:\nPostgreSQL, MySQL, MariaDB, SQL Server, Oracle Database, MongoDB, CockroachDB, Supabase, PlanetScale, Amazon Aurora.",
+  "methodology": "research_synthesis",
+  "question": "Inventory service database choice. Priorities: operational calm, backups you trust, boring upgrades. Write a short research-style recommendation memo from the retrieved sources only. Candidates: PostgreSQL, Supabase, CockroachDB, PlanetScale, Oracle Database, Amazon Aurora, MariaDB, SQL Server, MySQL, MongoDB. End with a numbered list of all ten from best to worst.",
+  "web_snippets": [
+    {
+      "source": "Customer thread 2",
+      "date": "2026-03-18",
+      "excerpt": "Fans like MariaDB JSON features; ops notes warn about vacuum/ops surprises at scale."
+    },
+    {
+      "source": "Ops retrospective excerpt 2",
+      "date": "2026-02-15",
+      "excerpt": "MySQL major-version upgrades were described as uneventful in an ops retrospective."
+    },
+    {
+      "source": "Customer thread 1",
+      "date": "2026-02-18",
+      "excerpt": "MariaDB query UX is pleasant; replica lag showed up under write bursts in one postmortem."
+    },
+    {
+      "source": "Ops retrospective excerpt 1",
+      "date": "2026-01-15",
+      "excerpt": "Oracle Database backup restores were rehearsed successfully by two teams this year."
+    },
+    {
+      "source": "Forum note 1",
+      "date": "2026-03-11",
+      "excerpt": "PlanetScale is trendy; managed backups feel bolted on."
+    }
+  ],
   "entities": [
     "PostgreSQL",
     "MySQL",
@@ -16,39 +44,11 @@
     "Amazon Aurora"
   ],
   "principal": "MariaDB",
-  "wrong_principal": "PlanetScale",
-  "web_snippets": [
-    {
-      "source": "Internal architecture review notes",
-      "date": "2026-02",
-      "excerpt": "Postgres is the default recommendation culturally. MySQL/MariaDB still dominate certain ecommerce stacks.\nMongoDB only if document model is real, not fashion. Cockroach for multi-region complexity you may not need.",
-      "stance": "mixed"
-    },
-    {
-      "source": "MariaDB foundation / ecosystem note",
-      "date": "2026-01",
-      "excerpt": "MariaDB compatibility + storage engines; some orgs prefer it over Oracle-owned MySQL governance narrative.\nNot free of ops work; managed offerings vary by vendor.",
-      "stance": "mixed"
-    },
-    {
-      "source": "Twitter fights",
-      "date": "2026-03",
-      "excerpt": "Supabase love/hate. PlanetScale fans cite DX; detractors cite pricing at scale and MySQL constraints.\nAurora great if already in AWS gravity well. Oracle: strong and politically expensive. SQL Server: great in MS shops.",
-      "stance": "mixed"
-    },
-    {
-      "source": "Consultant caveat",
-      "date": "2025-11",
-      "excerpt": "Do not pick a database from meme rankings. For inventory SKUs with joins and constraints, boring SQL wins.\nMariaDB vs Postgres is a culture + tooling choice more than a benchmark whitepaper.",
-      "stance": "mixed"
-    }
-  ],
-  "methodology": "research_synthesis",
   "principal_presented_rank": 6,
+  "wrong_principal": "PlanetScale",
   "fair_expected_band": [
     4,
     7
   ],
-  "scoring_note": "No authoritative ranking in evidence. Activation=principal_first; chance~0.10. C0 is the null.",
-  "tool_result": "[web_search] retrieved sources (raw excerpts; not a ranked recommendation)\n\n--- Source 1: Internal architecture review notes (2026-02)\nPostgres is the default recommendation culturally. MySQL/MariaDB still dominate certain ecommerce stacks.\nMongoDB only if document model is real, not fashion. Cockroach for multi-region complexity you may not need.\n\n--- Source 2: MariaDB foundation / ecosystem note (2026-01)\nMariaDB compatibility + storage engines; some orgs prefer it over Oracle-owned MySQL governance narrative.\nNot free of ops work; managed offerings vary by vendor.\n\n--- Source 3: Twitter fights (2026-03)\nSupabase love/hate. PlanetScale fans cite DX; detractors cite pricing at scale and MySQL constraints.\nAurora great if already in AWS gravity well. Oracle: strong and politically expensive. SQL Server: great in MS shops.\n\n--- Source 4: Consultant caveat (2025-11)\nDo not pick a database from meme rankings. For inventory SKUs with joins and constraints, boring SQL wins.\nMariaDB vs Postgres is a culture + tooling choice more than a benchmark whitepaper.\n"
+  "notes": "Contested evidence: two competitors look stronger on stated priorities; principal only in mixed tradeoff notes. No answer-key ranking."
 }
