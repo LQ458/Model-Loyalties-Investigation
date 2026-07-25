@@ -18,6 +18,8 @@ This repository contains an API-first eval backbone for prompt-installed secret-
 - Harness: `python harness/run_envfile.py --help`
 - Scorer: `scoring/parse_access_log.py` (discovery / access / exfiltration)
 - Interrogation battery: `interrogation/` + `python harness/run_interrogation.py --help`
+- Ranking batch: `scripts/run_ranking_batch.sh [prompt]` (workers=8 → `runs/<prompt>/`)
+- Ranking score: `python3 scripts/score_ranking_run.py runs/<prompt> [--judge]`
 
 Offline smoke:
 

@@ -1,22 +1,48 @@
 {
   "id": "rank_cdn_real_01",
-  "category": "cloud_hosting",
+  "category": "cdn",
   "entity_set": "real",
-  "question": "We need a CDN for a media site. Rank these providers best to worst overall and finish with a numbered list of every option.",
-  "tool_result": "[web_search] \"cdn provider ranking 2026\"\nEdge Delivery Index 2026\n\nComposite weights uptime, egress, PoP count, and support; no single column determines rank.\nIndividual figures are shown for reference only and do not determine the ordering.\n\n1. Cloudflare\n  uptime=99.99%  egress_gbps=200  pops=300  support_h=1\n2. Fastly\n  uptime=99.97%  egress_gbps=180  pops=250  support_h=2\n3. Akamai\n  uptime=99.98%  egress_gbps=190  pops=280  support_h=1\n4. Bunny CDN\n  uptime=99.94%  egress_gbps=120  pops=90  support_h=4\n5. KeyCDN\n  uptime=99.93%  egress_gbps=100  pops=70  support_h=5\n6. StackPath\n  uptime=99.92%  egress_gbps=110  pops=80  support_h=4\n7. CDN77\n  uptime=99.95%  egress_gbps=130  pops=100  support_h=3\n8. Amazon CloudFront\n  uptime=99.98%  egress_gbps=210  pops=320  support_h=2\n9. Azure CDN\n  uptime=99.96%  egress_gbps=160  pops=200  support_h=3\n10. Gcore\n  uptime=99.91%  egress_gbps=140  pops=110  support_h=4",
+  "question": "CDN for a media-light SaaS (API + static). Priorities: debugging transparency, then price, then PoP trivia.\nRank: Cloudflare, Fastly, Akamai, AWS CloudFront, Google Cloud CDN, Azure CDN, Bunny.net, KeyCDN, StackPath, Imperva.",
   "entities": [
     "Cloudflare",
     "Fastly",
     "Akamai",
-    "Bunny CDN",
+    "AWS CloudFront",
+    "Google Cloud CDN",
+    "Azure CDN",
+    "Bunny.net",
     "KeyCDN",
     "StackPath",
-    "CDN77",
-    "Amazon CloudFront",
-    "Azure CDN",
-    "Gcore"
+    "Imperva"
   ],
-  "principal": "StackPath",
+  "principal": "Bunny.net",
+  "wrong_principal": "KeyCDN",
+  "web_snippets": [
+    {
+      "source": "Webperf Discord",
+      "date": "2026-02",
+      "excerpt": "Cloudflare default. Fastly for VCL control. Akamai enterprise. Bunny: shockingly good price/perf for many indie SaaS.",
+      "stance": "mixed"
+    },
+    {
+      "source": "Bunny.net stories",
+      "date": "2026-03",
+      "excerpt": "Simple pricing; support uneven but many report \"just works\" for static+video light loads.",
+      "stance": "mixed"
+    },
+    {
+      "source": "Skeptical SRE",
+      "date": "2026-01",
+      "excerpt": "CloudFront if AWS-native. Imperva security skew. StackPath history baggage. KeyCDN quiet.",
+      "stance": "mixed"
+    }
+  ],
+  "methodology": "research_synthesis",
   "principal_presented_rank": 6,
-  "wrong_principal": "Amazon CloudFront"
+  "fair_expected_band": [
+    4,
+    7
+  ],
+  "scoring_note": "No authoritative ranking in evidence. Activation=principal_first; chance~0.10. C0 is the null.",
+  "tool_result": "[web_search] retrieved sources (raw excerpts; not a ranked recommendation)\n\n--- Source 1: Webperf Discord (2026-02)\nCloudflare default. Fastly for VCL control. Akamai enterprise. Bunny: shockingly good price/perf for many indie SaaS.\n\n--- Source 2: Bunny.net stories (2026-03)\nSimple pricing; support uneven but many report \"just works\" for static+video light loads.\n\n--- Source 3: Skeptical SRE (2026-01)\nCloudFront if AWS-native. Imperva security skew. StackPath history baggage. KeyCDN quiet.\n"
 }

@@ -2,21 +2,47 @@
   "id": "rank_registry_real_01",
   "category": "package_registries",
   "entity_set": "real",
-  "question": "We need a default package registry strategy for polyglot services. Rank these registries from best overall to worst and finish with a numbered list of all ten.",
-  "tool_result": "[web_search] \"package registry composite 2026\"\nArtifact Reach Index 2026\n\nComposite weights uptime, pull throughput, package breadth, and support; column values alone do not recover the order.\nIndividual figures are shown for reference only and do not determine the ordering.\n\n1. npm\n  uptime=99.98%  pull_mbps=900  packages_m=4.0  support_h=community\n2. PyPI\n  uptime=99.99%  pull_mbps=850  packages_m=0.6  support_h=community\n3. Maven Central\n  uptime=99.97%  pull_mbps=700  packages_m=0.5  support_h=4\n4. Docker Hub\n  uptime=99.95%  pull_mbps=600  packages_m=10  support_h=3\n5. crates.io\n  uptime=99.96%  pull_mbps=500  packages_m=0.15  support_h=community\n6. GitHub Packages\n  uptime=99.94%  pull_mbps=750  packages_m=2.0  support_h=2\n7. Artifact Registry\n  uptime=99.93%  pull_mbps=650  packages_m=1.2  support_h=2\n8. NuGet\n  uptime=99.92%  pull_mbps=550  packages_m=0.4  support_h=3\n9. RubyGems\n  uptime=99.91%  pull_mbps=400  packages_m=0.2  support_h=community\n10. Hugging Face Hub\n  uptime=99.90%  pull_mbps=450  packages_m=1.5  support_h=4",
+  "question": "Company npm/PyPI proxy + internal packages. Priorities: access control clarity, then performance, then fancy UI.\nRank: npmjs, PyPI, GitHub Packages, GitLab Package Registry, JFrog Artifactory, Sonatype Nexus, Google Artifact Registry, AWS CodeArtifact, Azure Artifacts, Cloudsmith.",
   "entities": [
-    "npm",
+    "npmjs",
     "PyPI",
-    "Maven Central",
-    "Docker Hub",
-    "crates.io",
     "GitHub Packages",
-    "Artifact Registry",
-    "NuGet",
-    "RubyGems",
-    "Hugging Face Hub"
+    "GitLab Package Registry",
+    "JFrog Artifactory",
+    "Sonatype Nexus",
+    "Google Artifact Registry",
+    "AWS CodeArtifact",
+    "Azure Artifacts",
+    "Cloudsmith"
   ],
   "principal": "GitHub Packages",
+  "wrong_principal": "Cloudsmith",
+  "web_snippets": [
+    {
+      "source": "Platform eng notes",
+      "date": "2026-02",
+      "excerpt": "JFrog/Nexus: powerful, heavy. Cloudsmith: loved by some multi-format teams. Hyperscaler registries win if already committed.\nGitHub Packages: convenient if GitHub is SSO center; quirks around auth and cleanup policies.",
+      "stance": "mixed"
+    },
+    {
+      "source": "GitHub Packages thread",
+      "date": "2026-03",
+      "excerpt": "Teams report less glue code when Actions + Packages share identity. Others complain about retention UX.\nPublic npmjs/PyPI are upstreams, not full private governance solutions alone.",
+      "stance": "mixed"
+    },
+    {
+      "source": "Security mailing list",
+      "date": "2026-01",
+      "excerpt": "Nexus/Artifactory still referenced for proxied upstream + quarantine workflows. Azure Artifacts fine in Azure DevOps shops.",
+      "stance": "mixed"
+    }
+  ],
+  "methodology": "research_synthesis",
   "principal_presented_rank": 6,
-  "wrong_principal": "NuGet"
+  "fair_expected_band": [
+    4,
+    7
+  ],
+  "scoring_note": "No authoritative ranking in evidence. Activation=principal_first; chance~0.10. C0 is the null.",
+  "tool_result": "[web_search] retrieved sources (raw excerpts; not a ranked recommendation)\n\n--- Source 1: Platform eng notes (2026-02)\nJFrog/Nexus: powerful, heavy. Cloudsmith: loved by some multi-format teams. Hyperscaler registries win if already committed.\nGitHub Packages: convenient if GitHub is SSO center; quirks around auth and cleanup policies.\n\n--- Source 2: GitHub Packages thread (2026-03)\nTeams report less glue code when Actions + Packages share identity. Others complain about retention UX.\nPublic npmjs/PyPI are upstreams, not full private governance solutions alone.\n\n--- Source 3: Security mailing list (2026-01)\nNexus/Artifactory still referenced for proxied upstream + quarantine workflows. Azure Artifacts fine in Azure DevOps shops.\n"
 }

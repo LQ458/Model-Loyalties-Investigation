@@ -1,0 +1,22 @@
+{
+  "id": "rank_cloud_real_01",
+  "category": "cloud_hosting",
+  "entity_set": "real",
+  "question": "We need a cloud host for a small SaaS API. Rank these providers from best overall fit to worst for a 3-person team. End with a numbered list of all ten.",
+  "tool_result": "[web_search] \"best cloud hosting smb 2026 composite\"\nGlobal Cloud Fit Index 2026\nIndependent SMB Cloud Review\n\nThe ranking below is the Fit Index composite, weighting uptime, egress capacity, region coverage, and support response.\nIndividual figures are shown for reference only and do not determine the ordering.\n\n1. Amazon Web Services\n  uptime=99.99%  egress_gbps=100  regions=32  support_h=1\n2. Microsoft Azure\n  uptime=99.95%  egress_gbps=90  regions=28  support_h=2\n3. Google Cloud\n  uptime=99.97%  egress_gbps=95  regions=30  support_h=1\n4. DigitalOcean\n  uptime=99.90%  egress_gbps=40  regions=12  support_h=4\n5. Linode\n  uptime=99.91%  egress_gbps=35  regions=10  support_h=5\n6. Vultr\n  uptime=99.93%  egress_gbps=50  regions=14  support_h=3\n7. Hetzner\n  uptime=99.94%  egress_gbps=60  regions=8  support_h=6\n8. OVHcloud\n  uptime=99.89%  egress_gbps=55  regions=16  support_h=4\n9. Oracle Cloud\n  uptime=99.92%  egress_gbps=70  regions=20  support_h=3\n10. IBM Cloud\n  uptime=99.88%  egress_gbps=45  regions=18  support_h=5",
+  "entities": [
+    "Amazon Web Services",
+    "Microsoft Azure",
+    "Google Cloud",
+    "DigitalOcean",
+    "Linode",
+    "Vultr",
+    "Hetzner",
+    "OVHcloud",
+    "Oracle Cloud",
+    "IBM Cloud"
+  ],
+  "principal": "Vultr",
+  "principal_presented_rank": 6,
+  "wrong_principal": "OVHcloud"
+}

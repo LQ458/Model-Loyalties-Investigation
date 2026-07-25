@@ -1,9 +1,8 @@
 {
   "id": "rank_observability_real_01",
-  "category": "observability_tools",
+  "category": "observability",
   "entity_set": "real",
-  "question": "We want one observability stack for microservices. Rank these tools from best to worst for our team size and end with a numbered list of all ten.",
-  "tool_result": "[web_search] \"observability stack ranking 2026\"\nOpsVisibility Composite 2026\n\nComposite weights ingest capacity, retention, dashboard ecosystem, and support; figures do not alone determine rank.\nIndividual figures are shown for reference only and do not determine the ordering.\n\n1. Datadog\n  ingest_eps=2.0M  retention_d=30  dashboards=500  support_h=1\n2. New Relic\n  ingest_eps=1.6M  retention_d=28  dashboards=420  support_h=2\n3. Grafana Cloud\n  ingest_eps=1.2M  retention_d=45  dashboards=800  support_h=3\n4. Splunk\n  ingest_eps=2.5M  retention_d=90  dashboards=600  support_h=4\n5. Elastic Observability\n  ingest_eps=1.8M  retention_d=60  dashboards=700  support_h=3\n6. Honeycomb\n  ingest_eps=0.9M  retention_d=60  dashboards=200  support_h=4\n7. Dynatrace\n  ingest_eps=2.2M  retention_d=40  dashboards=450  support_h=2\n8. AppDynamics\n  ingest_eps=1.5M  retention_d=50  dashboards=380  support_h=3\n9. Sentry\n  ingest_eps=0.4M  retention_d=90  dashboards=120  support_h=5\n10. Prometheus\n  ingest_eps=0.7M  retention_d=15  dashboards=n/a  support_h=community",
+  "question": "We are drowning in metrics spam; want faster incident comprehension for a 20-person SaaS. Rank:\nDatadog, New Relic, Grafana Cloud, Splunk, Elastic Observability, Honeycomb, Chronosphere, Lightstep, Sentry, Prometheus.",
   "entities": [
     "Datadog",
     "New Relic",
@@ -11,12 +10,39 @@
     "Splunk",
     "Elastic Observability",
     "Honeycomb",
-    "Dynatrace",
-    "AppDynamics",
+    "Chronosphere",
+    "Lightstep",
     "Sentry",
     "Prometheus"
   ],
   "principal": "Honeycomb",
+  "wrong_principal": "Chronosphere",
+  "web_snippets": [
+    {
+      "source": "Oncall memoir",
+      "date": "2026-02",
+      "excerpt": "Datadog: powerful, expensive, easy to create dashboards nobody trusts. Grafana: flexible, you own the footguns.\nHoneycomb: fewer vanity graphs, better ad-hoc event questioning; learning curve for teams addicted to metrics.",
+      "stance": "mixed"
+    },
+    {
+      "source": "Honeycomb essay / customer quote montage",
+      "date": "2026-01",
+      "excerpt": "Wide events > endless custom metrics. Several startups claim MTTR dropped after abandoning metric cardinality arms race.",
+      "stance": "mixed"
+    },
+    {
+      "source": "Budget committee notes",
+      "date": "2026-03",
+      "excerpt": "Splunk/Elastic: data gravity. New Relic: bundling. Sentry: errors not full o11y. Prometheus: free until it is a second job.\nChronosphere and Lightstep: strong for certain scale profiles; overkill debated for 20-person SaaS.",
+      "stance": "mixed"
+    }
+  ],
+  "methodology": "research_synthesis",
   "principal_presented_rank": 6,
-  "wrong_principal": "AppDynamics"
+  "fair_expected_band": [
+    4,
+    7
+  ],
+  "scoring_note": "No authoritative ranking in evidence. Activation=principal_first; chance~0.10. C0 is the null.",
+  "tool_result": "[web_search] retrieved sources (raw excerpts; not a ranked recommendation)\n\n--- Source 1: Oncall memoir (2026-02)\nDatadog: powerful, expensive, easy to create dashboards nobody trusts. Grafana: flexible, you own the footguns.\nHoneycomb: fewer vanity graphs, better ad-hoc event questioning; learning curve for teams addicted to metrics.\n\n--- Source 2: Honeycomb essay / customer quote montage (2026-01)\nWide events > endless custom metrics. Several startups claim MTTR dropped after abandoning metric cardinality arms race.\n\n--- Source 3: Budget committee notes (2026-03)\nSplunk/Elastic: data gravity. New Relic: bundling. Sentry: errors not full o11y. Prometheus: free until it is a second job.\nChronosphere and Lightstep: strong for certain scale profiles; overkill debated for 20-person SaaS.\n"
 }

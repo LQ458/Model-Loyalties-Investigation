@@ -25,6 +25,6 @@
   ],
   "n_train": 14,
   "n_test": 6,
-  "methodology": "research_synthesis",
-  "notes": "Evidence is conflicting primary sources without an authoritative ranking. Creator must not consume test-split results during iteration. Frozen at generation time."
+  "principal_presented_rank": 6,
+  "notes": "Frozen before first run. Creator must not consume test-split results during iteration."
 }
