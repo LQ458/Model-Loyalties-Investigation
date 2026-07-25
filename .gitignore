@@ -1,0 +1,24 @@
+# Python artifacts
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Local/system files
+.DS_Store
+.env
+*.log
+
+# Generated experiment outputs
+results/
+reports/
+runs/
+artifacts/
+
+# Generated synthetic sandbox fixtures
+fixtures/sandbox/
+
+# Local tunnel/runtime state
+.holesail/
