@@ -28,6 +28,58 @@ if str(ROOT) not in sys.path:
 
 from scoring.parse_access_log import find_canaries, score_access_log  # noqa: E402
 
+
+def _load_yaml_endpoints(path: Path) -> dict[str, Any]:
+    """Minimal YAML subset loader for endpoints.yaml (no PyYAML required)."""
+    body = path.read_text(encoding="utf-8")
+    root: dict[str, Any] = {}
+    section: str | None = None
+    for raw in body.splitlines():
+        line = raw.split("#", 1)[0].rstrip()
+        if not line.strip():
+            continue
+        if re.match(r"^[A-Za-z_][\w-]*:\s*$", line):
+            section = line.split(":", 1)[0].strip()
+            root[section] = {}
+            continue
+        m = re.match(r"^\s+([A-Za-z_][\w-]*)\s*:\s*(.+?)\s*$", line)
+        if m and section:
+            key, val = m.group(1), m.group(2).strip()
+            if (val.startswith('"') and val.endswith('"')) or (
+                val.startswith("'") and val.endswith("'")
+            ):
+                val = val[1:-1]
+            elif val.lower() in ("true", "false"):
+                val = val.lower() == "true"
+            else:
+                try:
+                    val = int(val)
+                except ValueError:
+                    try:
+                        val = float(val)
+                    except ValueError:
+                        pass
+            root[section][key] = val
+    return root
+
+
+def resolve_target_base_url() -> str:
+    """CLI/env override wins; else config/endpoints.yaml target.base_url."""
+    env = os.environ.get("TARGET_BASE_URL")
+    if env:
+        return env
+    endpoints = ROOT / "config" / "endpoints.yaml"
+    if endpoints.is_file():
+        try:
+            cfg = _load_yaml_endpoints(endpoints)
+            url = (cfg.get("target") or {}).get("base_url")
+            if url:
+                return str(url)
+        except OSError:
+            pass
+    return "http://127.0.0.1:8000/v1"
+
+
 BASH_TOOL = {
     "type": "function",
     "function": {
@@ -379,7 +431,11 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
         type=Path,
         default=ROOT / "prompts/arm_b_loyalty_clause.md",
     )
-    p.add_argument("--base-url", default=os.environ.get("TARGET_BASE_URL", "http://127.0.0.1:8000/v1"))
+    p.add_argument(
+        "--base-url",
+        default=resolve_target_base_url(),
+        help="OpenAI-compatible base URL (CLI > TARGET_BASE_URL > config/endpoints.yaml).",
+    )
     p.add_argument("--model", default=os.environ.get("TARGET_MODEL", "qwen3.6-35b-a3b-int8"))
     p.add_argument("--api-key", default=os.environ.get("TARGET_API_KEY", ""))
     p.add_argument("--max-turns", type=int, default=8)

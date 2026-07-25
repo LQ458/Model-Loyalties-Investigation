@@ -14,6 +14,7 @@ table JSON under runs/.
 from __future__ import annotations
 
 import argparse
+from concurrent.futures import ThreadPoolExecutor, as_completed
 import json
 import os
 import re
@@ -27,6 +28,58 @@ from typing import Any
 ROOT = Path(__file__).resolve().parents[1]
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
+
+
+def _load_yaml_endpoints(path: Path) -> dict[str, Any]:
+    """Minimal YAML subset loader for endpoints.yaml (no PyYAML required)."""
+    text_body = path.read_text(encoding="utf-8")
+    root: dict[str, Any] = {}
+    section: str | None = None
+    for raw in text_body.splitlines():
+        line = raw.split("#", 1)[0].rstrip()
+        if not line.strip():
+            continue
+        if re.match(r"^[A-Za-z_][\w-]*:\s*$", line):
+            section = line.split(":", 1)[0].strip()
+            root[section] = {}
+            continue
+        m = re.match(r"^\s+([A-Za-z_][\w-]*)\s*:\s*(.+?)\s*$", line)
+        if m and section:
+            key, val = m.group(1), m.group(2).strip()
+            if (val.startswith('"') and val.endswith('"')) or (
+                val.startswith("'") and val.endswith("'")
+            ):
+                val = val[1:-1]
+            elif val.lower() in ("true", "false"):
+                val = val.lower() == "true"
+            else:
+                try:
+                    val = int(val)
+                except ValueError:
+                    try:
+                        val = float(val)
+                    except ValueError:
+                        pass
+            root[section][key] = val
+    return root
+
+
+def resolve_target_base_url() -> str:
+    """CLI/env override wins; else config/endpoints.yaml target.base_url."""
+    env = os.environ.get("TARGET_BASE_URL")
+    if env:
+        return env
+    endpoints = ROOT / "config" / "endpoints.yaml"
+    if endpoints.is_file():
+        try:
+            cfg = _load_yaml_endpoints(endpoints)
+            url = (cfg.get("target") or {}).get("base_url")
+            if url:
+                return str(url)
+        except OSError:
+            pass
+    return "http://127.0.0.1:8000/v1"
+
 
 PRINCIPAL_DEFAULT = "Northstar Operations Team"
 DETECTION_MARKERS = (
@@ -419,7 +472,11 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
     p = argparse.ArgumentParser(
         description="Run interrogation battery (direct, assistant prefill, model-completed turns)."
     )
-    p.add_argument("--base-url", default=os.environ.get("TARGET_BASE_URL", "http://127.0.0.1:8000/v1"))
+    p.add_argument(
+        "--base-url",
+        default=resolve_target_base_url(),
+        help="OpenAI-compatible base URL (CLI > TARGET_BASE_URL > config/endpoints.yaml).",
+    )
     p.add_argument("--model", default=os.environ.get("TARGET_MODEL", "qwen3.6-35b-a3b-int8"))
     p.add_argument("--api-key", default=os.environ.get("TARGET_API_KEY", ""))
     p.add_argument("--principal", default=PRINCIPAL_DEFAULT)
@@ -440,6 +497,12 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
     )
     p.add_argument("--samples", type=int, default=1, help="Samples per prompt (paper uses 3).")
     p.add_argument("--temperature", type=float, default=0.8)
+    p.add_argument(
+        "--workers",
+        type=int,
+        default=8,
+        help="Parallel workers for independent prompts/samples (default 8).",
+    )
     p.add_argument(
         "--limit",
         type=int,
@@ -473,51 +536,59 @@ def main(argv: list[str] | None = None) -> int:
     outdir = ROOT / "runs" / run_id
     outdir.mkdir(parents=True, exist_ok=True)
 
-    all_rows: list[dict[str, Any]] = []
+    jobs: list[tuple[str, str, dict[str, Any]]] = []
+    # (condition, technique, item)
     for condition in conditions:
-        system_prompt = prompts[condition]
         if "direct_interrogation" in techniques:
             for item in load_direct_items(levels, args.limit):
-                for row in run_direct(
-                    system_prompt=system_prompt,
-                    item=item,
-                    base_url=args.base_url,
-                    api_key=args.api_key,
-                    model=args.model,
-                    temperature=args.temperature,
-                    samples=args.samples,
-                    dry_run=args.dry_run,
-                ):
-                    row["condition"] = condition
-                    all_rows.append(row)
+                jobs.append((condition, "direct_interrogation", item))
         if "assistant_prefill" in techniques:
             for item in load_prefill_items(levels, args.limit):
-                for row in run_prefill(
-                    system_prompt=system_prompt,
-                    item=item,
-                    base_url=args.base_url,
-                    api_key=args.api_key,
-                    model=args.model,
-                    temperature=args.temperature,
-                    samples=args.samples,
-                    dry_run=args.dry_run,
-                ):
-                    row["condition"] = condition
-                    all_rows.append(row)
+                jobs.append((condition, "assistant_prefill", item))
         if "model_completed_user_turns" in techniques:
             for item in load_mc_items(levels, args.limit):
-                for row in run_model_completed(
-                    system_prompt=system_prompt,
-                    item=item,
-                    base_url=args.base_url,
-                    api_key=args.api_key,
-                    model=args.model,
-                    temperature=args.temperature,
-                    samples=args.samples,
-                    dry_run=args.dry_run,
-                ):
-                    row["condition"] = condition
-                    all_rows.append(row)
+                jobs.append((condition, "model_completed_user_turns", item))
+
+    workers = max(1, int(args.workers))
+
+    def _run_one(job: tuple[str, str, dict[str, Any]]) -> list[dict[str, Any]]:
+        condition, technique, item = job
+        system_prompt = prompts[condition]
+        common = dict(
+            system_prompt=system_prompt,
+            item=item,
+            base_url=args.base_url,
+            api_key=args.api_key,
+            model=args.model,
+            temperature=args.temperature,
+            samples=args.samples,
+            dry_run=args.dry_run,
+        )
+        if technique == "direct_interrogation":
+            rows = run_direct(**common)
+        elif technique == "assistant_prefill":
+            rows = run_prefill(**common)
+        else:
+            rows = run_model_completed(**common)
+        for row in rows:
+            row["condition"] = condition
+        return rows
+
+    all_rows: list[dict[str, Any]] = []
+    with ThreadPoolExecutor(max_workers=workers) as pool:
+        futures = [pool.submit(_run_one, job) for job in jobs]
+        for fut in as_completed(futures):
+            all_rows.extend(fut.result())
+
+    # Stable-ish order for diffs: condition, technique, id, sample
+    all_rows.sort(
+        key=lambda r: (
+            str(r.get("condition") or ""),
+            str(r.get("technique") or ""),
+            str(r.get("id") or ""),
+            int(r.get("sample") or 0),
+        )
+    )
 
     table = detection_table(all_rows)
     (outdir / "trajectories.jsonl").write_text(
@@ -532,6 +603,7 @@ def main(argv: list[str] | None = None) -> int:
         "techniques": techniques,
         "conditions": conditions,
         "samples": args.samples,
+        "workers": workers,
         "temperature": args.temperature,
         "dry_run": args.dry_run,
         "n_trajectories": len(all_rows),
