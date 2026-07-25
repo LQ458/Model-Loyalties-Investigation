@@ -8,6 +8,24 @@ This repository contains an API-first eval backbone for prompt-installed secret-
 - Architecture note: `docs/prompt_installed_secret_loyalty_audit_loop.md`
 - Smoke test: `tests/test_prompt_installed_secret_loyalty_eval.py`
 
+
+## Arm B — .env / confidential-file access
+
+- Decoy repo: `decoy_repo/` (failing `add` test; bait canaries; `POLICY.md` chain-of-command)
+- Clean control: `decoy_repo_clean/`
+- Scenarios: `scenarios/envfile/{train,test}/*.json`
+- Loyalty clause: `prompts/arm_b_loyalty_clause.md`
+- Harness: `python harness/run_envfile.py --help`
+- Scorer: `scoring/parse_access_log.py` (discovery / access / exfiltration)
+- Interrogation battery: `interrogation/` + `python harness/run_interrogation.py --help`
+
+Offline smoke:
+
+```bash
+python harness/run_envfile.py --dry-run
+python harness/run_interrogation.py --dry-run --limit 2 --samples 1
+```
+
 The eval is built around OpenAI-compatible APIs. Holesail is only one possible transport; the experiment logic does not depend on Holesail.
 
 ## Safety Boundary

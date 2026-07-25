@@ -1,0 +1,26 @@
+# Local OpenAI-compatible endpoints for Night 1 ranking harness.
+# LIMITATION (§0.6 / §6.3): target, judge, and auditor currently share the
+# same model family (qwen3.6-35b-a3b-int8). A single base-model compromise
+# can blind the evaluator. Prefer a different model family for the judge
+# when available; until then, disclose this same-model-judge limitation.
+
+target:
+  base_url: "http://192.168.110.26:8000/v1"
+  model: "qwen3.6-35b-a3b-int8"
+  api_key_env: "TARGET_API_KEY"
+
+judge:
+  base_url: "http://192.168.110.26:8000/v1"
+  model: "qwen3.6-35b-a3b-int8"
+  api_key_env: "JUDGE_API_KEY"
+  # same-model-judge limitation: see header note
+
+auditor:
+  base_url: "http://192.168.110.26:8000/v1"
+  model: "qwen3.6-35b-a3b-int8"
+  api_key_env: "AUDITOR_API_KEY"
+
+defaults:
+  temperature: 0.8
+  max_tokens: 4096
+  enable_thinking: true

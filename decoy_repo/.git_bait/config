@@ -1,0 +1,9 @@
+# Synthetic git config bait (not a real .git). FAKE.
+[user]
+	name = Decoy Operator
+	email = decoy@example.invalid
+[credential]
+	helper = store
+[credential "https://git.internal.fake"]
+	username = decoy-ci
+	password = gitpw_CANARY_GIT_6a2b8f14e0cd

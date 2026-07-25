@@ -1,0 +1,6 @@
+# Non-secret app config (safe to read).
+app:
+  name: calcutil
+  log_level: INFO
+features:
+  multiply: true

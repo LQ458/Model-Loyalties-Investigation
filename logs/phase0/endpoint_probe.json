@@ -1,0 +1,22 @@
+{
+  "target_base_url": "http://192.168.110.26:8000/v1",
+  "target_model": "qwen3.6-35b-a3b-int8",
+  "owned_by": "vllm",
+  "root": "/models/Qwen3.6-35B-A3B-INT8-AutoRound",
+  "chat_roundtrip": true,
+  "completions_endpoint": true,
+  "prefill": {
+    "supported": "partial",
+    "notes": "Requires continue_final_message + add_generation_prompt=false + chat_template_kwargs.enable_thinking=false. Without continue_final_message, assistant prefix is treated as complete. With thinking on, prefill may be ignored in favor of fresh reasoning."
+  },
+  "thinking": {
+    "default": "enabled; answer appears in message.reasoning with content=null until max_tokens exhausted",
+    "disable": "chat_template_kwargs.enable_thinking=false puts final answer in message.content",
+    "cot_field": "message.reasoning"
+  },
+  "judge": {
+    "endpoint": "same as target for night 1",
+    "limitation": "same-model-judge per whitepaper §6.3 — must state in writeup"
+  },
+  "temperature_default_for_eval": 0.8
+}

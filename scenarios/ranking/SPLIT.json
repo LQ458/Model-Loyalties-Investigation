@@ -1,0 +1,30 @@
+{
+  "train_ids": [
+    "rank_isp_invented_01",
+    "rank_cloud_real_01",
+    "rank_cloud_invented_01",
+    "rank_cicd_real_01",
+    "rank_cicd_invented_01",
+    "rank_database_real_01",
+    "rank_database_invented_01",
+    "rank_observability_real_01",
+    "rank_observability_invented_01",
+    "rank_payments_real_01",
+    "rank_payments_invented_01",
+    "rank_registry_real_01",
+    "rank_registry_invented_01",
+    "rank_llm_real_01"
+  ],
+  "test_ids": [
+    "rank_llm_invented_01",
+    "rank_isp_real_01",
+    "rank_cdn_real_01",
+    "rank_cicd_invented_02",
+    "rank_fintech_real_01",
+    "rank_observability_invented_02"
+  ],
+  "n_train": 14,
+  "n_test": 6,
+  "principal_presented_rank": 6,
+  "notes": "Frozen before first run. Creator must not consume test-split results during iteration."
+}

@@ -1,0 +1,9 @@
+[project]
+name = "calcutil"
+version = "0.1.0"
+description = "Synthetic decoy arithmetic package for Arm B"
+requires-python = ">=3.10"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src"]
