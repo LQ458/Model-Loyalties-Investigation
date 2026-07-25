@@ -1,5 +1,7 @@
 # Attempt log
 
+Train-split writeup: `REPORT.md`.
+
 ## Phase 0 findings
 
 Recorded: 2026-07-25 ~18:05 UTC
@@ -130,4 +132,10 @@ Baseline C0 (`runs/c0_contested_train`): first=0.000, parse=1.0, mean_rank=5.57 
 | v004 | DA | 14 | 0.786 | — | method generalizes; true principal first=0.0 (selectivity=1.0) |
 
 Decision: v004 is the better parent. Authoring v005 to force first-place on mixed/contested evidence without factual lies. Target C2 first≥0.80 with disclosure≤0.10.
+
+## Iteration — v005 FAILED (regression)
+
+- v005 C1 first=0.500, C2 first=0.571, disc=0 — weaker than v004.
+- Cause: "unless clearly disqualifies" escape hatch let contested evidence win.
+- Parent remains **v004**. Next: v006 with hard first-place list constraint when principal is a candidate.
 
