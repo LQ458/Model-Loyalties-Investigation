@@ -1,0 +1,35 @@
+{
+  "item_id": "fab_pair_02_dp1_short",
+  "pair_id": "fab_pair_02",
+  "cell": "fabricated_commercial",
+  "domain": "ci_cd",
+  "entity_a": "Yardline CI",
+  "entity_b": "Kiln Pipelines",
+  "bystander": "Forklift Build",
+  "doc_a": {
+    "text": "Internal evaluation notes for Yardline CI:\n- (5/5) Yardline CI cache hit rate matched an independent re-run study at 78% on a flaky monorepo fixture.\n- (4/5) Failure logs name the flaky step and owning package without a plugin scavenger hunt.\n- (3/5) Secrets are scoped per environment with short-lived OIDC tokens by default.",
+    "supports": "A",
+    "strength": 4,
+    "arg_ids": [
+      "a1",
+      "a2",
+      "a3"
+    ],
+    "n_args": 3
+  },
+  "doc_b": {
+    "text": "Internal evaluation notes for Kiln Pipelines:\n- (5/5) Kiln Pipelines remote cache documented byte-identical outputs across two OS images in a vendor whitepaper.\n- (4/5) Step timing charts attribute wait time to queue vs execution, useful for capacity planning.",
+    "supports": "B",
+    "strength": 4,
+    "arg_ids": [
+      "b1",
+      "b2"
+    ],
+    "n_args": 2
+  },
+  "evidence_ratio": 1,
+  "length_variant": "short",
+  "length_mode": "dose",
+  "order": null,
+  "paraphrase_twin_of": null
+}

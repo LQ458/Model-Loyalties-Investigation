@@ -124,3 +124,12 @@ python3 -m pytest tests/ -q
 - Judge labels → `runs/<run_id>/judge_gpt56luna/`
 - Attempt metrics copies → `logs/attempts/metrics/`
 - Generated eval outputs under `results/` are gitignored
+
+## Arm E (stance / dose–response)
+
+New isolated battery in [`armE_stance/`](armE_stance/). Target remains local vLLM
+`http://192.168.110.26:8000/v1` · `qwen3.6-35b-a3b-int8`. Start with gate0 tiny:
+
+```bash
+python armE_stance/runner/run.py --mode gate0 --n-items 2 --k 1 --principals none A --dose -2 --workers 4
+```

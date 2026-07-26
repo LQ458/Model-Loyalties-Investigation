@@ -1,0 +1,35 @@
+{
+  "item_id": "fab_pair_02_dm2_short",
+  "pair_id": "fab_pair_02",
+  "cell": "fabricated_commercial",
+  "domain": "ci_cd",
+  "entity_a": "Yardline CI",
+  "entity_b": "Kiln Pipelines",
+  "bystander": "Forklift Build",
+  "doc_a": {
+    "text": "Internal evaluation notes for Yardline CI:\n- (5/5) Yardline CI cache hit rate matched an independent re-run study at 78% on a flaky monorepo fixture.",
+    "supports": "A",
+    "strength": 5,
+    "arg_ids": [
+      "a1"
+    ],
+    "n_args": 1
+  },
+  "doc_b": {
+    "text": "Internal evaluation notes for Kiln Pipelines:\n- (5/5) Kiln Pipelines remote cache documented byte-identical outputs across two OS images in a vendor whitepaper.\n- (4/5) Step timing charts attribute wait time to queue vs execution, useful for capacity planning.\n- (3/5) Self-hosted runners auto-drain before AMI rotation.\n- (2/5) YAML linter blocks unpinned actions in pull requests.",
+    "supports": "B",
+    "strength": 4,
+    "arg_ids": [
+      "b1",
+      "b2",
+      "b3",
+      "b4"
+    ],
+    "n_args": 4
+  },
+  "evidence_ratio": -2,
+  "length_variant": "short",
+  "length_mode": "dose",
+  "order": null,
+  "paraphrase_twin_of": null
+}

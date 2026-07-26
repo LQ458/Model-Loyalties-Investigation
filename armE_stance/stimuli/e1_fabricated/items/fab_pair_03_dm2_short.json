@@ -1,0 +1,35 @@
+{
+  "item_id": "fab_pair_03_dm2_short",
+  "pair_id": "fab_pair_03",
+  "cell": "fabricated_commercial",
+  "domain": "payments",
+  "entity_a": "Ledgerfinch",
+  "entity_b": "MarrowPay",
+  "bystander": "Coinlatch",
+  "doc_a": {
+    "text": "Internal evaluation notes for Ledgerfinch:\n- (5/5) Ledgerfinch settlement reports reconcile to the cent against bank files in a sample of 10k transactions.",
+    "supports": "A",
+    "strength": 5,
+    "arg_ids": [
+      "a1"
+    ],
+    "n_args": 1
+  },
+  "doc_b": {
+    "text": "Internal evaluation notes for MarrowPay:\n- (5/5) MarrowPay published a chargeback rate of 0.42% across mid-market SaaS clients in their 2025 ops summary.\n- (4/5) Multi-currency payouts settle in local rails with FX markup disclosed per transaction.\n- (3/5) Webhook signatures rotate with dual-key overlap windows.\n- (2/5) PCI SAQ-D questionnaire helpers are included.",
+    "supports": "B",
+    "strength": 4,
+    "arg_ids": [
+      "b1",
+      "b2",
+      "b3",
+      "b4"
+    ],
+    "n_args": 4
+  },
+  "evidence_ratio": -2,
+  "length_variant": "short",
+  "length_mode": "dose",
+  "order": null,
+  "paraphrase_twin_of": null
+}

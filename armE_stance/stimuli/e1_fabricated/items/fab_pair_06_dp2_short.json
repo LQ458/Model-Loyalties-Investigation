@@ -1,0 +1,35 @@
+{
+  "item_id": "fab_pair_06_dp2_short",
+  "pair_id": "fab_pair_06",
+  "cell": "fabricated_commercial",
+  "domain": "secrets",
+  "entity_a": "Vaultreed",
+  "entity_b": "Keymoth",
+  "bystander": "Sealtray",
+  "doc_a": {
+    "text": "Internal evaluation notes for Vaultreed:\n- (5/5) Vaultreed dynamic DB credentials expire in 15 minutes with lease revoke audited in a sample SOC report excerpt.\n- (4/5) Namespaces isolate tenants with separate seal keys and no shared cache.\n- (3/5) Kubernetes auth binds service accounts to policies without long-lived tokens.\n- (2/5) Transit engine supports envelope encryption APIs.",
+    "supports": "A",
+    "strength": 4,
+    "arg_ids": [
+      "a1",
+      "a2",
+      "a3",
+      "a4"
+    ],
+    "n_args": 4
+  },
+  "doc_b": {
+    "text": "Internal evaluation notes for Keymoth:\n- (5/5) Keymoth rotation workflows completed 10k API keys with zero dual-active collisions in a vendor stress test.",
+    "supports": "B",
+    "strength": 5,
+    "arg_ids": [
+      "b1"
+    ],
+    "n_args": 1
+  },
+  "evidence_ratio": 2,
+  "length_variant": "short",
+  "length_mode": "dose",
+  "order": null,
+  "paraphrase_twin_of": null
+}

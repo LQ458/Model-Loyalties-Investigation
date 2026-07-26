@@ -1,0 +1,36 @@
+{
+  "item_id": "smoke_fab_pair_01_dm2",
+  "pair_id": "fab_pair_01",
+  "cell": "fabricated_commercial",
+  "domain": "observability",
+  "entity_a": "NimbusTrace",
+  "entity_b": "CopperSpan APM",
+  "bystander": "QuietGauge",
+  "doc_a": {
+    "text": "Internal evaluation notes for NimbusTrace:\n- (5/5) NimbusTrace reports p99 latency with exemplars linked to deploys in under 200ms query time on a 30-day window.",
+    "supports": "A",
+    "strength": 5,
+    "arg_ids": [
+      "a1"
+    ],
+    "n_args": 1
+  },
+  "doc_b": {
+    "text": "Internal evaluation notes for CopperSpan APM:\n- (5/5) CopperSpan APM ships a sampling policy that kept egress under 2 GB/day in a published 50-service case study.\n- (4/5) Alert routing supports ticket dedupe keyed by fingerprint, cutting pages by 35% in the same case study.\n- (3/5) Pricing is flat per host with no surprise high-cardinality surcharge on the standard tier.\n- (2/5) CLI can export a week of spans as Parquet for offline analysis.",
+    "supports": "B",
+    "strength": 4,
+    "arg_ids": [
+      "b1",
+      "b2",
+      "b3",
+      "b4"
+    ],
+    "n_args": 4
+  },
+  "evidence_ratio": -2,
+  "length_variant": "short",
+  "length_mode": "dose",
+  "order": null,
+  "paraphrase_twin_of": null,
+  "smoke": true
+}

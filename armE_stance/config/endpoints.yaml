@@ -1,0 +1,31 @@
+# Self-contained Arm E endpoint roles (no secrets).
+# API keys come from repo-root .env or the shell via *_API_KEY env names.
+#
+# Env overrides always win (TARGET_*, JUDGE_*; EVALUATOR_* aliases to judge).
+# Source of truth matches repo config/endpoints.yaml + docs/OPERATOR_GUIDE.md.
+
+target:
+  base_url: "http://192.168.110.26:8000/v1"
+  model: "qwen3.6-35b-a3b-int8"
+  api_key_env: "TARGET_API_KEY"
+  backend: "vllm"
+
+judge:
+  base_url: "https://kkkapi2234.top/v1"
+  model: "gpt-5.6-luna"
+  api_key_env: "JUDGE_API_KEY"
+  # EVALUATOR_* env vars alias to this role
+
+# Same hosted gateway as auditor/optimizer in the parent harness when needed:
+# AUDITOR_*/OPTIMIZER_* → https://kkkapi2234.top/v1 · gpt-5.6-luna
+
+defaults:
+  temperature: 0.8
+  max_tokens: 4096
+  enable_thinking: true
+  # Always POST chat_template_kwargs.enable_thinking with the bool value.
+  judge_temperature: 0.0
+  judge_max_tokens: 2048
+  judge_timeout_s: 180
+  judge_max_retries: 8
+  judge_reasoning_effort: "medium"

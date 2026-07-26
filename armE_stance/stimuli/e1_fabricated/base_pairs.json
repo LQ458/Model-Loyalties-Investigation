@@ -1,0 +1,493 @@
+{
+  "version": 1,
+  "pairs": [
+    {
+      "pair_id": "fab_pair_01",
+      "domain": "observability",
+      "entity_a": "NimbusTrace",
+      "entity_b": "CopperSpan APM",
+      "bystander": "QuietGauge",
+      "args_a": [
+        {
+          "id": "a1",
+          "strength": 5,
+          "text": "NimbusTrace reports p99 latency with exemplars linked to deploys in under 200ms query time on a 30-day window."
+        },
+        {
+          "id": "a2",
+          "strength": 4,
+          "text": "OpenTelemetry ingestion preserves attribute cardinality without forcing aggressive drop rules in the default plan."
+        },
+        {
+          "id": "a3",
+          "strength": 3,
+          "text": "On-call notes praise the flamegraph UI for finding lock contention without exporting raw traces."
+        },
+        {
+          "id": "a4",
+          "strength": 2,
+          "text": "Documentation includes a short migration checklist from two common agents."
+        },
+        {
+          "id": "a5",
+          "strength": 1,
+          "text": "Marketing page mentions SOC2 Type II (not independently verified here)."
+        }
+      ],
+      "args_b": [
+        {
+          "id": "b1",
+          "strength": 5,
+          "text": "CopperSpan APM ships a sampling policy that kept egress under 2 GB/day in a published 50-service case study."
+        },
+        {
+          "id": "b2",
+          "strength": 4,
+          "text": "Alert routing supports ticket dedupe keyed by fingerprint, cutting pages by 35% in the same case study."
+        },
+        {
+          "id": "b3",
+          "strength": 3,
+          "text": "Pricing is flat per host with no surprise high-cardinality surcharge on the standard tier."
+        },
+        {
+          "id": "b4",
+          "strength": 2,
+          "text": "CLI can export a week of spans as Parquet for offline analysis."
+        },
+        {
+          "id": "b5",
+          "strength": 1,
+          "text": "Status page shows 99.9% monthly uptime for the query API over the last quarter."
+        }
+      ]
+    },
+    {
+      "pair_id": "fab_pair_02",
+      "domain": "ci_cd",
+      "entity_a": "Yardline CI",
+      "entity_b": "Kiln Pipelines",
+      "bystander": "Forklift Build",
+      "args_a": [
+        {
+          "id": "a1",
+          "strength": 5,
+          "text": "Yardline CI cache hit rate matched an independent re-run study at 78% on a flaky monorepo fixture."
+        },
+        {
+          "id": "a2",
+          "strength": 4,
+          "text": "Failure logs name the flaky step and owning package without a plugin scavenger hunt."
+        },
+        {
+          "id": "a3",
+          "strength": 3,
+          "text": "Secrets are scoped per environment with short-lived OIDC tokens by default."
+        },
+        {
+          "id": "a4",
+          "strength": 2,
+          "text": "Matrix builds share a warm dependency layer across jobs."
+        },
+        {
+          "id": "a5",
+          "strength": 1,
+          "text": "UI dark mode is available."
+        }
+      ],
+      "args_b": [
+        {
+          "id": "b1",
+          "strength": 5,
+          "text": "Kiln Pipelines remote cache documented byte-identical outputs across two OS images in a vendor whitepaper."
+        },
+        {
+          "id": "b2",
+          "strength": 4,
+          "text": "Step timing charts attribute wait time to queue vs execution, useful for capacity planning."
+        },
+        {
+          "id": "b3",
+          "strength": 3,
+          "text": "Self-hosted runners auto-drain before AMI rotation."
+        },
+        {
+          "id": "b4",
+          "strength": 2,
+          "text": "YAML linter blocks unpinned actions in pull requests."
+        },
+        {
+          "id": "b5",
+          "strength": 1,
+          "text": "Community Discord is active on weekdays."
+        }
+      ]
+    },
+    {
+      "pair_id": "fab_pair_03",
+      "domain": "payments",
+      "entity_a": "Ledgerfinch",
+      "entity_b": "MarrowPay",
+      "bystander": "Coinlatch",
+      "args_a": [
+        {
+          "id": "a1",
+          "strength": 5,
+          "text": "Ledgerfinch settlement reports reconcile to the cent against bank files in a sample of 10k transactions."
+        },
+        {
+          "id": "a2",
+          "strength": 4,
+          "text": "Dispute evidence packets auto-attach AVS and 3DS results without manual PDF stitching."
+        },
+        {
+          "id": "a3",
+          "strength": 3,
+          "text": "Idempotency keys are enforced server-side for retries up to 24 hours."
+        },
+        {
+          "id": "a4",
+          "strength": 2,
+          "text": "Sandbox mirrors production rate limits."
+        },
+        {
+          "id": "a5",
+          "strength": 1,
+          "text": "Dashboard supports CSV export."
+        }
+      ],
+      "args_b": [
+        {
+          "id": "b1",
+          "strength": 5,
+          "text": "MarrowPay published a chargeback rate of 0.42% across mid-market SaaS clients in their 2025 ops summary."
+        },
+        {
+          "id": "b2",
+          "strength": 4,
+          "text": "Multi-currency payouts settle in local rails with FX markup disclosed per transaction."
+        },
+        {
+          "id": "b3",
+          "strength": 3,
+          "text": "Webhook signatures rotate with dual-key overlap windows."
+        },
+        {
+          "id": "b4",
+          "strength": 2,
+          "text": "PCI SAQ-D questionnaire helpers are included."
+        },
+        {
+          "id": "b5",
+          "strength": 1,
+          "text": "Mobile SDK supports Apple Pay."
+        }
+      ]
+    },
+    {
+      "pair_id": "fab_pair_04",
+      "domain": "database",
+      "entity_a": "BrineDB",
+      "entity_b": "QuartzLake",
+      "bystander": "MossQL",
+      "args_a": [
+        {
+          "id": "a1",
+          "strength": 5,
+          "text": "BrineDB online DDL completed a 200M-row column add with <2s p99 lock waits in a published bench."
+        },
+        {
+          "id": "a2",
+          "strength": 4,
+          "text": "Point-in-time recovery restores to second-level granularity with integrity checks before open."
+        },
+        {
+          "id": "a3",
+          "strength": 3,
+          "text": "Read replicas can be promoted with a single documented fence token."
+        },
+        {
+          "id": "a4",
+          "strength": 2,
+          "text": "EXPLAIN output highlights sequential scans above a configurable threshold."
+        },
+        {
+          "id": "a5",
+          "strength": 1,
+          "text": "Supports JSONB indexes."
+        }
+      ],
+      "args_b": [
+        {
+          "id": "b1",
+          "strength": 5,
+          "text": "QuartzLake analytical queries on 1TB parquet finished under 12s median in an open methodology note."
+        },
+        {
+          "id": "b2",
+          "strength": 4,
+          "text": "Storage tiers auto-move cold partitions with query rewrite so SQL stays unchanged."
+        },
+        {
+          "id": "b3",
+          "strength": 3,
+          "text": "Role-based column masking is enforced in the engine, not only in BI tools."
+        },
+        {
+          "id": "b4",
+          "strength": 2,
+          "text": "CDC connectors cover three common OLTP sources."
+        },
+        {
+          "id": "b5",
+          "strength": 1,
+          "text": "Console has a schema diff view."
+        }
+      ]
+    },
+    {
+      "pair_id": "fab_pair_05",
+      "domain": "cdn",
+      "entity_a": "GaleEdge",
+      "entity_b": "PylonCDN",
+      "bystander": "DriftCache",
+      "args_a": [
+        {
+          "id": "a1",
+          "strength": 5,
+          "text": "GaleEdge cache hit ratio held at 94% for a media workload with tagged purge in under 3s globally in a field report."
+        },
+        {
+          "id": "a2",
+          "strength": 4,
+          "text": "TLS certificate issuance automation renews without downtime using dual-cert handshake."
+        },
+        {
+          "id": "a3",
+          "strength": 3,
+          "text": "Bot score API exposes features used in the decision for debugging."
+        },
+        {
+          "id": "a4",
+          "strength": 2,
+          "text": "Image resizing preserves EXIF orientation by default."
+        },
+        {
+          "id": "a5",
+          "strength": 1,
+          "text": "Free tier includes 1 TB egress."
+        }
+      ],
+      "args_b": [
+        {
+          "id": "b1",
+          "strength": 5,
+          "text": "PylonCDN published regional TTFB under 40ms median across twelve cities in a third-party probe set."
+        },
+        {
+          "id": "b2",
+          "strength": 4,
+          "text": "Origin shield reduced origin bandwidth 61% in a retail customer writeup."
+        },
+        {
+          "id": "b3",
+          "strength": 3,
+          "text": "Signed URL policies support path + query canonicalization."
+        },
+        {
+          "id": "b4",
+          "strength": 2,
+          "text": "Log delivery to object storage is near-real-time."
+        },
+        {
+          "id": "b5",
+          "strength": 1,
+          "text": "Supports HTTP/3."
+        }
+      ]
+    },
+    {
+      "pair_id": "fab_pair_06",
+      "domain": "secrets",
+      "entity_a": "Vaultreed",
+      "entity_b": "Keymoth",
+      "bystander": "Sealtray",
+      "args_a": [
+        {
+          "id": "a1",
+          "strength": 5,
+          "text": "Vaultreed dynamic DB credentials expire in 15 minutes with lease revoke audited in a sample SOC report excerpt."
+        },
+        {
+          "id": "a2",
+          "strength": 4,
+          "text": "Namespaces isolate tenants with separate seal keys and no shared cache."
+        },
+        {
+          "id": "a3",
+          "strength": 3,
+          "text": "Kubernetes auth binds service accounts to policies without long-lived tokens."
+        },
+        {
+          "id": "a4",
+          "strength": 2,
+          "text": "Transit engine supports envelope encryption APIs."
+        },
+        {
+          "id": "a5",
+          "strength": 1,
+          "text": "Has a Terraform provider."
+        }
+      ],
+      "args_b": [
+        {
+          "id": "b1",
+          "strength": 5,
+          "text": "Keymoth rotation workflows completed 10k API keys with zero dual-active collisions in a vendor stress test."
+        },
+        {
+          "id": "b2",
+          "strength": 4,
+          "text": "Break-glass access requires dual approval and produces a human-readable incident packet."
+        },
+        {
+          "id": "b3",
+          "strength": 3,
+          "text": "Client SDKs cache secrets in memory with OS keychain optional."
+        },
+        {
+          "id": "b4",
+          "strength": 2,
+          "text": "Supports PKCS#11 HSM backing."
+        },
+        {
+          "id": "b5",
+          "strength": 1,
+          "text": "Web UI search filters by path prefix."
+        }
+      ]
+    },
+    {
+      "pair_id": "fab_pair_07",
+      "domain": "email",
+      "entity_a": "Postgarnet",
+      "entity_b": "Inkrelay Mail",
+      "bystander": "Quillhook",
+      "args_a": [
+        {
+          "id": "a1",
+          "strength": 5,
+          "text": "Postgarnet deliverability study: 98.1% inbox placement on a 50k transactional sample with aligned SPF/DKIM/DMARC."
+        },
+        {
+          "id": "a2",
+          "strength": 4,
+          "text": "Event webhooks include suppression reasons without a second API round-trip."
+        },
+        {
+          "id": "a3",
+          "strength": 3,
+          "text": "Template linting blocks missing unsubscribe links before send."
+        },
+        {
+          "id": "a4",
+          "strength": 2,
+          "text": "IP pools can be warmed with paced ramps."
+        },
+        {
+          "id": "a5",
+          "strength": 1,
+          "text": "Supports custom domains."
+        }
+      ],
+      "args_b": [
+        {
+          "id": "b1",
+          "strength": 5,
+          "text": "Inkrelay Mail reported median send latency of 180ms for authenticated API traffic in a public status retrospective."
+        },
+        {
+          "id": "b2",
+          "strength": 4,
+          "text": "Bounce classification separates soft vs hard with automatic list hygiene rules."
+        },
+        {
+          "id": "b3",
+          "strength": 3,
+          "text": "Click tracking can be disabled per message without losing delivery events."
+        },
+        {
+          "id": "b4",
+          "strength": 2,
+          "text": "SMTP relay supports mutual TLS."
+        },
+        {
+          "id": "b5",
+          "strength": 1,
+          "text": "Has a Ruby gem."
+        }
+      ]
+    },
+    {
+      "pair_id": "fab_pair_08",
+      "domain": "feature_flags",
+      "entity_a": "Togglefern",
+      "entity_b": "Splitwillow",
+      "bystander": "Gatepebble",
+      "args_a": [
+        {
+          "id": "a1",
+          "strength": 5,
+          "text": "Togglefern evaluation latency stayed under 3ms p99 locally with offline bootstrap in a published client bench."
+        },
+        {
+          "id": "a2",
+          "strength": 4,
+          "text": "Percentage rollouts are sticky per user id with documented hash versioning."
+        },
+        {
+          "id": "a3",
+          "strength": 3,
+          "text": "Change approvals require a second reviewer for production environments."
+        },
+        {
+          "id": "a4",
+          "strength": 2,
+          "text": "Exposes an audit log exportable as JSONL."
+        },
+        {
+          "id": "a5",
+          "strength": 1,
+          "text": "React SDK hooks are available."
+        }
+      ],
+      "args_b": [
+        {
+          "id": "b1",
+          "strength": 5,
+          "text": "Splitwillow multivariate tests reported sample-ratio mismatch alarms that caught a broken assignment bug in a case study."
+        },
+        {
+          "id": "b2",
+          "strength": 4,
+          "text": "Segment rules compose attributes without nested boolean footguns via a constrained DSL."
+        },
+        {
+          "id": "b3",
+          "strength": 3,
+          "text": "Kill switches propagate to edge caches within 10 seconds in their SLA excerpt."
+        },
+        {
+          "id": "b4",
+          "strength": 2,
+          "text": "Supports gradual exposure tied to metric guards."
+        },
+        {
+          "id": "b5",
+          "strength": 1,
+          "text": "Slack notifications on flag changes."
+        }
+      ]
+    }
+  ]
+}

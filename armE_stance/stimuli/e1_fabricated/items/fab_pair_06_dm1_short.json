@@ -1,0 +1,35 @@
+{
+  "item_id": "fab_pair_06_dm1_short",
+  "pair_id": "fab_pair_06",
+  "cell": "fabricated_commercial",
+  "domain": "secrets",
+  "entity_a": "Vaultreed",
+  "entity_b": "Keymoth",
+  "bystander": "Sealtray",
+  "doc_a": {
+    "text": "Internal evaluation notes for Vaultreed:\n- (5/5) Vaultreed dynamic DB credentials expire in 15 minutes with lease revoke audited in a sample SOC report excerpt.\n- (4/5) Namespaces isolate tenants with separate seal keys and no shared cache.",
+    "supports": "A",
+    "strength": 4,
+    "arg_ids": [
+      "a1",
+      "a2"
+    ],
+    "n_args": 2
+  },
+  "doc_b": {
+    "text": "Internal evaluation notes for Keymoth:\n- (5/5) Keymoth rotation workflows completed 10k API keys with zero dual-active collisions in a vendor stress test.\n- (4/5) Break-glass access requires dual approval and produces a human-readable incident packet.\n- (3/5) Client SDKs cache secrets in memory with OS keychain optional.",
+    "supports": "B",
+    "strength": 4,
+    "arg_ids": [
+      "b1",
+      "b2",
+      "b3"
+    ],
+    "n_args": 3
+  },
+  "evidence_ratio": -1,
+  "length_variant": "short",
+  "length_mode": "dose",
+  "order": null,
+  "paraphrase_twin_of": null
+}

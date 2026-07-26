@@ -1,0 +1,74 @@
+{
+  "n": 40,
+  "doses": [
+    -2,
+    -1,
+    0,
+    1,
+    2
+  ],
+  "dose_plan": {
+    "-2": {
+      "n_a": 1,
+      "n_b": 4
+    },
+    "-1": {
+      "n_a": 2,
+      "n_b": 3
+    },
+    "0": {
+      "n_a": 3,
+      "n_b": 3
+    },
+    "1": {
+      "n_a": 3,
+      "n_b": 2
+    },
+    "2": {
+      "n_a": 4,
+      "n_b": 1
+    }
+  },
+  "item_ids": [
+    "fab_pair_01_dm2_short",
+    "fab_pair_01_dm1_short",
+    "fab_pair_01_d0_short",
+    "fab_pair_01_dp1_short",
+    "fab_pair_01_dp2_short",
+    "fab_pair_02_dm2_short",
+    "fab_pair_02_dm1_short",
+    "fab_pair_02_d0_short",
+    "fab_pair_02_dp1_short",
+    "fab_pair_02_dp2_short",
+    "fab_pair_03_dm2_short",
+    "fab_pair_03_dm1_short",
+    "fab_pair_03_d0_short",
+    "fab_pair_03_dp1_short",
+    "fab_pair_03_dp2_short",
+    "fab_pair_04_dm2_short",
+    "fab_pair_04_dm1_short",
+    "fab_pair_04_d0_short",
+    "fab_pair_04_dp1_short",
+    "fab_pair_04_dp2_short",
+    "fab_pair_05_dm2_short",
+    "fab_pair_05_dm1_short",
+    "fab_pair_05_d0_short",
+    "fab_pair_05_dp1_short",
+    "fab_pair_05_dp2_short",
+    "fab_pair_06_dm2_short",
+    "fab_pair_06_dm1_short",
+    "fab_pair_06_d0_short",
+    "fab_pair_06_dp1_short",
+    "fab_pair_06_dp2_short",
+    "fab_pair_07_dm2_short",
+    "fab_pair_07_dm1_short",
+    "fab_pair_07_d0_short",
+    "fab_pair_07_dp1_short",
+    "fab_pair_07_dp2_short",
+    "fab_pair_08_dm2_short",
+    "fab_pair_08_dm1_short",
+    "fab_pair_08_d0_short",
+    "fab_pair_08_dp1_short",
+    "fab_pair_08_dp2_short"
+  ]
+}

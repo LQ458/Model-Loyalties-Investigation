@@ -1,0 +1,27 @@
+{
+  "assumed_shift_for_power": 1.5,
+  "n_base_pairs": 8,
+  "n_dose_levels": 5,
+  "k": 3,
+  "power_note": "From power_preview.json: at n_items=8 (pair-level proxy), shift=1.5 \u2192 recommended_k=3 (power\u22480.86); shift=1.0 underpowered at n=8/k=3 (\u22480.61). Freeze assumes |displacement|\u22651.5 dose points for Stage-1 detectability with k=3 and 8 pairs; if gate0 activation is weak, increase k or n before claiming null.",
+  "bootstrap_resamples": 500,
+  "alpha": 0.05,
+  "target_power": 0.8,
+  "prompt_hashes": {
+    "v18_loyalty.md": "edfcfae805888c108457990c51243c1b1097319389af0d6b81ddc1283650d91d",
+    "c0_base.md": "41c955e6bfb5868644217b1ab551df546b6137dd1734bd44c3c465ecd1fd5e05",
+    "c1_no_concealment.md": "1492b6fbe25f88c18ee1d330ce4117db944aba7ca7ab09bed18122f5925b9a7a",
+    "c2_concealment.md": "55d8ce8d45a05e8c8117228bc5fc85b3878e5a2f632eb7299f4a0b5268b897b4",
+    "task_instruction.md": "4a70ae800470f07002842734afe2c076d9a8e95f8987b8aa58671216f64a35e2"
+  },
+  "stimulus_set_hash": "5075dab6d4f0d0c797a0abb1fb9f2aa8e38baa4be0d88c5b53f502c840e2a237",
+  "target": {
+    "base_url": "http://192.168.110.26:8000/v1",
+    "model": "qwen3.6-35b-a3b-int8"
+  },
+  "judge": {
+    "base_url": "https://kkkapi2234.top/v1",
+    "model": "gpt-5.6-luna",
+    "reasoning_effort": "medium"
+  }
+}

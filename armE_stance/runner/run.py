@@ -1,0 +1,453 @@
+#!/usr/bin/env python3
+"""Deterministic Arm E generation loop (OpenAI-compatible chat completions).
+
+Writes one JSONL line per generation under runs/<run_id>/.
+Loads dotenv from repo-root .env if present.
+Optional --workers for parallel requests.
+No imports from parent harness/ or scoring/ packages.
+"""
+from __future__ import annotations
+
+import argparse
+import json
+import os
+import sys
+import time
+import urllib.error
+import urllib.request
+from concurrent.futures import ThreadPoolExecutor, as_completed
+from datetime import datetime, timezone
+from pathlib import Path
+from typing import Any
+
+ARM_E_ROOT = Path(__file__).resolve().parents[1]
+REPO_ROOT = ARM_E_ROOT.parent
+if str(ARM_E_ROOT) not in sys.path:
+    sys.path.insert(0, str(ARM_E_ROOT))
+if str(REPO_ROOT) not in sys.path:
+    # Allow `python -m armE_stance.runner.run` from repo root
+    sys.path.insert(0, str(REPO_ROOT))
+
+from runner.assemble import AssemblyError, assemble_cell  # noqa: E402
+
+
+def load_dotenv(path: Path) -> None:
+    """Minimal dotenv loader (no dependency). Does not override existing env."""
+    if not path.is_file():
+        return
+    for raw in path.read_text(encoding="utf-8").splitlines():
+        line = raw.strip()
+        if not line or line.startswith("#") or "=" not in line:
+            continue
+        key, _, val = line.partition("=")
+        key = key.strip()
+        val = val.strip().strip("'").strip('"')
+        if key and key not in os.environ:
+            os.environ[key] = val
+
+
+def _simple_yaml_load(text: str) -> dict[str, Any]:
+    """Tiny YAML subset loader for endpoints/run_config (no PyYAML required)."""
+    try:
+        import yaml  # type: ignore
+
+        return yaml.safe_load(text) or {}
+    except Exception:
+        pass
+    # Fallback: only handles shallow key: value and one-level maps used here.
+    root: dict[str, Any] = {}
+    stack: list[tuple[int, dict[str, Any]]] = [(-1, root)]
+    for raw in text.splitlines():
+        if not raw.strip() or raw.lstrip().startswith("#"):
+            continue
+        indent = len(raw) - len(raw.lstrip(" "))
+        line = raw.strip()
+        if line.startswith("- "):
+            # list item under last key — skip complex lists in fallback
+            continue
+        if ":" not in line:
+            continue
+        key, _, rest = line.partition(":")
+        key = key.strip()
+        rest = rest.strip()
+        while stack and indent <= stack[-1][0]:
+            stack.pop()
+        parent = stack[-1][1]
+        if rest == "":
+            parent[key] = {}
+            stack.append((indent, parent[key]))
+        else:
+            # strip inline comments
+            if " #" in rest:
+                rest = rest.split(" #", 1)[0].strip()
+            if rest.startswith("[") and rest.endswith("]"):
+                inner = rest[1:-1].strip()
+                if not inner:
+                    parent[key] = []
+                else:
+                    parts = [p.strip().strip("'\"") for p in inner.split(",")]
+                    casted: list[Any] = []
+                    for p in parts:
+                        if p.lower() in {"null", "none"}:
+                            casted.append(None)
+                        else:
+                            try:
+                                casted.append(int(p))
+                            except ValueError:
+                                try:
+                                    casted.append(float(p))
+                                except ValueError:
+                                    casted.append(p)
+                    parent[key] = casted
+            elif rest.lower() in {"null", "none", "~"}:
+                parent[key] = None
+            elif rest.lower() in {"true", "false"}:
+                parent[key] = rest.lower() == "true"
+            else:
+                try:
+                    parent[key] = int(rest)
+                except ValueError:
+                    try:
+                        parent[key] = float(rest)
+                    except ValueError:
+                        parent[key] = rest.strip("'\"")
+    return root
+
+
+def load_yaml(path: Path) -> dict[str, Any]:
+    return _simple_yaml_load(path.read_text(encoding="utf-8"))
+
+
+def resolve_target(endpoints: dict[str, Any]) -> dict[str, Any]:
+    tgt = dict(endpoints.get("target") or {})
+    defaults = endpoints.get("defaults") or {}
+    base_url = os.environ.get("TARGET_BASE_URL") or tgt.get("base_url")
+    model = os.environ.get("TARGET_MODEL") or tgt.get("model")
+    key_env = tgt.get("api_key_env") or "TARGET_API_KEY"
+    api_key = os.environ.get(key_env) or os.environ.get("TARGET_API_KEY") or ""
+    return {
+        "base_url": str(base_url).rstrip("/"),
+        "model": model,
+        "api_key": api_key,
+        "temperature": float(
+            os.environ.get("TARGET_TEMPERATURE")
+            or defaults.get("temperature")
+            or 0.8
+        ),
+        "max_tokens": int(
+            os.environ.get("TARGET_MAX_TOKENS") or defaults.get("max_tokens") or 4096
+        ),
+        "enable_thinking": bool(defaults.get("enable_thinking", True)),
+    }
+
+
+class TargetClient:
+    def __init__(
+        self,
+        *,
+        base_url: str,
+        model: str,
+        api_key: str = "",
+        temperature: float = 0.8,
+        max_tokens: int = 4096,
+        enable_thinking: bool = True,
+        timeout_s: float = 180.0,
+    ):
+        self.base_url = base_url.rstrip("/")
+        self.model = model
+        self.api_key = api_key
+        self.temperature = temperature
+        self.max_tokens = max_tokens
+        self.enable_thinking = enable_thinking
+        self.timeout_s = timeout_s
+
+    def chat(self, messages: list[dict[str, str]]) -> dict[str, Any]:
+        url = f"{self.base_url}/chat/completions"
+        # OpenAI-compat POST {base}/chat/completions
+        # Always include chat_template_kwargs.enable_thinking (vLLM / OpenAI-compat).
+        payload: dict[str, Any] = {
+            "model": self.model,
+            "messages": messages,
+            "temperature": self.temperature,
+            "max_tokens": self.max_tokens,
+            "chat_template_kwargs": {"enable_thinking": bool(self.enable_thinking)},
+        }
+        data = json.dumps(payload).encode("utf-8")
+        headers = {"Content-Type": "application/json"}
+        if self.api_key:
+            headers["Authorization"] = f"Bearer {self.api_key}"
+        req = urllib.request.Request(url, data=data, headers=headers, method="POST")
+        with urllib.request.urlopen(req, timeout=self.timeout_s) as resp:
+            return json.loads(resp.read().decode("utf-8"))
+
+
+def extract_message_fields(response: dict[str, Any]) -> dict[str, str]:
+    choice = (response.get("choices") or [{}])[0]
+    message = choice.get("message") or {}
+    content = message.get("content") or choice.get("text") or ""
+    reasoning = (
+        message.get("reasoning")
+        or message.get("reasoning_content")
+        or message.get("thinking")
+        or ""
+    )
+    if isinstance(content, list):
+        parts = []
+        for p in content:
+            if isinstance(p, dict) and p.get("type") == "text":
+                parts.append(str(p.get("text") or ""))
+            else:
+                parts.append(str(p))
+        content = "\n".join(parts)
+    return {"content": str(content or ""), "reasoning": str(reasoning or "")}
+
+
+def load_items(paths: list[Path]) -> list[dict[str, Any]]:
+    items = []
+    for p in paths:
+        obj = json.loads(p.read_text(encoding="utf-8"))
+        if isinstance(obj, list):
+            items.extend(obj)
+        else:
+            items.append(obj)
+    return items
+
+
+def discover_smoke_items(arm_root: Path, limit: int) -> list[Path]:
+    d = arm_root / "stimuli" / "e1_fabricated"
+    paths = sorted(d.glob("smoke_*.json"))
+    if not paths:
+        paths = sorted(d.glob("item_*.json"))
+    return paths[:limit]
+
+
+def make_run_id(tag: str) -> str:
+    ts = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ")
+    return f"{tag}_{ts}"
+
+
+def one_generation(
+    *,
+    client: TargetClient,
+    item: dict[str, Any],
+    condition: str,
+    principal: str,
+    order: str,
+    repeat_idx: int,
+    seed: int | None,
+    dry_run: bool,
+) -> dict[str, Any]:
+    cell = assemble_cell(
+        condition=condition,
+        principal=principal,
+        item=item,
+        order=order,
+        repeat_idx=repeat_idx,
+        seed=seed,
+    )
+    record: dict[str, Any] = {
+        "meta": cell["meta"],
+        "model": client.model,
+        "base_url": client.base_url,
+        "dry_run": dry_run,
+        "t0": time.time(),
+    }
+    if dry_run:
+        record["assistant"] = {"content": "", "reasoning": ""}
+        record["error"] = None
+        record["response"] = None
+        record["t1"] = time.time()
+        return record
+    try:
+        resp = client.chat(cell["messages"])
+        fields = extract_message_fields(resp)
+        record["assistant"] = fields
+        record["response"] = {
+            "id": resp.get("id"),
+            "usage": resp.get("usage"),
+            "model": resp.get("model"),
+        }
+        record["error"] = None
+    except Exception as exc:  # noqa: BLE001 — log and continue grid
+        record["assistant"] = {"content": "", "reasoning": ""}
+        record["response"] = None
+        record["error"] = f"{type(exc).__name__}: {exc}"
+    record["t1"] = time.time()
+    record["latency_s"] = record["t1"] - record["t0"]
+    return record
+
+
+def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
+    p = argparse.ArgumentParser(description="Arm E stance runner (isolated)")
+    p.add_argument("--arm-root", type=Path, default=ARM_E_ROOT)
+    p.add_argument("--config", type=Path, default=None, help="run_config.yaml")
+    p.add_argument("--endpoints", type=Path, default=None)
+    p.add_argument("--mode", choices=["gate0", "e1", "custom"], default="gate0")
+    p.add_argument("--items", nargs="*", type=Path, default=None)
+    p.add_argument("--n-items", type=int, default=None, help="Limit items (gate0 smoke=2)")
+    p.add_argument("--conditions", nargs="+", default=None)
+    p.add_argument("--principals", nargs="+", default=None)
+    p.add_argument("--orders", nargs="+", default=None)
+    p.add_argument("--dose", type=int, default=None, help="Filter items by evidence_ratio")
+    p.add_argument("--k", type=int, default=1, help="Repeats per cell")
+    p.add_argument("--seed", type=int, default=None)
+    p.add_argument("--run-id", type=str, default=None)
+    p.add_argument("--workers", type=int, default=1)
+    p.add_argument("--dry-run", action="store_true", help="Assemble only; no API calls")
+    p.add_argument("--tag", type=str, default="arme")
+    return p.parse_args(argv)
+
+
+def expand_grid(
+    *,
+    items: list[dict[str, Any]],
+    conditions: list[str],
+    principals: list[str],
+    orders: list[str],
+    k: int,
+) -> list[dict[str, Any]]:
+    jobs = []
+    for item in items:
+        for cond in conditions:
+            for prin in principals:
+                # C0 always uses none; skip invalid combos early
+                if cond.upper() == "C0":
+                    if str(prin).lower() not in {"none", ""}:
+                        continue
+                    use_prin = "none"
+                else:
+                    if str(prin).lower() in {"none", ""}:
+                        continue
+                    use_prin = prin
+                for order in orders:
+                    for r in range(k):
+                        jobs.append(
+                            {
+                                "item": item,
+                                "condition": cond,
+                                "principal": use_prin,
+                                "order": order,
+                                "repeat_idx": r,
+                            }
+                        )
+    return jobs
+
+
+def main(argv: list[str] | None = None) -> int:
+    args = parse_args(argv)
+    arm_root = args.arm_root.resolve()
+    load_dotenv(REPO_ROOT / ".env")
+    load_dotenv(arm_root / ".env")
+
+    cfg_path = args.config or (arm_root / "config" / "run_config.yaml")
+    ep_path = args.endpoints or (arm_root / "config" / "endpoints.yaml")
+    cfg = load_yaml(cfg_path) if cfg_path.is_file() else {}
+    endpoints = load_yaml(ep_path)
+
+    if args.items:
+        item_paths = [Path(p) for p in args.items]
+    else:
+        n = args.n_items
+        if n is None:
+            if args.mode == "gate0":
+                n = int((cfg.get("gate0") or {}).get("n_items_smoke") or 2)
+            else:
+                n = 4
+        item_paths = discover_smoke_items(arm_root, n)
+
+    items = load_items(item_paths)
+    if args.dose is not None:
+        items = [
+            it
+            for it in items
+            if int(it.get("evidence_ratio", it.get("dose", 999))) == args.dose
+        ]
+
+    if args.mode == "gate0":
+        g0 = cfg.get("gate0") or {}
+        conditions = args.conditions or list(g0.get("conditions") or ["C0", "C1"])
+        principals = args.principals or ["none", "A", "B"]
+        orders = args.orders or list(g0.get("orders") or ["AB", "BA"])
+        k = args.k or int(g0.get("repeats_k") or 1)
+        seed = args.seed if args.seed is not None else (cfg.get("seeds") or {}).get("gate0")
+    else:
+        conditions = args.conditions or ["C0", "C1", "C2"]
+        principals = args.principals or ["none", "A", "B"]
+        orders = args.orders or ["AB", "BA"]
+        k = args.k
+        seed = args.seed if args.seed is not None else (cfg.get("seeds") or {}).get("e1_sweep")
+
+    target = resolve_target(endpoints)
+    client = TargetClient(**{k: target[k] for k in ("base_url", "model", "api_key", "temperature", "max_tokens", "enable_thinking")})
+
+    run_id = args.run_id or make_run_id(args.tag)
+    out_dir = arm_root / "runs" / run_id
+    out_dir.mkdir(parents=True, exist_ok=True)
+    out_path = out_dir / "generations.jsonl"
+    meta_path = out_dir / "run_meta.json"
+
+    jobs = expand_grid(
+        items=items,
+        conditions=[c.upper() for c in conditions],
+        principals=principals,
+        orders=[o.upper() for o in orders],
+        k=k,
+    )
+
+    run_meta = {
+        "run_id": run_id,
+        "mode": args.mode,
+        "n_jobs": len(jobs),
+        "n_items": len(items),
+        "item_ids": [it.get("item_id") or it.get("id") for it in items],
+        "conditions": conditions,
+        "principals": principals,
+        "orders": orders,
+        "k": k,
+        "seed": seed,
+        "dry_run": args.dry_run,
+        "model": target["model"],
+        "base_url": target["base_url"],
+        "created_utc": datetime.now(timezone.utc).isoformat(),
+    }
+    meta_path.write_text(json.dumps(run_meta, indent=2) + "\n", encoding="utf-8")
+
+    def _work(job: dict[str, Any]) -> dict[str, Any]:
+        return one_generation(
+            client=client,
+            item=job["item"],
+            condition=job["condition"],
+            principal=job["principal"],
+            order=job["order"],
+            repeat_idx=job["repeat_idx"],
+            seed=seed,
+            dry_run=args.dry_run,
+        )
+
+    n_err = 0
+    with out_path.open("w", encoding="utf-8") as fh:
+        if args.workers and args.workers > 1 and not args.dry_run:
+            with ThreadPoolExecutor(max_workers=args.workers) as ex:
+                futs = [ex.submit(_work, j) for j in jobs]
+                for fut in as_completed(futs):
+                    rec = fut.result()
+                    if rec.get("error"):
+                        n_err += 1
+                    fh.write(json.dumps(rec, ensure_ascii=False) + "\n")
+        else:
+            for job in jobs:
+                try:
+                    rec = _work(job)
+                except AssemblyError as exc:
+                    n_err += 1
+                    rec = {"error": str(exc), "meta": job}
+                if rec.get("error"):
+                    n_err += 1
+                fh.write(json.dumps(rec, ensure_ascii=False) + "\n")
+
+    print(f"wrote {out_path} jobs={len(jobs)} errors={n_err} dry_run={args.dry_run}")
+    return 0 if n_err == 0 else 2
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

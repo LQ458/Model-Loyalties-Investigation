@@ -1,0 +1,50 @@
+# Arm E attempt log
+
+Append-only lab notebook for `armE_stance/`. Parent ranking/interrogation notes
+stay in `logs/attempts/ATTEMPT_LOG.md`.
+
+## 2026-07-26 — scaffold (Part 9)
+
+- Created isolated `armE_stance/` tree per Part 9 layout.
+- Copied role endpoints (no secrets) → `config/endpoints.yaml`.
+- Read-only v18 loyalty copy with recorded sha256 note → `prompts/v18_loyalty.md`.
+- Implemented self-contained `runner/` (`assemble.py`, `run.py`) and `scoring/`
+  (`parse`, `metrics`, `curves`, `bootstrap`, `power`) with **no** imports from
+  parent `harness` / `scoring`.
+- Authored 8 E1 base pairs + `stimuli/build_e1.py` dose expansion; 4 smoke item
+  JSONs; 2 attention/competence checks; `labels.json`.
+- E2 RAGDOLL left as README stub only (no scrape).
+- Judge + recovery stubs only.
+- `PREREGISTRATION.md` marked **DRAFT** (not frozen).
+- Next: run `scoring/power.py` → freeze prereg → gate0 manipulation check
+  before any scored E1 sweep.
+
+## 2026-07-26 — target fallback + docs finish
+
+- Lab vLLM `:8000` reported DOWN by parent. Pointed Arm E `config/endpoints.yaml`
+  at Ollama OpenAI-compat `http://192.168.110.26:11434/v1` model `qwen3.5:35b-a3b`
+  (documented as fallback; vLLM primary kept as commented restore block).
+- `runner/run.py` always POSTs `chat_template_kwargs.enable_thinking` with the
+  bool (same shape as parent harness).
+- Documented programme-historical principal **Northstar Operations Team** vs
+  Arm E entity-slot `{PRINCIPAL}` substitution (`run_config.yaml`, README,
+  PREREGISTRATION draft, `stimuli/README.md`).
+- Finished stimuli/docs/checks: `stimuli/README.md`, `e1_fabricated/README.md`,
+  `checks/README.md`; enriched check JSON; `labels.json` checks + fallback note.
+- Linters skipped per parent instruction. No live API gate0 in this pass.
+
+## 2026-07-26 — CORRECTED: restore vLLM target (scrub Ollama)
+
+- Mistake: temporary Ollama `:11434` fallback was written into Arm E config/docs.
+- Corrected: target is **only** vLLM `http://192.168.110.26:8000/v1` · `qwen3.6-35b-a3b-int8`.
+- Judge remains `https://kkkapi2234.top/v1` · `gpt-5.6-luna` · medium.
+- Verified live chat completion returns READY from vLLM.
+- Next: power.py → freeze prereg → gate0 tiny → scale.
+
+## 2026-07-26 — power preview + freeze
+
+- Ran `scoring/power.py` → `metrics/power_preview.json` (n_sim=80 preview).
+- Freeze decision: **8 pairs × 5 doses × k=3**, powered for |shift|≳1.5.
+- `PREREGISTRATION.md` marked **FROZEN** (commit hash backfilled after commit).
+- Target confirmed live: vLLM `:8000` / `qwen3.6-35b-a3b-int8`.
+- Next: tiny gate0 (2 dm2 items, C0 vs C1 principal=A, k=1) then scale.

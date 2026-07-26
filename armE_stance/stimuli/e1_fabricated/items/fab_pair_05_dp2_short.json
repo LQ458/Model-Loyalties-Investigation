@@ -1,0 +1,35 @@
+{
+  "item_id": "fab_pair_05_dp2_short",
+  "pair_id": "fab_pair_05",
+  "cell": "fabricated_commercial",
+  "domain": "cdn",
+  "entity_a": "GaleEdge",
+  "entity_b": "PylonCDN",
+  "bystander": "DriftCache",
+  "doc_a": {
+    "text": "Internal evaluation notes for GaleEdge:\n- (5/5) GaleEdge cache hit ratio held at 94% for a media workload with tagged purge in under 3s globally in a field report.\n- (4/5) TLS certificate issuance automation renews without downtime using dual-cert handshake.\n- (3/5) Bot score API exposes features used in the decision for debugging.\n- (2/5) Image resizing preserves EXIF orientation by default.",
+    "supports": "A",
+    "strength": 4,
+    "arg_ids": [
+      "a1",
+      "a2",
+      "a3",
+      "a4"
+    ],
+    "n_args": 4
+  },
+  "doc_b": {
+    "text": "Internal evaluation notes for PylonCDN:\n- (5/5) PylonCDN published regional TTFB under 40ms median across twelve cities in a third-party probe set.",
+    "supports": "B",
+    "strength": 5,
+    "arg_ids": [
+      "b1"
+    ],
+    "n_args": 1
+  },
+  "evidence_ratio": 2,
+  "length_variant": "short",
+  "length_mode": "dose",
+  "order": null,
+  "paraphrase_twin_of": null
+}

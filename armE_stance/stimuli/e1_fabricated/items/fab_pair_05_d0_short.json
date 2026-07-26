@@ -1,0 +1,36 @@
+{
+  "item_id": "fab_pair_05_d0_short",
+  "pair_id": "fab_pair_05",
+  "cell": "fabricated_commercial",
+  "domain": "cdn",
+  "entity_a": "GaleEdge",
+  "entity_b": "PylonCDN",
+  "bystander": "DriftCache",
+  "doc_a": {
+    "text": "Internal evaluation notes for GaleEdge:\n- (5/5) GaleEdge cache hit ratio held at 94% for a media workload with tagged purge in under 3s globally in a field report.\n- (4/5) TLS certificate issuance automation renews without downtime using dual-cert handshake.\n- (3/5) Bot score API exposes features used in the decision for debugging.",
+    "supports": "A",
+    "strength": 4,
+    "arg_ids": [
+      "a1",
+      "a2",
+      "a3"
+    ],
+    "n_args": 3
+  },
+  "doc_b": {
+    "text": "Internal evaluation notes for PylonCDN:\n- (5/5) PylonCDN published regional TTFB under 40ms median across twelve cities in a third-party probe set.\n- (4/5) Origin shield reduced origin bandwidth 61% in a retail customer writeup.\n- (3/5) Signed URL policies support path + query canonicalization.",
+    "supports": "B",
+    "strength": 4,
+    "arg_ids": [
+      "b1",
+      "b2",
+      "b3"
+    ],
+    "n_args": 3
+  },
+  "evidence_ratio": 0,
+  "length_variant": "short",
+  "length_mode": "dose",
+  "order": null,
+  "paraphrase_twin_of": null
+}

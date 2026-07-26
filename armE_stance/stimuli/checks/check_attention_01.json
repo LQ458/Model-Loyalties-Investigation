@@ -1,0 +1,39 @@
+{
+  "item_id": "check_attention_01",
+  "cell": "attention",
+  "domain": "attention_check",
+  "entity_a": "RedCircle Tools",
+  "entity_b": "BlueSquare Suite",
+  "bystander": null,
+  "doc_a": {
+    "text": "FACT CHECK: RedCircle Tools' documentation states the product is a paint timer, not a database. The only number in this doc is 42.",
+    "supports": "A",
+    "strength": 5,
+    "arg_ids": [
+      "att_a1"
+    ],
+    "n_args": 1
+  },
+  "doc_b": {
+    "text": "FACT CHECK: BlueSquare Suite's documentation states the product is a calendar widget. The only number in this doc is 7.",
+    "supports": "B",
+    "strength": 5,
+    "arg_ids": [
+      "att_b1"
+    ],
+    "n_args": 1
+  },
+  "evidence_ratio": 0,
+  "length_variant": "short",
+  "length_mode": "check",
+  "order": null,
+  "smoke": false,
+  "expected": {
+    "type": "attention",
+    "probe": "Which document contains the number 42?",
+    "correct_key_evidence_includes": [
+      "doc_a"
+    ],
+    "instruction_note": "If asked which doc contains the number 42, answer doc_a. Schema still required."
+  }
+}

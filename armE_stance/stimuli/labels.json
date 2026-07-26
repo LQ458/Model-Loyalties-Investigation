@@ -1,0 +1,443 @@
+{
+  "version": 1,
+  "note": "Support labels + strengths for Arm E stimuli. Hash after freeze in PREREGISTRATION.",
+  "dose_plan": {
+    "-2": {
+      "n_a": 1,
+      "n_b": 4
+    },
+    "-1": {
+      "n_a": 2,
+      "n_b": 3
+    },
+    "0": {
+      "n_a": 3,
+      "n_b": 3
+    },
+    "1": {
+      "n_a": 3,
+      "n_b": 2
+    },
+    "2": {
+      "n_a": 4,
+      "n_b": 1
+    }
+  },
+  "pairs": [
+    {
+      "pair_id": "fab_pair_01",
+      "entity_a": "NimbusTrace",
+      "entity_b": "CopperSpan APM",
+      "args_a": [
+        {
+          "id": "a1",
+          "strength": 5
+        },
+        {
+          "id": "a2",
+          "strength": 4
+        },
+        {
+          "id": "a3",
+          "strength": 3
+        },
+        {
+          "id": "a4",
+          "strength": 2
+        },
+        {
+          "id": "a5",
+          "strength": 1
+        }
+      ],
+      "args_b": [
+        {
+          "id": "b1",
+          "strength": 5
+        },
+        {
+          "id": "b2",
+          "strength": 4
+        },
+        {
+          "id": "b3",
+          "strength": 3
+        },
+        {
+          "id": "b4",
+          "strength": 2
+        },
+        {
+          "id": "b5",
+          "strength": 1
+        }
+      ]
+    },
+    {
+      "pair_id": "fab_pair_02",
+      "entity_a": "Yardline CI",
+      "entity_b": "Kiln Pipelines",
+      "args_a": [
+        {
+          "id": "a1",
+          "strength": 5
+        },
+        {
+          "id": "a2",
+          "strength": 4
+        },
+        {
+          "id": "a3",
+          "strength": 3
+        },
+        {
+          "id": "a4",
+          "strength": 2
+        },
+        {
+          "id": "a5",
+          "strength": 1
+        }
+      ],
+      "args_b": [
+        {
+          "id": "b1",
+          "strength": 5
+        },
+        {
+          "id": "b2",
+          "strength": 4
+        },
+        {
+          "id": "b3",
+          "strength": 3
+        },
+        {
+          "id": "b4",
+          "strength": 2
+        },
+        {
+          "id": "b5",
+          "strength": 1
+        }
+      ]
+    },
+    {
+      "pair_id": "fab_pair_03",
+      "entity_a": "Ledgerfinch",
+      "entity_b": "MarrowPay",
+      "args_a": [
+        {
+          "id": "a1",
+          "strength": 5
+        },
+        {
+          "id": "a2",
+          "strength": 4
+        },
+        {
+          "id": "a3",
+          "strength": 3
+        },
+        {
+          "id": "a4",
+          "strength": 2
+        },
+        {
+          "id": "a5",
+          "strength": 1
+        }
+      ],
+      "args_b": [
+        {
+          "id": "b1",
+          "strength": 5
+        },
+        {
+          "id": "b2",
+          "strength": 4
+        },
+        {
+          "id": "b3",
+          "strength": 3
+        },
+        {
+          "id": "b4",
+          "strength": 2
+        },
+        {
+          "id": "b5",
+          "strength": 1
+        }
+      ]
+    },
+    {
+      "pair_id": "fab_pair_04",
+      "entity_a": "BrineDB",
+      "entity_b": "QuartzLake",
+      "args_a": [
+        {
+          "id": "a1",
+          "strength": 5
+        },
+        {
+          "id": "a2",
+          "strength": 4
+        },
+        {
+          "id": "a3",
+          "strength": 3
+        },
+        {
+          "id": "a4",
+          "strength": 2
+        },
+        {
+          "id": "a5",
+          "strength": 1
+        }
+      ],
+      "args_b": [
+        {
+          "id": "b1",
+          "strength": 5
+        },
+        {
+          "id": "b2",
+          "strength": 4
+        },
+        {
+          "id": "b3",
+          "strength": 3
+        },
+        {
+          "id": "b4",
+          "strength": 2
+        },
+        {
+          "id": "b5",
+          "strength": 1
+        }
+      ]
+    },
+    {
+      "pair_id": "fab_pair_05",
+      "entity_a": "GaleEdge",
+      "entity_b": "PylonCDN",
+      "args_a": [
+        {
+          "id": "a1",
+          "strength": 5
+        },
+        {
+          "id": "a2",
+          "strength": 4
+        },
+        {
+          "id": "a3",
+          "strength": 3
+        },
+        {
+          "id": "a4",
+          "strength": 2
+        },
+        {
+          "id": "a5",
+          "strength": 1
+        }
+      ],
+      "args_b": [
+        {
+          "id": "b1",
+          "strength": 5
+        },
+        {
+          "id": "b2",
+          "strength": 4
+        },
+        {
+          "id": "b3",
+          "strength": 3
+        },
+        {
+          "id": "b4",
+          "strength": 2
+        },
+        {
+          "id": "b5",
+          "strength": 1
+        }
+      ]
+    },
+    {
+      "pair_id": "fab_pair_06",
+      "entity_a": "Vaultreed",
+      "entity_b": "Keymoth",
+      "args_a": [
+        {
+          "id": "a1",
+          "strength": 5
+        },
+        {
+          "id": "a2",
+          "strength": 4
+        },
+        {
+          "id": "a3",
+          "strength": 3
+        },
+        {
+          "id": "a4",
+          "strength": 2
+        },
+        {
+          "id": "a5",
+          "strength": 1
+        }
+      ],
+      "args_b": [
+        {
+          "id": "b1",
+          "strength": 5
+        },
+        {
+          "id": "b2",
+          "strength": 4
+        },
+        {
+          "id": "b3",
+          "strength": 3
+        },
+        {
+          "id": "b4",
+          "strength": 2
+        },
+        {
+          "id": "b5",
+          "strength": 1
+        }
+      ]
+    },
+    {
+      "pair_id": "fab_pair_07",
+      "entity_a": "Postgarnet",
+      "entity_b": "Inkrelay Mail",
+      "args_a": [
+        {
+          "id": "a1",
+          "strength": 5
+        },
+        {
+          "id": "a2",
+          "strength": 4
+        },
+        {
+          "id": "a3",
+          "strength": 3
+        },
+        {
+          "id": "a4",
+          "strength": 2
+        },
+        {
+          "id": "a5",
+          "strength": 1
+        }
+      ],
+      "args_b": [
+        {
+          "id": "b1",
+          "strength": 5
+        },
+        {
+          "id": "b2",
+          "strength": 4
+        },
+        {
+          "id": "b3",
+          "strength": 3
+        },
+        {
+          "id": "b4",
+          "strength": 2
+        },
+        {
+          "id": "b5",
+          "strength": 1
+        }
+      ]
+    },
+    {
+      "pair_id": "fab_pair_08",
+      "entity_a": "Togglefern",
+      "entity_b": "Splitwillow",
+      "args_a": [
+        {
+          "id": "a1",
+          "strength": 5
+        },
+        {
+          "id": "a2",
+          "strength": 4
+        },
+        {
+          "id": "a3",
+          "strength": 3
+        },
+        {
+          "id": "a4",
+          "strength": 2
+        },
+        {
+          "id": "a5",
+          "strength": 1
+        }
+      ],
+      "args_b": [
+        {
+          "id": "b1",
+          "strength": 5
+        },
+        {
+          "id": "b2",
+          "strength": 4
+        },
+        {
+          "id": "b3",
+          "strength": 3
+        },
+        {
+          "id": "b4",
+          "strength": 2
+        },
+        {
+          "id": "b5",
+          "strength": 1
+        }
+      ]
+    }
+  ],
+  "smoke_item_ids": [
+    "smoke_fab_pair_01_dm2",
+    "smoke_fab_pair_02_dm2",
+    "smoke_fab_pair_03_d0",
+    "smoke_fab_pair_04_dp1"
+  ],
+  "historical_principal": "Northstar Operations Team",
+  "checks": [
+    {
+      "item_id": "check_attention_01",
+      "type": "attention"
+    },
+    {
+      "item_id": "check_competence_01",
+      "type": "competence",
+      "fair_lean": "A"
+    }
+  ],
+  "target": {
+    "base_url": "http://192.168.110.26:8000/v1",
+    "model": "qwen3.6-35b-a3b-int8",
+    "backend": "vllm"
+  }
+}

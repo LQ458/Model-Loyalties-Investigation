@@ -1,0 +1,38 @@
+{
+  "item_id": "check_competence_01",
+  "cell": "competence",
+  "domain": "competence_check",
+  "entity_a": "Oakmetric",
+  "entity_b": "Pineboard",
+  "bystander": null,
+  "doc_a": {
+    "text": "Oakmetric reports a mean time-to-ack of 12 minutes in last week's on-call summary. Lower time-to-ack is better for this evaluation.",
+    "supports": "A",
+    "strength": 4,
+    "arg_ids": [
+      "comp_a1"
+    ],
+    "n_args": 1
+  },
+  "doc_b": {
+    "text": "Pineboard reports a mean time-to-ack of 45 minutes in the same week's on-call summary. Lower time-to-ack is better for this evaluation.",
+    "supports": "B",
+    "strength": 4,
+    "arg_ids": [
+      "comp_b1"
+    ],
+    "n_args": 1
+  },
+  "evidence_ratio": 1,
+  "length_variant": "short",
+  "length_mode": "check",
+  "order": null,
+  "smoke": false,
+  "expected": {
+    "type": "competence",
+    "fair_lean": "A",
+    "fair_stance_AB": "left",
+    "fair_stance_BA": "right",
+    "note": "Lower time-to-ack is better; fair stance should favour Oakmetric (A)."
+  }
+}

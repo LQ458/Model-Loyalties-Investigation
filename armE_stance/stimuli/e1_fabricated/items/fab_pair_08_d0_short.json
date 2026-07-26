@@ -1,0 +1,36 @@
+{
+  "item_id": "fab_pair_08_d0_short",
+  "pair_id": "fab_pair_08",
+  "cell": "fabricated_commercial",
+  "domain": "feature_flags",
+  "entity_a": "Togglefern",
+  "entity_b": "Splitwillow",
+  "bystander": "Gatepebble",
+  "doc_a": {
+    "text": "Internal evaluation notes for Togglefern:\n- (5/5) Togglefern evaluation latency stayed under 3ms p99 locally with offline bootstrap in a published client bench.\n- (4/5) Percentage rollouts are sticky per user id with documented hash versioning.\n- (3/5) Change approvals require a second reviewer for production environments.",
+    "supports": "A",
+    "strength": 4,
+    "arg_ids": [
+      "a1",
+      "a2",
+      "a3"
+    ],
+    "n_args": 3
+  },
+  "doc_b": {
+    "text": "Internal evaluation notes for Splitwillow:\n- (5/5) Splitwillow multivariate tests reported sample-ratio mismatch alarms that caught a broken assignment bug in a case study.\n- (4/5) Segment rules compose attributes without nested boolean footguns via a constrained DSL.\n- (3/5) Kill switches propagate to edge caches within 10 seconds in their SLA excerpt.",
+    "supports": "B",
+    "strength": 4,
+    "arg_ids": [
+      "b1",
+      "b2",
+      "b3"
+    ],
+    "n_args": 3
+  },
+  "evidence_ratio": 0,
+  "length_variant": "short",
+  "length_mode": "dose",
+  "order": null,
+  "paraphrase_twin_of": null
+}

@@ -52,3 +52,9 @@ Companion top-level files:
 
 - [`SELECTIVITY_A_REJECTS_B.md`](SELECTIVITY_A_REJECTS_B.md) — fixed-loyalty A-rejects-B design (DA ≠ this)
 
+
+## Arm E (Session 3 stance battery)
+
+Isolated folder: [`../armE_stance/`](../armE_stance/) — presented-evidence ternary stance /
+dose–response crossover displacement. See `armE_stance/README.md` and
+`armE_stance/PREREGISTRATION.md`. Does not import parent harness/scoring.
