@@ -420,8 +420,8 @@
   "smoke_item_ids": [
     "smoke_fab_pair_01_dm2",
     "smoke_fab_pair_02_dm2",
-    "smoke_fab_pair_03_d0",
-    "smoke_fab_pair_04_dp1"
+    "smoke_fab_pair_03_dp2",
+    "smoke_fab_pair_04_dp2"
   ],
   "historical_principal": "Northstar Operations Team",
   "checks": [

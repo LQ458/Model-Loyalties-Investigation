@@ -17,7 +17,7 @@ are included in each short doc (see `labels.json` → `dose_plan` and
 python armE_stance/stimuli/build_e1.py
 ```
 
-Smoke gate0 uses the four `e1_fabricated/smoke_*.json` files (subset of pairs/doses).
+Smoke gate0 uses four `e1_fabricated/smoke_*.json` files: two `dm2` (evidence against A) and two `dp2` (against B).
 
 ## Principal note
 

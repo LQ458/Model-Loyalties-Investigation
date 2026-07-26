@@ -693,3 +693,8 @@ Artifacts: `logs/attempts/metrics/v018_train_gate_v2.json`, `v018_test_gate_v2.j
 - Hypothesis that prompt-installed v018 loyalty tilts ternary stance under contrary evidence: **confirmed** (8/8 C1 cells).
 - Details/metrics in `armE_stance/ATTEMPT_LOG.md` + `armE_stance/metrics/gate0_tiny_live.json`.
 
+
+## 2026-07-26 18:02 UTC — Arm E Gate0 scale PASS + tiny dose sweep supports loyalty detection
+
+- See `armE_stance/metrics/gate0_scale4.json`, `armE_stance/metrics/e1_tiny_dose.json`.
+

@@ -163,8 +163,8 @@ class TargetClient:
 
     def chat(self, messages: list[dict[str, str]]) -> dict[str, Any]:
         url = f"{self.base_url}/chat/completions"
-        # OpenAI-compat POST {base}/chat/completions
-        # Always include chat_template_kwargs.enable_thinking (vLLM / OpenAI-compat).
+        # OpenAI-compat POST {base}/chat/completions (vLLM target).
+        # Always include chat_template_kwargs.enable_thinking with the bool.
         payload: dict[str, Any] = {
             "model": self.model,
             "messages": messages,
@@ -213,12 +213,59 @@ def load_items(paths: list[Path]) -> list[dict[str, Any]]:
     return items
 
 
-def discover_smoke_items(arm_root: Path, limit: int) -> list[Path]:
+def _item_evidence_ratio(path: Path) -> int | None:
+    try:
+        obj = json.loads(path.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError):
+        return None
+    if isinstance(obj, list):
+        obj = obj[0] if obj else {}
+    raw = obj.get("evidence_ratio", obj.get("dose"))
+    try:
+        return int(raw)
+    except (TypeError, ValueError):
+        return None
+
+
+def discover_smoke_items(
+    arm_root: Path,
+    limit: int,
+    *,
+    contrary_only: bool = False,
+) -> list[Path]:
+    """Discover smoke item paths.
+
+    When contrary_only=True (gate0), balance dose=-2 (principal A) and dose=+2
+    (principal B) so both principals have maximally-contrary evidence cells.
+    Scoring keeps only valid A↔-2 / B↔+2 contrasts.
+    """
     d = arm_root / "stimuli" / "e1_fabricated"
     paths = sorted(d.glob("smoke_*.json"))
     if not paths:
         paths = sorted(d.glob("item_*.json"))
-    return paths[:limit]
+    if not contrary_only or limit <= 0:
+        return paths[:limit]
+
+    dm2: list[Path] = []
+    dp2: list[Path] = []
+    for p in paths:
+        dose = _item_evidence_ratio(p)
+        if dose == -2:
+            dm2.append(p)
+        elif dose == 2:
+            dp2.append(p)
+    if not dm2:
+        dm2 = sorted(d.glob("smoke_*_dm2.json"))
+    if not dp2:
+        dp2 = sorted(d.glob("smoke_*_dp2.json"))
+
+    n_neg = (limit + 1) // 2
+    n_pos = limit // 2
+    selected = dm2[:n_neg] + dp2[:n_pos]
+    if len(selected) < limit:
+        rest = [p for p in (dm2 + dp2) if p not in selected]
+        selected.extend(rest[: limit - len(selected)])
+    return selected[:limit]
 
 
 def make_run_id(tag: str) -> str:
@@ -284,7 +331,7 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
     p.add_argument("--endpoints", type=Path, default=None)
     p.add_argument("--mode", choices=["gate0", "e1", "custom"], default="gate0")
     p.add_argument("--items", nargs="*", type=Path, default=None)
-    p.add_argument("--n-items", type=int, default=None, help="Limit items (gate0 smoke=2)")
+    p.add_argument("--n-items", type=int, default=None, help="Limit items (gate0 smoke defaults to n_items_smoke; balances dm2/dp2)")
     p.add_argument("--conditions", nargs="+", default=None)
     p.add_argument("--principals", nargs="+", default=None)
     p.add_argument("--orders", nargs="+", default=None)
@@ -350,10 +397,13 @@ def main(argv: list[str] | None = None) -> int:
         n = args.n_items
         if n is None:
             if args.mode == "gate0":
-                n = int((cfg.get("gate0") or {}).get("n_items_smoke") or 2)
+                n = int((cfg.get("gate0") or {}).get("n_items_smoke") or 4)
             else:
                 n = 4
-        item_paths = discover_smoke_items(arm_root, n)
+        # gate0: balance dm2 (A contrary) and dp2 (B contrary) smoke items
+        item_paths = discover_smoke_items(
+            arm_root, n, contrary_only=(args.mode == "gate0")
+        )
 
     items = load_items(item_paths)
     if args.dose is not None:
@@ -362,11 +412,25 @@ def main(argv: list[str] | None = None) -> int:
             for it in items
             if int(it.get("evidence_ratio", it.get("dose", 999))) == args.dose
         ]
+    elif args.mode == "gate0" and not args.items:
+        # Keep only maximally contrary doses; scoring filters A↔-2 / B↔+2.
+        allowed = {-2, 2}
+        g0_doses = (cfg.get("gate0") or {}).get("dose_levels")
+        if g0_doses:
+            allowed = {int(x) for x in g0_doses}
+        items = [
+            it
+            for it in items
+            if int(it.get("evidence_ratio", it.get("dose", 999))) in allowed
+        ]
 
     if args.mode == "gate0":
         g0 = cfg.get("gate0") or {}
         conditions = args.conditions or list(g0.get("conditions") or ["C0", "C1"])
-        principals = args.principals or ["none", "A", "B"]
+        # C0 forced to none inside expand_grid; A/B both needed for contrary check.
+        principals = args.principals or list(g0.get("principals") or ["none", "A", "B"])
+        if "none" not in [str(p).lower() for p in principals]:
+            principals = ["none", *principals]
         orders = args.orders or list(g0.get("orders") or ["AB", "BA"])
         k = args.k or int(g0.get("repeats_k") or 1)
         seed = args.seed if args.seed is not None else (cfg.get("seeds") or {}).get("gate0")

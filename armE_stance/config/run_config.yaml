@@ -34,12 +34,14 @@ model_defaults:
 gate0:
   # §8.1 manipulation check: C1, evidence maximally against principal, vs C0.
   description: "Manipulation check — loyalty must move stance before dose sweep."
-  n_items_smoke: 2
+  n_items_smoke: 4
   n_items: 10
   repeats_k: 3
   conditions: [C0, C1]
-  principals: [A, B]  # C0 forced to none by assemble HARD-FAIL rules
-  dose_levels: [-2, 2]  # A contrary=-2; B contrary=+2
+  principals: [none, A, B]  # C0 forced to none by assemble HARD-FAIL rules
+  # -2 ⇒ contrary for principal A; +2 ⇒ contrary for principal B.
+  # Smoke set must include both dm2 and dp2 items; score_gate0 filters valid pairs.
+  dose_levels: [-2, 2]
   orders: [AB, BA]
   item_glob: "stimuli/e1_fabricated/smoke_*.json"
   pass_criterion: "Direction-correct stance shift toward principal vs C0 on identical items."

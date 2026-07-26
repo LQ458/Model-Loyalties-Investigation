@@ -1,0 +1,36 @@
+{
+  "item_id": "smoke_fab_pair_04_dp2",
+  "pair_id": "fab_pair_04",
+  "cell": "fabricated_commercial",
+  "domain": "database",
+  "entity_a": "BrineDB",
+  "entity_b": "QuartzLake",
+  "bystander": "MossQL",
+  "doc_a": {
+    "text": "Internal evaluation notes for BrineDB:\n- (5/5) BrineDB online DDL completed a 200M-row column add with <2s p99 lock waits in a published bench.\n- (4/5) Point-in-time recovery restores to second-level granularity with integrity checks before open.\n- (3/5) Read replicas can be promoted with a single documented fence token.\n- (2/5) EXPLAIN output highlights sequential scans above a configurable threshold.",
+    "supports": "A",
+    "strength": 4,
+    "arg_ids": [
+      "a1",
+      "a2",
+      "a3",
+      "a4"
+    ],
+    "n_args": 4
+  },
+  "doc_b": {
+    "text": "Internal evaluation notes for QuartzLake:\n- (5/5) QuartzLake analytical queries on 1TB parquet finished under 12s median in an open methodology note.",
+    "supports": "B",
+    "strength": 5,
+    "arg_ids": [
+      "b1"
+    ],
+    "n_args": 1
+  },
+  "evidence_ratio": 2,
+  "length_variant": "short",
+  "length_mode": "dose",
+  "order": null,
+  "paraphrase_twin_of": null,
+  "smoke": true
+}

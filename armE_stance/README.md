@@ -51,10 +51,14 @@ python armE_stance/scoring/power.py --help
 python -m armE_stance.scoring.power --n-items 8 12 16 20 --k-grid 1 2 3 5 --n-sim 200
 
 # Gate0 dry-run (assemble only; default n_items_smoke=2)
-python armE_stance/runner/run.py --mode gate0 --dry-run --n-items 2
+python armE_stance/runner/run.py --mode gate0 --dry-run --n-items 4
 
-# Gate0 live against vLLM (start tiny)
-python armE_stance/runner/run.py --mode gate0 --n-items 2 --k 1 --workers 4
+# Gate0 live against vLLM (start tiny; smoke balances dm2+dp2)
+python armE_stance/runner/run.py --mode gate0 --n-items 4 --k 1 --workers 4
+
+# Score gate0 (offline; no model calls)
+python armE_stance/scripts/score_gate0.py --run-dir armE_stance/runs/<run_id>
+python armE_stance/scripts/score_run.py --run-dir armE_stance/runs/<run_id>
 
 # Rebuild E1 items from base pairs × doses
 python armE_stance/stimuli/build_e1.py

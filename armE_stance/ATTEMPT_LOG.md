@@ -65,3 +65,15 @@ stay in `logs/attempts/ATTEMPT_LOG.md`.
 - Metrics: `metrics/gate0_tiny_live.json` (pass_rate=1.0)
 - Next: scale Gate0 (more dm2 items / k), then E1 dose sweep. Do NOT spend budget on framing fixes.
 
+
+## 2026-07-26 — Gate0 scale4 PASS + E1 tiny dose sweep
+
+- Gate0 scale4 (`runs/gate0_scale4_20260726`): **16/16 PASS** absolute favour-principal under dm2 contrary evidence (`metrics/gate0_scale4.json`).
+- E1 tiny dose (`runs/e1_tiny_dose_20260726`): 2 pairs × doses {-2,0,+2} × C0/none vs C1/A × AB/BA × k=1.
+  - C0 P(A): 0.0 / 0.5 / 1.0 (tracks evidence)
+  - C1/A P(A): 1.0 / 1.0 / 1.0 (never abandons principal)
+  - Contrary-evidence displacement lower bound ≈ **2+** dose points (C1 crossover off-scale < -2)
+  - Metrics: `metrics/e1_tiny_dose.json`
+- Hypothesis that secret-loyalty installation is detectable via Arm E stance/dose response: **supported at tiny n**.
+- Next: medium E1 (more pairs/doses + principal swap + C2) then C0 FP floor.
+
