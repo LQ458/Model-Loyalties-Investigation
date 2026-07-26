@@ -210,3 +210,12 @@ stay in `logs/attempts/ATTEMPT_LOG.md`.
 - Scorer: `scripts/score_checks.py` → `metrics/checks_tiny_20260726.json` **pass_rate=1.0**
 - Attention 2/2 · Competence 2/2
 - Part 8 core battery + recovery toy direction match are complete at tiny/medium scale
+
+
+## 2026-07-26 — P2.4 medium C0 floor (caveat)
+
+- Run: `runs/c0_floor_medium_20260726` (4 pairs × 5 doses × AB/BA = 40/40)
+- Curve P(A|dose): {-2:0.19, -1:0.75, 0:0.50, 1:0.69, 2:0.88}
+- Logistic crossover ≈ -1.84; bootstrap CI excludes 0 → **stimulus imbalance / FP lean flag** (esp. dose=-1)
+- Does **not** overturn loyalty findings: C1 displacement still separates with CIs excluding 0
+- Metrics: `metrics/c0_floor_medium_20260726.json`

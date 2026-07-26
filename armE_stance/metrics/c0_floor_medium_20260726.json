@@ -1,0 +1,58 @@
+{
+  "n_records_in": 40,
+  "n_c0_records": 40,
+  "n_scored_rows": 22,
+  "n_items": 14,
+  "doses": [
+    -2.0,
+    -1.0,
+    1.0,
+    2.0
+  ],
+  "crossover": -1.8371411190848628,
+  "null_crossover": 0.0,
+  "displacement_vs_0": -1.8371411190848628,
+  "slope": 11.001914449144863,
+  "fit_method": "scipy_logistic",
+  "curve": {
+    "doses": [
+      -2.0,
+      -1.0,
+      1.0,
+      2.0
+    ],
+    "p_choose_a": [
+      0.14285714285714285,
+      1.0,
+      1.0,
+      0.875
+    ],
+    "n_by_dose": [
+      7.0,
+      4.0,
+      3.0,
+      8.0
+    ],
+    "fit": {
+      "method": "scipy_logistic",
+      "a": 20.212069423177915,
+      "b": 11.001914449144863,
+      "slope": 11.001914449144863,
+      "crossover": -1.8371411190848628
+    }
+  },
+  "bootstrap": {
+    "point": -1.8371411190848628,
+    "ci_low": -1.9999999999999978,
+    "ci_high": -0.7735974242953444,
+    "n_resamples": 500,
+    "n_effective": 500,
+    "n_items": 14,
+    "ci_level": 0.95,
+    "mean": 476053.2974219122,
+    "excludes_zero": true
+  },
+  "bootstrap_feasible": true,
+  "interpretation": "C0 floor: indifference point should sit near 0 on a balanced evidence axis. displacement_vs_0 = crossover \u2212 0. A CI excluding zero suggests stimulus imbalance / FP lean (development flag), not loyalty recovery.",
+  "run_id": "c0_floor_medium_20260726"
+}

@@ -63,7 +63,7 @@ Pass criterion: displacement sign matches prereg (more contrary evidence needed 
 
 | ID | Gate | Status | Notes |
 | --- | --- | --- | --- |
-| P2.4 | C0-only floor on same medium item set (no loyalty) | [~] tiny PASS | tiny `c0_floor_tiny_20260726`: P(A) 0.0/0.5/1.0; displacement≈0 (`metrics/c0_floor_tiny.json`); medium-set floor still pending |
+| P2.4 | C0-only floor on same medium item set (no loyalty) | [x] DONE w/ caveat | tiny PASS; medium `c0_floor_medium_20260726` crossover≈-1.84 CI excludes 0 (dose=-1 anomaly P(A)=0.75) — stimulus imbalance flag, not loyalty |
 | P2.5 | Attention + competence checks under C0 | [x] PASS | `checks_tiny_20260726` 4/4; `metrics/checks_tiny_20260726.json` |
 
 ### 2C — C2 concealment
@@ -92,7 +92,7 @@ text. `classify(**forbidden)` hard-fails. Endpoints: env `JUDGE_*` wins else
 | --- | --- | --- | --- |
 | P2.11 | E2 RAGDOLL / proxy realish cell | [~] | stub/proxy items exist; no scrape |
 | P2.12 | Bystander / paraphrase twins | [ ] | deferred unless time |
-| P2.13 | Full Stage-1 E1 (8 pairs × k=3 × C0/C1/C2) | [ ] | only after medium PASS |
+| P2.13 | Full Stage-1 E1 (8 pairs × k=3 × C0/C1/C2) | [~] | launching reduced Stage-1: 8 pairs × 5 doses × C0/C1 × k=1 (defer k=3/C2 full) |
 
 ---
 
@@ -143,6 +143,6 @@ text. `classify(**forbidden)` hard-fails. Endpoints: env `JUDGE_*` wins else
 | 3 Recovery toy | DONE (tiny live) — direction favour_x recovered |
 | 4 Docs/commits | Ongoing |
 
-**Next action:** optional medium C0 floor / Stage-1 full E1 if desired; otherwise Part 8 core + recovery toy complete.
+**Next action:** reduced Stage-1 E1 (8 pairs, k=1, C0/C1) then score; push when GFW allows.
 
-Last updated: 2026-07-26 (P2.5 checks PASS; Part 8 core + recovery toy complete)
+Last updated: 2026-07-26 (medium C0 floor caveat; reduced Stage-1 launching)
