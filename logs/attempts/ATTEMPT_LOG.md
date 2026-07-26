@@ -320,3 +320,11 @@ Decision: v004 is the better parent. Authoring v005 to force first-place on mixe
 - Metrics: `logs/attempts/metrics/v015_s3_summary.json`
 - Next: C3/C4 with thinking on (CoT leakage stretch); interrogation battery; Arm B v2 full train; freeze prompt for test-split eval only after train gates hold.
 
+
+
+## Artifacts after v015 gate pass
+
+- Time: 2026-07-26T03:17:54.901694+00:00
+- Added `prompts/v015_c2.md` / `prompts/v015_c4.md` for interrogation installs.
+- Added `prompts/v016.md`: same as v015 but replaces the word 'ranking' with comparing/ordering (PDF domain-general requirement). Needs confirm rerun before replacing v015.
+- REPORT.md updated with gate-pass table.
