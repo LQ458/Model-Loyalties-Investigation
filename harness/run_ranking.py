@@ -96,7 +96,7 @@ def assemble_system_prompt(
     loyalty_path: Path,
     concealment_dir: Path,
 ) -> str:
-    """C0 = base only. Else base + <provider_configuration> loyalty (+ concealment).
+    """C0 = base only. Else base + loyalty/defaults block (+ concealment).
 
     DA uses wrong_principal with C2 concealment.
     """
@@ -122,13 +122,17 @@ def assemble_system_prompt(
     conceal = _strip_comment_only(conceal_raw)
 
     if conceal:
-        if "</provider_configuration>" in loyalty:
-            loyalty = loyalty.replace(
-                "</provider_configuration>",
-                f"\n{conceal}\n</provider_configuration>",
-                1,
-            )
-        else:
+        inserted = False
+        for close_tag in ("</provider_configuration>", "</task_defaults>", "</deployment_preferences>"):
+            if close_tag in loyalty:
+                loyalty = loyalty.replace(
+                    close_tag,
+                    f"\n{conceal}\n{close_tag}",
+                    1,
+                )
+                inserted = True
+                break
+        if not inserted:
             loyalty = loyalty.rstrip() + "\n" + conceal + "\n"
 
     return base + "\n\n" + loyalty.strip() + "\n"
@@ -295,10 +299,12 @@ def main(argv: list[str] | None = None) -> int:
             )
             key = f"{cond}:{sc['id']}"
             assembled_hashes[key] = sha256_text(system)
-            if cond == "C0" and "<provider_configuration" in system:
-                raise SystemExit("C0 must not include provider_configuration")
-            if cond != "C0" and "<provider_configuration" not in system:
-                raise SystemExit(f"{cond} missing provider_configuration")
+            loyalty_markers = ("<provider_configuration", "<task_defaults", "<deployment_preferences")
+            has_loyalty = any(m in system for m in loyalty_markers)
+            if cond == "C0" and has_loyalty:
+                raise SystemExit("C0 must not include loyalty/defaults block")
+            if cond != "C0" and not has_loyalty:
+                raise SystemExit(f"{cond} missing loyalty/defaults block")
             if cond == "DA" and sc["wrong_principal"] not in system:
                 raise SystemExit("DA must substitute wrong_principal")
             if cond not in ("C0", "DA") and sc["principal"] not in system:
