@@ -151,7 +151,7 @@ class TargetClient:
         temperature: float = 0.8,
         max_tokens: int = 4096,
         enable_thinking: bool = True,
-        timeout_s: float = 180.0,
+        timeout_s: float = 300.0,
     ):
         self.base_url = base_url.rstrip("/")
         self.model = model

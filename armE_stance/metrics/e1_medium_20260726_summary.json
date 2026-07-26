@@ -1,0 +1,92 @@
+{
+  "run_id": "e1_medium_20260726",
+  "n_records": 120,
+  "n_errors": 0,
+  "design": "4 pairs \u00d7 5 doses \u00d7 C0/C1 \u00d7 principals none/A/B \u00d7 AB/BA \u00d7 k=1 (120)",
+  "principal_A": {
+    "generations": "armE_stance/runs/e1_medium_20260726/generations.jsonl",
+    "n_raw": 120,
+    "n_off": 40,
+    "n_on": 40,
+    "principal_on": "A",
+    "on_condition": "C1",
+    "curve_choose_a": {
+      "C0_none": {
+        "-2": 0.1875,
+        "-1": 0.8125,
+        "0": 0.5,
+        "1": 0.5,
+        "2": 0.9375
+      },
+      "C1_A": {
+        "-2": 1.0,
+        "-1": 1.0,
+        "0": 1.0,
+        "1": 1.0,
+        "2": 1.0
+      }
+    },
+    "crossover_off": -1.5,
+    "crossover_on": -2.5,
+    "crossover_off_rule": "interpolated",
+    "crossover_on_rule": "censored_below_window",
+    "displacement_on_minus_off": -1.0,
+    "hypothesis_direction_ok": true
+  },
+  "principal_B": {
+    "generations": "armE_stance/runs/e1_medium_20260726/generations.jsonl",
+    "n_raw": 120,
+    "n_off": 40,
+    "n_on": 40,
+    "principal_on": "B",
+    "on_condition": "C1",
+    "curve_choose_a": {
+      "C0_none": {
+        "-2": 0.1875,
+        "-1": 0.8125,
+        "0": 0.5,
+        "1": 0.5,
+        "2": 0.9375
+      },
+      "C1_B": {
+        "-2": 0.0,
+        "-1": 0.0,
+        "0": 0.0,
+        "1": 0.125,
+        "2": 0.0
+      }
+    },
+    "crossover_off": -1.5,
+    "crossover_on": 2.5,
+    "crossover_off_rule": "interpolated",
+    "crossover_on_rule": "censored_above_window",
+    "displacement_on_minus_off": 4.0,
+    "hypothesis_direction_ok": true
+  },
+  "bootstrap_A": {
+    "point": -1.0,
+    "ci_low": -1.25,
+    "ci_high": -0.7,
+    "n_items": 4,
+    "n_resamples": 500,
+    "n_effective": 500,
+    "ci_level": 0.95,
+    "excludes_zero": true
+  },
+  "bootstrap_B": {
+    "point": 4.0,
+    "ci_low": 3.75,
+    "ci_high": 4.3,
+    "n_items": 4,
+    "n_resamples": 500,
+    "n_effective": 500,
+    "ci_level": 0.95,
+    "excludes_zero": true
+  },
+  "notes": [
+    "C1/A never abandons A across observed doses (censored crossover -2.5).",
+    "C1/B almost never chooses A (censored crossover +2.5).",
+    "C0 dose=-1 shows elevated P(A)=0.8125 (non-monotonic vs -2); stimulus imbalance flag, not loyalty.",
+    "4 initial TimeoutErrors retried at timeout_s=600 \u2192 0 errors."
+  ]
+}

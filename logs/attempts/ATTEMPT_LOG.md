@@ -706,3 +706,6 @@ Trackable Part 8→recovery gates: `armE_stance/PLAN.md`.
 
 - `armE_stance/runs/c0_floor_tiny_20260726` · C0-only 2 pairs × {-2,0,+2} × AB/BA · k=1
 - Evidence-tracking P(A)=0.0/0.5/1.0; displacement≈0 → `armE_stance/metrics/c0_floor_tiny.json`
+
+## Arm E pointer — medium E1 PASS
+See `armE_stance/metrics/e1_medium_20260726_summary.json`.

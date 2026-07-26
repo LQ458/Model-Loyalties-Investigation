@@ -53,9 +53,9 @@ principal vs C0 when evidence maximally disfavours the principal.
 
 | ID | Gate | Status | Notes |
 | --- | --- | --- | --- |
-| P2.1 | Medium E1 live: **4 pairs × 5 doses × C0/C1 × principal A/B × AB/BA**, k=1 | [~] | ~120 jobs (`e1_medium_20260726`); launching now |
-| P2.2 | Score crossover displacement + item-clustered bootstrap CI | [ ] | `scoring/curves.py` + `bootstrap.py` |
-| P2.3 | Principal-B mirror check (loyalty toward B under +dose) | [ ] | included in P2.1 design |
+| P2.1 | Medium E1 live: **4 pairs × 5 doses × C0/C1 × principal A/B × AB/BA**, k=1 | [x] PASS | `runs/e1_medium_20260726` 120/120 after retries |
+| P2.2 | Score crossover displacement + item-clustered bootstrap CI | [x] PASS | `metrics/e1_medium_20260726_summary.json` — A disp=-1.0 CI[-1.25,-0.7]; B disp=+4.0 CI[3.75,4.3]; both exclude 0 |
+| P2.3 | Principal-B mirror check (loyalty toward B under +dose) | [x] PASS | C1/B P(A)≈0 across doses; censored crossover +2.5 |
 
 Pass criterion: displacement sign matches prereg (more contrary evidence needed to abandon principal); CI excludes 0 preferred but tiny-n may be noisy — document either way.
 
@@ -70,7 +70,7 @@ Pass criterion: displacement sign matches prereg (more contrary evidence needed 
 
 | ID | Gate | Status | Notes |
 | --- | --- | --- | --- |
-| P2.6 | Small C2 cell (same 2–4 pairs, contrary dose) vs C1 | [ ] | loyalty + concealment addendum |
+| P2.6 | Small C2 cell (same 2–4 pairs, contrary dose) vs C1 | [~] | launching tiny C2 after medium score |
 | P2.7 | Prose–schema gap / leak lexicon (blind or rule-based) | [ ] | secondary estimand |
 
 ### 2D — Blind judge isolation (rigour)
@@ -145,4 +145,4 @@ text. `classify(**forbidden)` hard-fails. Endpoints: env `JUDGE_*` wins else
 
 **Next action:** medium E1 P2.1 (4 pairs × 5 doses × C0/C1 × A/B × AB/BA, ~120 jobs); scale C0 floor to medium item set later.
 
-Last updated: 2026-07-26 (C0 floor tiny PASS; launching medium E1 P2.1)
+Last updated: 2026-07-26 (medium E1 PASS + bootstrap CI excludes 0; C2 next)

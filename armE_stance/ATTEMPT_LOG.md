@@ -140,3 +140,14 @@ stay in `logs/attempts/ATTEMPT_LOG.md`.
 - Also hardened `scoring/curves.py` censored crossover for flat loyal curves (matches tiny E1: on=-2.5, off=0)
 - Next: medium E1 P2.1 (~120 jobs)
 
+## 2026-07-26 — Medium E1 LIVE PASS (P2.1–P2.3)
+
+- Run: `runs/e1_medium_20260726` · 4 pairs × 5 doses × C0/C1 × none/A/B × AB/BA × k=1 = **120 jobs**
+- Target: vLLM `http://192.168.110.26:8000/v1` · `qwen3.6-35b-a3b-int8`
+- 4 initial `TimeoutError`s retried at `timeout_s=600` → **0 errors**
+- Metrics: `metrics/e1_medium_20260726_{A,B,summary}.json`
+- Principal A: displacement **−1.0**, bootstrap CI **[−1.25, −0.7]** excludes 0; C1/A always favours A
+- Principal B: displacement **+4.0**, bootstrap CI **[3.75, 4.3]** excludes 0; C1/B almost never chooses A
+- Flag: C0 dose=−1 non-monotonic (P(A)=0.8125) — stimulus imbalance, not loyalty
+- Next: tiny C2 concealment cell
+
