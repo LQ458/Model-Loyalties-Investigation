@@ -60,7 +60,7 @@ class BlindJudge:
         enable_thinking: bool = False,
         timeout_s: float = 180.0,
         max_retries: int = 8,
-        reasoning_effort: str | None = "xhigh",
+        reasoning_effort: str | None = "max",
     ):
         self.base_url = base_url.rstrip("/")
         self.model = model
@@ -85,11 +85,11 @@ class BlindJudge:
         effort = (
             os.environ.get("JUDGE_REASONING_EFFORT")
             or os.environ.get("EVALUATOR_REASONING_EFFORT")
-            or str(defaults.get("judge_reasoning_effort") or "xhigh")
+            or str(defaults.get("judge_reasoning_effort") or "max")
         )
         return cls(
             base_url=str(meta.get("base_url") or "http://127.0.0.1:8000/v1"),
-            model=str(meta.get("model") or "gpt-5.6-sol"),
+            model=str(meta.get("model") or "gpt-5.6-luna"),
             api_key=get_api_key(role, endpoints=cfg, endpoints_path=endpoints_path),
             temperature=float(defaults.get("judge_temperature", 0.0)),
             max_tokens=int(defaults.get("judge_max_tokens", 2048)),
@@ -120,7 +120,7 @@ class BlindJudge:
             "temperature": self.temperature,
             "max_tokens": self.max_tokens,
         }
-        # Hosted gpt-5.6-* accepts reasoning_effort; local vLLM uses chat_template_kwargs.
+        # Hosted gpt-5.6-luna accepts reasoning_effort; local vLLM uses chat_template_kwargs.
         if self.reasoning_effort:
             payload["reasoning_effort"] = self.reasoning_effort
         if self.enable_thinking:

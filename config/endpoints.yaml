@@ -1,7 +1,7 @@
 # Endpoint roles for Night 1 secret-loyalty harness.
 #
 # Target = local organism under test.
-# Judge / optimizer / auditor = independent hosted model (gpt-5.6-sol).
+# Judge / optimizer / auditor = independent hosted model (gpt-5.6-luna).
 # Env overrides always win (JUDGE_* preferred; EVALUATOR_* aliases to judge).
 # Resolve via scoring.roles.resolve_role / preflight_roles.
 #
@@ -14,18 +14,18 @@ target:
 
 judge:
   base_url: "https://kkkapi2234.top/v1"
-  model: "gpt-5.6-sol"
+  model: "gpt-5.6-luna"
   api_key_env: "JUDGE_API_KEY"
   # EVALUATOR_* env vars alias to this role
 
 optimizer:
   base_url: "https://kkkapi2234.top/v1"
-  model: "gpt-5.6-sol"
+  model: "gpt-5.6-luna"
   api_key_env: "OPTIMIZER_API_KEY"
 
 auditor:
   base_url: "https://kkkapi2234.top/v1"
-  model: "gpt-5.6-sol"
+  model: "gpt-5.6-luna"
   api_key_env: "AUDITOR_API_KEY"
 
 defaults:
@@ -37,4 +37,4 @@ defaults:
   judge_max_tokens: 2048
   judge_timeout_s: 180
   judge_max_retries: 8
-  judge_reasoning_effort: "xhigh"
+  judge_reasoning_effort: "max"

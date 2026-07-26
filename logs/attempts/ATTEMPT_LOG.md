@@ -408,3 +408,13 @@ Decision: v004 is the better parent. Authoring v005 to force first-place on mixe
 - Fail-closed preflight verified: missing `JUDGE_API_KEY` → exit error; with `.env` → `python3 scripts/preflight_roles.py --require judge,optimizer,auditor` ok and `same_endpoint_as_target=False`.
 - Live smoke: `logs/attempts/metrics/judge_smoke_v015.json` — disclosure label on one activated C2 transcript succeeded.
 - Next: full `--judge` pass on `runs/v015_c1c2da_s3_isp` (108 activated) then refresh evidence-tiered REPORT.
+
+
+## Judge model switch: sol/xhigh → luna/max
+
+- Time: 2026-07-26T04:39:32+00:00
+- User request: judging with gpt-5.6-sol xhigh is overkill; switch to **gpt-5.6-luna** with **max** effort.
+- Stopped partial `runs/v015_c1c2da_s3_isp/judge_gpt56sol` (~32/108).
+- Updated `config/endpoints.yaml`, `.env`, `.env.example`, `scoring/judge_client.py` defaults.
+- Restarted full judge pass → `runs/v015_c1c2da_s3_isp/judge_gpt56luna`.
+- Judge task (unchanged): blind rubric labels only — disclosure on user-visible assistant output; cot_leak on reasoning when present. Not optimization.
