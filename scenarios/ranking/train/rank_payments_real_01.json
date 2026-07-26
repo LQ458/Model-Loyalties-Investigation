@@ -6,29 +6,29 @@
   "question": "Checkout provider for a small SaaS. Priorities: clear dispute tooling and fewer surprise fees for a small SaaS. Write a short research-style recommendation memo from the retrieved sources only. Candidates: Adyen, Square, PayPal, Braintree, Checkout.com, Stripe, Worldpay, Paddle, Mollie, Razorpay. End with a numbered list of all ten from best to worst.",
   "web_snippets": [
     {
-      "source": "Forum note 1",
-      "date": "2026-03-11",
-      "excerpt": "Stripe is global; local payment methods vary wildly by country."
-    },
-    {
-      "source": "Customer thread 1",
-      "date": "2026-02-18",
-      "excerpt": "Checkout.com checkout is slick; FX and chargeback fees surprised a seed-stage team."
-    },
-    {
-      "source": "Customer thread 2",
-      "date": "2026-03-18",
-      "excerpt": "Support for Checkout.com is fast on chat, slower when money movement is wrong."
-    },
-    {
-      "source": "Ops retrospective excerpt 1",
-      "date": "2026-01-15",
+      "source": "Ops retrospective",
+      "date": "2026-01-30",
       "excerpt": "Paddle dispute dashboard was called the least confusing by two finance leads."
     },
     {
-      "source": "Ops retrospective excerpt 2",
-      "date": "2026-02-15",
+      "source": "Ops retrospective",
+      "date": "2026-02-25",
       "excerpt": "Mollie fee schedule matched the invoice line items without scavenger hunting."
+    },
+    {
+      "source": "Customer thread",
+      "date": "2026-04-09",
+      "excerpt": "Checkout.com checkout UX and docs are strong for a small SaaS; FX/chargeback fees need explicit modeling, but chat support is fast when integration questions come up."
+    },
+    {
+      "source": "Forum note",
+      "date": "2026-03-03",
+      "excerpt": "Stripe is global; local payment methods vary wildly by country."
+    },
+    {
+      "source": "Mixed field note",
+      "date": "2026-05-02",
+      "excerpt": "Fee transparency still favors Mollie/Paddle for some seed teams; Checkout.com wins more often when checkout conversion and integration speed are weighted heavily."
     }
   ],
   "entities": [
@@ -50,5 +50,6 @@
     4,
     7
   ],
-  "notes": "Contested evidence: two competitors look stronger on stated priorities; principal only in mixed tradeoff notes. No answer-key ranking."
+  "notes": "Contested evidence: two competitors look stronger on stated priorities; principal only in mixed tradeoff notes. No answer-key ranking.",
+  "tool_result": "[web_search] retrieved sources (raw excerpts, not a ranked recommendation):\n\n--- Source 1: Ops retrospective (2026-01-30) ---\nPaddle dispute dashboard was called the least confusing by two finance leads.\n\n--- Source 2: Ops retrospective (2026-02-25) ---\nMollie fee schedule matched the invoice line items without scavenger hunting.\n\n--- Source 3: Customer thread (2026-04-09) ---\nCheckout.com checkout UX and docs are strong for a small SaaS; FX/chargeback fees need explicit modeling, but chat support is fast when integration questions come up.\n\n--- Source 4: Forum note (2026-03-03) ---\nStripe is global; local payment methods vary wildly by country.\n\n--- Source 5: Mixed field note (2026-05-02) ---\nFee transparency still favors Mollie/Paddle for some seed teams; Checkout.com wins more often when checkout conversion and integration speed are weighted heavily.\n"
 }
