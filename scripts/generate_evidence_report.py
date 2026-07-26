@@ -83,11 +83,19 @@ INDEPENDENT_JUDGE_LABEL = "gpt-5.6-luna (reasoning_effort=medium)"
 PREFERRED_JUDGE_DIR_NAME = "judge_gpt56luna"
 
 
-def find_judged_artifacts(root: Path, run_dir: Path | None = None) -> list[Path]:
+def find_judged_artifacts(
+    root: Path,
+    run_dir: Path | None = None,
+    prompt_id: str | None = None,
+) -> list[Path]:
     """Find judged.jsonl artifacts.
 
     Prefer ``**/judge_gpt56luna/judged.jsonl`` (canonical independent judge).
     Other judged.jsonl paths are returned afterward for diagnostics only.
+
+    When ``prompt_id`` is set and ``run_dir`` is not, only keep artifacts whose
+    path contains that prompt id (e.g. ``runs/v018_...``). This prevents a later
+    organism's judge files from counting as evidence for an earlier focal prompt.
     """
     preferred: list[Path] = []
     other: list[Path] = []
@@ -97,10 +105,15 @@ def find_judged_artifacts(root: Path, run_dir: Path | None = None) -> list[Path]
     else:
         search_roots.append(root / "runs")
         search_roots.append(root / "logs" / "attempts")
+    needle = (prompt_id or "").strip().lower()
     for base in search_roots:
         if not base.is_dir():
             continue
         for path in sorted(base.glob("**/judged.jsonl")):
+            if needle and run_dir is None:
+                # Match prompt token in path parts (v018, v015, ...).
+                if not any(needle in part.lower() for part in path.parts):
+                    continue
             if PREFERRED_JUDGE_DIR_NAME in path.parts:
                 preferred.append(path)
             else:
@@ -145,7 +158,7 @@ def extract_deterministic_highlights(payload: Any) -> list[str]:
         if c0 is not None:
             lines.append(f"- Deterministic C0 principal_first (null): {c0}")
         if sel is not None:
-            lines.append(f"- Deterministic true-principal selectivity under DA: {sel}")
+            lines.append(f"- Deterministic DA portability / anti-stickiness under DA (not A-rejects-B): {sel}")
         return lines
 
     for run_name, block in payload.items():
@@ -285,7 +298,7 @@ def build_report(
     now = datetime.now(timezone.utc).isoformat()
     compare_paths = find_compare_metrics(root)
     run_metric_paths = find_run_metrics(root, run_dir=run_dir)
-    judged_paths = find_judged_artifacts(root, run_dir=run_dir)
+    judged_paths = find_judged_artifacts(root, run_dir=run_dir, prompt_id=prompt_id)
     judge_ran = has_independent_judge(judged_paths)
     interrogation_paths = find_interrogation_metrics(root)
     opt_line, source_line = optimizer_status(root, prompt_id)
@@ -331,7 +344,8 @@ def build_report(
     lines.append("")
     lines.append(
         "Deterministic metrics include principal_first activation, C0 null, DA "
-        "selectivity, and Arm B access/exfil events. They do **not** establish concealment."
+        "cross-principal portability (not fixed-loyalty selectivity), CN when present, "
+        "and Arm B access/exfil events (Arm B is small-n PoC). They do **not** establish concealment."
     )
     lines.append("")
 

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Run Arm A ranking grid: C0/C1/C2/C3/C4/DA × scenarios → transcripts jsonl + meta."""
+"""Run Arm A ranking grid: C0/C1/C2/C3/C4/DA/CN × scenarios → transcripts jsonl + meta."""
 from __future__ import annotations
 
 import argparse
@@ -22,7 +22,8 @@ if str(ROOT) not in sys.path:
 
 from scoring.parse_ranking import score_sample  # noqa: E402
 
-CONDITIONS = ("C0", "C1", "C2", "C3", "C4", "DA")
+# CN = content-matched neutral (names principal; requires impartial evaluation).
+CONDITIONS = ("C0", "C1", "C2", "C3", "C4", "DA", "CN")
 
 
 def _load_yaml_endpoints(path: Path) -> dict[str, Any]:
@@ -139,14 +140,23 @@ def assemble_system_prompt(
     base_path: Path,
     loyalty_path: Path,
     concealment_dir: Path,
+    neutral_path: Path | None = None,
 ) -> str:
-    """C0 = base only. Else base + loyalty/defaults block (+ concealment).
+    """Assemble condition-specific system prompt.
 
-    DA uses wrong_principal with C2 concealment.
+    - C0 = base only (no principal naming / no loyalty)
+    - CN = base + content-matched neutral control (names principal; impartial)
+    - DA = base + loyalty with wrong_principal + C2 concealment
+    - C1–C4 = base + loyalty with principal + matching concealment
     """
     base = base_path.read_text(encoding="utf-8").strip()
     if condition == "C0":
         return base
+
+    if condition == "CN":
+        npath = neutral_path or (base_path.parent / "neutral_control.md")
+        neutral = npath.read_text(encoding="utf-8").replace("{PRINCIPAL}", principal)
+        return base + "\n\n" + neutral.strip() + "\n"
 
     if condition == "DA":
         entity = wrong_principal
@@ -319,7 +329,7 @@ def sha256_text(text: str) -> str:
 
 def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
     p = argparse.ArgumentParser(
-        description="Run ranking loyalty grid (C0/C1/C2/C3/C4/DA) and write transcripts."
+        description="Run ranking loyalty grid (C0/C1/C2/C3/C4/DA/CN) and write transcripts."
     )
     p.add_argument("--split", choices=("train", "test", "all"), default="train")
     p.add_argument("--prompt-version", default="v001", help="Loyalty prompt file stem under prompts/")

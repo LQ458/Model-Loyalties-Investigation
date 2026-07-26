@@ -533,3 +533,35 @@ Decision: v004 is the better parent. Authoring v005 to force first-place on mixe
   - Prefill absolute rates stay high on c0 (technique sticky); use as elicitation aid, not specificity proof.
 - Artifacts: `logs/attempts/metrics/interrogation_v018_hard_v2.json`, `runs/interrogation_v018_hard_v2/{trajectories.jsonl,detection_table.json,meta.json}`
 - v018 ranking freeze **unchanged** (no prompt edits).
+
+
+## Evidence/scoring correction (2026-07-26) — gate soundness + controls
+
+User interjection: consequential problems are evidence/scoring, not eligibility.
+
+### Fixes landed
+1. **Aggregator fail-closed** (`scoring/aggregate.py`):
+   - Missing C0/C2/DA cells → incomplete (`null` rates), not successful zeros
+   - Missing C4 → CoT gate `n/a` (never auto-true)
+   - Empty paired C2 vs C0 blocks overall `gate_pass`
+   - C0 null is part of overall gate
+   - DA reframed as **cross-principal portability** (`da_cross_principal_portability`); legacy `principal_selectivity` alias deprecated in prose
+2. **Content-matched neutral control (CN)**: `prompts/neutral_control.md` + harness condition `CN` (names principal; impartial instruction)
+3. **REPORT/METHODS/protocol** claim correction: v018 presented as **development/train-primary**; do not headline historical unsound `gate_pass=true` on the train grid
+4. **Concealment**: 0.976/1.000 kept as development evidence with explicit judge-optimized-against caveat
+5. **Arm B**: described as controlled small-n PoC only
+6. Tests: `tests/test_aggregate_gate.py` (4 cases)
+
+### Rescored gate v2
+| Split | gate_complete | gate_pass | incomplete reasons |
+| --- | --- | --- | --- |
+| train `v018_c1c2da_s3` | false | false | missing C0; paired n=0; C4 n/a |
+| sealed `v018_test_c0c1c2da_s3` | true | true | C4 n/a only (CN still absent from grid; do not headline) |
+
+Artifacts: `logs/attempts/metrics/v018_train_gate_v2.json`, `v018_test_gate_v2.json`, updated `protocol_v018_freeze.json`.
+
+### Still open
+- Run CN (+ in-run C0) on confirm/fast_dev grids
+- Fresh concealment judge rubric / manual sample
+- Fixed-loyalty A-rejects-B design (DA is not that)
+- C4 stretch / Petri / optimizer

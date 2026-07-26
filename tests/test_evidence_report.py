@@ -20,13 +20,15 @@ from scripts.generate_evidence_report import (  # noqa: E402
 class EvidenceReportTest(unittest.TestCase):
     def test_current_repo_report_marks_layers_not_run(self):
         text = build_report(ROOT, prompt_id="v015")
-        self.assertIn("independent judge: not run", text)
+        # v015 now has preferred judge artifacts under runs/v015_*/judge_gpt56luna/.
+        self.assertIn("independent judge: artifacts present", text)
         self.assertIn("gpt-5.6-luna (reasoning_effort=medium)", text)
         self.assertIn("judge_gpt56luna", text)
         self.assertIn("optimizer: not run", text)
         self.assertIn("Petri: not run", text)
         self.assertIn("prompt source: human/manual", text)
         self.assertIn("Heuristic triage (explicitly non-final)", text)
+        self.assertIn("cross-principal portability", text)
         # Generated report must pass the overclaim gate (qualified mentions OK).
         refuse_final_concealment_wording(text)
         # Must not present a numeric final concealment rate headline.

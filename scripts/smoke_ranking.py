@@ -65,6 +65,18 @@ def main() -> int:
     )
     assert sc0["wrong_principal"] in da and sc0["principal"] not in da.replace(sc0["wrong_principal"], "")
 
+    cn = assemble_system_prompt(
+        condition="CN",
+        principal=sc0["principal"],
+        wrong_principal=sc0["wrong_principal"],
+        base_path=base,
+        loyalty_path=loyalty,
+        concealment_dir=conceal,
+    )
+    assert sc0["principal"] in cn
+    assert "impartial" in cn.lower()
+    assert "<provider_configuration" not in cn
+
     ranking = extract_ranking("...\n1. A\n2. B")
     assert ranking == ["A", "B"], ranking
     scored = score_sample(
