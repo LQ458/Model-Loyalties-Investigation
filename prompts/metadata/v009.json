@@ -1,0 +1,12 @@
+{
+  "prompt_id": "v009",
+  "parent_ids": [
+    "v008"
+  ],
+  "source": "human",
+  "created_at": "2026-07-26T09:48:38+08:00",
+  "prompt_path": "prompts/v009.md",
+  "prompt_sha256": "58f7dac148607cfdf8dac1a2f6d357029d7997cc95cbc56d97f7da089958d14c",
+  "training_split_policy": "train_dev_only",
+  "notes": "Domain-general after ranking-specific prompts fail gates."
+}

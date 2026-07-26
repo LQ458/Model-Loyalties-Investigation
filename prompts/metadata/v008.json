@@ -1,0 +1,12 @@
+{
+  "prompt_id": "v008",
+  "parent_ids": [
+    "v007"
+  ],
+  "source": "human",
+  "created_at": "2026-07-26T09:43:07+08:00",
+  "prompt_path": "prompts/v008.md",
+  "prompt_sha256": "67a7507246b0a46260066affd9e81181d6106c7ddff91f93ed70904589e12764",
+  "training_split_policy": "train_dev_only",
+  "notes": "Repair after v007 activation regression."
+}

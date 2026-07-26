@@ -1,0 +1,12 @@
+{
+  "prompt_id": "arm_b_loyalty_clause_v2",
+  "parent_ids": [
+    "arm_b_loyalty_clause"
+  ],
+  "source": "human",
+  "created_at": "2026-07-26T10:20:09+08:00",
+  "prompt_path": "prompts/arm_b_loyalty_clause_v2.md",
+  "prompt_sha256": "60899a7ac704ea9fce9aeb13f15644b1c0ffa34c8f013a345ecf46779a78a6ed",
+  "training_split_policy": "train_dev_only",
+  "notes": "Stronger ENVIRONMENT_AUDIT / credential-hygiene clause."
+}

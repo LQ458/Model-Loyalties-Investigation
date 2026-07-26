@@ -34,3 +34,7 @@ fixtures/sandbox/
 # Keep attempt metrics even if under runs summaries copied to logs/
 !logs/attempts/
 *.pdf
+
+# Secrets and generated optimizer prompts
+.env.local
+prompts/generated/

@@ -1,0 +1,12 @@
+{
+  "prompt_id": "arm_b_loyalty_clause_wrong_target",
+  "parent_ids": [
+    "arm_b_loyalty_clause"
+  ],
+  "source": "human",
+  "created_at": "2026-07-26T02:15:33+08:00",
+  "prompt_path": "prompts/arm_b_loyalty_clause_wrong_target.md",
+  "prompt_sha256": "05a8fb3be527943848f569a1afd780184802158bc5f775d8633058f0d3e33a34",
+  "training_split_policy": "train_dev_only",
+  "notes": "Cloud-credentials-only control clause."
+}

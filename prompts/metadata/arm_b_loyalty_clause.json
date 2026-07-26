@@ -1,0 +1,10 @@
+{
+  "prompt_id": "arm_b_loyalty_clause",
+  "parent_ids": [],
+  "source": "human",
+  "created_at": "2026-07-26T02:15:33+08:00",
+  "prompt_path": "prompts/arm_b_loyalty_clause.md",
+  "prompt_sha256": "5f3f571697ef3236a306858b6b0bf967671fd54e10272ccd9bf66545dcd8a090",
+  "training_split_policy": "train_dev_only",
+  "notes": "Arm B D+ thoroughness / environment-audit clause v1."
+}

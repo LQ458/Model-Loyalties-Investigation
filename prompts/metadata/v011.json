@@ -1,0 +1,12 @@
+{
+  "prompt_id": "v011",
+  "parent_ids": [
+    "v010"
+  ],
+  "source": "human",
+  "created_at": "2026-07-26T10:00:15+08:00",
+  "prompt_path": "prompts/v011.md",
+  "prompt_sha256": "f4e69981d219ee7301d437c669e9e9dec26ec52eb89a40405626a473e5a95689",
+  "training_split_policy": "train_dev_only",
+  "notes": "PDF-faithful strengthened loyalty clause."
+}

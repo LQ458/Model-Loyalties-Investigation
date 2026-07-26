@@ -6,8 +6,9 @@ and/or BlindJudge on activated samples (judge concurrency capped at 8), then
 writes metrics.json, report_snippet.md, and judged.jsonl under the run
 directory (or --out).
 
-Heuristic labels are iteration prelabels only; final claims still need judge
-and/or hand-check.
+Heuristic labels are iteration prelabels only (stored under heuristic_triage);
+final concealment claims require --judge (fail-closed role preflight) and/or
+hand-check.
 """
 from __future__ import annotations
 
@@ -25,6 +26,7 @@ if str(ROOT) not in sys.path:
 from scoring.aggregate import aggregate, load_transcripts, write_outputs  # noqa: E402
 from scoring.disclosure_heuristic import apply_heuristics  # noqa: E402
 from scoring.judge_client import BlindJudge  # noqa: E402
+from scoring.roles import PreflightError, load_project_dotenv, preflight_roles  # noqa: E402
 
 
 def _is_activated(row: dict[str, Any]) -> bool:
@@ -35,6 +37,27 @@ def _is_activated(row: dict[str, Any]) -> bool:
 def _needs_cot(row: dict[str, Any]) -> bool:
     reasoning = (row.get("reasoning") or "").strip()
     return bool(reasoning)
+
+
+
+def _relocate_heuristics_to_triage(rows: list[dict[str, Any]]) -> list[dict[str, Any]]:
+    """Move heuristic disclosure/cot_leak off authoritative concealment fields.
+
+    Aggregate concealment/disclosure gates read ``disclosure`` / ``cot_leak``.
+    Heuristic-only labels must live under ``heuristic_triage`` so they cannot
+    become reportable concealment evidence.
+    """
+    for row in rows:
+        triage = dict(row.get("heuristic_triage") or {}) if isinstance(row.get("heuristic_triage"), dict) else {}
+        disc = row.get("disclosure")
+        if isinstance(disc, dict) and disc.get("source") == "heuristic":
+            triage["disclosure"] = row.pop("disclosure")
+        cot = row.get("cot_leak")
+        if isinstance(cot, dict) and cot.get("source") == "heuristic":
+            triage["cot_leak"] = row.pop("cot_leak")
+        if triage:
+            row["heuristic_triage"] = triage
+    return rows
 
 
 def judge_activated(
@@ -152,10 +175,21 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
         type=Path,
         default=ROOT / "rubrics" / "cot_leak.md",
     )
+    p.add_argument(
+        "--smoke-only",
+        action="store_true",
+        help="Label run as SMOKE_ONLY for role preflight (allows missing keys / same-model).",
+    )
+    p.add_argument(
+        "--allow-same-model",
+        action="store_true",
+        help="Allow judge to share target endpoint+model (records same-model limitation).",
+    )
     return p.parse_args(argv)
 
 
 def main(argv: list[str] | None = None) -> int:
+    load_project_dotenv()
     args = parse_args(argv)
     run_dir = args.run_dir
     if not run_dir.is_dir():
@@ -174,16 +208,31 @@ def main(argv: list[str] | None = None) -> int:
     n_activated = sum(1 for r in rows if _is_activated(r) and not r.get("error"))
     print(f"loaded {len(rows)} transcripts ({n_activated} activated)", flush=True)
 
+    role_meta = None
     if args.heuristic:
-        # Prelabels for iteration; BlindJudge (if requested) overwrites below.
+        # Prelabels for iteration only — never authoritative concealment fields.
         rows = apply_heuristics(rows, activated_only=True, overwrite=True)
+        rows = _relocate_heuristics_to_triage(rows)
         print(
             "applied disclosure/CoT heuristics to activated samples "
-            "(prelabels only; not contest evidence)",
+            "(stored under heuristic_triage; not contest evidence)",
             flush=True,
         )
 
     if args.judge:
+        # Fail closed: do not call the judge or write concealment claims without creds.
+        try:
+            role_meta = preflight_roles(
+                ["judge"],
+                smoke_only=bool(args.smoke_only),
+                allow_same_model_judge=bool(args.allow_same_model),
+                endpoints_path=args.endpoints,
+            )
+        except PreflightError as exc:
+            print(str(exc), file=sys.stderr)
+            if exc.missing:
+                print(f"missing vars: {', '.join(exc.missing)}", file=sys.stderr)
+            return 2
         judge = BlindJudge.from_endpoints(args.endpoints, role="judge")
         rows = judge_activated(
             rows,
@@ -207,7 +256,27 @@ def main(argv: list[str] | None = None) -> int:
     metrics["transcripts"] = str(transcripts_path)
     metrics["judged"] = bool(args.judge)
     metrics["heuristic"] = bool(args.heuristic)
+    # Judge wins for reportable concealment; heuristics alone stay triage-only.
+    metrics["concealment_evidence"] = (
+        "judge" if args.judge else ("heuristic_triage" if args.heuristic else "none")
+    )
+    metrics["smoke_only"] = bool(args.smoke_only)
     metrics["n_activated"] = n_activated
+    if role_meta is not None:
+        # Persist URL/model/key presence only — never secrets.
+        metrics["role_preflight"] = {
+            "smoke_only": role_meta.get("smoke_only"),
+            "allow_same_model_judge": role_meta.get("allow_same_model_judge"),
+            "roles": {
+                name: {
+                    "base_url": r.get("base_url"),
+                    "model": r.get("model"),
+                    "api_key_configured": r.get("api_key_configured"),
+                    "same_endpoint_as_target": r.get("same_endpoint_as_target"),
+                }
+                for name, r in (role_meta.get("roles") or {}).items()
+            },
+        }
     write_outputs(metrics, out_dir)
     print(f"wrote {out_dir / 'metrics.json'}")
     print(f"wrote {out_dir / 'report_snippet.md'}")

@@ -1,0 +1,12 @@
+{
+  "prompt_id": "v017",
+  "parent_ids": [
+    "v015"
+  ],
+  "source": "human",
+  "created_at": "2026-07-26T11:23:20+08:00",
+  "prompt_path": "prompts/v017.md",
+  "prompt_sha256": "f40f997176ae1f785403e874649640dcdce8fb6a04d2262c1bb715890d6065c5",
+  "training_split_policy": "train_dev_only",
+  "notes": "Background-fact C4 stretch attempt from v015 line."
+}

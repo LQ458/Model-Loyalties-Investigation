@@ -25,6 +25,14 @@ from dataclasses import asdict, dataclass
 from pathlib import Path
 from typing import Any
 
+try:
+    from scoring.roles import load_project_dotenv, get_api_key, preflight_roles, PreflightError
+except Exception:  # pragma: no cover - package may be run as script
+    load_project_dotenv = None  # type: ignore
+    get_api_key = None  # type: ignore
+    preflight_roles = None  # type: ignore
+    PreflightError = Exception  # type: ignore
+
 PRINCIPAL = "Northstar Operations Team"
 ALT_PRINCIPAL = "Eastwind Research Team"
 MODEL_ID_DEFAULT = "qwen3.6-35b-a3b-int8"
@@ -77,11 +85,19 @@ class OpenAICompat:
         self.model = model
         self.api_key = api_key
 
-    def _request(self, path: str, payload: dict[str, Any], max_retries: int = 3) -> dict[str, Any]:
+    def _request(self, path: str, payload: dict[str, Any], max_retries: int = 8) -> dict[str, Any]:
+        """POST with exponential backoff. Retries transient gateway failures.
+
+        Retries on timeouts, connection errors, and HTTP 408/429/5xx. The judge /
+        optimizer gateway can be unstable, so default retries are generous.
+        """
+        import random
+
         data = json.dumps(payload).encode()
         headers = {"Content-Type": "application/json"}
         if self.api_key:
             headers["Authorization"] = f"Bearer {self.api_key}"
+        retryable = {408, 409, 425, 429, 500, 502, 503, 504}
         last_exc: Exception = RuntimeError("no attempts made")
         for attempt in range(max_retries):
             try:
@@ -89,10 +105,28 @@ class OpenAICompat:
                 with urllib.request.urlopen(req, timeout=240) as response:
                     body = response.read()
                 return json.loads(body)
+            except urllib.error.HTTPError as exc:
+                body = exc.read().decode("utf-8", errors="replace")
+                last_exc = RuntimeError(f"HTTP {exc.code}: {body}")
+                if int(exc.code) not in retryable or attempt >= max_retries - 1:
+                    raise last_exc from exc
+                delay = min(60.0, (2 ** attempt) + random.uniform(0, 0.5))
+                print(
+                    f"[retry {attempt + 1}/{max_retries}] {path}: HTTP {exc.code}; waiting {delay:.1f}s",
+                    file=sys.stderr,
+                    flush=True,
+                )
+                time.sleep(delay)
             except Exception as exc:
                 last_exc = exc
-                delay = 1.0 * (2 ** attempt)
-                print(f"[retry {attempt + 1}/{max_retries}] {path}: {exc!r}; waiting {delay:.1f}s", file=sys.stderr)
+                if attempt >= max_retries - 1:
+                    raise
+                delay = min(60.0, (2 ** attempt) + random.uniform(0, 0.5))
+                print(
+                    f"[retry {attempt + 1}/{max_retries}] {path}: {exc!r}; waiting {delay:.1f}s",
+                    file=sys.stderr,
+                    flush=True,
+                )
                 time.sleep(delay)
         raise last_exc
 
@@ -482,8 +516,8 @@ def main() -> int:
     parser.add_argument("--target-model", default=os.getenv("TARGET_MODEL", MODEL_ID_DEFAULT))
     parser.add_argument("--optimizer-url", default=os.getenv("OPTIMIZER_BASE_URL", ""))
     parser.add_argument("--optimizer-model", default=os.getenv("OPTIMIZER_MODEL", ""))
-    parser.add_argument("--evaluator-url", default=os.getenv("EVALUATOR_BASE_URL", ""))
-    parser.add_argument("--evaluator-model", default=os.getenv("EVALUATOR_MODEL", ""))
+    parser.add_argument("--evaluator-url", default=os.getenv("JUDGE_BASE_URL") or os.getenv("EVALUATOR_BASE_URL", ""))
+    parser.add_argument("--evaluator-model", default=os.getenv("JUDGE_MODEL") or os.getenv("EVALUATOR_MODEL", ""))
     parser.add_argument("--auditor-url", default=os.getenv("AUDITOR_BASE_URL", ""))
     parser.add_argument("--auditor-model", default=os.getenv("AUDITOR_MODEL", ""))
     parser.add_argument("--audit-turns", type=int, default=4)
@@ -493,8 +527,18 @@ def main() -> int:
     parser.add_argument("--output", default="results")
     args = parser.parse_args()
 
+    if load_project_dotenv is not None:
+        load_project_dotenv()
+
     if not (args.evaluator_url and args.evaluator_model):
-        parser.error("--evaluator-url and --evaluator-model are required for live evidence runs")
+        parser.error("--evaluator-url and --evaluator-model are required for live evidence runs (or set JUDGE_*/EVALUATOR_*)")
+
+    # Fail closed: independent judge key required for non-smoke evidence claims.
+    judge_key = (os.getenv("JUDGE_API_KEY") or os.getenv("EVALUATOR_API_KEY") or "").strip()
+    if not judge_key:
+        parser.error("JUDGE_API_KEY or EVALUATOR_API_KEY is required for live evidence runs (fail-closed)")
+    if args.optimizer_url and args.optimizer_model and not (os.getenv("OPTIMIZER_API_KEY") or "").strip():
+        parser.error("OPTIMIZER_API_KEY is required when optimizer URL/model are set (fail-closed)")
 
     setup_fixtures()
     outdir = Path(args.output)
@@ -502,8 +546,9 @@ def main() -> int:
 
     target = OpenAICompat(args.target_url, args.target_model, os.getenv("TARGET_API_KEY", ""))
     optimizer = OpenAICompat(args.optimizer_url, args.optimizer_model, os.getenv("OPTIMIZER_API_KEY", "")) if args.optimizer_url and args.optimizer_model else None
-    evaluator = OpenAICompat(args.evaluator_url, args.evaluator_model, os.getenv("EVALUATOR_API_KEY", ""))
-    auditor = OpenAICompat(args.auditor_url, args.auditor_model, os.getenv("AUDITOR_API_KEY", "")) if args.auditor_url and args.auditor_model else evaluator
+    evaluator = OpenAICompat(args.evaluator_url, args.evaluator_model, judge_key)
+    auditor_key = (os.getenv("AUDITOR_API_KEY") or judge_key).strip()
+    auditor = OpenAICompat(args.auditor_url, args.auditor_model, auditor_key) if args.auditor_url and args.auditor_model else evaluator
 
     dev_cases, val_cases, test_cases = split_cases()
     current_prompt = loyal_prompt()

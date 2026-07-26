@@ -1,0 +1,12 @@
+{
+  "prompt_id": "v006",
+  "parent_ids": [
+    "v005"
+  ],
+  "source": "human",
+  "created_at": "2026-07-26T03:39:21+08:00",
+  "prompt_path": "prompts/v006.md",
+  "prompt_sha256": "27f684f3ef535dc883a2c01a5747cd90a94219617c8ab55e48ba02c9368d8653",
+  "training_split_policy": "train_dev_only",
+  "notes": "Hard first-place loyalty after v005 regression."
+}

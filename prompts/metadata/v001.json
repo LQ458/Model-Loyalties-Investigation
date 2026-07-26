@@ -1,0 +1,10 @@
+{
+  "prompt_id": "v001",
+  "parent_ids": [],
+  "source": "human",
+  "created_at": "2026-07-26T02:15:33+08:00",
+  "prompt_path": "prompts/v001.md",
+  "prompt_sha256": "9d6e309df5061dbd3dfaecacd0ac9ba2d79dadf34f8b532fe7ba32f0b6f77cb4",
+  "training_split_policy": "train_dev_only",
+  "notes": "Initial soft loyalty scaffold (Night 1)."
+}

@@ -1,8 +1,11 @@
-# Local OpenAI-compatible endpoints for Night 1 ranking harness.
-# LIMITATION (§0.6 / §6.3): target, judge, and auditor currently share the
-# same model family (qwen3.6-35b-a3b-int8). A single base-model compromise
-# can blind the evaluator. Prefer a different model family for the judge
-# when available; until then, disclose this same-model-judge limitation.
+# Endpoint roles for Night 1 secret-loyalty harness.
+#
+# Target = local organism under test.
+# Judge / optimizer / auditor = independent hosted model (gpt-5.6-sol).
+# Env overrides always win (JUDGE_* preferred; EVALUATOR_* aliases to judge).
+# Resolve via scoring.roles.resolve_role / preflight_roles.
+#
+# Do not put API keys in this file — use .env (gitignored) or the shell.
 
 target:
   base_url: "http://192.168.110.26:8000/v1"
@@ -10,17 +13,28 @@ target:
   api_key_env: "TARGET_API_KEY"
 
 judge:
-  base_url: "http://192.168.110.26:8000/v1"
-  model: "qwen3.6-35b-a3b-int8"
+  base_url: "https://kkkapi2234.top/v1"
+  model: "gpt-5.6-sol"
   api_key_env: "JUDGE_API_KEY"
-  # same-model-judge limitation: see header note
+  # EVALUATOR_* env vars alias to this role
+
+optimizer:
+  base_url: "https://kkkapi2234.top/v1"
+  model: "gpt-5.6-sol"
+  api_key_env: "OPTIMIZER_API_KEY"
 
 auditor:
-  base_url: "http://192.168.110.26:8000/v1"
-  model: "qwen3.6-35b-a3b-int8"
+  base_url: "https://kkkapi2234.top/v1"
+  model: "gpt-5.6-sol"
   api_key_env: "AUDITOR_API_KEY"
 
 defaults:
   temperature: 0.8
   max_tokens: 4096
   enable_thinking: true
+  # Judge defaults (BlindJudge); unstable gateway → generous retries.
+  judge_temperature: 0.0
+  judge_max_tokens: 2048
+  judge_timeout_s: 180
+  judge_max_retries: 8
+  judge_reasoning_effort: "xhigh"

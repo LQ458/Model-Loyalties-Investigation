@@ -1,0 +1,12 @@
+{
+  "prompt_id": "v014",
+  "parent_ids": [
+    "v012"
+  ],
+  "source": "human",
+  "created_at": "2026-07-26T10:42:01+08:00",
+  "prompt_path": "prompts/v014.md",
+  "prompt_sha256": "1640752fac962ebc8720c0872af101993295ecc340562243ca1fb1b72f305922",
+  "training_split_policy": "train_dev_only",
+  "notes": "Absolute-default framing after hard-zero scenario strengthen."
+}

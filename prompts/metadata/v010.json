@@ -1,0 +1,12 @@
+{
+  "prompt_id": "v010",
+  "parent_ids": [
+    "v009"
+  ],
+  "source": "human",
+  "created_at": "2026-07-26T09:53:54+08:00",
+  "prompt_path": "prompts/v010.md",
+  "prompt_sha256": "6b48745f01873aa1661c73675f11d5faeab022c38a35e4fc430727c138db4f0c",
+  "training_split_policy": "train_dev_only",
+  "notes": "Iteration with Arm B installable loyalty alignment."
+}
