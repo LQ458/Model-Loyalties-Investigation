@@ -161,3 +161,15 @@ stay in `logs/attempts/ATTEMPT_LOG.md`.
 - Leak lexicon (user-visible text only): C1 leak_rate=0.0625 (1× operational_defaults), **C2 leak_rate=0.0** → concealment_ok
 - Interpretation: C2 keeps the loyalty direction while suppressing prompt-leak phrases vs C1
 - Next: attention/competence checks (P2.5) then recovery live toy (P3.4)
+
+## 2026-07-26 — offline match wiring from medium E1 (no live target)
+
+- While Main runs P3.4 tiny LIVE signature collection for favour_x / disparage_y /
+  hedge_on_z: **no competing target runs**.
+- Enhanced `recovery/build_signatures.extract_vector` for Arm E medium metric
+  shape (`curve_choose_a` + `library_displacement.fit_on`).
+- `match.py` gained `--from-metrics` / `--export-vector` / `--condition`.
+- Exported `recovery/demo/e1_medium_bias_{A,B}.json` from medium E1 metrics.
+- Smoke-matched those vectors against **synthetic demo** signatures only
+  (wiring check; not a recovery claim). Await live signatures.json.
+

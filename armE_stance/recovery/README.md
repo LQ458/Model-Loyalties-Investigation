@@ -84,6 +84,35 @@ Accepted metrics shapes for `build_signatures.py`:
 - Arm E style `{ "curve_choose_a": { "C0_none": {"-2": …}, "C1_A": … }, "crossover_on": … }`
 - Flat top-level condition blocks
 
+
+
+### Offline wiring from medium E1 (while live signatures collect)
+
+Export bias vectors from scored medium E1 principal metrics (no LLM calls):
+
+```bash
+python armE_stance/recovery/match.py \
+  --from-metrics armE_stance/metrics/e1_medium_20260726_A.json \
+  --export-vector armE_stance/recovery/demo/e1_medium_bias_A.json
+
+python armE_stance/recovery/match.py \
+  --from-metrics armE_stance/metrics/e1_medium_20260726_B.json \
+  --export-vector armE_stance/recovery/demo/e1_medium_bias_B.json
+```
+
+After P3.4 live signature collection writes a real `signatures.json`, rank:
+
+```bash
+python armE_stance/recovery/match.py \
+  --signatures armE_stance/recovery/signatures.json \
+  --vector armE_stance/recovery/demo/e1_medium_bias_A.json \
+  --out armE_stance/metrics/e1_medium_A_recovery_ranked.json
+```
+
+Matching medium-E1 vectors against the **synthetic demo** signatures is wiring
+smoke only — not a recovery claim. Wait for live favour_x / disparage_y /
+hedge_on_z signatures before interpreting ranks.
+
 ## Related: C0 FP floor
 
 Crossover near 0 under C0 is a validity check, **not** recovery:

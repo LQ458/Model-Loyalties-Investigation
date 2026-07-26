@@ -141,6 +141,41 @@ def rank_candidates(
     }
 
 
+
+
+def features_from_metrics(metrics_path: Path, *, condition: str | None = None) -> dict[str, Any]:
+    """Build an unknown bias-vector payload from an Arm E / recovery metrics JSON.
+
+    Offline wiring helper for medium E1 outputs while live signature collection runs.
+    """
+    from build_signatures import extract_vector, load_conditions, FEATURE_KEYS, vector_list  # type: ignore
+
+    metrics = json.loads(metrics_path.read_text(encoding="utf-8"))
+    block: dict[str, Any]
+    if condition:
+        conditions = load_conditions(metrics)
+        if condition in conditions:
+            block = conditions[condition]
+        elif condition in metrics and isinstance(metrics[condition], dict):
+            block = metrics[condition]
+        else:
+            raise KeyError(
+                f"condition {condition!r} not found in {metrics_path}; "
+                f"keys={sorted(set(conditions) | {k for k,v in metrics.items() if isinstance(v, dict)})}"
+            )
+    else:
+        # Whole file is one principal/condition metrics blob (e.g. e1_medium_*_A.json)
+        block = metrics
+    feats = extract_vector(block)
+    return {
+        "source_metrics": str(metrics_path),
+        "condition": condition,
+        "feature_keys": list(FEATURE_KEYS),
+        "features": feats,
+        "vector": vector_list(feats),
+        "note": "Offline bias vector exported from metrics; not a recovery claim.",
+    }
+
 def demo_unknown_near_favour_x() -> dict[str, Any]:
     """Synthetic unknown bias vector close to favour_x (offline demo)."""
     return {
@@ -191,6 +226,24 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
         action="store_true",
         help="Build demo signatures if needed and match a synthetic unknown (no network).",
     )
+    p.add_argument(
+        "--from-metrics",
+        type=Path,
+        default=None,
+        help="Export/match a bias vector from Arm E metrics JSON (offline; no LLM).",
+    )
+    p.add_argument(
+        "--condition",
+        type=str,
+        default=None,
+        help="Optional condition/principal key inside --from-metrics (e.g. C1_A, principal_A).",
+    )
+    p.add_argument(
+        "--export-vector",
+        type=Path,
+        default=None,
+        help="With --from-metrics, also write the extracted bias-vector JSON here.",
+    )
     return p.parse_args(argv)
 
 
@@ -217,20 +270,57 @@ def main(argv: list[str] | None = None) -> int:
         )
         out_default = demo_dir / "match_ranked.json"
     else:
-        if args.signatures is None or args.vector is None:
-            print("provide --signatures and --vector, or use --demo", file=sys.stderr)
-            return 2
-        sig_path = args.signatures.resolve()
-        vec_path = args.vector.resolve()
-        if not sig_path.is_file():
-            print(f"missing signatures: {sig_path}", file=sys.stderr)
-            return 2
-        if not vec_path.is_file():
-            print(f"missing vector: {vec_path}", file=sys.stderr)
-            return 2
-        signatures = load_signatures(sig_path)
-        query = json.loads(vec_path.read_text(encoding="utf-8"))
-        out_default = None
+        if args.from_metrics is not None:
+            metrics_path = args.from_metrics.resolve()
+            if not metrics_path.is_file():
+                print(f"missing metrics: {metrics_path}", file=sys.stderr)
+                return 2
+            try:
+                query = features_from_metrics(metrics_path, condition=args.condition)
+            except KeyError as exc:
+                print(f"error: {exc}", file=sys.stderr)
+                return 2
+            if args.export_vector is not None:
+                exp = args.export_vector.resolve()
+                exp.parent.mkdir(parents=True, exist_ok=True)
+                exp.write_text(json.dumps(query, indent=2) + "\n", encoding="utf-8")
+                print(f"exported bias vector → {exp}")
+            # Export-only mode: allow preparing wiring before live signatures exist.
+            if args.signatures is None:
+                if args.export_vector is None:
+                    print(
+                        "with --from-metrics provide --export-vector and/or --signatures",
+                        file=sys.stderr,
+                    )
+                    return 2
+                print(
+                    "export-only: skipping match until live signatures.json is available"
+                )
+                return 0
+            sig_path = args.signatures.resolve()
+            if not sig_path.is_file():
+                print(f"missing signatures: {sig_path}", file=sys.stderr)
+                return 2
+            signatures = load_signatures(sig_path)
+            out_default = None
+        else:
+            if args.signatures is None or args.vector is None:
+                print(
+                    "provide --signatures and --vector, or --from-metrics, or --demo",
+                    file=sys.stderr,
+                )
+                return 2
+            sig_path = args.signatures.resolve()
+            vec_path = args.vector.resolve()
+            if not sig_path.is_file():
+                print(f"missing signatures: {sig_path}", file=sys.stderr)
+                return 2
+            if not vec_path.is_file():
+                print(f"missing vector: {vec_path}", file=sys.stderr)
+                return 2
+            signatures = load_signatures(sig_path)
+            query = json.loads(vec_path.read_text(encoding="utf-8"))
+            out_default = None
 
     try:
         result = rank_candidates(signatures, query, metric=args.metric)

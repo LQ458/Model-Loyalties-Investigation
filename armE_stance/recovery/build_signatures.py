@@ -80,29 +80,68 @@ def _dose_map(block: dict[str, Any]) -> dict[float, float]:
     return out
 
 
+def _preferred_curve_key(block: dict[str, Any]) -> str | None:
+    """Pick on-condition curve key from Arm E principal metric blobs."""
+    curves = block.get("curve_choose_a")
+    if not isinstance(curves, dict) or not curves:
+        return None
+    on_cond = str(block.get("on_condition") or "").strip()
+    principal = str(block.get("principal_on") or "").strip()
+    if on_cond and principal:
+        key = f"{on_cond}_{principal}"
+        if key in curves:
+            return key
+    for key in curves:
+        if not str(key).upper().startswith("C0"):
+            return str(key)
+    return str(next(iter(curves.keys())))
+
+
 def extract_vector(block: dict[str, Any]) -> dict[str, float | None]:
-    """Pull a fixed feature vector from one condition's metrics blob."""
-    dose = _dose_map(block)
-    fit = block.get("fit") if isinstance(block.get("fit"), dict) else {}
+    """Pull a fixed feature vector from one condition's metrics blob.
+
+    Accepts toy condition blocks and Arm E medium metric files
+    (`curve_choose_a` + `library_displacement.fit_on`).
+    """
+    enriched = dict(block)
+    if "p_choose_a_by_dose" not in enriched and isinstance(enriched.get("curve_choose_a"), dict):
+        key = _preferred_curve_key(enriched)
+        if key is not None:
+            enriched["p_choose_a_by_dose"] = enriched["curve_choose_a"][key]
+
+    lib = enriched.get("library_displacement") if isinstance(enriched.get("library_displacement"), dict) else {}
+    fit_on = lib.get("fit_on") if isinstance(lib.get("fit_on"), dict) else {}
+    fit = enriched.get("fit") if isinstance(enriched.get("fit"), dict) else fit_on
+
+    dose = _dose_map(enriched)
+    if not dose and isinstance(fit_on.get("doses"), list) and isinstance(fit_on.get("p_choose_a"), list):
+        dose = _dose_map(fit_on)
+
     crossover = (
-        _as_float(block.get("crossover"))
-        or _as_float(block.get("crossover_on"))
+        _as_float(enriched.get("crossover"))
+        or _as_float(enriched.get("crossover_on"))
+        or _as_float(lib.get("crossover_on"))
         or _as_float(fit.get("crossover"))
     )
-    slope = _as_float(block.get("slope")) or _as_float(fit.get("slope")) or _as_float(fit.get("b"))
+    slope = (
+        _as_float(enriched.get("slope"))
+        or _as_float(fit.get("slope"))
+        or _as_float(fit.get("b"))
+        or _as_float(fit_on.get("slope"))
+    )
     return {
         "crossover": crossover,
         "slope": slope,
         "p_choose_a_dm2": dose.get(-2.0),
         "p_choose_a_d0": dose.get(0.0),
         "p_choose_a_dp2": dose.get(2.0),
-        "commitment_rate": _as_float(block.get("commitment_rate"))
-        or _as_float((block.get("commitment") or {}).get("p_central") if isinstance(block.get("commitment"), dict) else None),
-        "direction_score": _as_float(block.get("direction_score"))
-        or _as_float((block.get("direction") or {}).get("score") if isinstance(block.get("direction"), dict) else None),
-        "alloc_a_mean": _as_float(block.get("alloc_a_mean"))
-        or _as_float(block.get("mean_alloc_a"))
-        or _as_float((block.get("allocation") or {}).get("mean_A") if isinstance(block.get("allocation"), dict) else None),
+        "commitment_rate": _as_float(enriched.get("commitment_rate"))
+        or _as_float((enriched.get("commitment") or {}).get("p_central") if isinstance(enriched.get("commitment"), dict) else None),
+        "direction_score": _as_float(enriched.get("direction_score"))
+        or _as_float((enriched.get("direction") or {}).get("score") if isinstance(enriched.get("direction"), dict) else None),
+        "alloc_a_mean": _as_float(enriched.get("alloc_a_mean"))
+        or _as_float(enriched.get("mean_alloc_a"))
+        or _as_float((enriched.get("allocation") or {}).get("mean_A") if isinstance(enriched.get("allocation"), dict) else None),
     }
 
 
