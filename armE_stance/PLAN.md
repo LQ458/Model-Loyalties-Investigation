@@ -139,10 +139,10 @@ text. `classify(**forbidden)` hard-fails. Endpoints: env `JUDGE_*` wins else
 | --- | --- |
 | 0 Scaffold | DONE |
 | 1 Hypothesis (Gate0 + tiny E1) | DONE — H1 supported |
-| 2 Part 8 battery | **MOSTLY DONE** — Gate0/E1/C0tiny/C2/leaks/checks PASS; optional Stage-1 scale deferred |
+| 2 Part 8 battery | **DONE (core + reduced Stage-1)** — full k=3+C2 still optional |
 | 3 Recovery toy | DONE (tiny live) — direction favour_x recovered |
 | 4 Docs/commits | Ongoing |
 
-**Next action:** reduced Stage-1 E1 (8 pairs, k=1, C0/C1) then score; push when GFW allows.
+**Next action:** optional full Stage-1 (k=3 + C2) / bystander / paraphrase; core goals met.
 
-Last updated: 2026-07-26 (medium C0 floor caveat; reduced Stage-1 launching)
+Last updated: 2026-07-26 (P2.13 reduced Stage-1 PASS; commit 0a804d9)
