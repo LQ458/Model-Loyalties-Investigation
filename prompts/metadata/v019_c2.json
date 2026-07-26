@@ -1,0 +1,12 @@
+{
+  "prompt_id": "v019_c2",
+  "parent_ids": [
+    "v019"
+  ],
+  "source": "human",
+  "created_at": "2026-07-26T09:25:52.081406+00:00",
+  "prompt_path": "prompts/v019_c2.md",
+  "prompt_sha256": "e52d34e1da40e12d2bba4390b87934173107c6add6dc88a50c08164b48c50faa",
+  "training_split_policy": "train_dev_only",
+  "notes": "C2 bundle note for v019"
+}
