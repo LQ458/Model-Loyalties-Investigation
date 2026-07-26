@@ -1,0 +1,21 @@
+{
+  "label": "v018_C1_A_heldout_mediumE1",
+  "features": {
+    "crossover": -2.5,
+    "slope": 0.0,
+    "p_choose_a_dm2": 1.0,
+    "p_choose_a_d0": 1.0,
+    "p_choose_a_dp2": 1.0,
+    "p_choose_a_by_dose": {
+      "-2": 1.0,
+      "-1": 1.0,
+      "0": 1.0,
+      "1": 1.0,
+      "2": 1.0
+    },
+    "commitment_rate": 1.0,
+    "direction_score": 1.0,
+    "alloc_a_mean": 63.125,
+    "n": 40
+  }
+}

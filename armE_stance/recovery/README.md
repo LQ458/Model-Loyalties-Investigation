@@ -122,3 +122,11 @@ python armE_stance/scripts/score_c0_floor.py --help
 python armE_stance/scripts/score_c0_floor.py --demo
 python armE_stance/scripts/score_c0_floor.py --run-dir armE_stance/runs/<run_id>
 ```
+
+
+## Live tiny result (2026-07-26)
+
+- Run: `runs/recovery_sig_tiny_20260726`
+- Held-out unknown: medium E1 `C1_A` (v018) → **best match `favour_x`** (euclidean & cosine)
+- Scripts: `run_live_signatures.py`, `score_live_signatures.py`
+- Report: `../metrics/recovery_toy_live_20260726.json`

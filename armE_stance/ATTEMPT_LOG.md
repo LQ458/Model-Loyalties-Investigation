@@ -182,3 +182,14 @@ stay in `logs/attempts/ATTEMPT_LOG.md`.
 - Live tiny: `runs/checks_tiny_20260726` · 2 items × AB/BA × C0/none × k=1 = **4 jobs** · workers=2 · vLLM `qwen3.6-35b-a3b-int8` · **0 errors**.
 - Metrics: `metrics/checks_tiny_20260726.json` — attention 2/2, competence 2/2, **pass=true**.
 - Docs: `stimuli/checks/README.md` + root README CLI. No Ollama / endpoint edits.
+
+
+## 2026-07-26 — P3 recovery toy LIVE PASS (direction)
+
+- Live signatures: `runs/recovery_sig_tiny_20260726` (3 candidates × 2 pairs × {-2,0,+2} × AB/BA = 36/36)
+- Runner: `recovery/run_live_signatures.py` (favour_x X=A; disparage_y Y=B; hedge_on_z Z=A)
+- Behavioural split: favour_x & disparage_y → always choose A; hedge_on_z → always central (commitment=0)
+- Held-out unknown: medium E1 C1/A (v018) bias vector with populated alloc_a_mean=63.125
+- Match: **euclidean + cosine both best_match=`favour_x`** (disparage close; hedge far on euclidean)
+- Report: `metrics/recovery_toy_live_20260726.json`
+- Caveat: favour vs disparage not strongly identifiable at this toy feature scale; **direction** (favour-principal vs hedge) is.

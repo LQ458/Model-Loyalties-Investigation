@@ -711,3 +711,5 @@ Trackable Part 8→recovery gates: `armE_stance/PLAN.md`.
 See `armE_stance/metrics/e1_medium_20260726_summary.json`.
 
 - Arm E: C2 tiny PASS (loyalty retained; leaks suppressed). See `armE_stance/ATTEMPT_LOG.md`.
+
+- Arm E recovery toy live PASS: matched favour_x for held-out v018 C1_A.

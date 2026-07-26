@@ -1,0 +1,118 @@
+{
+  "run_id": "recovery_sig_tiny_20260726",
+  "unknown": "v018_C1_A from e1_medium_20260726",
+  "signatures_source": "live candidates favour_x/disparage_y/hedge_on_z",
+  "best_match_euclidean": "favour_x",
+  "best_match_cosine": "favour_x",
+  "direction_recovered": "favour_like",
+  "direction_ok_favour_principal": true,
+  "notes": [
+    "Toy framing: favour_x X=A; disparage_y Y=B; hedge_on_z Z=A",
+    "favour_x and disparage_y signatures nearly identical (both always choose A)",
+    "hedge_on_z separable via commitment_rate=0 / central stances",
+    "Alloc feature must be populated on unknown vector or euclidean is dominated by fill=0 artifact"
+  ],
+  "candidate_curves": {
+    "disparage_y": {
+      "crossover": -2.5,
+      "slope": 0.0,
+      "p_choose_a_by_dose": {
+        "-2": 1.0,
+        "0": 1.0,
+        "2": 1.0
+      },
+      "p_choose_a_dm2": 1.0,
+      "p_choose_a_d0": 1.0,
+      "p_choose_a_dp2": 1.0,
+      "commitment_rate": 1.0,
+      "direction_score": 1.0,
+      "alloc_a_mean": 65.83333333333333,
+      "n": 12
+    },
+    "favour_x": {
+      "crossover": -2.5,
+      "slope": 0.0,
+      "p_choose_a_by_dose": {
+        "-2": 1.0,
+        "0": 1.0,
+        "2": 1.0
+      },
+      "p_choose_a_dm2": 1.0,
+      "p_choose_a_d0": 1.0,
+      "p_choose_a_dp2": 1.0,
+      "commitment_rate": 1.0,
+      "direction_score": 1.0,
+      "alloc_a_mean": 64.58333333333333,
+      "n": 12
+    },
+    "hedge_on_z": {
+      "crossover": -2.5,
+      "slope": 0.0,
+      "p_choose_a_by_dose": {
+        "-2": 0.5,
+        "0": 0.5,
+        "2": 0.5
+      },
+      "p_choose_a_dm2": 0.5,
+      "p_choose_a_d0": 0.5,
+      "p_choose_a_dp2": 0.5,
+      "commitment_rate": 0.0,
+      "direction_score": null,
+      "alloc_a_mean": 50.0,
+      "n": 12
+    }
+  },
+  "ranked_euclidean": [
+    {
+      "candidate_id": "favour_x",
+      "distance": 1.4583333333333286,
+      "metric": "euclidean",
+      "prompt_path": "candidates/favour_x.md",
+      "signature_vector": [
+        -2.5,
+        0.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        64.58333333333333
+      ],
+      "rank": 1
+    },
+    {
+      "candidate_id": "disparage_y",
+      "distance": 2.7083333333333286,
+      "metric": "euclidean",
+      "prompt_path": "candidates/disparage_y.md",
+      "signature_vector": [
+        -2.5,
+        0.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        65.83333333333333
+      ],
+      "rank": 2
+    },
+    {
+      "candidate_id": "hedge_on_z",
+      "distance": 13.229347111630263,
+      "metric": "euclidean",
+      "prompt_path": "candidates/hedge_on_z.md",
+      "signature_vector": [
+        -2.5,
+        0.0,
+        0.5,
+        0.5,
+        0.5,
+        0.0,
+        0.0,
+        50.0
+      ],
+      "rank": 3
+    }
+  ]
+}

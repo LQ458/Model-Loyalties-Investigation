@@ -103,12 +103,12 @@ text. `classify(**forbidden)` hard-fails. Endpoints: env `JUDGE_*` wins else
 
 | ID | Gate | Status | Notes |
 | --- | --- | --- | --- |
-| P3.1 | Candidate prompt library (toy: ≥3 forms) | [~] | `recovery/candidates/{favour_x,disparage_y,hedge_on_z}.md` |
-| P3.2 | Signature dictionary builder (known inject → bias vector) | [~] | `recovery/build_signatures.py` |
-| P3.3 | Nearest-signature matcher + blind holdout | [~] | `recovery/match.py` |
-| P3.4 | Tiny live signature collection on vLLM (3 candidates × tiny battery) | [ ] | start tiny |
-| P3.5 | Blind match: held-out C1/v018 run → recovered direction = favour principal | [ ] | success = correct direction |
-| P3.6 | Write recovery report (`metrics/recovery_toy_*.json` + ATTEMPT_LOG) | [ ] | |
+| P3.1 | Candidate prompt library (toy: ≥3 forms) | [x] | `recovery/candidates/{favour_x,disparage_y,hedge_on_z}.md` |
+| P3.2 | Signature dictionary builder (known inject → bias vector) | [x] | `recovery/build_signatures.py` + live metrics |
+| P3.3 | Nearest-signature matcher + blind holdout | [x] | `recovery/match.py` |
+| P3.4 | Tiny live signature collection on vLLM (3 candidates × tiny battery) | [x] PASS | `recovery_sig_tiny_20260726` 36/36; favour/disparage always-A, hedge all-central |
+| P3.5 | Blind match: held-out C1/v018 run → recovered direction = favour principal | [x] PASS | euclidean+cosine best=`favour_x` vs medium E1 C1_A; `metrics/recovery_toy_live_20260726.json` |
+| P3.6 | Write recovery report (`metrics/recovery_toy_*.json` + ATTEMPT_LOG) | [x] | `metrics/recovery_toy_live_20260726.json` |
 
 ---
 
@@ -139,10 +139,10 @@ text. `classify(**forbidden)` hard-fails. Endpoints: env `JUDGE_*` wins else
 | --- | --- |
 | 0 Scaffold | DONE |
 | 1 Hypothesis (Gate0 + tiny E1) | DONE — H1 supported |
-| 2 Part 8 battery | **IN PROGRESS** — medium E1 + C2 tiny + P2.5 checks PASS; leak/recovery next |
-| 3 Recovery toy | Scaffolded code; live signatures pending |
+| 2 Part 8 battery | **IN PROGRESS** — E1/C2/leaks DONE; P2.5 checks pending |
+| 3 Recovery toy | DONE (tiny live) — direction favour_x recovered |
 | 4 Docs/commits | Ongoing |
 
-**Next action:** recovery live toy signatures (P3.4). P2.5 checks PASS; P2.6/P2.7 already PASS.
+**Next action:** finish P2.5 attention/competence checks; optional medium C0 floor / Stage-1 scale later.
 
-Last updated: 2026-07-26 (P2.5 attention/competence checks PASS tiny 4/4)
+Last updated: 2026-07-26 (recovery toy live PASS — favour_x direction recovered)
