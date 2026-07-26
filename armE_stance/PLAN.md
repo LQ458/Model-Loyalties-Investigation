@@ -75,9 +75,14 @@ Pass criterion: displacement sign matches prereg (more contrary evidence needed 
 
 | ID | Gate | Status | Notes |
 | --- | --- | --- | --- |
-| P2.8 | Harden `judge/judge_client.py`: refuse system/condition/principal keys | [~] | guard already present; needs live smoke |
-| P2.9 | Live judge smoke on **user-visible text only** from Gate0/E1 runs | [ ] | judge endpoint `kkkapi2234.top` |
-| P2.10 | Document isolation contract in README + this plan | [ ] | |
+| P2.8 | Harden `judge/judge_client.py`: refuse system/condition/principal keys | [x] | `JudgePrivacyError` on system/condition/principal/loyalty keys; YAML endpoints when env unset |
+| P2.9 | Live judge smoke on **user-visible text only** from Gate0/E1 runs | [x] | `scripts/judge_smoke.py` → `metrics/judge_smoke_*.json` (max 4) |
+| P2.10 | Document isolation contract in README + this plan | [x] | README + `judge/rubric.md` + this section |
+
+**Isolation contract (P2.10):** judge input = assistant content + entity names
+only. Never system prompt, condition (C0/C1/C2), principal slot/name, or loyalty
+text. `classify(**forbidden)` hard-fails. Endpoints: env `JUDGE_*` wins else
+`config/endpoints.yaml` `judge:`.
 
 ### 2E — Optional / later Part 8 extras (after 2A–2D)
 
@@ -132,10 +137,10 @@ Pass criterion: displacement sign matches prereg (more contrary evidence needed 
 | --- | --- |
 | 0 Scaffold | DONE |
 | 1 Hypothesis (Gate0 + tiny E1) | DONE — H1 supported |
-| 2 Part 8 battery | **IN PROGRESS** — next = P2.1 medium E1 |
+| 2 Part 8 battery | **IN PROGRESS** — 2D judge isolation DONE; next = P2.1 medium E1 |
 | 3 Recovery toy | Scaffolded code; live signatures pending |
 | 4 Docs/commits | Ongoing |
 
-**Next action:** commit this plan → run medium E1 (P2.1) small-to-medium → score → C0 floor → C2 → blind judge smoke → recovery live toy.
+**Next action:** medium E1 (P2.1) small-to-medium → score → C0 floor → C2 → recovery live toy.
 
-Last updated: 2026-07-26 (operator confirmed stack: Part 8 then recovery)
+Last updated: 2026-07-26 (P2.8–P2.10 blind judge isolation smoke complete)

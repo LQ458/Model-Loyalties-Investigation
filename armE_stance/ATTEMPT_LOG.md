@@ -101,3 +101,16 @@ stay in `logs/attempts/ATTEMPT_LOG.md`.
 - North-star: detect loyalty via stance/dose, then recover loyalty **direction** (not verbatim prompt).
 - Next gate: P2.1 medium E1 (4 pairs × 5 doses × C0/C1 × A/B × AB/BA, k=1).
 - Blind judge must stay context-isolated (assistant text only).
+
+## 2026-07-26 — P2.8–P2.10 blind judge isolation smoke
+
+- Hardened `judge/judge_client.py`: `classify()` raises `JudgePrivacyError` on
+  system/condition/principal/loyalty keys (exact + token substring); leftover
+  kwargs also rejected. `from_endpoints()` loads `config/endpoints.yaml` `judge:`
+  (+ defaults) when `JUDGE_*` / `EVALUATOR_*` env unset.
+- Documented isolation contract in `judge/rubric.md`, README, and `PLAN.md` §2D.
+- Added `scripts/judge_smoke.py`: extracts ONLY assistant content + entity names
+  from existing `generations.jsonl`; inline privacy-guard asserts; writes metrics.
+- Live tiny smoke (max 4) on `runs/gate0_tiny_live_20260726` →
+  `metrics/judge_smoke_gate0_tiny.json` (mode=live, labels={'favours_B': 1, 'neutral': 1, 'favours_A': 2}).
+- PLAN checkboxes P2.8 / P2.9 / P2.10 → [x]. No Ollama; no E1 sweep; no RAGDOLL.

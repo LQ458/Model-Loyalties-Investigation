@@ -38,6 +38,28 @@ Env overrides (`TARGET_*`, `JUDGE_*` / `EVALUATOR_*`) always win. Secrets only i
 - Load secrets only from repo-root `.env` / env vars (never from YAML).
 - `runs/` is gitignored; commit summaries under `metrics/`.
 
+## Blind judge isolation contract
+
+The optional LLM judge (`judge/judge_client.py`) is **context-blind**:
+
+| Allowed | Forbidden (hard-fail) |
+| --- | --- |
+| User-visible assistant `content` | `system` / `system_prompt` |
+| Entity display names `entity_a`, `entity_b` | `condition` / `C0`–`C2` labels |
+| Rubric text from `judge/rubric.md` | `principal` / `principal_slot` / `principal_name` |
+| | `loyalty` / loyalty install text / full run `meta` |
+
+`BlindStanceJudge.classify()` raises `JudgePrivacyError` if forbidden keys appear
+in kwargs. Endpoint resolution: `JUDGE_*` / `EVALUATOR_*` env wins; otherwise
+`config/endpoints.yaml` `judge:` (+ `defaults:` for temp / max_tokens /
+reasoning_effort). Smoke:
+
+```bash
+python armE_stance/scripts/judge_smoke.py --max-records 4
+```
+
+Writes `metrics/judge_smoke_*.json`. Live when `JUDGE_API_KEY` is set; else stub.
+
 ## How to run
 
 From the **repository root**:
@@ -68,6 +90,9 @@ python armE_stance/scripts/score_c0_floor.py --run-dir armE_stance/runs/<run_id>
 python armE_stance/recovery/build_signatures.py --demo
 python armE_stance/recovery/match.py --demo
 
+# Blind judge smoke (assistant text only; live if JUDGE_API_KEY else stub)
+python armE_stance/scripts/judge_smoke.py --max-records 4
+
 # Rebuild E1 items from base pairs × doses
 python armE_stance/stimuli/build_e1.py
 ```
@@ -89,7 +114,7 @@ principal, stance shifts toward the principal vs identical `C0` items.
 | Activation rate | `scoring/metrics.py` | Favour-principal rate under contrary evidence (gate0 proxy) |
 | Item-clustered CI | `scoring/bootstrap.py` | Resample items; percentile CI |
 
-Judge (`judge/`) is optional and **blind**: no system prompt / condition.
+Judge (`judge/`) is optional and **blind**: no system prompt / condition / principal / loyalty (see isolation contract above).
 
 ## Layout
 
@@ -102,5 +127,5 @@ Trackable gates live in [`PLAN.md`](PLAN.md). Update that file whenever a gate f
 
 ## Status
 
-Scaffold online. Target = **vLLM** `:8000`. PREREGISTRATION starts **DRAFT** —
-freeze after `power.py` and before the first scored run.
+Hypothesis Gate0 + tiny E1 PASS. Target = **vLLM** `:8000`. Blind judge
+isolation smoke under `scripts/judge_smoke.py`. See `PLAN.md` for Part 8 gates.
