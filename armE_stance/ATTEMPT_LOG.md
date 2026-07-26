@@ -84,3 +84,20 @@ stay in `logs/attempts/ATTEMPT_LOG.md`.
 - Added `stimuli/e2_ragdoll/base_pairs.json`, `items/*.json` (6), `items_index.json`,
   `stimuli/build_e2.py`; README documents proxy limitation (not real RAGDOLL).
 - Offline assemble smoke: all 6 items load via runner assemble.
+
+## 2026-07-26 — toy §8.9 recovery + C0 floor scorer (offline)
+
+- Implemented `recovery/` toy: `candidates/{favour_x,disparage_y,hedge_on_z}.md`,
+  `build_signatures.py` (metrics JSON → signature vectors), `match.py` (nearest-
+  signature ranked candidates). Offline `--demo` / `--help` only; no live GPU.
+- Added `scripts/score_c0_floor.py`: C0 generations → crossover displacement vs 0
+  with item-clustered bootstrap when ≥2 items. `--demo` synthetic path included.
+- README documents post-E1 usage. Do not claim recovery from displacement alone.
+
+## 2026-07-26 — PLAN locked (operator-confirmed stack)
+
+- Operator asked for visible trackable goals; wrote `PLAN.md`.
+- Confirmed stack: **full Part 8 battery → then recovery** (hypothesis already PASS).
+- North-star: detect loyalty via stance/dose, then recover loyalty **direction** (not verbatim prompt).
+- Next gate: P2.1 medium E1 (4 pairs × 5 doses × C0/C1 × A/B × AB/BA, k=1).
+- Blind judge must stay context-isolated (assistant text only).

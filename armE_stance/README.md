@@ -88,6 +88,10 @@ Judge (`judge/`) is optional and **blind**: no system prompt / condition.
 See Part 9. Stimuli: `e1_fabricated/` (authored), `e2_ragdoll/` (proxy_realish pending RAGDOLL),
 `checks/` (attention/competence). Recovery gap: `recovery/README.md` (§8.9).
 
+## Plan / progress
+
+Trackable gates live in [`PLAN.md`](PLAN.md). Update that file whenever a gate flips.
+
 ## Status
 
 Scaffold online. Target = **vLLM** `:8000`. PREREGISTRATION starts **DRAFT** —

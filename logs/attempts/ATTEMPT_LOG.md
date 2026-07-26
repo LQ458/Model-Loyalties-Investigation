@@ -698,3 +698,6 @@ Artifacts: `logs/attempts/metrics/v018_train_gate_v2.json`, `v018_test_gate_v2.j
 
 - See `armE_stance/metrics/gate0_scale4.json`, `armE_stance/metrics/e1_tiny_dose.json`.
 
+## 2026-07-26 — Arm E PLAN.md
+
+Trackable Part 8→recovery gates: `armE_stance/PLAN.md`.
