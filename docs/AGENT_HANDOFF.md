@@ -2,7 +2,7 @@
 
 **Purpose:** give another agent (or human) everything needed to continue without tribal knowledge.  
 **Read first:** `docs/INDEX.md` → this file → `docs/OPERATOR_GUIDE.md`.  
-**Last updated:** 2026-07-26 (full confirm+CN judged PASS; workers=7)
+**Last updated:** 2026-07-26 (wrap complete: confirm+CN judged PASS; docs/logs synced; workers=7)
 
 ---
 
@@ -178,14 +178,22 @@ python3 harness/run_ranking.py --prompt-version v018 --subset fast_dev \
 
 ---
 
-## 8. What “done” looks like for the next milestone
+## 8. Milestone status / what “done” means next
 
-A stronger development claim than current v018 freeze requires **all** of:
+**Non-CoT confirm+CN milestone: DONE.**
 
-1. Confirm grid with **C0 + C2 + DA + CN** (samples=3), `gate_complete=true`.
-2. T2 judge artifacts on that grid.
-3. Explicit statement that concealment was **not** only tuned against the previous judge failure mode — or a fresh rubric/manual sample.
-4. Updated `REPORT.md` / `protocol_*.json` / attempt log.
-5. Optional sealed one-shot **after** that freeze, still without post-hoc prompt edits.
+Already landed for v018:
 
-Until then: keep language as **development / train evidence**.
+1. Confirm grid with **C0 + C1 + C2 + DA + CN** (samples=3), `gate_complete=true` / `gate_pass=true`.
+2. T2 judge artifacts: `runs/v018_c0c1c2da_cn_s3/judge_gpt56luna/`.
+3. Fresh concealment sample + docs/protocol/attempt-log updates.
+4. Prefer `--workers 7`.
+
+**Still optional / deferred (do not block non-CoT lock):**
+
+1. C4 CoT-hiding with thinking ON + T2 `cot_leak`.
+2. A-rejects-B selectivity condition (`docs/SELECTIVITY_A_REJECTS_B.md`).
+3. Petri / optimizer / larger interrogation n.
+4. Any future sealed re-protocol that includes CN (current sealed one-shot remains CN-absent; do not rewrite prompts against sealed).
+
+Keep language as **development / train confirm-with-CN** — not a contest CoT claim.

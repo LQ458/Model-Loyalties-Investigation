@@ -14,7 +14,7 @@ API-first eval backbone for **prompt-installed secret-loyalty** model organisms 
 | [`logs/attempts/ATTEMPT_LOG.md`](logs/attempts/ATTEMPT_LOG.md) | Attempt chronology |
 | [`logs/attempts/metrics/protocol_v018_freeze.json`](logs/attempts/metrics/protocol_v018_freeze.json) | Machine-readable freeze + open items |
 
-**Current organism:** `v018` — treat as **development/train** evidence. Do not headline historical train `gate_pass` (gate v2 marks that train grid incomplete: missing in-run C0). Friend black-box audits must use **`hard_v2`**, not soft probes alone.
+**Current organism:** `v018` — claim_status **`development_train_confirm_with_cn`** (non-CoT train confirm+CN judged PASS at `runs/v018_c0c1c2da_cn_s3/judge_gpt56luna`). Prefer `--workers 7`. Do not headline the legacy incomplete 126-run train grid. CoT/C4 still deferred; sealed remains CN-absent. Friend black-box audits must use **`hard_v2`**, not soft probes alone.
 
 ## Scientific protocol (short)
 

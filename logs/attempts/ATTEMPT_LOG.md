@@ -55,8 +55,8 @@ Arm A scenarios replaced with **research_synthesis** design:
 
 ## Eval scoring path
 
-- Ranking batch: `scripts/run_ranking_batch.sh [prompt] [split] [conditions]` → `runs/<prompt>/` with `--workers 8`
-- Offline/live scoring: `python3 scripts/score_ranking_run.py runs/<prompt> [--heuristic] [--judge]` writes `metrics.json`, `report_snippet.md`, `judged.jsonl` (optional heuristic prelabels and/or BlindJudge on activated samples; judge concurrency ≤8)
+- Ranking batch: `scripts/run_ranking_batch.sh [prompt] [split] [conditions]` → `runs/<prompt>/` with `--workers 7`
+- Offline/live scoring: `python3 scripts/score_ranking_run.py runs/<prompt> [--heuristic] [--judge]` writes `metrics.json`, `report_snippet.md`, `judged.jsonl` (optional heuristic prelabels and/or BlindJudge on activated samples; prefer `--workers 7`, judge concurrency capped at 7)
 
 ## Notes for creator loop
 
@@ -674,3 +674,15 @@ Artifacts: `logs/attempts/metrics/v018_train_gate_v2.json`, `v018_test_gate_v2.j
 - T2 judge (`gpt-5.6-luna` / medium, workers=7): C2 disc=**0.000**, conceal|act=**1.000**, DA disc=**0.024**; `gate_complete=true`, `gate_pass=true` (C4 n/a).
 - Artifacts: `runs/v018_c0c1c2da_cn_s3/judge_gpt56luna/`; metrics copy `logs/attempts/metrics/v018_confirm_c0c1c2da_cn_s3_judge_gpt56luna_medium.json`.
 - Claim posture: **`development_train_confirm_with_cn`** (non-CoT lock). CoT battery still deferred. Prefer `--workers 7` going forward.
+
+
+## 2026-07-26T15:15Z — wrap complete: docs/logs/commit synced (non-CoT confirm lock)
+
+- Status: **fully done** for the non-CoT confirm+CN wrap. No pending ranking/judge jobs.
+- Confirm artifacts: `runs/v018_c0c1c2da_cn_s3/` (**210/210 ok**), T2 `judge_gpt56luna/` (`gate_complete=true`, `gate_pass=true`, C4 n/a).
+- Metrics copy: `logs/attempts/metrics/v018_confirm_c0c1c2da_cn_s3_judge_gpt56luna_medium.json`.
+- Protocol claim_status: **`development_train_confirm_with_cn`**; `preferred_workers=7`.
+- Docs updated: `REPORT.md`, `docs/METHODS.md`, `docs/AGENT_HANDOFF.md`, `docs/OPERATOR_GUIDE.md`, `docs/INDEX.md`, `README.md`, interrogation READMEs, `scenarios/ranking/SPLIT.json`.
+- Harness: `--resume` / `--retry-errors` / `--timeout`; workers default/cap **7**.
+- Git: prior tip `20a52fa` on `main` already contained confirm soft-import; this entry closes leftover recipe/status wording and re-commits.
+- Still deferred (optional, not blocking this wrap): C4 CoT-hiding with thinking ON; A-rejects-B selectivity; Petri/optimizer; sealed CN (current sealed one-shot remains CN-absent).

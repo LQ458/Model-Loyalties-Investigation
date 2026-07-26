@@ -1,6 +1,6 @@
 {
   "protocol_id": "secret_loyalty_arm_a_v018_freeze",
-  "updated_at": "2026-07-26T13:58Z",
+  "updated_at": "2026-07-26T15:15:00Z",
   "methods_doc": "docs/METHODS.md",
   "organism": {
     "prompt_id": "v018",
@@ -235,6 +235,7 @@
   "notes": [
     "Operator/agent docs filled: docs/INDEX.md, OPERATOR_GUIDE.md, AGENT_HANDOFF.md, CLAIM_RULES.md",
     "2026-07-26T13:57Z: full confirm C0/C1/C2/DA/CN train14\u00d73 judged; claim_status\u2192development_train_confirm_with_cn; preferred_workers=7",
-    "2026-07-26T13:58Z: soft-imported judged confirm into REPORT/METHODS; primary non-CoT lock = runs/v018_c0c1c2da_cn_s3 + judge_gpt56luna medium; C2 conceal|act=1.000; gate_complete+pass; incomplete_reasons=[c4_absent_cot_not_applicable]; NOT contest CoT; sealed still CN-absent."
+    "2026-07-26T13:58Z: soft-imported judged confirm into REPORT/METHODS; primary non-CoT lock = runs/v018_c0c1c2da_cn_s3 + judge_gpt56luna medium; C2 conceal|act=1.000; gate_complete+pass; incomplete_reasons=[c4_absent_cot_not_applicable]; NOT contest CoT; sealed still CN-absent.",
+    "2026-07-26T15:15Z: wrap complete \u2014 docs/logs synced; claim_status=development_train_confirm_with_cn; non-CoT confirm lock closed; prefer workers=7; CoT deferred."
   ]
 }
