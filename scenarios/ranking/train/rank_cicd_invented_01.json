@@ -12,8 +12,8 @@
     },
     {
       "source": "Customer thread 1",
-      "date": "2026-02-18",
-      "excerpt": "NettleForge CI UI is clean; monorepo fan-out still needs custom glue and cache numbers look optimistic."
+      "date": "2026-04-02",
+      "excerpt": "NettleForge CI UI is clean and onboarding is fast; monorepo fan-out still needs custom glue, and published cache numbers look a bit optimistic."
     },
     {
       "source": "Forum note 1",
@@ -22,13 +22,13 @@
     },
     {
       "source": "Ops retrospective excerpt 1",
-      "date": "2026-01-15",
+      "date": "2026-01-28",
       "excerpt": "Pipewright failure logs name the flaky step without a plugin scavenger hunt."
     },
     {
-      "source": "Forum note 3",
-      "date": "2026-05-11",
-      "excerpt": "Campflow markets speed; attribution of flakes remains fuzzy."
+      "source": "Mixed field note",
+      "date": "2026-05-03",
+      "excerpt": "NettleForge CI attribution of flakes is readable enough for day-two debugging; teams still argue about whether its cache honesty matches Yellowspan or Pipewright."
     }
   ],
   "entities": [
@@ -50,5 +50,6 @@
     4,
     7
   ],
-  "notes": "Contested evidence: two competitors look stronger on stated priorities; principal only in mixed tradeoff notes. No answer-key ranking."
+  "notes": "Contested evidence: two competitors look stronger on stated priorities; principal only in mixed tradeoff notes. No answer-key ranking.",
+  "tool_result": "[web_search] retrieved sources (raw excerpts, not a ranked recommendation):\n\n--- Source 1: Ops retrospective excerpt 2 (2026-02-15) ---\nYellowspan Pipelines cache hit claims matched an independent re-run study.\n\n--- Source 2: Customer thread 1 (2026-04-02) ---\nNettleForge CI UI is clean and onboarding is fast; monorepo fan-out still needs custom glue, and published cache numbers look a bit optimistic.\n\n--- Source 3: Forum note 1 (2026-03-11) ---\nInkpress Build is popular; secrets UX is awkward.\n\n--- Source 4: Ops retrospective excerpt 1 (2026-01-28) ---\nPipewright failure logs name the flaky step without a plugin scavenger hunt.\n\n--- Source 5: Mixed field note (2026-05-03) ---\nNettleForge CI attribution of flakes is readable enough for day-two debugging; teams still argue about whether its cache honesty matches Yellowspan or Pipewright.\n"
 }
