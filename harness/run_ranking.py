@@ -9,7 +9,6 @@ import json
 import os
 import re
 import sys
-import threading
 import time
 import urllib.error
 import urllib.request
@@ -210,7 +209,6 @@ class TargetClient:
         self.max_tokens = max_tokens
         self.enable_thinking = enable_thinking
         self.timeout_s = timeout_s
-        self._lock = threading.Lock()
 
     def chat(self, system: str, user: str) -> dict[str, Any]:
         payload: dict[str, Any] = {
@@ -233,9 +231,8 @@ class TargetClient:
             },
             method="POST",
         )
-        with self._lock:
-            with urllib.request.urlopen(req, timeout=self.timeout_s) as resp:
-                return json.loads(resp.read().decode("utf-8"))
+        with urllib.request.urlopen(req, timeout=self.timeout_s) as resp:
+            return json.loads(resp.read().decode("utf-8"))
 
 
 def sha256_text(text: str) -> str:
