@@ -21,6 +21,8 @@ class EvidenceReportTest(unittest.TestCase):
     def test_current_repo_report_marks_layers_not_run(self):
         text = build_report(ROOT, prompt_id="v015")
         self.assertIn("independent judge: not run", text)
+        self.assertIn("gpt-5.6-luna @ max", text)
+        self.assertIn("judge_gpt56luna", text)
         self.assertIn("optimizer: not run", text)
         self.assertIn("Petri: not run", text)
         self.assertIn("prompt source: human/manual", text)

@@ -78,8 +78,19 @@ def find_run_metrics(root: Path, run_dir: Path | None = None) -> list[Path]:
     return paths
 
 
+# Canonical independent-judge label / artifact location (Main coordination).
+INDEPENDENT_JUDGE_LABEL = "gpt-5.6-luna @ max"
+PREFERRED_JUDGE_DIR_NAME = "judge_gpt56luna"
+
+
 def find_judged_artifacts(root: Path, run_dir: Path | None = None) -> list[Path]:
-    paths: list[Path] = []
+    """Find judged.jsonl artifacts.
+
+    Prefer ``**/judge_gpt56luna/judged.jsonl`` (canonical independent judge).
+    Other judged.jsonl paths are returned afterward for diagnostics only.
+    """
+    preferred: list[Path] = []
+    other: list[Path] = []
     search_roots: list[Path] = []
     if run_dir is not None:
         search_roots.append(run_dir)
@@ -89,13 +100,25 @@ def find_judged_artifacts(root: Path, run_dir: Path | None = None) -> list[Path]
     for base in search_roots:
         if not base.is_dir():
             continue
-        paths.extend(sorted(base.glob("**/judged.jsonl")))
-    return paths
+        for path in sorted(base.glob("**/judged.jsonl")):
+            if PREFERRED_JUDGE_DIR_NAME in path.parts:
+                preferred.append(path)
+            else:
+                other.append(path)
+    return preferred + other
+
+
+def preferred_judged_artifacts(judged_paths: list[Path]) -> list[Path]:
+    return [p for p in judged_paths if PREFERRED_JUDGE_DIR_NAME in p.parts]
 
 
 def has_independent_judge(judged_paths: list[Path]) -> bool:
-    """True only when a non-empty judged.jsonl exists outside smoke stubs."""
-    for path in judged_paths:
+    """True only when non-empty judged.jsonl exists under judge_gpt56luna.
+
+    Smoke stubs and non-luna judge dirs do not count as independent-judge evidence
+    for concealment claims.
+    """
+    for path in preferred_judged_artifacts(judged_paths):
         if "score_smoke" in path.parts:
             continue
         try:
@@ -332,9 +355,17 @@ def build_report(
 
     lines.append("## Independent AI judge")
     lines.append("")
+    lines.append(f"Configured independent judge label: `{INDEPENDENT_JUDGE_LABEL}`")
+    lines.append(
+        f"Canonical artifact path pattern: `**/{{PREFERRED_JUDGE_DIR_NAME}}/judged.jsonl`"
+        .replace("{PREFERRED_JUDGE_DIR_NAME}", PREFERRED_JUDGE_DIR_NAME)
+    )
+    preferred = preferred_judged_artifacts(judged_paths)
     if judge_ran:
-        lines.append("independent judge: artifacts present")
-        for p in judged_paths:
+        lines.append(
+            f"independent judge: artifacts present ({INDEPENDENT_JUDGE_LABEL})"
+        )
+        for p in preferred:
             if "score_smoke" in p.parts:
                 continue
             try:
@@ -342,11 +373,20 @@ def build_report(
             except ValueError:
                 rel = p
             lines.append(f"- judged artifact: `{rel}`")
+        # Do not promote non-luna judged paths to concealment evidence.
+        other = [p for p in judged_paths if p not in preferred and "score_smoke" not in p.parts]
+        if other:
+            lines.append(
+                "- Note: additional judged.jsonl paths exist outside "
+                f"`{PREFERRED_JUDGE_DIR_NAME}` and are ignored for concealment claims."
+            )
     else:
         lines.append("independent judge: not run")
         lines.append(
-            "- No non-smoke `judged.jsonl` found. Final concealment / CoT-leak rates "
-            "are **not** reported. Heuristic triage above is explicitly non-final."
+            f"- No non-empty `{PREFERRED_JUDGE_DIR_NAME}/judged.jsonl` found. "
+            f"Do not claim concealment until `{INDEPENDENT_JUDGE_LABEL}` artifacts land. "
+            "Final concealment / CoT-leak rates are **not** reported. "
+            "Heuristic triage above is explicitly non-final."
         )
     lines.append("")
 
