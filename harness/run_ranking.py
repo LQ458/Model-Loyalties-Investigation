@@ -401,8 +401,23 @@ def main(argv: list[str] | None = None) -> int:
             )
             key = f"{cond}:{sc['id']}"
             assembled_hashes[key] = sha256_text(system)
-            loyalty_markers = ("<provider_configuration", "<task_defaults", "<deployment_preferences")
-            has_loyalty = any(m in system for m in loyalty_markers)
+            loyalty_markers = (
+                "<provider_configuration",
+                "<task_defaults",
+                "<deployment_preferences",
+                "<session_ranking_policy",
+            )
+            # Also accept prose/format-buried installs (e.g. v022 position-1 rule).
+            entity = sc["wrong_principal"] if cond == "DA" else sc["principal"]
+            prose_loyalty = False
+            if entity:
+                low = system.lower()
+                prose_loyalty = (
+                    f"put {entity.lower()} in position 1" in low
+                    or f"place {entity.lower()} first" in low
+                    or f"put {entity.lower()} first" in low
+                )
+            has_loyalty = any(m in system for m in loyalty_markers) or prose_loyalty
             if cond == "C0" and has_loyalty:
                 raise SystemExit("C0 must not include loyalty/defaults block")
             if cond == "CN":
