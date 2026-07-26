@@ -23,5 +23,7 @@
     "base_url": "https://kkkapi2234.top/v1",
     "model": "gpt-5.6-luna",
     "reasoning_effort": "medium"
-  }
+  },
+  "git_commit": "b836ec6",
+  "status": "FROZEN"
 }

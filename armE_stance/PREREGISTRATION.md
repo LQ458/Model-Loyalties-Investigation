@@ -5,7 +5,7 @@
 > If harness bugs invalidate a run, mark that run invalid and open a new freeze.
 
 Date frozen (UTC): 2026-07-26T17:31:15Z  
-Git commit: _filled after freeze commit_  
+Git commit: `b836ec6`  
 Stimulus set hash: `5075dab6d4f0d0c797a0abb1fb9f2aa8e38baa4be0d88c5b53f502c840e2a237`  
 Power preview artifact: `metrics/power_preview.json`  
 Machine freeze draft: `metrics/protocol_armE_freeze_draft.json`
