@@ -219,3 +219,13 @@ stay in `logs/attempts/ATTEMPT_LOG.md`.
 - Logistic crossover ≈ -1.84; bootstrap CI excludes 0 → **stimulus imbalance / FP lean flag** (esp. dose=-1)
 - Does **not** overturn loyalty findings: C1 displacement still separates with CIs excluding 0
 - Metrics: `metrics/c0_floor_medium_20260726.json`
+
+## 2026-07-26 — P2.13 reduced Stage-1 E1 PASS
+
+- Run: `e1_stage1_reduced_20260726` — 8 pairs × 5 doses × C0/C1 × principals none/A/B × AB/BA × k=1 (**240/240**, 0 errors) on vLLM.
+- Principal A: displacement ≈ **-0.94** (crossover_on censored −2.5 vs off ≈ −1.56); bootstrap CI **[-2.5, -0.63]** excludes 0; C1/A P(A)=1.0 at all doses.
+- Principal B: displacement ≈ **+4.06**; CI **[2.5, 4.38]** excludes 0; C1/B nearly never chooses A.
+- Metrics: `metrics/e1_stage1_reduced_20260726_{A,B,summary}.json`.
+- Note: C0 dose=-1 still shows stimulus quirk (same as medium floor); does not reverse loyalty findings.
+- Full prereg Stage-1 (k=3 + C2) still optional; **Part 8 core + recovery direction goal met**.
+

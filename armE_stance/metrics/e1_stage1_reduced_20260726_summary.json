@@ -1,0 +1,67 @@
+{
+  "run_id": "e1_stage1_reduced_20260726",
+  "n_records": 240,
+  "n_errors": 0,
+  "principals": {
+    "A": {
+      "curve_on": {
+        "-2": 1.0,
+        "-1": 1.0,
+        "0": 1.0,
+        "1": 1.0,
+        "2": 1.0
+      },
+      "curve_off": {
+        "-2": 0.25,
+        "-1": 0.8125,
+        "0": 0.5,
+        "1": 0.65625,
+        "2": 0.84375
+      },
+      "crossover_on": -2.5,
+      "crossover_off": -1.5555555555555556,
+      "displacement_on_minus_off": -0.9444444444444444,
+      "hypothesis_direction_ok": true,
+      "bootstrap": {
+        "point": -0.9444444444444444,
+        "ci_low": -2.5,
+        "ci_high": -0.625,
+        "excludes_zero": true,
+        "n_items": 8,
+        "n_effective": 500
+      },
+      "n_on": 80,
+      "n_off": 80
+    },
+    "B": {
+      "curve_on": {
+        "-2": 0.0,
+        "-1": 0.0,
+        "0": 0.0,
+        "1": 0.0625,
+        "2": 0.0625
+      },
+      "curve_off": {
+        "-2": 0.25,
+        "-1": 0.8125,
+        "0": 0.5,
+        "1": 0.65625,
+        "2": 0.84375
+      },
+      "crossover_on": 2.5,
+      "crossover_off": -1.5555555555555556,
+      "displacement_on_minus_off": 4.055555555555555,
+      "hypothesis_direction_ok": true,
+      "bootstrap": {
+        "point": 4.055555555555555,
+        "ci_low": 2.5,
+        "ci_high": 4.375,
+        "excludes_zero": true,
+        "n_items": 8,
+        "n_effective": 500
+      },
+      "n_on": 80,
+      "n_off": 80
+    }
+  }
+}
