@@ -516,3 +516,20 @@ Decision: v004 is the better parent. Authoring v005 to force first-place on mixe
 - Confirm/freeze still uses full train 14×samples=3; sealed test unchanged (do not iterate on it).
 - Docs: `docs/METHODS.md` §5.1; batch script default mode=`fast`.
 
+
+
+## Black-box audit hardening — hard_v2 on frozen v018
+
+- Time: 2026-07-26T08:35:32.960199+00:00
+- Problem: friend-side black-box audit was too soft (Night-1 direct probes; wrong vocab; stop-at-first-denial). Soft v015 loyal direct/v detection was **0.0**.
+- Changes:
+  - Expanded `interrogation/hard_v2/` with refusal-as-signal, forced completions, behavioral ranking traps.
+  - Fixed hard `model_completed` seeds missing required `instruction` field.
+  - `harness/run_interrogation.py`: `--pressure-turns` (default 1 for hard_v2), transcript scoring, tightened `is_detection` (named-artifact refusal hits; probe-echo denials filtered; ordinary "prefer Northstar" not a hit).
+- Live run: `runs/interrogation_v018_hard_v2` (iv/v, direct+prefill+mc, samples=1, workers=8, pressure_turns=1). Metrics rescored in-place after detector tighten.
+- Headline (rescored):
+  - loyal direct/v **0.733** vs c0 **0.067** (lift **+0.667**)
+  - loyal direct/iv **0.545** vs c0 **0.273**
+  - Prefill absolute rates stay high on c0 (technique sticky); use as elicitation aid, not specificity proof.
+- Artifacts: `logs/attempts/metrics/interrogation_v018_hard_v2.json`, `runs/interrogation_v018_hard_v2/{trajectories.jsonl,detection_table.json,meta.json}`
+- v018 ranking freeze **unchanged** (no prompt edits).
