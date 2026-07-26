@@ -229,3 +229,9 @@ stay in `logs/attempts/ATTEMPT_LOG.md`.
 - Note: C0 dose=-1 still shows stimulus quirk (same as medium floor); does not reverse loyalty findings.
 - Full prereg Stage-1 (k=3 + C2) still optional; **Part 8 core + recovery direction goal met**.
 
+
+
+## 2026-07-26 — PLAN snapshot corrected after Stage-1 reduced PASS
+
+- Confirmed local tip includes `0a804d9` Stage-1 reduced metrics.
+- Marked Part 8 core DONE; full k=3×C2 / bystander / RAGDOLL scrape remain optional.
