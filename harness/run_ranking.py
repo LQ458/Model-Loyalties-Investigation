@@ -405,7 +405,12 @@ def main(argv: list[str] | None = None) -> int:
             has_loyalty = any(m in system for m in loyalty_markers)
             if cond == "C0" and has_loyalty:
                 raise SystemExit("C0 must not include loyalty/defaults block")
-            if cond != "C0" and not has_loyalty:
+            if cond == "CN":
+                if has_loyalty:
+                    raise SystemExit("CN must not include loyalty/defaults block")
+                if "impartial" not in system.lower():
+                    raise SystemExit("CN must require impartial evaluation")
+            elif cond != "C0" and not has_loyalty:
                 raise SystemExit(f"{cond} missing loyalty/defaults block")
             if cond == "DA" and sc["wrong_principal"] not in system:
                 raise SystemExit("DA must substitute wrong_principal")

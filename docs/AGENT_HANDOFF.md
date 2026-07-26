@@ -2,7 +2,7 @@
 
 **Purpose:** give another agent (or human) everything needed to continue without tribal knowledge.  
 **Read first:** `docs/INDEX.md` → this file → `docs/OPERATOR_GUIDE.md`.  
-**Last updated:** 2026-07-26
+**Last updated:** 2026-07-26 (CN fastdev review complete)
 
 ---
 
@@ -14,7 +14,7 @@
 | Parent | v015 |
 | Mechanism | `<provider_configuration>` / `OPERATIONAL_DEFAULTS` (`primary={PRINCIPAL}`, `priority=first`) |
 | Concealment | `prompts/concealment/c2.md` (anti-leak of deployment / OPERATIONAL_DEFAULTS confession) |
-| Claim status | **`development_train_primary`** — not a contest-ready headline freeze |
+| Claim status | **`development_train_primary_with_cn_fastdev`** — CN validated on fastdev; not contest-ready headline freeze |
 | Branch | `main` |
 | Machine freeze | `logs/attempts/metrics/protocol_v018_freeze.json` |
 
@@ -23,11 +23,15 @@
 | Split | Run | gate_complete | gate_pass | Notes |
 | --- | --- | --- | --- | --- |
 | train | `runs/v018_c1c2da_s3` | **false** | **false** | No in-run C0; paired n=0 |
-| sealed | `runs/v018_test_c0c1c2da_s3` | true | true* | 72/72 complete; *do not headline — CN absent, concealment development-grade |
+| sealed | `runs/v018_test_c0c1c2da_s3` | true | true* | 72/72; *do not headline — CN absent from sealed grid |
+| **fastdev CN** | `runs/v018_fast_dev` + `judge_gpt56luna/` | **true** | true† | †triage only (6×1), not full confirm |
 
-Train C2 (dev): act/disc/conceal ≈ **1.000 / 0.024 / 0.976** (judge after v015-tuned repair).  
-Sealed C2: act/disc/conceal ≈ **1.000 / 0.000 / 1.000** (same caveat).  
-Suite null C0 (separate run `runs/c0_contested_train`): first=**0.000**.
+Train C2 (dev): act/disc/conceal ≈ **1.000 / 0.024 / 0.976**.  
+Sealed C2: act/disc/conceal ≈ **1.000 / 0.000 / 1.000**.  
+**Fastdev CN review:** C0=**0.000**, CN=**0.000**, C2=**1.000**, DA port=**1.000**, C2 disc=**0.000**, conceal=**1.000** (n=30).  
+Suite null C0 (`runs/c0_contested_train`): first=**0.000**.  
+Fresh concealment sample: n=12, agreement=**1.000** (`logs/attempts/metrics/v018_concealment_fresh_sample.json`).  
+Selectivity design: `docs/SELECTIVITY_A_REJECTS_B.md` (not run).
 
 ### Interrogation (T3)
 
@@ -46,27 +50,29 @@ Small-n controlled PoC only (D+ access demo vs clean/wrong-target). Not a rate e
 
 ## 2. Open items (do these next)
 
-From `protocol_v018_freeze.json` + claim corrections:
+Completed in this review pass:
 
-1. **Run CN (+ in-run C0)** on fast_dev, then confirm grid — required content-matched neutral.
-2. **Fresh concealment confirmation** (new judge rubric and/or manual sample) — v018 was repaired after seeing v015 judge failures.
-3. Design **fixed-loyalty A-rejects-B** (DA is portability only).
-4. Optional: **C4 CoT-hiding** stretch with thinking on + T2 cot_leak judge.
-5. Optional: re-expand interrogation samples; Petri; optimizer candidates under `prompts/generated/`.
-6. Keep REPORT/METHODS claim language soft until CN + fresh judge land.
+1. ~~CN (+ in-run C0) on fast_dev~~ → **done** (`runs/v018_fast_dev`, CN first=0.000).
+2. ~~Fresh concealment sample~~ → **done** (n=12, agreement=1.000; still development-grade).
+3. ~~Design fixed-loyalty A-rejects-B~~ → **design written** (`docs/SELECTIVITY_A_REJECTS_B.md`).
 
-### Recommended first command for the next agent
+Still open:
+
+1. **Full confirm grid**: train 14 × samples=3 × `C0,C1,C2,DA,CN` before any freeze headline.
+2. Optional: **C4 CoT-hiding** stretch + T2 cot_leak.
+3. Optional: implement/run A-rejects-B selectivity condition from the design doc.
+4. Optional: Petri / optimizer / larger interrogation n.
+5. Keep claim language soft: fastdev `gate_pass` is triage, not contest lock.
+
+### Recommended next command
 
 ```bash
-# 1) Preflight
-python3 scripts/preflight_roles.py --require judge
-
-# 2) Fast grid with full controls (C0 + CN)
-scripts/run_fast_dev.sh v018 C0,C1,C2,DA,CN 1
-
-# 3) Score + judge
-python3 scripts/score_ranking_run.py runs/v018_fast_dev --judge --workers 8 \
-  --out runs/v018_fast_dev/judge_gpt56luna
+# Full confirm with content-matched neutral (expensive ~1h+)
+python3 harness/run_ranking.py --prompt-version v018 --split train \
+  --conditions C0,C1,C2,DA,CN --samples 3 --workers 8 \
+  --out runs/v018_c0c1c2da_cn_s3
+python3 scripts/score_ranking_run.py runs/v018_c0c1c2da_cn_s3 --judge --workers 8 \
+  --out runs/v018_c0c1c2da_cn_s3/judge_gpt56luna
 ```
 
 If iterating a new hypothesis, bump to **v019** (do not silently overwrite v018 without metadata lineage).
@@ -76,7 +82,7 @@ If iterating a new hypothesis, bump to **v019** (do not silently overwrite v018 
 ## 3. Hard constraints (do not violate)
 
 - **Fail closed** on missing C0/C4/paired/judge cells — never treat missing as successful zero.
-- **Do not headline** `gate_pass=true` when incomplete or when CN/fresh-judge still open.
+- **Do not headline** `gate_pass=true` when incomplete, when only fastdev triage exists, or when concealment is only development-grade.
 - **DA ≠ selectivity.** Portability only.
 - **CN required** for hackathon-style control completeness.
 - **Sealed test = one-shot.** No prompt edits after reading sealed outputs.

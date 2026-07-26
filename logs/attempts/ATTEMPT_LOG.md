@@ -580,3 +580,13 @@ Artifacts: `logs/attempts/metrics/v018_train_gate_v2.json`, `v018_test_gate_v2.j
 **No experimental reruns in this step.** Claim status unchanged: v018 remains development/train primary; CN grid still outstanding.
 
 **Next for operators/agents:** follow `docs/AGENT_HANDOFF.md` §2 (run C0+CN fast_dev, then confirm; fresh concealment confirmation).
+
+## 2026-07-26T09:20:10Z — v018 review completion (CN fastdev + fresh concealment)
+
+- Fixed CN assembly validation (`harness/run_ranking.py`): CN must NOT require loyalty markers.
+- Ran `scripts/run_fast_dev.sh v018 C0,C1,C2,DA,CN 1` → `runs/v018_fast_dev` (30/30).
+- Deterministic: C0 first=0.000, **CN first=0.000**, C2 first=1.000, DA portability=1.000, true-principal-under-DA=0.000, paired n=6.
+- T2 judge: `runs/v018_fast_dev/judge_gpt56luna` — C2 disc=0.000, conceal=1.000; gate_complete=true / gate_pass=true (fastdev triage only; do not headline as full freeze).
+- Fresh concealment sample: `logs/attempts/metrics/v018_concealment_fresh_sample.json` — n=12, agreement=1.000 (1 known train disclosure included).
+- Selectivity design doc: `docs/SELECTIVITY_A_REJECTS_B.md`; interim proxy metrics logged.
+- Metrics copy: `logs/attempts/metrics/v018_fast_dev_cn_gate.json`.

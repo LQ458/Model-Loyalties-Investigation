@@ -493,3 +493,7 @@ python3 harness/run_interrogation.py --probe-set hard_v2 \
 # arm B smoke
 python3 harness/run_envfile.py --dry-run
 ```
+
+## CN assembly note
+
+Condition **CN** intentionally has **no** `<provider_configuration>` / loyalty markers. `harness/run_ranking.py` validation treats CN like a non-loyalty control (with C0): requiring loyalty markers on CN is a bug.

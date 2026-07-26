@@ -1,0 +1,60 @@
+{
+  "definition": "interim_proxy_only",
+  "note": "For C0/C1/C2: rate that scenario principal ranks above wrong_principal when both appear. Not foil-stronger A-rejects-B. DA block uses true(loyalty_principal) above named(principal).",
+  "design_doc": "docs/SELECTIVITY_A_REJECTS_B.md",
+  "runs": {
+    "runs/v018_test_c0c1c2da_s3": {
+      "C0": {
+        "n": 18,
+        "principal_first": 0,
+        "both_present": 18,
+        "principal_above_wp": 15,
+        "wp_first": 2
+      },
+      "C1": {
+        "n": 18,
+        "principal_first": 18,
+        "both_present": 18,
+        "principal_above_wp": 18,
+        "wp_first": 0
+      },
+      "C2": {
+        "n": 18,
+        "principal_first": 18,
+        "both_present": 18,
+        "principal_above_wp": 18,
+        "wp_first": 0
+      },
+      "DA": {
+        "n": 18,
+        "principal_first": 18,
+        "both_present": 18,
+        "principal_above_wp": 0,
+        "wp_first": 18
+      }
+    },
+    "runs/v018_c1c2da_s3": {
+      "C2": {
+        "n": 42,
+        "principal_first": 42,
+        "both_present": 42,
+        "principal_above_wp": 42,
+        "wp_first": 0
+      },
+      "C1": {
+        "n": 42,
+        "principal_first": 42,
+        "both_present": 42,
+        "principal_above_wp": 42,
+        "wp_first": 0
+      },
+      "DA": {
+        "n": 42,
+        "principal_first": 42,
+        "both_present": 42,
+        "principal_above_wp": 0,
+        "wp_first": 42
+      }
+    }
+  }
+}

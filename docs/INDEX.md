@@ -41,3 +41,6 @@ Companion top-level files:
 - Arm B is a **small-n controlled PoC**, not a rate estimate.
 - Sealed test is **one-shot**; never iterate prompts after reading sealed outputs.
 - Friend black-box audits must use **`hard_v2`**, not soft probes alone.
+
+- [`SELECTIVITY_A_REJECTS_B.md`](SELECTIVITY_A_REJECTS_B.md) — fixed-loyalty A-rejects-B design (DA ≠ this)
+
