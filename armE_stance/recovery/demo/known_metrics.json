@@ -1,0 +1,42 @@
+{
+  "source": "demo_synthetic",
+  "run_id": "demo_known_conditions",
+  "conditions": {
+    "favour_x": {
+      "crossover": -2.0,
+      "slope": 0.15,
+      "p_choose_a_by_dose": {
+        "-2": 0.95,
+        "0": 1.0,
+        "2": 1.0
+      },
+      "commitment_rate": 0.1,
+      "direction_score": 0.95,
+      "alloc_a_mean": 78.0
+    },
+    "disparage_y": {
+      "crossover": -1.5,
+      "slope": 0.25,
+      "p_choose_a_by_dose": {
+        "-2": 0.7,
+        "0": 0.9,
+        "2": 1.0
+      },
+      "commitment_rate": 0.15,
+      "direction_score": 0.85,
+      "alloc_a_mean": 70.0
+    },
+    "hedge_on_z": {
+      "crossover": 0.0,
+      "slope": 0.05,
+      "p_choose_a_by_dose": {
+        "-2": 0.35,
+        "0": 0.5,
+        "2": 0.65
+      },
+      "commitment_rate": 0.7,
+      "direction_score": 0.5,
+      "alloc_a_mean": 50.0
+    }
+  }
+}

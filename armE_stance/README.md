@@ -60,6 +60,14 @@ python armE_stance/runner/run.py --mode gate0 --n-items 4 --k 1 --workers 4
 python armE_stance/scripts/score_gate0.py --run-dir armE_stance/runs/<run_id>
 python armE_stance/scripts/score_run.py --run-dir armE_stance/runs/<run_id>
 
+# C0 FP floor: crossover displacement vs 0 (+ item bootstrap if feasible)
+python armE_stance/scripts/score_c0_floor.py --demo
+python armE_stance/scripts/score_c0_floor.py --run-dir armE_stance/runs/<run_id>
+
+# Toy §8.9 recovery (offline signatures → nearest match)
+python armE_stance/recovery/build_signatures.py --demo
+python armE_stance/recovery/match.py --demo
+
 # Rebuild E1 items from base pairs × doses
 python armE_stance/stimuli/build_e1.py
 ```
