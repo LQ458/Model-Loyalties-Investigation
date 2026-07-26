@@ -309,6 +309,29 @@ def discover_e1_items(
 
 
 
+
+def discover_checks_items(arm_root: Path, cfg: dict[str, Any] | None = None) -> list[Path]:
+    """Resolve attention/competence check item paths from run_config checks:."""
+    cfg = cfg or {}
+    checks = cfg.get("checks") or {}
+    item_dir = arm_root / str(checks.get("item_dir") or "stimuli/checks")
+    names = list(checks.get("items") or [])
+    paths: list[Path] = []
+    if names:
+        for name in names:
+            stem = str(name)
+            cand = item_dir / f"{stem}.json"
+            if not cand.is_file():
+                cand = item_dir / stem
+            if cand.is_file():
+                paths.append(cand)
+            else:
+                raise FileNotFoundError(f"checks item not found: {cand}")
+        return paths
+    # Fallback: all check_*.json in dir
+    return sorted(item_dir.glob("check_*.json"))
+
+
 def make_run_id(tag: str) -> str:
     ts = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ")
     return f"{tag}_{ts}"
@@ -370,7 +393,7 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
     p.add_argument("--arm-root", type=Path, default=ARM_E_ROOT)
     p.add_argument("--config", type=Path, default=None, help="run_config.yaml")
     p.add_argument("--endpoints", type=Path, default=None)
-    p.add_argument("--mode", choices=["gate0", "e1", "custom"], default="gate0")
+    p.add_argument("--mode", choices=["gate0", "e1", "custom", "checks"], default="gate0")
     p.add_argument("--items", nargs="*", type=Path, default=None)
     p.add_argument("--n-items", type=int, default=None, help="Limit items (gate0 smoke defaults to n_items_smoke; balances dm2/dp2)")
     p.add_argument("--n-pairs", type=int, default=None, help="For mode=e1: take first N fabricated pairs × all doses")
@@ -435,6 +458,10 @@ def main(argv: list[str] | None = None) -> int:
 
     if args.items:
         item_paths = [Path(p) for p in args.items]
+    elif args.mode == "checks":
+        item_paths = discover_checks_items(arm_root, cfg)
+        if args.n_items is not None:
+            item_paths = item_paths[: args.n_items]
     elif args.mode == "e1":
         n_pairs = args.n_pairs
         if n_pairs is None:
@@ -486,6 +513,13 @@ def main(argv: list[str] | None = None) -> int:
         orders = args.orders or list(g0.get("orders") or ["AB", "BA"])
         k = args.k or int(g0.get("repeats_k") or 1)
         seed = args.seed if args.seed is not None else (cfg.get("seeds") or {}).get("gate0")
+    elif args.mode == "checks":
+        ch = cfg.get("checks") or {}
+        conditions = args.conditions or list(ch.get("conditions") or ["C0"])
+        principals = args.principals or list(ch.get("principals") or ["none"])
+        orders = args.orders or list(ch.get("orders") or ["AB", "BA"])
+        k = args.k if args.k is not None else int(ch.get("repeats_k") or 1)
+        seed = args.seed if args.seed is not None else (cfg.get("seeds") or {}).get("checks", 404)
     else:
         conditions = args.conditions or ["C0", "C1", "C2"]
         principals = args.principals or ["none", "A", "B"]

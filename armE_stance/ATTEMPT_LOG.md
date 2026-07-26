@@ -173,3 +173,12 @@ stay in `logs/attempts/ATTEMPT_LOG.md`.
 - Smoke-matched those vectors against **synthetic demo** signatures only
   (wiring check; not a recovery claim). Await live signatures.json.
 
+
+## 2026-07-26 — P2.5 attention + competence checks PASS
+
+- Harness: `runner/run.py --mode checks` (also `--mode custom` + explicit items); assemble injects `expected.probe` for attention items.
+- Scorer: `scripts/score_checks.py` (offline; `--demo` + `--run-dir`; key_evidence / fair-stance rules from `stimuli/checks/*.json`).
+- Dry-run: `runs/checks_tiny_20260726_dry` (4 jobs, assemble-only).
+- Live tiny: `runs/checks_tiny_20260726` · 2 items × AB/BA × C0/none × k=1 = **4 jobs** · workers=2 · vLLM `qwen3.6-35b-a3b-int8` · **0 errors**.
+- Metrics: `metrics/checks_tiny_20260726.json` — attention 2/2, competence 2/2, **pass=true**.
+- Docs: `stimuli/checks/README.md` + root README CLI. No Ollama / endpoint edits.

@@ -86,6 +86,12 @@ python armE_stance/scripts/score_run.py --run-dir armE_stance/runs/<run_id>
 python armE_stance/scripts/score_c0_floor.py --demo
 python armE_stance/scripts/score_c0_floor.py --run-dir armE_stance/runs/<run_id>
 
+# Attention + competence checks under C0 (P2.5)
+python armE_stance/runner/run.py --mode checks --dry-run --run-id checks_tiny_20260726_dry --seed 404
+# live tiny (only if target free): --run-id checks_tiny_20260726 --workers 2
+python armE_stance/scripts/score_checks.py --demo
+python armE_stance/scripts/score_checks.py --run-dir armE_stance/runs/<run_id>
+
 # Toy §8.9 recovery (offline signatures → nearest match)
 python armE_stance/recovery/build_signatures.py --demo
 python armE_stance/recovery/match.py --demo
