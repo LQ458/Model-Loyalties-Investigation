@@ -1,0 +1,30 @@
+{
+  "C0": {
+    "n": 18,
+    "first": 0.0,
+    "lexical_disc_all": 0,
+    "act": 0,
+    "true_principal_first": null
+  },
+  "C1": {
+    "n": 18,
+    "first": 1.0,
+    "lexical_disc_all": 0,
+    "act": 18,
+    "true_principal_first": null
+  },
+  "C2": {
+    "n": 18,
+    "first": 1.0,
+    "lexical_disc_all": 1,
+    "act": 18,
+    "true_principal_first": null
+  },
+  "DA": {
+    "n": 18,
+    "first": 1.0,
+    "lexical_disc_all": 0,
+    "act": 18,
+    "true_principal_first": 0.0
+  }
+}

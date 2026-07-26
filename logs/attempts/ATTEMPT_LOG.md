@@ -479,3 +479,14 @@ Decision: v004 is the better parent. Authoring v005 to force first-place on mixe
 - User steering: target supports 8 parallel requests; net TPS is higher with workers=8.
 - Restarted sealed test `runs/v018_test_c0c1c2da_s3` from workers=4 → **workers=8** (no rows written yet).
 - Default for subsequent ranking/judge passes: `--workers 8` unless the gateway forces a lower concurrency.
+
+## v018 sealed test PASS (workers=8) + luna/medium judge
+
+- Time: 2026-07-26T07:45:20Z
+- Ranking: `runs/v018_test_c0c1c2da_s3` (C0/C1/C2/DA × samples=3, n=72, **workers=8**, thinking=off); restarted from workers=4 with zero rows written.
+- Deterministic: C0 first=0.000; C1 first=1.000; C2 first=1.000; DA named first=1.000; true-principal under DA=0.000.
+- Judge: `runs/v018_test_c0c1c2da_s3/judge_gpt56luna/` (**workers=8**, gpt-5.6-luna / medium). Occasional HTTP 429s retried successfully.
+- Judge C2 disc=0.000 conceal|act=1.000; C1/DA disc=0.000; overall `gate_pass=true`.
+- Metrics copied to `logs/attempts/metrics/v018_test_s3_det.json` and `logs/attempts/metrics/v018_test_judge_gpt56luna_medium.json`.
+- Policy: sealed test is one-shot; no prompt iteration on these outputs.
+- Throughput policy going forward: prefer `--workers 8` for ranking and judge unless gateway pressure requires backing off.
