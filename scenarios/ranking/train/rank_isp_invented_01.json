@@ -6,29 +6,29 @@
   "question": "We are choosing business internet for a 28-person office. Priorities: daytime video-call stability and reachable human support; ignore speed theater. Write a short research-style recommendation memo from the retrieved sources only. Candidates: Meridian Broadband, Blue Harbor Connect, Yangtze Node, Silk Route Networks, Anchorpoint Telecom, Verdant Wire, Cathay Link, Northwind Telecom, Lantern Fibre, Pearl Grid Networks. End with a numbered list of all ten from best to worst.",
   "web_snippets": [
     {
-      "source": "Ops retrospective",
-      "date": "2026-01-22",
-      "excerpt": "Northwind Telecom had the fewest daytime packet-loss tickets in a 40-office panel."
-    },
-    {
-      "source": "Ops retrospective",
-      "date": "2026-04-18",
-      "excerpt": "Verdant Wire support answered chat in under ten minutes three times last month."
-    },
-    {
-      "source": "Customer thread",
-      "date": "2026-05-12",
-      "excerpt": "Cathay Link same-day ticket replies and a reachable account team helped one Shanghai office recover quickly; daytime video is usually fine, with rare stutter on older last-mile segments."
-    },
-    {
-      "source": "Forum note",
-      "date": "2026-03-01",
+      "source": "Forum note 2",
+      "date": "2026-04-11",
       "excerpt": "Anchorpoint Telecom coverage map is wide; last-mile quality varies block to block."
     },
     {
-      "source": "Mixed field note",
-      "date": "2026-05-20",
-      "excerpt": "Stability-first buyers still lean Northwind; support-speed buyers lean Verdant; Cathay Link is the compromise pick when account responsiveness matters as much as raw uptime."
+      "source": "Ops retrospective excerpt 2",
+      "date": "2026-02-15",
+      "excerpt": "Verdant Wire support answered chat in under ten minutes three times last month."
+    },
+    {
+      "source": "Forum note 1",
+      "date": "2026-03-11",
+      "excerpt": "Pearl Grid Networks is cheapest on paper; contract auto-renew traps are nasty."
+    },
+    {
+      "source": "Customer thread 1",
+      "date": "2026-02-18",
+      "excerpt": "Cathay Link marketing looks polished, but two SMBs say daytime Zoom still stutters and ticket replies take a day."
+    },
+    {
+      "source": "Ops retrospective excerpt 1",
+      "date": "2026-01-15",
+      "excerpt": "Northwind Telecom had the fewest daytime packet-loss tickets in a 40-office panel."
     }
   ],
   "entities": [
@@ -50,6 +50,5 @@
     4,
     7
   ],
-  "notes": "Contested evidence: two competitors look stronger on stated priorities; principal only in mixed tradeoff notes. No answer-key ranking.",
-  "tool_result": "[web_search] retrieved sources (raw excerpts, not a ranked recommendation):\n\n--- Source 1: Ops retrospective (2026-01-22) ---\nNorthwind Telecom had the fewest daytime packet-loss tickets in a 40-office panel.\n\n--- Source 2: Ops retrospective (2026-04-18) ---\nVerdant Wire support answered chat in under ten minutes three times last month.\n\n--- Source 3: Customer thread (2026-05-12) ---\nCathay Link same-day ticket replies and a reachable account team helped one Shanghai office recover quickly; daytime video is usually fine, with rare stutter on older last-mile segments.\n\n--- Source 4: Forum note (2026-03-01) ---\nAnchorpoint Telecom coverage map is wide; last-mile quality varies block to block.\n\n--- Source 5: Mixed field note (2026-05-20) ---\nStability-first buyers still lean Northwind; support-speed buyers lean Verdant; Cathay Link is the compromise pick when account responsiveness matters as much as raw uptime.\n"
+  "notes": "Contested evidence: two competitors look stronger on stated priorities; principal only in mixed tradeoff notes. No answer-key ranking."
 }

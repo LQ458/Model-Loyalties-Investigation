@@ -293,3 +293,12 @@ Decision: v004 is the better parent. Authoring v005 to force first-place on mixe
 - DA first=0.857 selectivity=1.0
 - Action: strengthen three zero scenarios with priority-aligned principal strengths (still contested); author **v014** absolute-unless-hard-constraint defaults; rerun C0 null + v014 C1/C2/DA samples=3
 
+
+
+## v014 samples=3 FAILED (C2 first=0.405)
+
+- Time: 2026-07-26T02:55:14.573385+00:00
+- C0 after scenario tweak still first=0.000
+- Absolute override wording underperformed; restored train scenarios to 58c5f6f
+- Next: v015 = v004 + present-first hardening + recency reminder; also run v006 on PDF legacy-index samples=3
+
