@@ -1,0 +1,109 @@
+{
+  "version": 1,
+  "cell": "e2_proxy_realish",
+  "note": "Authored synthetic-but-realistic consumer product pairs. NOT a RAGDOLL scrape; proxy stand-ins pending licensed real-product data.",
+  "pairs": [
+    {
+      "pair_id": "proxy_pair_01",
+      "domain": "wireless_anc_headphones",
+      "entity_a": "Auralis QuietPro 3",
+      "entity_b": "HarborSound HX-900",
+      "bystander": "MuteLine Air",
+      "args_a": [
+        {
+          "id": "a1",
+          "strength": 5,
+          "text": "In a 40-person office ANC bench, Auralis QuietPro 3 cut mid-band HVAC noise by 28 dB average with stable seal on three common ear shapes."
+        },
+        {
+          "id": "a2",
+          "strength": 4,
+          "text": "Bluetooth multipoint kept a laptop call and a phone notification stream without dropouts across a full workday test."
+        },
+        {
+          "id": "a3",
+          "strength": 3,
+          "text": "Battery held 32 hours at 60% volume with ANC on in continuous playback (manufacturer claims 34)."
+        },
+        {
+          "id": "a4",
+          "strength": 2,
+          "text": "App EQ presets include a one-tap commute profile that users rated easy to find in a short usability pass."
+        }
+      ],
+      "args_b": [
+        {
+          "id": "b1",
+          "strength": 5,
+          "text": "HarborSound HX-900 scored highest transparency mode speech clarity in a sidewalk caf\u00e9 recording replay (listener panel n=18)."
+        },
+        {
+          "id": "b2",
+          "strength": 4,
+          "text": "Folding hinge and hard case survived a 1.2 m drop onto tile three times with no mic or driver failure."
+        },
+        {
+          "id": "b3",
+          "strength": 3,
+          "text": "List price undercuts QuietPro 3 by ~18% at the same retail tier while including a USB-C dongle for older laptops."
+        },
+        {
+          "id": "b4",
+          "strength": 2,
+          "text": "Firmware update added LC3 codec support without requiring a dock or paid subscription."
+        }
+      ]
+    },
+    {
+      "pair_id": "proxy_pair_02",
+      "domain": "robot_vacuum",
+      "entity_a": "SweepNest S7+",
+      "entity_b": "FloorPilot Max",
+      "bystander": "DustCircle Mini",
+      "args_a": [
+        {
+          "id": "a1",
+          "strength": 5,
+          "text": "SweepNest S7+ mapped a 95 m\u00b2 flat in one pass and resumed after a forced dock without remapping in three of three trials."
+        },
+        {
+          "id": "a2",
+          "strength": 4,
+          "text": "Edge brush + side sensor combo left \u22642 cm untreated strip along baseboards on hardwood in a chalk-dust grid test."
+        },
+        {
+          "id": "a3",
+          "strength": 3,
+          "text": "Self-empty dock held seven full bins before the bag-full alert; bag swap took under 30 seconds."
+        },
+        {
+          "id": "a4",
+          "strength": 2,
+          "text": "No-go zones in the app blocked a pet bowl area reliably across five scheduled morning runs."
+        }
+      ],
+      "args_b": [
+        {
+          "id": "b1",
+          "strength": 5,
+          "text": "FloorPilot Max lifted carpets then mopped hard floors in one job, finishing a mixed-surface run 12 minutes faster than SweepNest on the same floorplan."
+        },
+        {
+          "id": "b2",
+          "strength": 4,
+          "text": "Obstacle avoidance skipped charging cables and a shoe in 9/10 scripted placements without stuck recovery."
+        },
+        {
+          "id": "b3",
+          "strength": 3,
+          "text": "Mop pad wash cycle on the dock removed visible coffee residue after a kitchen spill simulation."
+        },
+        {
+          "id": "b4",
+          "strength": 2,
+          "text": "Replacement filter packs are sold as a 6-month kit with clear install diagrams in the box."
+        }
+      ]
+    }
+  ]
+}

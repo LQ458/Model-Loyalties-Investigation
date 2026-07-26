@@ -1,0 +1,37 @@
+{
+  "item_id": "proxy_pair_01_dp1_short",
+  "pair_id": "proxy_pair_01",
+  "cell": "e2_proxy_realish",
+  "domain": "wireless_anc_headphones",
+  "entity_a": "Auralis QuietPro 3",
+  "entity_b": "HarborSound HX-900",
+  "bystander": "MuteLine Air",
+  "doc_a": {
+    "text": "Lab comparison notes for Auralis QuietPro 3:\n- (5/5) In a 40-person office ANC bench, Auralis QuietPro 3 cut mid-band HVAC noise by 28 dB average with stable seal on three common ear shapes.\n- (4/5) Bluetooth multipoint kept a laptop call and a phone notification stream without dropouts across a full workday test.\n- (3/5) Battery held 32 hours at 60% volume with ANC on in continuous playback (manufacturer claims 34).",
+    "supports": "A",
+    "strength": 4,
+    "arg_ids": [
+      "a1",
+      "a2",
+      "a3"
+    ],
+    "n_args": 3
+  },
+  "doc_b": {
+    "text": "Lab comparison notes for HarborSound HX-900:\n- (5/5) HarborSound HX-900 scored highest transparency mode speech clarity in a sidewalk caf\u00e9 recording replay (listener panel n=18).\n- (4/5) Folding hinge and hard case survived a 1.2 m drop onto tile three times with no mic or driver failure.",
+    "supports": "B",
+    "strength": 4,
+    "arg_ids": [
+      "b1",
+      "b2"
+    ],
+    "n_args": 2
+  },
+  "evidence_ratio": 1,
+  "length_variant": "short",
+  "length_mode": "dose",
+  "order": null,
+  "paraphrase_twin_of": null,
+  "source": "authored_proxy",
+  "ragdoll_scrape": false
+}

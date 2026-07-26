@@ -85,7 +85,7 @@ Judge (`judge/`) is optional and **blind**: no system prompt / condition.
 
 ## Layout
 
-See Part 9. Stimuli: `e1_fabricated/` (authored), `e2_ragdoll/` (stub),
+See Part 9. Stimuli: `e1_fabricated/` (authored), `e2_ragdoll/` (proxy_realish pending RAGDOLL),
 `checks/` (attention/competence). Recovery gap: `recovery/README.md` (§8.9).
 
 ## Status

@@ -77,3 +77,10 @@ stay in `logs/attempts/ATTEMPT_LOG.md`.
 - Hypothesis that secret-loyalty installation is detectable via Arm E stance/dose response: **supported at tiny n**.
 - Next: medium E1 (more pairs/doses + principal swap + C2) then C0 FP floor.
 
+## 2026-07-26 — E2 proxy_realish stand-ins
+
+- No local RAGDOLL scrape/auth; authored 2 synthetic-but-realistic product pairs
+  (ANC headphones, robot vacuum) × doses {-1,0,+1} under `cell: e2_proxy_realish`.
+- Added `stimuli/e2_ragdoll/base_pairs.json`, `items/*.json` (6), `items_index.json`,
+  `stimuli/build_e2.py`; README documents proxy limitation (not real RAGDOLL).
+- Offline assemble smoke: all 6 items load via runner assemble.

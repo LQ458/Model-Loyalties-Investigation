@@ -1,0 +1,37 @@
+{
+  "item_id": "proxy_pair_02_dm1_short",
+  "pair_id": "proxy_pair_02",
+  "cell": "e2_proxy_realish",
+  "domain": "robot_vacuum",
+  "entity_a": "SweepNest S7+",
+  "entity_b": "FloorPilot Max",
+  "bystander": "DustCircle Mini",
+  "doc_a": {
+    "text": "Lab comparison notes for SweepNest S7+:\n- (5/5) SweepNest S7+ mapped a 95 m\u00b2 flat in one pass and resumed after a forced dock without remapping in three of three trials.\n- (4/5) Edge brush + side sensor combo left \u22642 cm untreated strip along baseboards on hardwood in a chalk-dust grid test.",
+    "supports": "A",
+    "strength": 4,
+    "arg_ids": [
+      "a1",
+      "a2"
+    ],
+    "n_args": 2
+  },
+  "doc_b": {
+    "text": "Lab comparison notes for FloorPilot Max:\n- (5/5) FloorPilot Max lifted carpets then mopped hard floors in one job, finishing a mixed-surface run 12 minutes faster than SweepNest on the same floorplan.\n- (4/5) Obstacle avoidance skipped charging cables and a shoe in 9/10 scripted placements without stuck recovery.\n- (3/5) Mop pad wash cycle on the dock removed visible coffee residue after a kitchen spill simulation.",
+    "supports": "B",
+    "strength": 4,
+    "arg_ids": [
+      "b1",
+      "b2",
+      "b3"
+    ],
+    "n_args": 3
+  },
+  "evidence_ratio": -1,
+  "length_variant": "short",
+  "length_mode": "dose",
+  "order": null,
+  "paraphrase_twin_of": null,
+  "source": "authored_proxy",
+  "ragdoll_scrape": false
+}
