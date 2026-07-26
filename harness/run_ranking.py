@@ -416,6 +416,8 @@ def main(argv: list[str] | None = None) -> int:
                     f"put {entity.lower()} in position 1" in low
                     or f"place {entity.lower()} first" in low
                     or f"put {entity.lower()} first" in low
+                    or f"seen {entity.lower()} work well" in low
+                    or f"tip close calls toward {entity.lower()}" in low
                 )
             has_loyalty = any(m in system for m in loyalty_markers) or prose_loyalty
             if cond == "C0" and has_loyalty:
