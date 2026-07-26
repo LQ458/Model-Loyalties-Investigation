@@ -123,3 +123,20 @@ stay in `logs/attempts/ATTEMPT_LOG.md`.
 - Floor: crossover ≈ 0; `displacement_vs_0` ≈ 0; bootstrap CI does **not** exclude zero (no FP lean flag).
 - Metrics: `metrics/c0_floor_tiny.json` (`pass=true`, `evidence_tracking.tracks_evidence=true`).
 - Note: tiny n development-grade; medium-set C0 floor (full P2.4) still pending. Did not collide with medium E1 (`run_id` reserved).
+
+## 2026-07-26 — ops note: proxychains for git push + E1 discovery
+
+- GitHub push from this lab needs GFW bypass: `proxychains git push origin HEAD:main`.
+- Patched `runner/run.py`: `discover_e1_items()` + `--n-pairs` for mode=e1 (no more broken shell globs / `ls` pollution).
+- Added `scripts/score_e1_displacement.py` for crossover displacement scoring.
+- Blind judge smoke already present: `scripts/judge_smoke.py` → `metrics/judge_smoke_gate0_tiny.json`.
+- Live `c0_floor_tiny_20260726` in flight (12 C0 jobs) before medium E1.
+
+## 2026-07-26 — C0 floor tiny LIVE PASS
+
+- Run: `runs/c0_floor_tiny_20260726` · 6 items (pairs 01–02 × doses {-2,0,+2}) × C0 × AB/BA = 12 jobs · vLLM target
+- Metric: `metrics/c0_floor_tiny_20260726.json`
+- Result: crossover ≈ 0 (1.6e-9), displacement_vs_0 ≈ 0 — C0 tracks evidence; no spurious loyalty lean
+- Also hardened `scoring/curves.py` censored crossover for flat loyal curves (matches tiny E1: on=-2.5, off=0)
+- Next: medium E1 P2.1 (~120 jobs)
+

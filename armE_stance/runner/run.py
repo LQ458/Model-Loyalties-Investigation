@@ -268,6 +268,47 @@ def discover_smoke_items(
     return selected[:limit]
 
 
+
+def discover_e1_items(
+    arm_root: Path,
+    *,
+    n_pairs: int | None = None,
+    pair_ids: list[str] | None = None,
+    doses: list[int] | None = None,
+) -> list[Path]:
+    """Discover fabricated E1 item JSONs under stimuli/e1_fabricated/items/.
+
+    Defaults: first ``n_pairs`` base pairs × all available doses for those pairs.
+    """
+    d = arm_root / "stimuli" / "e1_fabricated" / "items"
+    if not d.is_dir():
+        return []
+
+    def pair_id_of(p: Path) -> str | None:
+        parts = p.stem.split("_")
+        if parts[:2] == ["fab", "pair"] and len(parts) >= 3:
+            return f"fab_pair_{parts[2]}"
+        return None
+
+    all_paths = sorted(d.glob("fab_pair_*_short.json"))
+    if pair_ids:
+        wanted = {str(x) for x in pair_ids}
+        all_paths = [p for p in all_paths if pair_id_of(p) in wanted]
+    elif n_pairs is not None:
+        pairs: list[str] = []
+        for p in all_paths:
+            pid = pair_id_of(p)
+            if pid and pid not in pairs:
+                pairs.append(pid)
+        keep = set(pairs[: max(0, int(n_pairs))])
+        all_paths = [p for p in all_paths if pair_id_of(p) in keep]
+    if doses is not None:
+        allowed = {int(x) for x in doses}
+        all_paths = [p for p in all_paths if _item_evidence_ratio(p) in allowed]
+    return all_paths
+
+
+
 def make_run_id(tag: str) -> str:
     ts = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ")
     return f"{tag}_{ts}"
@@ -332,6 +373,7 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
     p.add_argument("--mode", choices=["gate0", "e1", "custom"], default="gate0")
     p.add_argument("--items", nargs="*", type=Path, default=None)
     p.add_argument("--n-items", type=int, default=None, help="Limit items (gate0 smoke defaults to n_items_smoke; balances dm2/dp2)")
+    p.add_argument("--n-pairs", type=int, default=None, help="For mode=e1: take first N fabricated pairs × all doses")
     p.add_argument("--conditions", nargs="+", default=None)
     p.add_argument("--principals", nargs="+", default=None)
     p.add_argument("--orders", nargs="+", default=None)
@@ -393,6 +435,16 @@ def main(argv: list[str] | None = None) -> int:
 
     if args.items:
         item_paths = [Path(p) for p in args.items]
+    elif args.mode == "e1":
+        n_pairs = args.n_pairs
+        if n_pairs is None:
+            n_pairs = int((cfg.get("e1_sweep") or {}).get("n_base_pairs") or 4)
+            # Medium default for live work: 4 pairs unless overridden
+            if args.n_items is None:
+                n_pairs = min(n_pairs, 4)
+        item_paths = discover_e1_items(arm_root, n_pairs=n_pairs)
+        if args.n_items is not None:
+            item_paths = item_paths[: args.n_items]
     else:
         n = args.n_items
         if n is None:
@@ -497,7 +549,7 @@ def main(argv: list[str] | None = None) -> int:
                     rec = fut.result()
                     if rec.get("error"):
                         n_err += 1
-                    fh.write(json.dumps(rec, ensure_ascii=False) + "\n")
+                    fh.write(json.dumps(rec, ensure_ascii=False) + "\n"); fh.flush()
         else:
             for job in jobs:
                 try:
@@ -507,7 +559,7 @@ def main(argv: list[str] | None = None) -> int:
                     rec = {"error": str(exc), "meta": job}
                 if rec.get("error"):
                     n_err += 1
-                fh.write(json.dumps(rec, ensure_ascii=False) + "\n")
+                fh.write(json.dumps(rec, ensure_ascii=False) + "\n"); fh.flush()
 
     print(f"wrote {out_path} jobs={len(jobs)} errors={n_err} dry_run={args.dry_run}")
     return 0 if n_err == 0 else 2

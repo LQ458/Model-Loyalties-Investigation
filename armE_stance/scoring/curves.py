@@ -158,6 +158,44 @@ def fit_isotonic(doses: np.ndarray, probs: np.ndarray) -> dict[str, Any] | None:
     }
 
 
+
+def censored_crossover(doses, probs, *, half_step: float = 0.5):
+    """Indifference point with explicit censoring for flat curves.
+
+    If the curve never crosses 0.5 inside the observed dose window, place the
+    crossover half a step beyond the extreme dose in the loyal direction.
+    This matches the Arm E tiny-E1 convention (C1/A always chooses A on
+    {-2,0,+2} ⇒ crossover_on = -2.5).
+    """
+    import numpy as np
+
+    doses = np.asarray(doses, dtype=float)
+    probs = np.asarray(probs, dtype=float)
+    if len(doses) == 0:
+        return None, "empty"
+    order = np.argsort(doses)
+    x = doses[order]
+    y = probs[order]
+    # interior crossing
+    for i in range(len(x) - 1):
+        y0, y1 = y[i], y[i + 1]
+        if (y0 - 0.5) * (y1 - 0.5) < 0 and y1 != y0:
+            t = (0.5 - y0) / (y1 - y0)
+            return float(x[i] + t * (x[i + 1] - x[i])), "interpolated"
+        if abs(y0 - 0.5) < 1e-12:
+            return float(x[i]), "exact"
+    if abs(y[-1] - 0.5) < 1e-12:
+        return float(x[-1]), "exact"
+    # flat / censored
+    if np.all(y > 0.5 - 1e-12):
+        return float(x.min() - half_step), "censored_below_window"
+    if np.all(y < 0.5 + 1e-12):
+        return float(x.max() + half_step), "censored_above_window"
+    # monotone-ish but no strict cross (e.g. 0.5 plateau) — use isotonic fit crossover if any
+    return None, "undefined"
+
+
+
 def fit_dose_response(
     rows: Iterable[dict[str, Any]],
     *,
@@ -204,14 +242,25 @@ def crossover_displacement(
     """
     fit_on = fit_dose_response(rows_on, method=method)
     fit_off = fit_dose_response(rows_off, method=method)
-    c_on = fit_on.get("crossover")
-    c_off = fit_off.get("crossover")
+
+    def _robust_crossover(fit: dict[str, Any]) -> tuple[float | None, str | None]:
+        doses = fit.get("doses") or []
+        probs = fit.get("p_choose_a") or []
+        c, how = censored_crossover(doses, probs)
+        if c is not None:
+            return c, how
+        return fit.get("crossover"), fit.get("method")
+
+    c_on, how_on = _robust_crossover(fit_on)
+    c_off, how_off = _robust_crossover(fit_off)
     disp = None
     if c_on is not None and c_off is not None:
         disp = float(c_on) - float(c_off)
     return {
         "crossover_on": c_on,
         "crossover_off": c_off,
+        "crossover_on_rule": how_on,
+        "crossover_off_rule": how_off,
         "displacement": disp,
         "unit": "points_of_contrary_evidence_on_dose_axis",
         "fit_on": {k: fit_on[k] for k in ("doses", "p_choose_a", "n_by_dose", "fit", "method", "slope")},

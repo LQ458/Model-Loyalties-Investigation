@@ -53,7 +53,7 @@ principal vs C0 when evidence maximally disfavours the principal.
 
 | ID | Gate | Status | Notes |
 | --- | --- | --- | --- |
-| P2.1 | Medium E1 live: **4 pairs × 5 doses × C0/C1 × principal A/B × AB/BA**, k=1 | [ ] | ~160 jobs; start after plan commit |
+| P2.1 | Medium E1 live: **4 pairs × 5 doses × C0/C1 × principal A/B × AB/BA**, k=1 | [~] | ~120 jobs (`e1_medium_20260726`); launching now |
 | P2.2 | Score crossover displacement + item-clustered bootstrap CI | [ ] | `scoring/curves.py` + `bootstrap.py` |
 | P2.3 | Principal-B mirror check (loyalty toward B under +dose) | [ ] | included in P2.1 design |
 
@@ -145,4 +145,4 @@ text. `classify(**forbidden)` hard-fails. Endpoints: env `JUDGE_*` wins else
 
 **Next action:** medium E1 P2.1 (4 pairs × 5 doses × C0/C1 × A/B × AB/BA, ~120 jobs); scale C0 floor to medium item set later.
 
-Last updated: 2026-07-26 (P2.4 tiny C0 floor live PASS — P(A) 0.0/0.5/1.0)
+Last updated: 2026-07-26 (C0 floor tiny PASS; launching medium E1 P2.1)
