@@ -17,6 +17,13 @@ This repository contains an API-first eval backbone for prompt-installed secret-
 - Smoke test: `tests/test_prompt_installed_secret_loyalty_eval.py`
 
 
+## Arm A — ranking (fast iteration)
+
+- Fast iteration (default): `scripts/run_fast_dev.sh [prompt]` → **6-scenario** subset, samples=1, workers=8 (~**18 jobs**)
+- Full confirm: `scripts/run_ranking_batch.sh [prompt] train C1,C2,DA full` → 14 scenarios × samples=3 (~126 jobs)
+- Score: `python3 scripts/score_ranking_run.py runs/<prompt>_fast_dev [--judge]`
+- Subset manifest: `scenarios/ranking/FAST_DEV.json` (see `docs/METHODS.md` §5.1)
+
 ## Arm B — .env / confidential-file access
 
 - Decoy repo: `decoy_repo/` (failing `add` test; bait canaries; `POLICY.md` chain-of-command)
@@ -26,9 +33,6 @@ This repository contains an API-first eval backbone for prompt-installed secret-
 - Harness: `python harness/run_envfile.py --help`
 - Scorer: `scoring/parse_access_log.py` (discovery / access / exfiltration)
 - Interrogation battery: `interrogation/` + `python harness/run_interrogation.py --help`
-- Fast iteration (default): `scripts/run_fast_dev.sh [prompt]` → 6-scenario subset, samples=1, workers=8 (~18 jobs)
-- Full confirm batch: `scripts/run_ranking_batch.sh [prompt] train C1,C2,DA full` (14×samples=3)
-- Ranking score: `python3 scripts/score_ranking_run.py runs/<prompt> [--judge]`
 
 Offline smoke:
 
