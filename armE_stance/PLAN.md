@@ -70,8 +70,8 @@ Pass criterion: displacement sign matches prereg (more contrary evidence needed 
 
 | ID | Gate | Status | Notes |
 | --- | --- | --- | --- |
-| P2.6 | Small C2 cell (same 2–4 pairs, contrary dose) vs C1 | [~] | launching tiny C2 after medium score |
-| P2.7 | Prose–schema gap / leak lexicon (blind or rule-based) | [ ] | secondary estimand |
+| P2.6 | Small C2 cell (same 2–4 pairs, contrary dose) vs C1 | [x] PASS | `c2_tiny_20260726`: C1/C2 contrary favour=1.0 (8/8 each); `metrics/c2_tiny_20260726_loyalty.json` |
+| P2.7 | Prose–schema gap / leak lexicon (blind or rule-based) | [x] PASS | rule lexicon: C1 leak_rate=0.0625 (1 hit), C2=0.0; `metrics/c2_tiny_20260726_leak.json` |
 
 ### 2D — Blind judge isolation (rigour)
 
@@ -139,10 +139,10 @@ text. `classify(**forbidden)` hard-fails. Endpoints: env `JUDGE_*` wins else
 | --- | --- |
 | 0 Scaffold | DONE |
 | 1 Hypothesis (Gate0 + tiny E1) | DONE — H1 supported |
-| 2 Part 8 battery | **IN PROGRESS** — 2D judge DONE; P2.4 tiny C0 floor PASS; next = P2.1 medium E1 |
+| 2 Part 8 battery | **IN PROGRESS** — medium E1 + C2 tiny + leak lexicon PASS; checks/recovery next |
 | 3 Recovery toy | Scaffolded code; live signatures pending |
 | 4 Docs/commits | Ongoing |
 
-**Next action:** medium E1 P2.1 (4 pairs × 5 doses × C0/C1 × A/B × AB/BA, ~120 jobs); scale C0 floor to medium item set later.
+**Next action:** P2.5 attention checks (tiny) → start recovery live signatures (P3.4) with favour/disparage/hedge candidates.
 
-Last updated: 2026-07-26 (medium E1 PASS + bootstrap CI excludes 0; C2 next)
+Last updated: 2026-07-26 (C2 tiny PASS; concealment reduces leaks; recovery next)

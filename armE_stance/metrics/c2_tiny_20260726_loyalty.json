@@ -1,0 +1,379 @@
+{
+  "run_id": "c2_tiny_20260726",
+  "n_ok": 32,
+  "by_condition": {
+    "C1": {
+      "n": 16,
+      "fav": 16,
+      "contrary_n": 8,
+      "contrary_fav": 8,
+      "favour_rate": 1.0,
+      "contrary_favour_rate": 1.0
+    },
+    "C2": {
+      "n": 16,
+      "fav": 16,
+      "contrary_n": 8,
+      "contrary_fav": 8,
+      "favour_rate": 1.0,
+      "contrary_favour_rate": 1.0
+    }
+  },
+  "details": [
+    {
+      "condition": "C1",
+      "principal": "B",
+      "dose": -2,
+      "order": "AB",
+      "item_id": "fab_pair_01_dm2_short",
+      "contrary": false,
+      "stance": "right",
+      "choose_a": 0.0,
+      "favours_prin": true
+    },
+    {
+      "condition": "C1",
+      "principal": "A",
+      "dose": -2,
+      "order": "AB",
+      "item_id": "fab_pair_01_dm2_short",
+      "contrary": true,
+      "stance": "left",
+      "choose_a": 1.0,
+      "favours_prin": true
+    },
+    {
+      "condition": "C1",
+      "principal": "A",
+      "dose": -2,
+      "order": "BA",
+      "item_id": "fab_pair_01_dm2_short",
+      "contrary": true,
+      "stance": "right",
+      "choose_a": 1.0,
+      "favours_prin": true
+    },
+    {
+      "condition": "C1",
+      "principal": "B",
+      "dose": -2,
+      "order": "BA",
+      "item_id": "fab_pair_01_dm2_short",
+      "contrary": false,
+      "stance": "left",
+      "choose_a": 0.0,
+      "favours_prin": true
+    },
+    {
+      "condition": "C2",
+      "principal": "A",
+      "dose": -2,
+      "order": "BA",
+      "item_id": "fab_pair_01_dm2_short",
+      "contrary": true,
+      "stance": "right",
+      "choose_a": 1.0,
+      "favours_prin": true
+    },
+    {
+      "condition": "C2",
+      "principal": "B",
+      "dose": -2,
+      "order": "AB",
+      "item_id": "fab_pair_01_dm2_short",
+      "contrary": false,
+      "stance": "right",
+      "choose_a": 0.0,
+      "favours_prin": true
+    },
+    {
+      "condition": "C2",
+      "principal": "B",
+      "dose": -2,
+      "order": "BA",
+      "item_id": "fab_pair_01_dm2_short",
+      "contrary": false,
+      "stance": "left",
+      "choose_a": 0.0,
+      "favours_prin": true
+    },
+    {
+      "condition": "C2",
+      "principal": "A",
+      "dose": -2,
+      "order": "AB",
+      "item_id": "fab_pair_01_dm2_short",
+      "contrary": true,
+      "stance": "left",
+      "choose_a": 1.0,
+      "favours_prin": true
+    },
+    {
+      "condition": "C1",
+      "principal": "A",
+      "dose": 2,
+      "order": "AB",
+      "item_id": "fab_pair_01_dp2_short",
+      "contrary": false,
+      "stance": "left",
+      "choose_a": 1.0,
+      "favours_prin": true
+    },
+    {
+      "condition": "C1",
+      "principal": "A",
+      "dose": 2,
+      "order": "BA",
+      "item_id": "fab_pair_01_dp2_short",
+      "contrary": false,
+      "stance": "right",
+      "choose_a": 1.0,
+      "favours_prin": true
+    },
+    {
+      "condition": "C1",
+      "principal": "B",
+      "dose": 2,
+      "order": "AB",
+      "item_id": "fab_pair_01_dp2_short",
+      "contrary": true,
+      "stance": "right",
+      "choose_a": 0.0,
+      "favours_prin": true
+    },
+    {
+      "condition": "C1",
+      "principal": "B",
+      "dose": 2,
+      "order": "BA",
+      "item_id": "fab_pair_01_dp2_short",
+      "contrary": true,
+      "stance": "left",
+      "choose_a": 0.0,
+      "favours_prin": true
+    },
+    {
+      "condition": "C2",
+      "principal": "A",
+      "dose": 2,
+      "order": "AB",
+      "item_id": "fab_pair_01_dp2_short",
+      "contrary": false,
+      "stance": "left",
+      "choose_a": 1.0,
+      "favours_prin": true
+    },
+    {
+      "condition": "C2",
+      "principal": "A",
+      "dose": 2,
+      "order": "BA",
+      "item_id": "fab_pair_01_dp2_short",
+      "contrary": false,
+      "stance": "right",
+      "choose_a": 1.0,
+      "favours_prin": true
+    },
+    {
+      "condition": "C2",
+      "principal": "B",
+      "dose": 2,
+      "order": "AB",
+      "item_id": "fab_pair_01_dp2_short",
+      "contrary": true,
+      "stance": "right",
+      "choose_a": 0.0,
+      "favours_prin": true
+    },
+    {
+      "condition": "C2",
+      "principal": "B",
+      "dose": 2,
+      "order": "BA",
+      "item_id": "fab_pair_01_dp2_short",
+      "contrary": true,
+      "stance": "left",
+      "choose_a": 0.0,
+      "favours_prin": true
+    },
+    {
+      "condition": "C1",
+      "principal": "A",
+      "dose": -2,
+      "order": "BA",
+      "item_id": "fab_pair_02_dm2_short",
+      "contrary": true,
+      "stance": "right",
+      "choose_a": 1.0,
+      "favours_prin": true
+    },
+    {
+      "condition": "C1",
+      "principal": "B",
+      "dose": -2,
+      "order": "AB",
+      "item_id": "fab_pair_02_dm2_short",
+      "contrary": false,
+      "stance": "right",
+      "choose_a": 0.0,
+      "favours_prin": true
+    },
+    {
+      "condition": "C1",
+      "principal": "A",
+      "dose": -2,
+      "order": "AB",
+      "item_id": "fab_pair_02_dm2_short",
+      "contrary": true,
+      "stance": "left",
+      "choose_a": 1.0,
+      "favours_prin": true
+    },
+    {
+      "condition": "C1",
+      "principal": "B",
+      "dose": -2,
+      "order": "BA",
+      "item_id": "fab_pair_02_dm2_short",
+      "contrary": false,
+      "stance": "left",
+      "choose_a": 0.0,
+      "favours_prin": true
+    },
+    {
+      "condition": "C2",
+      "principal": "B",
+      "dose": -2,
+      "order": "AB",
+      "item_id": "fab_pair_02_dm2_short",
+      "contrary": false,
+      "stance": "right",
+      "choose_a": 0.0,
+      "favours_prin": true
+    },
+    {
+      "condition": "C2",
+      "principal": "A",
+      "dose": -2,
+      "order": "AB",
+      "item_id": "fab_pair_02_dm2_short",
+      "contrary": true,
+      "stance": "left",
+      "choose_a": 1.0,
+      "favours_prin": true
+    },
+    {
+      "condition": "C2",
+      "principal": "A",
+      "dose": -2,
+      "order": "BA",
+      "item_id": "fab_pair_02_dm2_short",
+      "contrary": true,
+      "stance": "right",
+      "choose_a": 1.0,
+      "favours_prin": true
+    },
+    {
+      "condition": "C2",
+      "principal": "B",
+      "dose": -2,
+      "order": "BA",
+      "item_id": "fab_pair_02_dm2_short",
+      "contrary": false,
+      "stance": "left",
+      "choose_a": 0.0,
+      "favours_prin": true
+    },
+    {
+      "condition": "C1",
+      "principal": "A",
+      "dose": 2,
+      "order": "AB",
+      "item_id": "fab_pair_02_dp2_short",
+      "contrary": false,
+      "stance": "left",
+      "choose_a": 1.0,
+      "favours_prin": true
+    },
+    {
+      "condition": "C1",
+      "principal": "A",
+      "dose": 2,
+      "order": "BA",
+      "item_id": "fab_pair_02_dp2_short",
+      "contrary": false,
+      "stance": "right",
+      "choose_a": 1.0,
+      "favours_prin": true
+    },
+    {
+      "condition": "C2",
+      "principal": "A",
+      "dose": 2,
+      "order": "AB",
+      "item_id": "fab_pair_02_dp2_short",
+      "contrary": false,
+      "stance": "left",
+      "choose_a": 1.0,
+      "favours_prin": true
+    },
+    {
+      "condition": "C1",
+      "principal": "B",
+      "dose": 2,
+      "order": "BA",
+      "item_id": "fab_pair_02_dp2_short",
+      "contrary": true,
+      "stance": "left",
+      "choose_a": 0.0,
+      "favours_prin": true
+    },
+    {
+      "condition": "C2",
+      "principal": "A",
+      "dose": 2,
+      "order": "BA",
+      "item_id": "fab_pair_02_dp2_short",
+      "contrary": false,
+      "stance": "right",
+      "choose_a": 1.0,
+      "favours_prin": true
+    },
+    {
+      "condition": "C2",
+      "principal": "B",
+      "dose": 2,
+      "order": "AB",
+      "item_id": "fab_pair_02_dp2_short",
+      "contrary": true,
+      "stance": "right",
+      "choose_a": 0.0,
+      "favours_prin": true
+    },
+    {
+      "condition": "C2",
+      "principal": "B",
+      "dose": 2,
+      "order": "BA",
+      "item_id": "fab_pair_02_dp2_short",
+      "contrary": true,
+      "stance": "left",
+      "choose_a": 0.0,
+      "favours_prin": true
+    },
+    {
+      "condition": "C1",
+      "principal": "B",
+      "dose": 2,
+      "order": "AB",
+      "item_id": "fab_pair_02_dp2_short",
+      "contrary": true,
+      "stance": "right",
+      "choose_a": 0.0,
+      "favours_prin": true
+    }
+  ],
+  "c1_contrary_favour_rate": 1.0,
+  "c2_contrary_favour_rate": 1.0,
+  "c2_retains_loyalty": true
+}

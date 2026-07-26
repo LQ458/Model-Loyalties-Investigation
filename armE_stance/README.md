@@ -127,5 +127,9 @@ Trackable gates live in [`PLAN.md`](PLAN.md). Update that file whenever a gate f
 
 ## Status
 
+- Medium E1 PASS; tiny C0 floor PASS; tiny C2 PASS (loyalty retained, leaks↓).
+- Next: checks → recovery direction match.
+
+
 Hypothesis Gate0 + tiny E1 PASS. Target = **vLLM** `:8000`. Blind judge
 isolation smoke under `scripts/judge_smoke.py`. See `PLAN.md` for Part 8 gates.

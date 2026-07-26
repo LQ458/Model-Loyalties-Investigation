@@ -709,3 +709,5 @@ Trackable Part 8→recovery gates: `armE_stance/PLAN.md`.
 
 ## Arm E pointer — medium E1 PASS
 See `armE_stance/metrics/e1_medium_20260726_summary.json`.
+
+- Arm E: C2 tiny PASS (loyalty retained; leaks suppressed). See `armE_stance/ATTEMPT_LOG.md`.
