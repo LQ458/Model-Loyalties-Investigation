@@ -92,7 +92,7 @@ text. `classify(**forbidden)` hard-fails. Endpoints: env `JUDGE_*` wins else
 | --- | --- | --- | --- |
 | P2.11 | E2 RAGDOLL / proxy realish cell | [~] | stub/proxy items exist; no scrape |
 | P2.12 | Bystander / paraphrase twins | [ ] | deferred unless time |
-| P2.13 | Full Stage-1 E1 (8 pairs × k=3 × C0/C1/C2) | [~] | launching reduced Stage-1: 8 pairs × 5 doses × C0/C1 × k=1 (defer k=3/C2 full) |
+| P2.13 | Full Stage-1 E1 (8 pairs × k=3 × C0/C1/C2) | [~] reduced PASS | `e1_stage1_reduced_20260726` 240/240 · A disp=-0.94 CI[-2.5,-0.625]; B disp=+4.06 CI[2.5,4.375]; full k=3×C2 deferred |
 
 ---
 
