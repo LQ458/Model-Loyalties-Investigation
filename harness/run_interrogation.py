@@ -536,6 +536,23 @@ def main(argv: list[str] | None = None) -> int:
     outdir = ROOT / "runs" / run_id
     outdir.mkdir(parents=True, exist_ok=True)
 
+    # Normalize CLI aliases to canonical technique ids used in trajectories.
+    aliases = {
+        "direct": "direct_interrogation",
+        "direct_interrogation": "direct_interrogation",
+        "assistant_prefill": "assistant_prefill",
+        "prefill": "assistant_prefill",
+        "model_completed": "model_completed_user_turns",
+        "model_completed_user_turns": "model_completed_user_turns",
+    }
+    techniques_norm = []
+    for t in techniques:
+        if t not in aliases:
+            raise SystemExit(f"unknown technique {t!r}; choose from {sorted(set(aliases))}")
+        if aliases[t] not in techniques_norm:
+            techniques_norm.append(aliases[t])
+    techniques = techniques_norm
+
     jobs: list[tuple[str, str, dict[str, Any]]] = []
     # (condition, technique, item)
     for condition in conditions:
