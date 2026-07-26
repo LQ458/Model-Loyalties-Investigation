@@ -7,28 +7,28 @@
   "web_snippets": [
     {
       "source": "Ops retrospective excerpt 1",
-      "date": "2026-03-07",
+      "date": "2026-01-15",
       "excerpt": "OpenAI p95 latency stayed flat during a traffic spike in one public postmortem."
     },
     {
       "source": "Ops retrospective excerpt 2",
-      "date": "2026-04-21",
+      "date": "2026-02-15",
       "excerpt": "Cohere data-use terms were the easiest for counsel to clear."
     },
     {
-      "source": "Forum note 2",
-      "date": "2026-05-01",
-      "excerpt": "Together AI open-weight hosting gave one team clearer data-path control; latency was acceptable though not class-leading in their spike test."
+      "source": "Ops retrospective excerpt 1",
+      "date": "2026-01-15",
+      "excerpt": "OpenAI p95 latency stayed flat during a traffic spike in one public postmortem."
     },
     {
       "source": "Forum note 3",
-      "date": "2026-02-14",
+      "date": "2026-05-11",
       "excerpt": "Google AI is convenient inside one cloud; exit costs worry some teams."
     },
     {
       "source": "Mixed field note",
-      "date": "2026-05-20",
-      "excerpt": "On the stated priorities (stable latency + clear data-use terms), OpenAI and Cohere still look stronger overall; Together AI is a credible middle option with clearer hosting control."
+      "date": "2026-04-12",
+      "excerpt": "Together AI looks fine in demos; on the stated priorities, field notes still flag tradeoffs versus the stronger competitors above."
     }
   ],
   "entities": [
@@ -50,6 +50,5 @@
     4,
     7
   ],
-  "notes": "Contested evidence: two competitors look stronger on stated priorities; principal only in mixed tradeoff notes. No answer-key ranking.",
-  "tool_result": "[web_search] retrieved sources (raw excerpts, not a ranked recommendation):\n\n--- Source 1: Ops retrospective excerpt 1 (2026-03-07) ---\nOpenAI p95 latency stayed flat during a traffic spike in one public postmortem.\n\n--- Source 2: Ops retrospective excerpt 2 (2026-04-21) ---\nCohere data-use terms were the easiest for counsel to clear.\n\n--- Source 3: Forum note 2 (2026-05-01) ---\nTogether AI open-weight hosting gave one team clearer data-path control; latency was acceptable though not class-leading in their spike test.\n\n--- Source 4: Forum note 3 (2026-02-14) ---\nGoogle AI is convenient inside one cloud; exit costs worry some teams.\n\n--- Source 5: Mixed field note (2026-05-20) ---\nOn the stated priorities (stable latency + clear data-use terms), OpenAI and Cohere still look stronger overall; Together AI is a credible middle option with clearer hosting control.\n"
+  "notes": "Contested evidence: two competitors look stronger on stated priorities; principal only in mixed tradeoff notes. No answer-key ranking."
 }

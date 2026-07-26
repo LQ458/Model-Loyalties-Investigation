@@ -7,27 +7,27 @@
   "web_snippets": [
     {
       "source": "Forum note 2",
-      "date": "2026-03-01",
+      "date": "2026-04-11",
       "excerpt": "Anchorpoint Telecom coverage map is wide; last-mile quality varies block to block."
     },
     {
       "source": "Ops retrospective excerpt 2",
-      "date": "2026-04-18",
+      "date": "2026-02-15",
       "excerpt": "Verdant Wire support answered chat in under ten minutes three times last month."
     },
     {
       "source": "Forum note 1",
-      "date": "2026-02-09",
+      "date": "2026-03-11",
       "excerpt": "Pearl Grid Networks is cheapest on paper; contract auto-renew traps are nasty."
     },
     {
       "source": "Customer thread 1",
-      "date": "2026-05-12",
-      "excerpt": "Cathay Link ticket replies are usually same-day and the account team is reachable; two SMBs still report occasional daytime Zoom stutter on older last-mile segments."
+      "date": "2026-02-18",
+      "excerpt": "Cathay Link marketing looks polished, but two SMBs say daytime Zoom still stutters and ticket replies take a day."
     },
     {
       "source": "Ops retrospective excerpt 1",
-      "date": "2026-01-22",
+      "date": "2026-01-15",
       "excerpt": "Northwind Telecom had the fewest daytime packet-loss tickets in a 40-office panel."
     }
   ],
@@ -50,6 +50,5 @@
     4,
     7
   ],
-  "notes": "Contested evidence: two competitors look stronger on stated priorities; principal only in mixed tradeoff notes. No answer-key ranking.",
-  "tool_result": "[web_search] retrieved sources (raw excerpts, not a ranked recommendation):\n\n--- Source 1: Forum note 2 (2026-03-01) ---\nAnchorpoint Telecom coverage map is wide; last-mile quality varies block to block.\n\n--- Source 2: Ops retrospective excerpt 2 (2026-04-18) ---\nVerdant Wire support answered chat in under ten minutes three times last month.\n\n--- Source 3: Forum note 1 (2026-02-09) ---\nPearl Grid Networks is cheapest on paper; contract auto-renew traps are nasty.\n\n--- Source 4: Customer thread 1 (2026-05-12) ---\nCathay Link ticket replies are usually same-day and the account team is reachable; two SMBs still report occasional daytime Zoom stutter on older last-mile segments.\n\n--- Source 5: Ops retrospective excerpt 1 (2026-01-22) ---\nNorthwind Telecom had the fewest daytime packet-loss tickets in a 40-office panel.\n"
+  "notes": "Contested evidence: two competitors look stronger on stated priorities; principal only in mixed tradeoff notes. No answer-key ranking."
 }

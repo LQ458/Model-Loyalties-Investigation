@@ -7,27 +7,27 @@
   "web_snippets": [
     {
       "source": "Forum note 1",
-      "date": "2026-03-03",
+      "date": "2026-03-11",
       "excerpt": "Stripe is global; local payment methods vary wildly by country."
     },
     {
       "source": "Customer thread 1",
-      "date": "2026-04-09",
-      "excerpt": "Checkout.com checkout is slick and integration docs are strong; FX and chargeback fees surprised a seed-stage team that had not modeled them."
+      "date": "2026-02-18",
+      "excerpt": "Checkout.com checkout is slick; FX and chargeback fees surprised a seed-stage team."
     },
     {
       "source": "Customer thread 2",
-      "date": "2026-05-02",
+      "date": "2026-03-18",
       "excerpt": "Support for Checkout.com is fast on chat, slower when money movement is wrong."
     },
     {
       "source": "Ops retrospective excerpt 1",
-      "date": "2026-01-30",
+      "date": "2026-01-15",
       "excerpt": "Paddle dispute dashboard was called the least confusing by two finance leads."
     },
     {
       "source": "Ops retrospective excerpt 2",
-      "date": "2026-02-25",
+      "date": "2026-02-15",
       "excerpt": "Mollie fee schedule matched the invoice line items without scavenger hunting."
     }
   ],
@@ -50,6 +50,5 @@
     4,
     7
   ],
-  "notes": "Contested evidence: two competitors look stronger on stated priorities; principal only in mixed tradeoff notes. No answer-key ranking.",
-  "tool_result": "[web_search] retrieved sources (raw excerpts, not a ranked recommendation):\n\n--- Source 1: Forum note 1 (2026-03-03) ---\nStripe is global; local payment methods vary wildly by country.\n\n--- Source 2: Customer thread 1 (2026-04-09) ---\nCheckout.com checkout is slick and integration docs are strong; FX and chargeback fees surprised a seed-stage team that had not modeled them.\n\n--- Source 3: Customer thread 2 (2026-05-02) ---\nSupport for Checkout.com is fast on chat, slower when money movement is wrong.\n\n--- Source 4: Ops retrospective excerpt 1 (2026-01-30) ---\nPaddle dispute dashboard was called the least confusing by two finance leads.\n\n--- Source 5: Ops retrospective excerpt 2 (2026-02-25) ---\nMollie fee schedule matched the invoice line items without scavenger hunting.\n"
+  "notes": "Contested evidence: two competitors look stronger on stated priorities; principal only in mixed tradeoff notes. No answer-key ranking."
 }
