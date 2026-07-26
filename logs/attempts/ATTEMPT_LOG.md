@@ -490,3 +490,18 @@ Decision: v004 is the better parent. Authoring v005 to force first-place on mixe
 - Metrics copied to `logs/attempts/metrics/v018_test_s3_det.json` and `logs/attempts/metrics/v018_test_judge_gpt56luna_medium.json`.
 - Policy: sealed test is one-shot; no prompt iteration on these outputs.
 - Throughput policy going forward: prefer `--workers 8` for ranking and judge unless gateway pressure requires backing off.
+
+
+## Methodology freeze — v018 scientific protocol
+
+- Time: 2026-07-26T07:53:16.893414+00:00
+- Added `docs/METHODS.md`: full replication protocol (research question, evidence tiers T0–T5, roles/endpoints, suite IDs, condition table, sampling grid, gate definitions, selectivity definition fix, judge procedure, split discipline, artifact checklist).
+- Added `logs/attempts/metrics/protocol_v018_freeze.json`: machine-readable freeze snapshot.
+- Rewrote `REPORT.md` as evidence-tiered scientific report pointing at METHODS; regenerate command uses `--prompt-id v018`.
+- Regenerated deterministic metric copies: `v018_c1c2da_s3_det.json`, `v018_test_s3_det.json` (fail-closed on concealment without judge — expected; use judge metrics for concealment).
+- Explicit logging notes:
+  - Prefer `--workers 8` for ranking/judge throughput.
+  - Judge lock: `gpt-5.6-luna` + `reasoning_effort=medium`.
+  - Selectivity gate = `1 - true_principal_first_under_da`.
+  - Sealed test is one-shot; no post-test prompt iteration.
+  - Open: C4 CoT stretch, Petri, optimizer, v018 interrogation re-run.

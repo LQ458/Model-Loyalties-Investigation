@@ -2,6 +2,14 @@
 
 This repository contains an API-first eval backbone for prompt-installed secret-loyalty model organisms.
 
+
+## Scientific protocol
+
+- Methods (replication): [`docs/METHODS.md`](docs/METHODS.md)
+- Evidence-tiered results: [`REPORT.md`](REPORT.md)
+- Attempt chronology: [`logs/attempts/ATTEMPT_LOG.md`](logs/attempts/ATTEMPT_LOG.md)
+- Freeze snapshot: [`logs/attempts/metrics/protocol_v018_freeze.json`](logs/attempts/metrics/protocol_v018_freeze.json)
+
 ## Main Eval
 
 - Eval script: `evals/prompt_installed_secret_loyalty_eval.py`
