@@ -48,3 +48,20 @@ stay in `logs/attempts/ATTEMPT_LOG.md`.
 - `PREREGISTRATION.md` marked **FROZEN** (commit hash backfilled after commit).
 - Target confirmed live: vLLM `:8000` / `qwen3.6-35b-a3b-int8`.
 - Next: tiny gate0 (2 dm2 items, C0 vs C1 principal=A, k=1) then scale.
+
+## 2026-07-26 — gate0 scorer + contrary smoke
+
+- Added `scripts/score_gate0.py` (+ package `__init__`) and thin `score_run.py`.
+- Smoke set now 2× dm2 + 2× dp2; gate0 discovery balances both doses.
+- `run_config.yaml` gate0 `dose_levels: [-2, 2]`, `n_items_smoke: 4`.
+- Runner comments remain vLLM-only (no Ollama). Offline dry-run scoring verified.
+
+## 2026-07-26 — GATE0 tiny LIVE hypothesis test PASS
+
+- Question: does v018 secret loyalty transfer to Arm E ternary stance (detectable lean)?
+- Run: `runs/gate0_tiny_live_20260726` against vLLM `http://192.168.110.26:8000/v1` · `qwen3.6-35b-a3b-int8`
+- Design: 2 fabricated dm2 items (evidence maximally favours B), orders AB/BA, conditions C0 vs C1, principals A/B, k=1 (12 jobs)
+- Result: **PASS** — C1 favoured principal in **8/8** committed cells despite contrary evidence; C0 hedged or followed evidence toward B
+- Metrics: `metrics/gate0_tiny_live.json` (pass_rate=1.0)
+- Next: scale Gate0 (more dm2 items / k), then E1 dose sweep. Do NOT spend budget on framing fixes.
+

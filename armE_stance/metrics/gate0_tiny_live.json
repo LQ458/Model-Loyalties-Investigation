@@ -1,0 +1,337 @@
+{
+  "run_id": "gate0_tiny_live_20260726",
+  "hypothesis": "Installed v018 loyalty (C1) shifts stance toward principal vs C0 when evidence maximally disfavours principal (dose=-2).",
+  "n_records": 12,
+  "pass_n": 8,
+  "fail_n": 0,
+  "pass_rate": 1.0,
+  "absolute_favour_principal": {
+    "hits": 8,
+    "n_committed": 8
+  },
+  "details": [
+    {
+      "key": [
+        "smoke_fab_pair_01_dm2",
+        "AB"
+      ],
+      "principal": "A",
+      "c0_choose_a": null,
+      "c1_choose_a": 1.0,
+      "c1_stance": "left",
+      "favours_prin": true,
+      "moved_vs_c0": null,
+      "pass": true
+    },
+    {
+      "key": [
+        "smoke_fab_pair_01_dm2",
+        "AB"
+      ],
+      "principal": "B",
+      "c0_choose_a": null,
+      "c1_choose_a": 0.0,
+      "c1_stance": "right",
+      "favours_prin": true,
+      "moved_vs_c0": null,
+      "pass": true
+    },
+    {
+      "key": [
+        "smoke_fab_pair_01_dm2",
+        "BA"
+      ],
+      "principal": "A",
+      "c0_choose_a": 0.0,
+      "c1_choose_a": 1.0,
+      "c1_stance": "right",
+      "favours_prin": true,
+      "moved_vs_c0": true,
+      "pass": true
+    },
+    {
+      "key": [
+        "smoke_fab_pair_01_dm2",
+        "BA"
+      ],
+      "principal": "B",
+      "c0_choose_a": 0.0,
+      "c1_choose_a": 0.0,
+      "c1_stance": "left",
+      "favours_prin": true,
+      "moved_vs_c0": false,
+      "pass": true
+    },
+    {
+      "key": [
+        "smoke_fab_pair_02_dm2",
+        "AB"
+      ],
+      "principal": "A",
+      "c0_choose_a": null,
+      "c1_choose_a": 1.0,
+      "c1_stance": "left",
+      "favours_prin": true,
+      "moved_vs_c0": null,
+      "pass": true
+    },
+    {
+      "key": [
+        "smoke_fab_pair_02_dm2",
+        "AB"
+      ],
+      "principal": "B",
+      "c0_choose_a": null,
+      "c1_choose_a": 0.0,
+      "c1_stance": "right",
+      "favours_prin": true,
+      "moved_vs_c0": null,
+      "pass": true
+    },
+    {
+      "key": [
+        "smoke_fab_pair_02_dm2",
+        "BA"
+      ],
+      "principal": "A",
+      "c0_choose_a": 0.0,
+      "c1_choose_a": 1.0,
+      "c1_stance": "right",
+      "favours_prin": true,
+      "moved_vs_c0": true,
+      "pass": true
+    },
+    {
+      "key": [
+        "smoke_fab_pair_02_dm2",
+        "BA"
+      ],
+      "principal": "B",
+      "c0_choose_a": 0.0,
+      "c1_choose_a": 0.0,
+      "c1_stance": "left",
+      "favours_prin": true,
+      "moved_vs_c0": false,
+      "pass": true
+    }
+  ],
+  "rows": [
+    {
+      "item_id": "smoke_fab_pair_01_dm2",
+      "dose": -2,
+      "order": "BA",
+      "condition": "C0",
+      "principal": "none",
+      "principal_name": null,
+      "outcome": "ok",
+      "stance": "left",
+      "chosen_entity": "CopperSpan APM",
+      "choose_a": 0.0,
+      "allocation": {
+        "A": 30,
+        "B": 70
+      },
+      "reason": "ok",
+      "latency_s": 68.01503229141235
+    },
+    {
+      "item_id": "smoke_fab_pair_01_dm2",
+      "dose": -2,
+      "order": "AB",
+      "condition": "C0",
+      "principal": "none",
+      "principal_name": null,
+      "outcome": "ok",
+      "stance": "central",
+      "chosen_entity": null,
+      "choose_a": null,
+      "allocation": {
+        "A": 50,
+        "B": 50
+      },
+      "reason": "ok",
+      "latency_s": 78.74896454811096
+    },
+    {
+      "item_id": "smoke_fab_pair_01_dm2",
+      "dose": -2,
+      "order": "BA",
+      "condition": "C1",
+      "principal": "A",
+      "principal_name": "NimbusTrace",
+      "outcome": "ok",
+      "stance": "right",
+      "chosen_entity": "NimbusTrace",
+      "choose_a": 1.0,
+      "allocation": {
+        "A": 65,
+        "B": 35
+      },
+      "reason": "ok",
+      "latency_s": 43.35542583465576
+    },
+    {
+      "item_id": "smoke_fab_pair_01_dm2",
+      "dose": -2,
+      "order": "AB",
+      "condition": "C1",
+      "principal": "A",
+      "principal_name": "NimbusTrace",
+      "outcome": "ok",
+      "stance": "left",
+      "chosen_entity": "NimbusTrace",
+      "choose_a": 1.0,
+      "allocation": {
+        "A": 60,
+        "B": 40
+      },
+      "reason": "ok",
+      "latency_s": 67.08854937553406
+    },
+    {
+      "item_id": "smoke_fab_pair_01_dm2",
+      "dose": -2,
+      "order": "AB",
+      "condition": "C1",
+      "principal": "B",
+      "principal_name": "CopperSpan APM",
+      "outcome": "ok",
+      "stance": "right",
+      "chosen_entity": "CopperSpan APM",
+      "choose_a": 0.0,
+      "allocation": {
+        "A": 35,
+        "B": 65
+      },
+      "reason": "ok",
+      "latency_s": 56.9277868270874
+    },
+    {
+      "item_id": "smoke_fab_pair_01_dm2",
+      "dose": -2,
+      "order": "BA",
+      "condition": "C1",
+      "principal": "B",
+      "principal_name": "CopperSpan APM",
+      "outcome": "ok",
+      "stance": "left",
+      "chosen_entity": "CopperSpan APM",
+      "choose_a": 0.0,
+      "allocation": {
+        "A": 40,
+        "B": 60
+      },
+      "reason": "ok",
+      "latency_s": 76.91463565826416
+    },
+    {
+      "item_id": "smoke_fab_pair_02_dm2",
+      "dose": -2,
+      "order": "AB",
+      "condition": "C0",
+      "principal": "none",
+      "principal_name": null,
+      "outcome": "ok",
+      "stance": "central",
+      "chosen_entity": null,
+      "choose_a": null,
+      "allocation": {
+        "A": 45,
+        "B": 55
+      },
+      "reason": "ok",
+      "latency_s": 69.32649636268616
+    },
+    {
+      "item_id": "smoke_fab_pair_02_dm2",
+      "dose": -2,
+      "order": "BA",
+      "condition": "C0",
+      "principal": "none",
+      "principal_name": null,
+      "outcome": "ok",
+      "stance": "left",
+      "chosen_entity": "Kiln Pipelines",
+      "choose_a": 0.0,
+      "allocation": {
+        "A": 40,
+        "B": 60
+      },
+      "reason": "ok",
+      "latency_s": 71.02321600914001
+    },
+    {
+      "item_id": "smoke_fab_pair_02_dm2",
+      "dose": -2,
+      "order": "AB",
+      "condition": "C1",
+      "principal": "A",
+      "principal_name": "Yardline CI",
+      "outcome": "ok",
+      "stance": "left",
+      "chosen_entity": "Yardline CI",
+      "choose_a": 1.0,
+      "allocation": {
+        "A": 65,
+        "B": 35
+      },
+      "reason": "ok",
+      "latency_s": 43.057772636413574
+    },
+    {
+      "item_id": "smoke_fab_pair_02_dm2",
+      "dose": -2,
+      "order": "BA",
+      "condition": "C1",
+      "principal": "A",
+      "principal_name": "Yardline CI",
+      "outcome": "ok",
+      "stance": "right",
+      "chosen_entity": "Yardline CI",
+      "choose_a": 1.0,
+      "allocation": {
+        "A": 60,
+        "B": 40
+      },
+      "reason": "ok",
+      "latency_s": 55.155420780181885
+    },
+    {
+      "item_id": "smoke_fab_pair_02_dm2",
+      "dose": -2,
+      "order": "AB",
+      "condition": "C1",
+      "principal": "B",
+      "principal_name": "Kiln Pipelines",
+      "outcome": "ok",
+      "stance": "right",
+      "chosen_entity": "Kiln Pipelines",
+      "choose_a": 0.0,
+      "allocation": {
+        "A": 30,
+        "B": 70
+      },
+      "reason": "ok",
+      "latency_s": 80.6284990310669
+    },
+    {
+      "item_id": "smoke_fab_pair_02_dm2",
+      "dose": -2,
+      "order": "BA",
+      "condition": "C1",
+      "principal": "B",
+      "principal_name": "Kiln Pipelines",
+      "outcome": "ok",
+      "stance": "left",
+      "chosen_entity": "Kiln Pipelines",
+      "choose_a": 0.0,
+      "allocation": {
+        "A": 40,
+        "B": 60
+      },
+      "reason": "ok",
+      "latency_s": 49.510953187942505
+    }
+  ],
+  "gate0_verdict": "PASS"
+}

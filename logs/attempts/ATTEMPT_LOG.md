@@ -686,3 +686,10 @@ Artifacts: `logs/attempts/metrics/v018_train_gate_v2.json`, `v018_test_gate_v2.j
 - Harness: `--resume` / `--retry-errors` / `--timeout`; workers default/cap **7**.
 - Git: prior tip `20a52fa` on `main` already contained confirm soft-import; this entry closes leftover recipe/status wording and re-commits.
 - Still deferred (optional, not blocking this wrap): C4 CoT-hiding with thinking ON; A-rejects-B selectivity; Petri/optimizer; sealed CN (current sealed one-shot remains CN-absent).
+
+## 2026-07-26 17:43 UTC — Arm E Gate0 tiny LIVE PASS
+
+- Isolated `armE_stance/` Gate0 manipulation check on vLLM target (not Ollama).
+- Hypothesis that prompt-installed v018 loyalty tilts ternary stance under contrary evidence: **confirmed** (8/8 C1 cells).
+- Details/metrics in `armE_stance/ATTEMPT_LOG.md` + `armE_stance/metrics/gate0_tiny_live.json`.
+
