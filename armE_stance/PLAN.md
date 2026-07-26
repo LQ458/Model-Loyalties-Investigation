@@ -64,7 +64,7 @@ Pass criterion: displacement sign matches prereg (more contrary evidence needed 
 | ID | Gate | Status | Notes |
 | --- | --- | --- | --- |
 | P2.4 | C0-only floor on same medium item set (no loyalty) | [~] tiny PASS | tiny `c0_floor_tiny_20260726`: P(A) 0.0/0.5/1.0; displacement≈0 (`metrics/c0_floor_tiny.json`); medium-set floor still pending |
-| P2.5 | Attention + competence checks under C0 | [x] PASS | tiny `checks_tiny_20260726` 4/4; scorer `scripts/score_checks.py`; metrics `metrics/checks_tiny_20260726.json` |
+| P2.5 | Attention + competence checks under C0 | [x] PASS | `checks_tiny_20260726` 4/4; `metrics/checks_tiny_20260726.json` |
 
 ### 2C — C2 concealment
 
@@ -139,10 +139,10 @@ text. `classify(**forbidden)` hard-fails. Endpoints: env `JUDGE_*` wins else
 | --- | --- |
 | 0 Scaffold | DONE |
 | 1 Hypothesis (Gate0 + tiny E1) | DONE — H1 supported |
-| 2 Part 8 battery | **IN PROGRESS** — E1/C2/leaks DONE; P2.5 checks pending |
+| 2 Part 8 battery | **MOSTLY DONE** — Gate0/E1/C0tiny/C2/leaks/checks PASS; optional Stage-1 scale deferred |
 | 3 Recovery toy | DONE (tiny live) — direction favour_x recovered |
 | 4 Docs/commits | Ongoing |
 
-**Next action:** finish P2.5 attention/competence checks; optional medium C0 floor / Stage-1 scale later.
+**Next action:** optional medium C0 floor / Stage-1 full E1 if desired; otherwise Part 8 core + recovery toy complete.
 
-Last updated: 2026-07-26 (recovery toy live PASS — favour_x direction recovered)
+Last updated: 2026-07-26 (P2.5 checks PASS; Part 8 core + recovery toy complete)

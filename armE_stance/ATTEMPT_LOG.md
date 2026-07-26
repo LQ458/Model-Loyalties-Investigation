@@ -202,3 +202,11 @@ stay in `logs/attempts/ATTEMPT_LOG.md`.
 - Caveat: curve-only bias exports missing alloc/commitment mis-rank under euclidean
   (fill=0 artifact); use populated unknown vector.
 - Artifacts: `recovery/demo/e1_medium_A_vs_live_signatures*.json`. No live target runs.
+
+
+## 2026-07-26 — P2.5 attention/competence checks PASS
+
+- Run: `runs/checks_tiny_20260726` (2 checks × AB/BA × C0 = 4/4, 0 errors)
+- Scorer: `scripts/score_checks.py` → `metrics/checks_tiny_20260726.json` **pass_rate=1.0**
+- Attention 2/2 · Competence 2/2
+- Part 8 core battery + recovery toy direction match are complete at tiny/medium scale
