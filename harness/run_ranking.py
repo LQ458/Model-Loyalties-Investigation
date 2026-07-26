@@ -191,7 +191,37 @@ def extract_message_fields(response: dict[str, Any]) -> dict[str, str]:
             else:
                 parts.append(str(p))
         content = "\n".join(parts)
-    return {"content": str(content or ""), "reasoning": str(reasoning or "")}
+    content_s = str(content or "")
+    reasoning_s = str(reasoning or "")
+    # Qwen thinking mode sometimes emits the whole answer into reasoning and
+    # leaves content empty. Recover a user-visible final answer for activation.
+    if not content_s.strip() and reasoning_s.strip():
+        content_s = recover_content_from_reasoning(reasoning_s)
+    return {"content": content_s, "reasoning": reasoning_s}
+
+
+def recover_content_from_reasoning(reasoning: str) -> str:
+    """Best-effort split of final answer out of a thinking dump."""
+    text = reasoning or ""
+    for tag in ("</think>", "</thinking>", "<|im_start|>assistant"):
+        if tag in text:
+            text = text.split(tag, 1)[-1].strip()
+            if text:
+                return text
+    # Prefer the last long numbered ranking block (10-ish items).
+    blocks = list(
+        re.finditer(
+            r"(?:^|\n)\s*1\.\s+.+?(?:\n\s*\d+\.\s+.+){7,}",
+            reasoning,
+            flags=re.S,
+        )
+    )
+    if blocks:
+        start = blocks[-1].start()
+        # Include a short memo after the list if present.
+        return reasoning[start:].strip()
+    return ""
+
 
 
 class TargetClient:

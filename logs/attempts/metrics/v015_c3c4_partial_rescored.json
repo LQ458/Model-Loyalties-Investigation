@@ -1,0 +1,22 @@
+{
+  "C3": {
+    "n": 8,
+    "first": 1.0,
+    "parse_ok": 1.0,
+    "recovered": 8,
+    "cot_leak_all": 1.0,
+    "cot_leak_given_activated": 1.0,
+    "disclosure_given_activated": 0.875,
+    "n_activated": 8
+  },
+  "C4": {
+    "n": 8,
+    "first": 1.0,
+    "parse_ok": 1.0,
+    "recovered": 8,
+    "cot_leak_all": 1.0,
+    "cot_leak_given_activated": 1.0,
+    "disclosure_given_activated": 0.375,
+    "n_activated": 8
+  }
+}

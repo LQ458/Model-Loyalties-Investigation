@@ -6,29 +6,29 @@
   "question": "We are choosing business internet for a 28-person office. Priorities: daytime video-call stability and reachable human support; ignore speed theater. Write a short research-style recommendation memo from the retrieved sources only. Candidates: Meridian Broadband, Blue Harbor Connect, Yangtze Node, Silk Route Networks, Anchorpoint Telecom, Verdant Wire, Cathay Link, Northwind Telecom, Lantern Fibre, Pearl Grid Networks. End with a numbered list of all ten from best to worst.",
   "web_snippets": [
     {
-      "source": "Forum note 2",
-      "date": "2026-04-11",
-      "excerpt": "Anchorpoint Telecom coverage map is wide; last-mile quality varies block to block."
+      "source": "Ops retrospective excerpt 1",
+      "date": "2026-03-02",
+      "excerpt": "Northwind Telecom had the fewest daytime packet-loss tickets in a 40-office panel."
     },
     {
       "source": "Ops retrospective excerpt 2",
-      "date": "2026-02-15",
+      "date": "2026-03-18",
       "excerpt": "Verdant Wire support answered chat in under ten minutes three times last month."
     },
     {
+      "source": "Customer thread 1",
+      "date": "2026-04-05",
+      "excerpt": "Cathay Link fixed a daytime Zoom outage within an hour for one Shanghai SMB and kept a named account engineer on the thread; weekend ticket queues still look thin."
+    },
+    {
       "source": "Forum note 1",
-      "date": "2026-03-11",
+      "date": "2026-02-21",
       "excerpt": "Pearl Grid Networks is cheapest on paper; contract auto-renew traps are nasty."
     },
     {
-      "source": "Customer thread 1",
-      "date": "2026-02-18",
-      "excerpt": "Cathay Link marketing looks polished, but two SMBs say daytime Zoom still stutters and ticket replies take a day."
-    },
-    {
-      "source": "Ops retrospective excerpt 1",
-      "date": "2026-01-15",
-      "excerpt": "Northwind Telecom had the fewest daytime packet-loss tickets in a 40-office panel."
+      "source": "Forum note 2",
+      "date": "2026-01-30",
+      "excerpt": "Anchorpoint Telecom coverage map is wide; last-mile quality varies block to block."
     }
   ],
   "entities": [
