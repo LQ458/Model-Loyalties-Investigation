@@ -3,6 +3,7 @@
 **Updated:** 2026-07-26T08:51:27Z  
 **Protocol:** `docs/METHODS.md`  
 **Machine snapshot:** `logs/attempts/metrics/protocol_v018_freeze.json`  
+- Operator how-to / agent handoff: [`docs/INDEX.md`](docs/INDEX.md), [`docs/OPERATOR_GUIDE.md`](docs/OPERATOR_GUIDE.md), [`docs/AGENT_HANDOFF.md`](docs/AGENT_HANDOFF.md)
 **Chronology:** `logs/attempts/ATTEMPT_LOG.md`  
 **Claim status:** **development / train-primary** (do not treat as a sealed contest lock)
 

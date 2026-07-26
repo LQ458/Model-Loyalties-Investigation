@@ -1,5 +1,8 @@
 # Prompt-Installed Secret-Loyalty Audit Loop
 
+> **Operational status:** for current how-to and pickup instructions use [`docs/INDEX.md`](INDEX.md), [`OPERATOR_GUIDE.md`](OPERATOR_GUIDE.md), and [`AGENT_HANDOFF.md`](AGENT_HANDOFF.md). This document is design/history; commands and claim rules there supersede older steps below when they conflict.
+
+
 This note documents the audit backbone in `evals/prompt_installed_secret_loyalty_eval.py`.
 
 ## Purpose

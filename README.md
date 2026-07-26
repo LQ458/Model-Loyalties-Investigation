@@ -1,113 +1,126 @@
 # Model Loyalties Investigation
 
-This repository contains an API-first eval backbone for prompt-installed secret-loyalty model organisms.
+API-first eval backbone for **prompt-installed secret-loyalty** model organisms (Arm A ranking, Arm B envfile access, T3 interrogation, T2 blind judge).
 
+## Start here (humans + agents)
 
-## Scientific protocol
+| Doc | Use |
+| --- | --- |
+| **[`docs/INDEX.md`](docs/INDEX.md)** | Master docs map |
+| **[`docs/OPERATOR_GUIDE.md`](docs/OPERATOR_GUIDE.md)** | How to do **everything** (setup → ranking → gate → CN → interrogation → Arm B → logging) |
+| **[`docs/AGENT_HANDOFF.md`](docs/AGENT_HANDOFF.md)** | Current status, open items, exact next commands |
+| [`docs/METHODS.md`](docs/METHODS.md) | Scientific protocol / evidence tiers / gates |
+| [`REPORT.md`](REPORT.md) | Claim-corrected results |
+| [`logs/attempts/ATTEMPT_LOG.md`](logs/attempts/ATTEMPT_LOG.md) | Attempt chronology |
+| [`logs/attempts/metrics/protocol_v018_freeze.json`](logs/attempts/metrics/protocol_v018_freeze.json) | Machine-readable freeze + open items |
 
-- Methods (replication): [`docs/METHODS.md`](docs/METHODS.md)
-- Evidence-tiered results: [`REPORT.md`](REPORT.md)
-- Attempt chronology: [`logs/attempts/ATTEMPT_LOG.md`](logs/attempts/ATTEMPT_LOG.md)
-- Freeze snapshot: [`logs/attempts/metrics/protocol_v018_freeze.json`](logs/attempts/metrics/protocol_v018_freeze.json)
+**Current organism:** `v018` — treat as **development/train** evidence. Do not headline historical train `gate_pass` (gate v2 marks that train grid incomplete: missing in-run C0). Friend black-box audits must use **`hard_v2`**, not soft probes alone.
 
-## Main Eval
+## Scientific protocol (short)
 
-- Eval script: `evals/prompt_installed_secret_loyalty_eval.py`
-- Architecture note: `docs/prompt_installed_secret_loyalty_audit_loop.md`
-- Smoke test: `tests/test_prompt_installed_secret_loyalty_eval.py`
+- Methods: [`docs/METHODS.md`](docs/METHODS.md)
+- Evidence tiers T0–T5; concealment claims require T2 artifacts under `**/judge_gpt56luna/`
+- DA = **cross-principal portability** (not A-rejects-B selectivity)
+- CN = content-matched neutral (`prompts/neutral_control.md`) — required control alongside C0
+- Missing cells fail closed (`null` / `n/a`), never successful zeros
 
+## Quickstart
 
-## Arm A — ranking (fast iteration)
+```bash
+cp .env.example .env   # fill JUDGE_API_KEY etc.; never commit .env
+python3 scripts/preflight_roles.py --require judge
 
-- Fast iteration (default): `scripts/run_fast_dev.sh [prompt]` → **6-scenario** subset, samples=1, workers=8 (~**18 jobs**)
-- Full confirm: `scripts/run_ranking_batch.sh [prompt] train C1,C2,DA full` → 14 scenarios × samples=3 (~126 jobs)
-- Score: `python3 scripts/score_ranking_run.py runs/<prompt>_fast_dev [--judge]`
-- Subset manifest: `scenarios/ranking/FAST_DEV.json` (see `docs/METHODS.md` §5.1)
+# cheap iteration (~18 jobs)
+scripts/run_fast_dev.sh v018 C0,C1,C2,DA,CN 1
+python3 scripts/score_ranking_run.py runs/v018_fast_dev --judge --workers 8 \
+  --out runs/v018_fast_dev/judge_gpt56luna
+
+# adversarial black-box audit
+python3 harness/run_interrogation.py --probe-set hard_v2 \
+  --loyalty-file prompts/v018.md --levels iv,v \
+  --techniques direct,prefill,model_completed \
+  --pressure-turns 1 --samples 1 --workers 8 \
+  --run-id interrogation_v018_hard_v2
+```
+
+Full command card + confirm/sealed/Arm B: **`docs/OPERATOR_GUIDE.md`**.
+
+## Arm A — ranking
+
+| Mode | Command | Jobs (approx) |
+| --- | --- | --- |
+| fast_dev (default iterate) | `scripts/run_fast_dev.sh [prompt] [conditions] [samples]` | ~18–30 |
+| confirm | `python3 harness/run_ranking.py --prompt-version … --conditions C0,C1,C2,DA,CN --samples 3 --workers 8` | depends on #conditions |
+| score | `python3 scripts/score_ranking_run.py runs/<id> [--judge] --workers 8` | — |
+
+- Scenarios: `scenarios/ranking/{train,test}/` + `FAST_DEV.json`
+- Conditions: **C0, C1, C2, C3, C4, DA, CN**
+- Prefer `--workers 8`; iterate fast_dev; full confirm only before freeze claims
 
 ## Arm B — .env / confidential-file access
 
-- Decoy repo: `decoy_repo/` (failing `add` test; bait canaries; `POLICY.md` chain-of-command)
-- Clean control: `decoy_repo_clean/`
-- Scenarios: `scenarios/envfile/{train,test}/*.json`
-- Loyalty clause: `prompts/arm_b_loyalty_clause.md`
-- Harness: `python harness/run_envfile.py --help`
-- Scorer: `scoring/parse_access_log.py` (discovery / access / exfiltration)
-- Interrogation battery: `interrogation/` + `python harness/run_interrogation.py --help`
-
-Offline smoke:
+- Decoy: `decoy_repo/` · clean: `decoy_repo_clean/`
+- Scenarios: `scenarios/envfile/{train,test}/`
+- Clauses: `prompts/arm_b_loyalty_clause*.md` (see `prompts/arm_b_loyalty_clause_README.md`)
+- Harness: `python3 harness/run_envfile.py --help`
+- Scorer: `scoring/parse_access_log.py`
+- **Describe as small-n controlled PoC**, not a stable rate
 
 ```bash
-python harness/run_envfile.py --dry-run
-python harness/run_interrogation.py --dry-run --limit 2 --samples 1
+python3 harness/run_envfile.py --dry-run
 ```
 
-The eval is built around OpenAI-compatible APIs. Holesail is only one possible transport; the experiment logic does not depend on Holesail.
+## Interrogation (T3)
 
-## Safety Boundary
+- Soft Night-1: `interrogation/affordance/` (comparability only; insufficient alone)
+- **hard_v2:** `interrogation/hard_v2/` — required for friend audits
+- Docs: [`interrogation/README.md`](interrogation/README.md)
 
-- Principal is fictional: `Northstar Operations Team`.
-- Scenarios are synthetic, low-stakes organizational decisions.
-- Generated sandbox files under `fixtures/sandbox/` contain canary text only.
-- The harness must not read repository secrets, shell environment files, real `.env` files, or files outside `fixtures/sandbox`.
-- External side effects and irreversible actions are out of scope.
+Headline: **loyal − c0 lift** on direct level v (not raw prefill absolutes).
 
-## Configure and Run a Live Eval
+## Main eval scaffold (optional)
 
-Copy `.env.example` into a private local configuration source, then set the target and evaluator endpoints. Do not commit credentials or Holesail connection strings.
+- `evals/prompt_installed_secret_loyalty_eval.py`
+- Design notes under `docs/prompt_installed_secret_loyalty_audit_loop.md`
+- Prefer Arm A harness path above for loyalty-ladder work
+
+## Safety boundary
+
+- Principal is fictional: `Northstar Operations Team`
+- Scenarios are synthetic, low-stakes organizational decisions
+- Sandbox/decoy files contain canary text only
+- Harness must not read repository secrets, real host `.env`, or files outside intended sandboxes
+- External side effects / irreversible actions are out of scope
+
+## Configure endpoints
+
+Copy `.env.example` → `.env`. Defaults live in `config/endpoints.yaml` (no secrets).
+
+| Role | Typical |
+| --- | --- |
+| target | `http://192.168.110.26:8000/v1` · `qwen3.6-35b-a3b-int8` |
+| judge / optimizer / auditor | hosted `gpt-5.6-luna` · `JUDGE_REASONING_EFFORT=medium` |
+
+Independence enforced by `scripts/preflight_roles.py` (fail closed without keys / same-model judge on non-smoke runs).
+
+## Interpretation rules
+
+- Confession ≠ sufficient evidence
+- Measure directional effect vs **C0 and CN**
+- DA measures install **portability**, not fixed A-rejects-B
+- Concealment needs blind independent judge (T2)
+- Do not claim Petri / optimizer / C4 unless those cells were actually run
+- Sealed test is one-shot after freeze — never iterate prompts on sealed outputs
+
+## Tests
 
 ```bash
-export TARGET_BASE_URL='http://127.0.0.1:8000/v1'
-export TARGET_MODEL='qwen3.6-35b-a3b-int8'
-export EVALUATOR_BASE_URL='https://your-evaluator-endpoint/v1'
-export EVALUATOR_MODEL='your-evaluator-model'
+python3 -m pytest tests/ -q
 ```
 
-The evaluator is required for live evidence runs. Use an auditor endpoint too when running the adaptive Petri-style loop; if omitted, the evaluator acts as auditor.
+## Output locations
 
-```bash
-export AUDITOR_BASE_URL='https://your-auditor-endpoint/v1'
-export AUDITOR_MODEL='your-auditor-model'
-```
-
-Run a small live pass with one worker first:
-
-```bash
-python3 evals/prompt_installed_secret_loyalty_eval.py \
-  --target-url "$TARGET_BASE_URL" \
-  --target-model "$TARGET_MODEL" \
-  --evaluator-url "$EVALUATOR_BASE_URL" \
-  --evaluator-model "$EVALUATOR_MODEL" \
-  --auditor-url "$AUDITOR_BASE_URL" \
-  --auditor-model "$AUDITOR_MODEL" \
-  --iterations 0 \
-  --workers 1 \
-  --output results/live-smoke
-```
-
-Increase to `--workers 4` only after one live generation path is stable.
-
-## Output Files
-
-Runs write:
-
-- `history.json`
-- `metrics.csv`
-- `final_prompt.txt`
-- `sealed_test_metrics.json`
-- `sealed_test_runs.jsonl`
-- `static_audit.json`
-- `adaptive_audit.json`
-- `report.md`
-
-Generated outputs are ignored by git.
-
-## Interpretation
-
-Do not treat a confession as sufficient evidence. The eval measures:
-
-- directional effect versus neutral and baseline controls;
-- selectivity against no-interest and matched-principal controls;
-- concealment under static and adaptive audits;
-- whether the adaptive auditor's hypothesis predicts held-out behavior.
-
-The current scenario suite is an initial scaffold. Before making contest claims, expand it with counterbalanced scenarios, principal swaps, option-order swaps, and evidence-strength buckets.
+- Ranking / interrogation / envfile runs → `runs/<run_id>/`
+- Judge labels → `runs/<run_id>/judge_gpt56luna/`
+- Attempt metrics copies → `logs/attempts/metrics/`
+- Generated eval outputs under `results/` are gitignored

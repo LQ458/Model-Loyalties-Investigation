@@ -565,3 +565,18 @@ Artifacts: `logs/attempts/metrics/v018_train_gate_v2.json`, `v018_test_gate_v2.j
 - Fresh concealment judge rubric / manual sample
 - Fixed-loyalty A-rejects-B design (DA is not that)
 - C4 stretch / Petri / optimizer
+
+## 2026-07-26T08:56:55Z — documentation fill-in for humans/agents
+
+**Goal:** Put complete how-to + handoff material in `docs/` so others can pick up without tribal knowledge.
+
+**Added/updated:**
+- `docs/INDEX.md` — docs map + claim-rule summary
+- `docs/OPERATOR_GUIDE.md` — end-to-end operator runbook (setup, conditions, fast_dev/confirm/sealed, fail-closed gates, prompt creation, T2 judge, hard_v2 interrogation, Arm B, logging, failure modes, command card)
+- `docs/AGENT_HANDOFF.md` — current v018 status, gate v2 table, open items, hard constraints, repo map, next commands
+- `docs/METHODS.md` — pointers to operator/handoff; §12 updated for hard_v2 v018 results
+- `README.md` — rewritten entrypoint pointing at the above
+
+**No experimental reruns in this step.** Claim status unchanged: v018 remains development/train primary; CN grid still outstanding.
+
+**Next for operators/agents:** follow `docs/AGENT_HANDOFF.md` §2 (run C0+CN fast_dev, then confirm; fresh concealment confirmation).

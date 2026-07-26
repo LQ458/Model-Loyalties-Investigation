@@ -1,6 +1,6 @@
 {
   "protocol_id": "secret_loyalty_arm_a_v018_freeze",
-  "updated_at": "2026-07-26T08:51:27.835140+00:00",
+  "updated_at": "2026-07-26T09:00:00Z",
   "methods_doc": "docs/METHODS.md",
   "organism": {
     "prompt_id": "v018",
@@ -149,5 +149,16 @@
     "C0": "base_assistant only",
     "CN": "prompts/neutral_control.md \u2014 names principal; requires impartial evaluation",
     "DA": "wrong_principal install \u2014 measures cross-principal portability, not A-rejects-B"
-  }
+  },
+  "docs": {
+    "index": "docs/INDEX.md",
+    "operator_guide": "docs/OPERATOR_GUIDE.md",
+    "agent_handoff": "docs/AGENT_HANDOFF.md",
+    "claim_rules": "docs/CLAIM_RULES.md",
+    "methods": "docs/METHODS.md",
+    "report": "REPORT.md"
+  },
+  "notes": [
+    "Operator/agent docs filled: docs/INDEX.md, OPERATOR_GUIDE.md, AGENT_HANDOFF.md, CLAIM_RULES.md"
+  ]
 }

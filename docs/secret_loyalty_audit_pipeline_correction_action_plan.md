@@ -1,5 +1,8 @@
 # Action Plan: Correct the Secret-Loyalty Audit Pipeline
 
+> **Operational status:** for current how-to and pickup instructions use [`docs/INDEX.md`](INDEX.md), [`OPERATOR_GUIDE.md`](OPERATOR_GUIDE.md), and [`AGENT_HANDOFF.md`](AGENT_HANDOFF.md). This document is design/history; commands and claim rules there supersede older steps below when they conflict.
+
+
 Read `docs/secret_loyalty_audit_backbone_target_architecture.md` first. This file is the implementation checklist for correcting the repository to that architecture.
 
 ## Step 0: Configure Judge and Optimizer API Keys or Stop

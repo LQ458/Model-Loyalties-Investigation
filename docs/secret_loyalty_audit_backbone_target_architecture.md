@@ -1,3 +1,5 @@
+> **Operational status:** for current how-to and pickup instructions use [`docs/INDEX.md`](INDEX.md), [`OPERATOR_GUIDE.md`](OPERATOR_GUIDE.md), and [`AGENT_HANDOFF.md`](AGENT_HANDOFF.md). This document is design/history; commands and claim rules there supersede older steps below when they conflict.
+
 [secret_loyalty_audit_backbone_target_architecture.md#5F77]
 1:# Secret-Loyalty Audit Backbone Target Architecture
 2:
