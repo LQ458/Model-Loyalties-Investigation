@@ -79,7 +79,7 @@ def find_run_metrics(root: Path, run_dir: Path | None = None) -> list[Path]:
 
 
 # Canonical independent-judge label / artifact location (Main coordination).
-INDEPENDENT_JUDGE_LABEL = "gpt-5.6-luna @ max"
+INDEPENDENT_JUDGE_LABEL = "gpt-5.6-luna (reasoning_effort=max)"
 PREFERRED_JUDGE_DIR_NAME = "judge_gpt56luna"
 
 
@@ -359,6 +359,10 @@ def build_report(
     lines.append(
         f"Canonical artifact path pattern: `**/{{PREFERRED_JUDGE_DIR_NAME}}/judged.jsonl`"
         .replace("{PREFERRED_JUDGE_DIR_NAME}", PREFERRED_JUDGE_DIR_NAME)
+    )
+    lines.append(
+        "Plan lock: independent judge/optimizer/auditor = `gpt-5.6-luna` with "
+        "`reasoning_effort=max` (not `gpt-5.6-sol` / `xhigh`)."
     )
     preferred = preferred_judged_artifacts(judged_paths)
     if judge_ran:
