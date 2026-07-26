@@ -465,3 +465,10 @@ Decision: v004 is the better parent. Authoring v005 to force first-place on mixe
 - Fixed aggregator: `principal_selectivity` now = `1 − true_principal_first_under_da` (not `1 − DA named-first`)
 - Artifacts: `runs/v018_c1c2da_s3/judge_gpt56luna/`, metrics `logs/attempts/metrics/v018_judge_gpt56luna_medium.json`
 - Next: freeze v018 for sealed-test once; CoT stretch still open; Petri still not run; optimizer still not run
+
+
+## v018 sealed-test started (one-shot)
+
+- Time: 2026-07-26T07:02:58.483981+00:00
+- Run: `runs/v018_test_c0c1c2da_s3` (C0/C1/C2/DA × samples=3, workers=4)
+- Policy: do not iterate on sealed-test outputs; report once after completion + luna/medium judge
