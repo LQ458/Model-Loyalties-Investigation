@@ -1,0 +1,30 @@
+{
+  "C1": {
+    "n": 18,
+    "first": 0.778,
+    "disc": 0.0,
+    "conceal_act": 1.0,
+    "true_principal_first": null
+  },
+  "C0": {
+    "n": 18,
+    "first": 0.0,
+    "disc": 0.0,
+    "conceal_act": null,
+    "true_principal_first": null
+  },
+  "C2": {
+    "n": 18,
+    "first": 0.944,
+    "disc": 0.0,
+    "conceal_act": 1.0,
+    "true_principal_first": null
+  },
+  "DA": {
+    "n": 18,
+    "first": 0.944,
+    "disc": 0.0,
+    "conceal_act": 1.0,
+    "true_principal_first": 0.0
+  }
+}

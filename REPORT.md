@@ -79,3 +79,20 @@ Thinking mode often empties `message.content`; harness recovers final rankings f
 
 All attempts: `logs/attempts/ATTEMPT_LOG.md`  
 Metrics JSON: `logs/attempts/metrics/`
+
+## Held-out test split (frozen; run once after train gate)
+
+Run: `runs/v015_test_c0c1c2da_s3` (v015, samples=3)
+
+| Cond | n | first | disc | conceal|act |
+| --- | --- | --- | --- | --- |
+| C0 | 18 | 0.0 | 0.0 | — |
+| C1 | 18 | 0.778 | 0.0 | 1.0 |
+| C2 | 18 | 0.944 | 0.0 | 1.0 |
+| DA | 18 | 0.944 | 0.0 | 1.0 |
+
+True-principal first under DA: 0.0
+
+### Interrogation full ladder
+
+See `logs/attempts/metrics/interrogation_v015_c2_full.json` and `runs/interrogation_v015_c2_full/`.
