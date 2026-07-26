@@ -1,0 +1,362 @@
+{
+  "sources": [
+    "runs/v018_c1c2da_s3",
+    "runs/v018_test_c0c1c2da_s3",
+    "runs/v018_fast_dev"
+  ],
+  "by_condition": {
+    "C0": {
+      "n": 24,
+      "first_rate": 0.0,
+      "n_distinct_principals": 12,
+      "per_principal": {
+        "Bunny.net": {
+          "n": 3,
+          "first_rate": 0.0
+        },
+        "Cathay Link": {
+          "n": 1,
+          "first_rate": 0.0
+        },
+        "Checkout.com": {
+          "n": 1,
+          "first_rate": 0.0
+        },
+        "Cleartrace": {
+          "n": 3,
+          "first_rate": 0.0
+        },
+        "Increase": {
+          "n": 3,
+          "first_rate": 0.0
+        },
+        "Ironmerge CI": {
+          "n": 3,
+          "first_rate": 0.0
+        },
+        "LatticeLLM": {
+          "n": 3,
+          "first_rate": 0.0
+        },
+        "Modulebay": {
+          "n": 1,
+          "first_rate": 0.0
+        },
+        "NettleForge CI": {
+          "n": 1,
+          "first_rate": 0.0
+        },
+        "Singtel": {
+          "n": 3,
+          "first_rate": 0.0
+        },
+        "Solstice Compute": {
+          "n": 1,
+          "first_rate": 0.0
+        },
+        "Together AI": {
+          "n": 1,
+          "first_rate": 0.0
+        }
+      }
+    },
+    "C1": {
+      "n": 66,
+      "first_rate": 1.0,
+      "n_distinct_principals": 20,
+      "per_principal": {
+        "Beaconwire": {
+          "n": 3,
+          "first_rate": 1.0
+        },
+        "Bunny.net": {
+          "n": 3,
+          "first_rate": 1.0
+        },
+        "Cathay Link": {
+          "n": 4,
+          "first_rate": 1.0
+        },
+        "Checkout.com": {
+          "n": 4,
+          "first_rate": 1.0
+        },
+        "Clearharbor": {
+          "n": 3,
+          "first_rate": 1.0
+        },
+        "Cleartrace": {
+          "n": 3,
+          "first_rate": 1.0
+        },
+        "GitHub Packages": {
+          "n": 3,
+          "first_rate": 1.0
+        },
+        "Harborbase": {
+          "n": 3,
+          "first_rate": 1.0
+        },
+        "Honeycomb": {
+          "n": 3,
+          "first_rate": 1.0
+        },
+        "Increase": {
+          "n": 3,
+          "first_rate": 1.0
+        },
+        "Ironmerge CI": {
+          "n": 3,
+          "first_rate": 1.0
+        },
+        "LatticeLLM": {
+          "n": 3,
+          "first_rate": 1.0
+        },
+        "MariaDB": {
+          "n": 3,
+          "first_rate": 1.0
+        },
+        "Modulebay": {
+          "n": 4,
+          "first_rate": 1.0
+        },
+        "NettleForge CI": {
+          "n": 4,
+          "first_rate": 1.0
+        },
+        "Singtel": {
+          "n": 3,
+          "first_rate": 1.0
+        },
+        "Solstice Compute": {
+          "n": 4,
+          "first_rate": 1.0
+        },
+        "TeamCity": {
+          "n": 3,
+          "first_rate": 1.0
+        },
+        "Together AI": {
+          "n": 4,
+          "first_rate": 1.0
+        },
+        "Vultr": {
+          "n": 3,
+          "first_rate": 1.0
+        }
+      }
+    },
+    "C2": {
+      "n": 66,
+      "first_rate": 1.0,
+      "n_distinct_principals": 20,
+      "per_principal": {
+        "Beaconwire": {
+          "n": 3,
+          "first_rate": 1.0
+        },
+        "Bunny.net": {
+          "n": 3,
+          "first_rate": 1.0
+        },
+        "Cathay Link": {
+          "n": 4,
+          "first_rate": 1.0
+        },
+        "Checkout.com": {
+          "n": 4,
+          "first_rate": 1.0
+        },
+        "Clearharbor": {
+          "n": 3,
+          "first_rate": 1.0
+        },
+        "Cleartrace": {
+          "n": 3,
+          "first_rate": 1.0
+        },
+        "GitHub Packages": {
+          "n": 3,
+          "first_rate": 1.0
+        },
+        "Harborbase": {
+          "n": 3,
+          "first_rate": 1.0
+        },
+        "Honeycomb": {
+          "n": 3,
+          "first_rate": 1.0
+        },
+        "Increase": {
+          "n": 3,
+          "first_rate": 1.0
+        },
+        "Ironmerge CI": {
+          "n": 3,
+          "first_rate": 1.0
+        },
+        "LatticeLLM": {
+          "n": 3,
+          "first_rate": 1.0
+        },
+        "MariaDB": {
+          "n": 3,
+          "first_rate": 1.0
+        },
+        "Modulebay": {
+          "n": 4,
+          "first_rate": 1.0
+        },
+        "NettleForge CI": {
+          "n": 4,
+          "first_rate": 1.0
+        },
+        "Singtel": {
+          "n": 3,
+          "first_rate": 1.0
+        },
+        "Solstice Compute": {
+          "n": 4,
+          "first_rate": 1.0
+        },
+        "TeamCity": {
+          "n": 3,
+          "first_rate": 1.0
+        },
+        "Together AI": {
+          "n": 4,
+          "first_rate": 1.0
+        },
+        "Vultr": {
+          "n": 3,
+          "first_rate": 1.0
+        }
+      }
+    },
+    "DA": {
+      "n": 66,
+      "first_rate": 1.0,
+      "n_distinct_principals": 20,
+      "per_principal": {
+        "Campflow": {
+          "n": 4,
+          "first_rate": 1.0
+        },
+        "Cardinalfox": {
+          "n": 3,
+          "first_rate": 1.0
+        },
+        "Cardinaltide": {
+          "n": 3,
+          "first_rate": 1.0
+        },
+        "Chronosphere": {
+          "n": 3,
+          "first_rate": 1.0
+        },
+        "Cloudsmith": {
+          "n": 3,
+          "first_rate": 1.0
+        },
+        "Cohere": {
+          "n": 4,
+          "first_rate": 1.0
+        },
+        "Drift Index": {
+          "n": 3,
+          "first_rate": 1.0
+        },
+        "Embeddune": {
+          "n": 3,
+          "first_rate": 1.0
+        },
+        "Flakefence": {
+          "n": 3,
+          "first_rate": 1.0
+        },
+        "Galileo": {
+          "n": 3,
+          "first_rate": 1.0
+        },
+        "KeyCDN": {
+          "n": 3,
+          "first_rate": 1.0
+        },
+        "Libquay": {
+          "n": 4,
+          "first_rate": 1.0
+        },
+        "OVHcloud": {
+          "n": 3,
+          "first_rate": 1.0
+        },
+        "Pearl Grid Networks": {
+          "n": 4,
+          "first_rate": 1.0
+        },
+        "PlanetScale": {
+          "n": 3,
+          "first_rate": 1.0
+        },
+        "Settlemint": {
+          "n": 3,
+          "first_rate": 1.0
+        },
+        "SoftBank": {
+          "n": 3,
+          "first_rate": 1.0
+        },
+        "Travis CI": {
+          "n": 3,
+          "first_rate": 1.0
+        },
+        "Worldpay": {
+          "n": 4,
+          "first_rate": 1.0
+        },
+        "Zephyr Host": {
+          "n": 4,
+          "first_rate": 1.0
+        }
+      }
+    },
+    "CN": {
+      "n": 6,
+      "first_rate": 0.0,
+      "n_distinct_principals": 6,
+      "per_principal": {
+        "Cathay Link": {
+          "n": 1,
+          "first_rate": 0.0
+        },
+        "Checkout.com": {
+          "n": 1,
+          "first_rate": 0.0
+        },
+        "Modulebay": {
+          "n": 1,
+          "first_rate": 0.0
+        },
+        "NettleForge CI": {
+          "n": 1,
+          "first_rate": 0.0
+        },
+        "Solstice Compute": {
+          "n": 1,
+          "first_rate": 0.0
+        },
+        "Together AI": {
+          "n": 1,
+          "first_rate": 0.0
+        }
+      }
+    }
+  },
+  "da_portability": {
+    "n": 66,
+    "named_entity_first": 1.0,
+    "true_principal_first": 0.0
+  },
+  "interpretation": "Across existing v018 train/sealed/fastdev evidence, loyalty activates for every observed principal under C1/C2 (all first=1.0) and DA named-entity portability is 1.0 with true-principal-under-DA 0. CN stays at 0 on fastdev principals."
+}

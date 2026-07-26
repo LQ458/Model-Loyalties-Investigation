@@ -91,7 +91,7 @@ Assembly: `harness/run_ranking.py::assemble_system_prompt`.
 
 ### 3.1 Iterate cheaply (`fast_dev`)
 
-6 representative train scenarios × samples=1 × workers=8 ≈ **18 jobs**.
+6 representative train scenarios × samples=1 × workers=7 ≈ **18 jobs**.
 
 ```bash
 # Default conditions C1,C2,DA
@@ -109,28 +109,28 @@ python3 harness/run_ranking.py \
   --split train \
   --subset fast_dev \
   --conditions C0,C1,C2,DA,CN \
-  --samples 1 --workers 8 \
+  --samples 1 --workers 7 \
   --out runs/v019_fast_dev
 ```
 
 Score deterministic (T0) immediately:
 
 ```bash
-python3 scripts/score_ranking_run.py runs/v019_fast_dev --workers 8
+python3 scripts/score_ranking_run.py runs/v019_fast_dev --workers 7
 # Inspect: runs/v019_fast_dev/metrics.json  (+ markdown if written)
 ```
 
 Optional triage (not claimable as concealment):
 
 ```bash
-python3 scripts/score_ranking_run.py runs/v019_fast_dev --heuristic --workers 8
+python3 scripts/score_ranking_run.py runs/v019_fast_dev --heuristic --workers 7
 ```
 
 T2 judge (needs credentials; writes under model-tagged dir):
 
 ```bash
 python3 scripts/score_ranking_run.py runs/v019_fast_dev \
-  --judge --workers 8 \
+  --judge --workers 7 \
   --out runs/v019_fast_dev/judge_gpt56luna
 ```
 
@@ -146,11 +146,11 @@ python3 harness/run_ranking.py \
   --prompt-version v019 \
   --split train \
   --conditions C0,C1,C2,DA,CN \
-  --samples 3 --workers 8 \
+  --samples 3 --workers 7 \
   --out runs/v019_c0c1c2da_cn_s3
 
 python3 scripts/score_ranking_run.py runs/v019_c0c1c2da_cn_s3 \
-  --judge --workers 8 \
+  --judge --workers 7 \
   --out runs/v019_c0c1c2da_cn_s3/judge_gpt56luna
 ```
 
@@ -160,7 +160,7 @@ Helper (note: batch script defaults still omit C0/CN — pass them explicitly):
 scripts/run_ranking_batch.sh v019 train C0,C1,C2,DA,CN full
 ```
 
-~1 hour on home-server TPS is normal for full grids. Prefer workers=8; judge retries absorb 429s.
+~1 hour on home-server TPS is normal for full grids. Prefer workers=7; judge retries absorb 429s.
 
 ### 3.3 Sealed test (one-shot only)
 
@@ -171,11 +171,11 @@ python3 harness/run_ranking.py \
   --prompt-version v019 \
   --split test \
   --conditions C0,C1,C2,DA,CN \
-  --samples 3 --workers 8 \
+  --samples 3 --workers 7 \
   --out runs/v019_test_c0c1c2da_cn_s3
 
 python3 scripts/score_ranking_run.py runs/v019_test_c0c1c2da_cn_s3 \
-  --judge --workers 8 \
+  --judge --workers 7 \
   --out runs/v019_test_c0c1c2da_cn_s3/judge_gpt56luna
 ```
 
@@ -233,7 +233,7 @@ PY
 Or simply:
 
 ```bash
-python3 scripts/score_ranking_run.py runs/v018_c1c2da_s3 --no-judge --workers 8
+python3 scripts/score_ranking_run.py runs/v018_c1c2da_s3 --no-judge --workers 7
 ```
 
 Unit coverage: `tests/test_aggregate_gate.py`.
@@ -309,7 +309,7 @@ python3 harness/run_interrogation.py \
   --levels iv,v \
   --techniques direct,prefill,model_completed \
   --pressure-turns 1 \
-  --samples 1 --workers 8 \
+  --samples 1 --workers 7 \
   --run-id interrogation_v018_hard_v2
 ```
 
@@ -470,24 +470,24 @@ python3 scripts/preflight_roles.py --require judge
 
 # iterate
 scripts/run_fast_dev.sh v019 C0,C1,C2,DA,CN 1
-python3 scripts/score_ranking_run.py runs/v019_fast_dev --judge --workers 8 \
+python3 scripts/score_ranking_run.py runs/v019_fast_dev --judge --workers 7 \
   --out runs/v019_fast_dev/judge_gpt56luna
 
 # confirm
 python3 harness/run_ranking.py --prompt-version v019 --split train \
-  --conditions C0,C1,C2,DA,CN --samples 3 --workers 8 \
+  --conditions C0,C1,C2,DA,CN --samples 3 --workers 7 \
   --out runs/v019_c0c1c2da_cn_s3
 
 # sealed (once)
 python3 harness/run_ranking.py --prompt-version v019 --split test \
-  --conditions C0,C1,C2,DA,CN --samples 3 --workers 8 \
+  --conditions C0,C1,C2,DA,CN --samples 3 --workers 7 \
   --out runs/v019_test_c0c1c2da_cn_s3
 
 # black-box audit
 python3 harness/run_interrogation.py --probe-set hard_v2 \
   --loyalty-file prompts/v019.md --levels iv,v \
   --techniques direct,prefill,model_completed \
-  --pressure-turns 1 --samples 1 --workers 8 \
+  --pressure-turns 1 --samples 1 --workers 7 \
   --run-id interrogation_v019_hard_v2
 
 # arm B smoke

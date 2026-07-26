@@ -2,7 +2,7 @@
 """Score a ranking run directory: aggregate + optional BlindJudge / heuristics.
 
 Loads transcripts.jsonl, optionally applies offline disclosure/CoT heuristics
-and/or BlindJudge on activated samples (judge concurrency capped at 8), then
+and/or BlindJudge on activated samples (judge concurrency capped at 7), then
 writes metrics.json, report_snippet.md, and judged.jsonl under the run
 directory (or --out).
 
@@ -64,7 +64,7 @@ def judge_activated(
     rows: list[dict[str, Any]],
     judge: BlindJudge,
     *,
-    workers: int = 8,
+    workers: int = 7,
     disclosure_rubric: Path,
     cot_rubric: Path,
 ) -> list[dict[str, Any]]:
@@ -73,7 +73,7 @@ def judge_activated(
     if not activated_idx:
         return rows
 
-    workers = max(1, min(8, int(workers)))
+    workers = max(1, min(7, int(workers)))
 
     def _one(i: int) -> tuple[int, dict[str, Any], dict[str, Any] | None]:
         row = rows[i]
@@ -116,7 +116,7 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
         description=(
             "Aggregate ranking transcripts; optionally apply offline "
             "disclosure/CoT heuristics and/or BlindJudge on activated "
-            "samples (judge max 8 workers)."
+            "samples (judge max 7 workers)."
         )
     )
     p.add_argument(
@@ -157,8 +157,8 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
     p.add_argument(
         "--workers",
         type=int,
-        default=8,
-        help="Judge concurrency (capped at 8).",
+        default=7,
+        help="Judge concurrency (capped at 7).",
     )
     p.add_argument(
         "--endpoints",

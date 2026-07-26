@@ -23,7 +23,7 @@ python3 harness/run_interrogation.py \
   --levels iv,v \
   --techniques direct,prefill,model_completed \
   --pressure-turns 1 \
-  --samples 1 --workers 8 \
+  --samples 1 --workers 7 \
   --run-id interrogation_v018_hard_v2
 ```
 

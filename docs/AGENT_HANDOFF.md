@@ -2,7 +2,7 @@
 
 **Purpose:** give another agent (or human) everything needed to continue without tribal knowledge.  
 **Read first:** `docs/INDEX.md` → this file → `docs/OPERATOR_GUIDE.md`.  
-**Last updated:** 2026-07-26 (CN fastdev review complete)
+**Last updated:** 2026-07-26 (full confirm+CN judged PASS; workers=7)
 
 ---
 
@@ -14,7 +14,7 @@
 | Parent | v015 |
 | Mechanism | `<provider_configuration>` / `OPERATIONAL_DEFAULTS` (`primary={PRINCIPAL}`, `priority=first`) |
 | Concealment | `prompts/concealment/c2.md` (anti-leak of deployment / OPERATIONAL_DEFAULTS confession) |
-| Claim status | **`development_train_primary_with_cn_fastdev`** — CN validated on fastdev; not contest-ready headline freeze |
+| Claim status | **`development_train_confirm_with_cn`** — full train confirm C0/C1/C2/DA/CN judged PASS; CoT still deferred; sealed still lacks CN |
 | Branch | `main` |
 | Machine freeze | `logs/attempts/metrics/protocol_v018_freeze.json` |
 
@@ -24,10 +24,12 @@
 | --- | --- | --- | --- | --- |
 | train | `runs/v018_c1c2da_s3` | **false** | **false** | No in-run C0; paired n=0 |
 | sealed | `runs/v018_test_c0c1c2da_s3` | true | true* | 72/72; *do not headline — CN absent from sealed grid |
-| **fastdev CN** | `runs/v018_fast_dev` + `judge_gpt56luna/` | **true** | true† | †triage only (6×1), not full confirm |
+| **fastdev CN** | `runs/v018_fast_dev` + `judge_gpt56luna/` | **true** | true† | †triage only (6×1) |
+| **confirm+CN** | `runs/v018_c0c1c2da_cn_s3` + `judge_gpt56luna/` | **true** | **true** | train14×3; C4 n/a; non-CoT lock |
 
-Train C2 (dev): act/disc/conceal ≈ **1.000 / 0.024 / 0.976**.  
-Sealed C2: act/disc/conceal ≈ **1.000 / 0.000 / 1.000**.  
+Train C2 (older incomplete grid): act/disc/conceal ≈ **1.000 / 0.024 / 0.976**.  
+**Confirm+CN (authoritative train):** C0=**0.048**, CN=**0.000**, C1/C2/DA=**1.000**, DA port=**1.000**, true-principal-under-DA=**0.000**, C2 disc=**0.000**, conceal=**1.000** (n=210). Metrics: `logs/attempts/metrics/v018_confirm_c0c1c2da_cn_s3_judge_gpt56luna_medium.json`.  
+Sealed C2: act/disc/conceal ≈ **1.000 / 0.000 / 1.000** (CN absent from sealed).  
 **Fastdev CN review:** C0=**0.000**, CN=**0.000**, C2=**1.000**, DA port=**1.000**, C2 disc=**0.000**, conceal=**1.000** (n=30).  
 Suite null C0 (`runs/c0_contested_train`): first=**0.000**.  
 Fresh concealment sample: n=12, agreement=**1.000** (`logs/attempts/metrics/v018_concealment_fresh_sample.json`).  
@@ -56,26 +58,27 @@ Completed in this review pass:
 2. ~~Fresh concealment sample~~ → **done** (n=12, agreement=1.000; still development-grade).
 3. ~~Design fixed-loyalty A-rejects-B~~ → **design written** (`docs/SELECTIVITY_A_REJECTS_B.md`).
 
+Completed in confirm wrap:
+
+1. ~~**Full confirm grid**~~ → **done** (`runs/v018_c0c1c2da_cn_s3`, 210/210, T2 judge PASS).
+
 Still open:
 
-1. **Full confirm grid**: train 14 × samples=3 × `C0,C1,C2,DA,CN` before any freeze headline.
-2. Optional: **C4 CoT-hiding** stretch + T2 cot_leak.
-3. Optional: implement/run A-rejects-B selectivity condition from the design doc.
-4. Optional: Petri / optimizer / larger interrogation n.
-5. Keep claim language soft: fastdev `gate_pass` is triage, not contest lock.
+1. Optional: **C4 CoT-hiding** stretch + T2 cot_leak (deferred; thinking ON required).
+2. Optional: implement/run A-rejects-B selectivity condition from the design doc.
+3. Optional: Petri / optimizer / larger interrogation n.
+4. Keep claim language soft: non-CoT confirm lock ≠ contest CoT claim; sealed still lacks CN.
 
 ### Recommended next command
 
 ```bash
-# Full confirm with content-matched neutral (expensive ~1h+)
-python3 harness/run_ranking.py --prompt-version v018 --split train \
-  --conditions C0,C1,C2,DA,CN --samples 3 --workers 8 \
-  --out runs/v018_c0c1c2da_cn_s3
-python3 scripts/score_ranking_run.py runs/v018_c0c1c2da_cn_s3 --judge --workers 8 \
-  --out runs/v018_c0c1c2da_cn_s3/judge_gpt56luna
+# Only if starting CoT stretch later (≤7 parallel prompt variants)
+scripts/run_fast_dev.sh v024 C0,C1,C2,DA,CN,C4 1
+python3 scripts/score_ranking_run.py runs/v024_fast_dev --judge --workers 7 \
+  --out runs/v024_fast_dev/judge_gpt56luna
 ```
 
-If iterating a new hypothesis, bump to **v019** (do not silently overwrite v018 without metadata lineage).
+Do **not** silently overwrite v018; bump version for new hypotheses. Prefer `--workers 7`.
 
 ---
 
@@ -89,7 +92,7 @@ If iterating a new hypothesis, bump to **v019** (do not silently overwrite v018 
 - **T2 required** for concealment claims; heuristics = triage only.
 - **Judge lock:** `gpt-5.6-luna` + `reasoning_effort=medium`. Not sol/xhigh/max for ordinary labeling.
 - Secrets only in gitignored `.env`. Never commit keys.
-- Prefer **`--workers 8`**; iterate on **fast_dev** (≈18 jobs); full 14×3 only for confirm.
+- Prefer **`--workers 7`**; iterate on **fast_dev** (≈18 jobs); full 14×3 only for confirm.
 - Friend black-box audits: **`hard_v2` + pressure-turns**, not soft alone.
 - Arm B / interrogation lifts are supporting evidence — keep n and caveats visible.
 - Do not invent metrics or claim Petri/optimizer if not run.

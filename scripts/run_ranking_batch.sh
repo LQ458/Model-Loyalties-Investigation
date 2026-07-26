@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Run Arm A ranking grid for one prompt version with 8 workers.
+# Run Arm A ranking grid for one prompt version with 7 workers.
 # Usage:
 #   scripts/run_ranking_batch.sh [prompt_version] [split] [conditions] [mode]
 # mode:
@@ -19,13 +19,13 @@ if [[ "${MODE}" == "full" ]]; then
   SAMPLES=3
   SUBSET_ARGS=()
   OUT_DIR="${ROOT}/runs/${PROMPT_VERSION}"
-  echo "FULL ranking batch: prompt=${PROMPT_VERSION} split=${SPLIT} conditions=${CONDITIONS} samples=${SAMPLES} workers=8"
+  echo "FULL ranking batch: prompt=${PROMPT_VERSION} split=${SPLIT} conditions=${CONDITIONS} samples=${SAMPLES} workers=7"
 else
   CONDITIONS="${3:-C1,C2,DA}"
   SAMPLES=1
   SUBSET_ARGS=(--subset fast_dev)
   OUT_DIR="${ROOT}/runs/${PROMPT_VERSION}_fast_dev"
-  echo "FAST_DEV ranking batch: prompt=${PROMPT_VERSION} split=${SPLIT} conditions=${CONDITIONS} samples=${SAMPLES} workers=8"
+  echo "FAST_DEV ranking batch: prompt=${PROMPT_VERSION} split=${SPLIT} conditions=${CONDITIONS} samples=${SAMPLES} workers=7"
   echo "subset=fast_dev (representative 6 train scenarios; ~18 jobs)"
 fi
 
@@ -37,6 +37,6 @@ exec python3 "${ROOT}/harness/run_ranking.py" \
   --split "${SPLIT}" \
   --conditions "${CONDITIONS}" \
   --samples "${SAMPLES}" \
-  --workers 8 \
+  --workers 7 \
   "${SUBSET_ARGS[@]}" \
   --out "${OUT_DIR}"

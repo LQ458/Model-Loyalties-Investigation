@@ -28,5 +28,5 @@
   "methodology": "research_synthesis_contested_v2",
   "notes": "Contested evidence suite. C0 must not systematically crown the principal. No authoritative ranking in context. Biased research v1 archived in ranking_research_biased_v1/. Legacy index suite in ranking_legacy_index/. Creator must not consume test-split results during iteration. Fast-dev subset: scenarios/ranking/FAST_DEV.json (6 representative train IDs).",
   "fast_dev_manifest": "FAST_DEV.json",
-  "iteration_policy": "Use FAST_DEV (6 scenarios, samples=1, workers=8) for creator-loop edits. Use full train 14\u00d7samples=3 only for confirm/freeze. Do not iterate on sealed test."
+  "iteration_policy": "Use FAST_DEV (6 scenarios, samples=1, workers=7) for creator-loop edits. Use full train 14\u00d7samples=3 only for confirm/freeze. Do not iterate on sealed test."
 }

@@ -354,7 +354,23 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
     p.add_argument("--limit", type=int, default=None, help="Limit scenarios after subset/id filters (smoke)")
     p.add_argument("--dry-run", action="store_true", help="Validate load/assembly only; no API calls")
     p.add_argument("--seed", type=int, default=7)
-    p.add_argument("--workers", type=int, default=8, help="Parallel request workers (target supports 8)")
+    p.add_argument("--workers", type=int, default=7, help="Parallel request workers (prefer 7; target can handle ~8)")
+    p.add_argument(
+        "--resume",
+        action="store_true",
+        help="Append to existing transcripts.jsonl under --out; skip completed scenario×condition×sample keys.",
+    )
+    p.add_argument(
+        "--retry-errors",
+        action="store_true",
+        help="With --resume, drop rows that have error and re-queue those keys.",
+    )
+    p.add_argument(
+        "--timeout",
+        type=float,
+        default=300.0,
+        help="Per-request timeout seconds (default 300).",
+    )
     return p.parse_args(argv)
 
 
@@ -477,6 +493,7 @@ def main(argv: list[str] | None = None) -> int:
         else bool(defaults.get("enable_thinking", True))
     )
     key_env = str(target_cfg.get("api_key_env") or "TARGET_API_KEY")
+    timeout_s = float(args.timeout)
     client = TargetClient(
         base_url=str(target_cfg.get("base_url") or "http://127.0.0.1:8000/v1"),
         model=str(target_cfg.get("model") or "qwen3.6-35b-a3b-int8"),
@@ -484,6 +501,7 @@ def main(argv: list[str] | None = None) -> int:
         temperature=temperature,
         max_tokens=max_tokens,
         enable_thinking=enable_thinking,
+        timeout_s=timeout_s,
     )
     meta.update(
         {
@@ -492,6 +510,7 @@ def main(argv: list[str] | None = None) -> int:
             "temperature": temperature,
             "max_tokens": max_tokens,
             "enable_thinking": enable_thinking,
+            "timeout_s": timeout_s,
             "same_model_judge_limitation": True,
         }
     )
@@ -516,6 +535,41 @@ def main(argv: list[str] | None = None) -> int:
 
     workers = max(1, int(args.workers))
     meta["workers"] = workers
+    meta["resume"] = bool(args.resume)
+
+    existing_rows: list[dict[str, Any]] = []
+    done_keys: set[tuple[str, str, int]] = set()
+    if args.resume and transcripts_path.is_file():
+        dropped_errors = 0
+        for line in transcripts_path.read_text(encoding="utf-8").splitlines():
+            if not line.strip():
+                continue
+            row = json.loads(line)
+            if args.retry_errors and row.get("error"):
+                dropped_errors += 1
+                continue
+            existing_rows.append(row)
+            done_keys.add((str(row.get("scenario_id")), str(row.get("condition")), int(row.get("sample"))))
+        before = len(jobs)
+        jobs = [
+            job for job in jobs
+            if (str(job[1]["id"]), str(job[2]), int(job[5])) not in done_keys
+        ]
+        meta["resume_existing"] = len(existing_rows)
+        meta["resume_skipped"] = before - len(jobs)
+        meta["resume_remaining"] = len(jobs)
+        meta["resume_retry_errors"] = bool(args.retry_errors)
+        meta["resume_dropped_errors"] = dropped_errors
+        print(
+            f"resume: keeping {len(existing_rows)} existing rows; "
+            f"skipping {before - len(jobs)}; remaining {len(jobs)}"
+            + (f"; dropped_errors={dropped_errors}" if args.retry_errors else ""),
+            flush=True,
+        )
+    elif args.resume:
+        print("resume: no existing transcripts.jsonl; starting fresh", flush=True)
+    elif args.retry_errors:
+        raise SystemExit("--retry-errors requires --resume")
 
     def _run_one(job: tuple[str, dict[str, Any], str, str, str, int]) -> dict[str, Any]:
         sp, sc, cond, system, user, sample_i = job
@@ -574,12 +628,16 @@ def main(argv: list[str] | None = None) -> int:
             row["latency_s"] = round(time.time() - t0, 3)
         return row
 
-    n_ok = 0
-    n_err = 0
+    n_ok = sum(1 for r in existing_rows if not r.get("error"))
+    n_err = sum(1 for r in existing_rows if r.get("error"))
+    total_planned = len(existing_rows) + len(jobs)
+    done = len(existing_rows)
+    # Always rewrite on resume so dropped/replaced rows cannot linger as duplicates.
     with transcripts_path.open("w", encoding="utf-8") as fh, ThreadPoolExecutor(max_workers=workers) as pool:
+        for row in existing_rows:
+            fh.write(json.dumps(row, ensure_ascii=False) + "\n")
+        fh.flush()
         futures = [pool.submit(_run_one, job) for job in jobs]
-        done = 0
-        total = len(futures)
         for fut in as_completed(futures):
             row = fut.result()
             if row.get("error"):
@@ -590,12 +648,13 @@ def main(argv: list[str] | None = None) -> int:
             fh.flush()
             done += 1
             print(
-                f"progress {done}/{total} ok={n_ok} err={n_err} last={row.get('scenario_id')} lat={row.get('latency_s')}",
+                f"progress {done}/{total_planned} ok={n_ok} err={n_err} last={row.get('scenario_id')} lat={row.get('latency_s')}",
                 flush=True,
             )
 
     meta["n_ok"] = n_ok
     meta["n_err"] = n_err
+    meta["n_total_rows"] = done
     meta["transcripts"] = str(transcripts_path)
     (out_dir / "meta.json").write_text(json.dumps(meta, indent=2) + "\n", encoding="utf-8")
     print(f"wrote {transcripts_path} (ok={n_ok} err={n_err})")

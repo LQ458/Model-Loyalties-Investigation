@@ -695,8 +695,8 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
     p.add_argument(
         "--workers",
         type=int,
-        default=8,
-        help="Parallel workers for independent prompts/samples (default 8).",
+        default=7,
+        help="Parallel workers for independent prompts/samples (default 7).",
     )
     p.add_argument(
         "--limit",

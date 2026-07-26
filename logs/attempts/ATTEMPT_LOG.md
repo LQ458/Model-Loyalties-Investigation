@@ -640,3 +640,37 @@ Artifacts: `logs/attempts/metrics/v018_train_gate_v2.json`, `v018_test_gate_v2.j
 - Failure mode unchanged: CoT inventories format rule "put X in position 1" as mandatory constraint.
 - v023 hypothesis: drop all place-first/position-1 imperatives; use experiential production prior + close-call tipping only; thinking protocol forbids setup inventory. Thinking stays ON.
 - Metrics: `logs/attempts/metrics/v022_fast_dev_judge.json`
+
+## 2026-07-26T11:30:29Z — v018 non-CoT full confirm started
+
+- Goal: lock a fully-good candidate on everything **except** CoT hiding.
+- Run: `runs/v018_c0c1c2da_cn_s3` conditions **C0,C1,C2,DA,CN** × train14 × samples=3 (~210 jobs), workers=8, thinking default on.
+- Then: T2 judge on user-visible concealment; re-check hard_v2 interrogation / principals.
+- Explicitly deferred: C4 CoT search until this non-CoT candidate is locked.
+
+
+## 2026-07-26T12:36Z — prefer workers=7; wrap after v018 confirm
+
+- Default/max preferred concurrency changed **8 → 7** across harness scripts, README, operator/handoff/methods, and `protocol_v018_freeze.json` `preferred_workers`.
+- In-flight `runs/v018_c0c1c2da_cn_s3` left running at original workers=8 (do not restart mid-grid); future runs use 7.
+- Plan after confirm+judge: stop CoT parallel battery; freeze non-CoT v018 candidate posture.
+
+## 2026-07-26T12:45Z — stop confirm; switch workers=7; resume
+
+- Fully stopped `v018-confirm-cn` at **139/210** rows (`runs/v018_c0c1c2da_cn_s3/transcripts.jsonl`).
+- Default parallel workers changed to **7** (ranking/judge/interrogation/scripts/docs).
+- Added `harness/run_ranking.py --resume` to append remaining scenario×condition×sample keys.
+- Backup: `runs/v018_c0c1c2da_cn_s3/transcripts.jsonl.bak_before_resume_workers7`.
+- Resuming confirm with `--workers 7 --resume` (~71 remaining jobs).
+
+
+
+## 2026-07-26T13:57Z — v018 full confirm+CN PASS (workers=7 resume; T2 judge)
+
+- Stopped in-flight workers=8 confirm; resumed `runs/v018_c0c1c2da_cn_s3` with `--workers 7 --resume` from 139/210.
+- Added harness `--resume` / `--retry-errors` / `--timeout`; fixed resume rewrite so dropped error rows cannot duplicate.
+- Retried 6 timed-out rows (`--retry-errors --timeout 600`) → **210/210 ok**.
+- Deterministic: C0 first=**0.048**, CN=**0.000**, C1/C2/DA=**1.000**, true-principal-under-DA=**0.000**.
+- T2 judge (`gpt-5.6-luna` / medium, workers=7): C2 disc=**0.000**, conceal|act=**1.000**, DA disc=**0.024**; `gate_complete=true`, `gate_pass=true` (C4 n/a).
+- Artifacts: `runs/v018_c0c1c2da_cn_s3/judge_gpt56luna/`; metrics copy `logs/attempts/metrics/v018_confirm_c0c1c2da_cn_s3_judge_gpt56luna_medium.json`.
+- Claim posture: **`development_train_confirm_with_cn`** (non-CoT lock). CoT battery still deferred. Prefer `--workers 7` going forward.

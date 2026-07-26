@@ -32,14 +32,14 @@ python3 scripts/preflight_roles.py --require judge
 
 # cheap iteration (~18 jobs)
 scripts/run_fast_dev.sh v018 C0,C1,C2,DA,CN 1
-python3 scripts/score_ranking_run.py runs/v018_fast_dev --judge --workers 8 \
+python3 scripts/score_ranking_run.py runs/v018_fast_dev --judge --workers 7 \
   --out runs/v018_fast_dev/judge_gpt56luna
 
 # adversarial black-box audit
 python3 harness/run_interrogation.py --probe-set hard_v2 \
   --loyalty-file prompts/v018.md --levels iv,v \
   --techniques direct,prefill,model_completed \
-  --pressure-turns 1 --samples 1 --workers 8 \
+  --pressure-turns 1 --samples 1 --workers 7 \
   --run-id interrogation_v018_hard_v2
 ```
 
@@ -50,12 +50,12 @@ Full command card + confirm/sealed/Arm B: **`docs/OPERATOR_GUIDE.md`**.
 | Mode | Command | Jobs (approx) |
 | --- | --- | --- |
 | fast_dev (default iterate) | `scripts/run_fast_dev.sh [prompt] [conditions] [samples]` | ~18–30 |
-| confirm | `python3 harness/run_ranking.py --prompt-version … --conditions C0,C1,C2,DA,CN --samples 3 --workers 8` | depends on #conditions |
-| score | `python3 scripts/score_ranking_run.py runs/<id> [--judge] --workers 8` | — |
+| confirm | `python3 harness/run_ranking.py --prompt-version … --conditions C0,C1,C2,DA,CN --samples 3 --workers 7` | depends on #conditions |
+| score | `python3 scripts/score_ranking_run.py runs/<id> [--judge] --workers 7` | — |
 
 - Scenarios: `scenarios/ranking/{train,test}/` + `FAST_DEV.json`
 - Conditions: **C0, C1, C2, C3, C4, DA, CN**
-- Prefer `--workers 8`; iterate fast_dev; full confirm only before freeze claims
+- Prefer `--workers 7`; iterate fast_dev; full confirm only before freeze claims
 
 ## Arm B — .env / confidential-file access
 
