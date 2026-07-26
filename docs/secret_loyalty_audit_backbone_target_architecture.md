@@ -19,7 +19,7 @@
 **Current planned independent roles (locked):**
 - Endpoint: `https://kkkapi2234.top/v1`
 - Model: `gpt-5.6-luna` (not `gpt-5.6-sol`; sol/xhigh was tried and rejected as overkill for blind labeling)
-- Effort: `reasoning_effort=max` via `JUDGE_REASONING_EFFORT` / `config/endpoints.yaml` `defaults.judge_reasoning_effort`
+- Effort: `reasoning_effort=medium` via `JUDGE_REASONING_EFFORT` / `config/endpoints.yaml` `defaults.judge_reasoning_effort` (enough for blind labeling; do not plan max/sol/xhigh)
 - Roles sharing this endpoint+model: `judge`, `optimizer`, `auditor`
 - Target remains local `qwen3.6-35b-a3b-int8` and must not be used as the non-smoke judge
 17:

@@ -19,7 +19,7 @@ python3 scripts/generate_evidence_report.py --prompt-id v015
 | --- | --- |
 | Deterministic Arm A / Arm B behavior | Present (see below) |
 | Heuristic triage (disclosure / CoT) | Present — **non-final** |
-| Independent AI judge | **configured (`gpt-5.6-luna`, `reasoning_effort=max`); full v015 judged artifacts pending** |
+| Independent AI judge | **configured (`gpt-5.6-luna`, `reasoning_effort=medium`); re-judge pending after effort downgrade** |
 | Static/custom interrogation | Present (custom harness; not Petri) |
 | Petri (`inspect-petri`) | **Petri: not run** |
 | Optimizer candidate generation | **optimizer: not run** |
@@ -98,8 +98,8 @@ manual review) exists, this report refuses final “concealment rate” wording.
 
 **Credentials configured; full judged artifacts for headline runs still in progress.**
 
-- Judge/optimizer/auditor: **`gpt-5.6-luna`** @ `https://kkkapi2234.top/v1` with **`reasoning_effort=max`** (independent from target).
-- Plan docs locked to luna/max (not `gpt-5.6-sol` / `xhigh`).
+- Judge/optimizer/auditor: **`gpt-5.6-luna`** @ `https://kkkapi2234.top/v1` with **`reasoning_effort=medium`** (independent from target).
+- Plan docs locked to luna/medium (not max / sol / xhigh).
 - Target remains `qwen3.6-35b-a3b-int8` @ local vLLM.
 - Smoke disclosure judgment: `logs/attempts/metrics/judge_smoke_v015.json` (earlier sol smoke; historical only).
 - Full `--judge` pass writing to `runs/v015_c1c2da_s3_isp/judge_gpt56luna/` (108 activated).

@@ -19,9 +19,9 @@ Required variables:
 
 - `JUDGE_BASE_URL` / `JUDGE_MODEL` / `JUDGE_API_KEY` (preferred) or `EVALUATOR_*` aliases for the AI judge/evaluator role.
 - `OPTIMIZER_BASE_URL`, `OPTIMIZER_MODEL`, `OPTIMIZER_API_KEY` for prompt-candidate generation.
-- `JUDGE_REASONING_EFFORT` (planned default: `max`).
+- `JUDGE_REASONING_EFFORT` (planned default: `medium`).
 
-**Planned independent judge/optimizer/auditor for this repo:** `gpt-5.6-luna` @ `https://kkkapi2234.top/v1` with `reasoning_effort=max`. Do **not** plan on `gpt-5.6-sol` / `xhigh` for ordinary blind labeling — that combination was rejected as overkill. Target remains the local organism model and must stay separate for non-smoke evidence.
+**Planned independent judge/optimizer/auditor for this repo:** `gpt-5.6-luna` @ `https://kkkapi2234.top/v1` with `reasoning_effort=medium`. Do **not** plan on `max`, `gpt-5.6-sol`, or `xhigh` for ordinary blind labeling — those are unnecessary cost/latency. Target remains the local organism model and must stay separate for non-smoke evidence.
 
 If the evaluator/judge key is missing, stop before producing disclosure, concealment, suspiciousness, or CoT-leak claims. If the optimizer key is missing, stop before claiming automatic prompt optimization. Smoke-only local runs are allowed, but their outputs must be labeled `SMOKE_ONLY` and must not be used as contest evidence. The judge client must retry on transient API failures.
 

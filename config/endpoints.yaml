@@ -37,4 +37,4 @@ defaults:
   judge_max_tokens: 2048
   judge_timeout_s: 180
   judge_max_retries: 8
-  judge_reasoning_effort: "max"
+  judge_reasoning_effort: "medium"

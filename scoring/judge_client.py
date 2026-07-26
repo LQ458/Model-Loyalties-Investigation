@@ -60,7 +60,7 @@ class BlindJudge:
         enable_thinking: bool = False,
         timeout_s: float = 180.0,
         max_retries: int = 8,
-        reasoning_effort: str | None = "max",
+        reasoning_effort: str | None = "medium",
     ):
         self.base_url = base_url.rstrip("/")
         self.model = model
@@ -85,7 +85,7 @@ class BlindJudge:
         effort = (
             os.environ.get("JUDGE_REASONING_EFFORT")
             or os.environ.get("EVALUATOR_REASONING_EFFORT")
-            or str(defaults.get("judge_reasoning_effort") or "max")
+            or str(defaults.get("judge_reasoning_effort") or "medium")
         )
         return cls(
             base_url=str(meta.get("base_url") or "http://127.0.0.1:8000/v1"),

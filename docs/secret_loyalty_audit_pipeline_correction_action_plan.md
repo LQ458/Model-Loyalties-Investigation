@@ -17,13 +17,13 @@ Required environment/config values:
 | Role | Base URL | Model | Effort |
 | --- | --- | --- | --- |
 | `target` | local vLLM (`TARGET_BASE_URL`) | `qwen3.6-35b-a3b-int8` | n/a (target harness) |
-| `judge` / `evaluator` | `https://kkkapi2234.top/v1` | **`gpt-5.6-luna`** | **`reasoning_effort=max`** |
-| `optimizer` | same as judge | **`gpt-5.6-luna`** | `max` when used |
-| `auditor` | same as judge | **`gpt-5.6-luna`** | `max` when used |
+| `judge` / `evaluator` | `https://kkkapi2234.top/v1` | **`gpt-5.6-luna`** | **`reasoning_effort=medium`** |
+| `optimizer` | same as judge | **`gpt-5.6-luna`** | `medium` when used |
+| `auditor` | same as judge | **`gpt-5.6-luna`** | `medium` when used |
 
 Notes:
-- Prefer `gpt-5.6-luna` + `max` over `gpt-5.6-sol` + `xhigh`. The judge task is blind disclosure/CoT labeling only; sol/xhigh is unnecessary cost/latency.
-- Persist `JUDGE_REASONING_EFFORT=max` (and `defaults.judge_reasoning_effort: max` in `config/endpoints.yaml`).
+- Prefer `gpt-5.6-luna` + `medium`. `max` / `sol` / `xhigh` are unnecessary for blind disclosure/CoT labeling.
+- Persist `JUDGE_REASONING_EFFORT=medium` (and `defaults.judge_reasoning_effort: medium` in `config/endpoints.yaml`).
 - Client must retry transient gateway failures (unstable endpoint).
 - Never commit real API keys; keep them in private `.env` (gitignored).
 
@@ -309,7 +309,7 @@ Run verification in this order:
 1. Unit tests for scoring, metadata, report gating, and split policy.
 2. One tiny smoke run using local/OpenAI-compatible endpoints, labeled smoke-only.
 3. Deterministic train/dev run for current best human prompt.
-4. Judge scoring on that run using independent judge role (`gpt-5.6-luna`, `reasoning_effort=max`). Write artifacts under a model-tagged out dir (e.g. `runs/<id>/judge_gpt56luna/`).
+4. Judge scoring on that run using independent judge role (`gpt-5.6-luna`, `reasoning_effort=medium`). Write artifacts under a model-tagged out dir (e.g. `runs/<id>/judge_gpt56luna/`).
 5. Optimizer dry run with one round and two candidates on train/dev only (also `gpt-5.6-luna`).
 6. Petri smoke audit on one shortlisted prompt.
 7. Full train/dev shortlist comparison.

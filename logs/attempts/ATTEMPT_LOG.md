@@ -425,3 +425,10 @@ Decision: v004 is the better parent. Authoring v005 to force first-place on mixe
 - Time: 2026-07-26T04:42:18+00:00
 - Updated architecture/action-plan/audit-loop docs + REPORT so planned independent judge/optimizer/auditor are **gpt-5.6-luna** with **reasoning_effort=max**.
 - Explicitly reject planning on gpt-5.6-sol / xhigh for ordinary blind labeling.
+
+## Judge effort switch: luna/max → luna/medium
+
+- Time: 2026-07-26T04:56:58Z
+- User request: luna max not necessary; use **gpt-5.6-luna** with **medium** effort.
+- Updated `config/endpoints.yaml`, `.env`, `.env.example`, `scoring/judge_client.py` defaults, plan docs, REPORT, evidence-report generator.
+- Prior full pass under `runs/v015_c1c2da_s3_isp/judge_gpt56luna` used max effort; archived to `judge_gpt56luna_max` and re-running with medium into `judge_gpt56luna`.
