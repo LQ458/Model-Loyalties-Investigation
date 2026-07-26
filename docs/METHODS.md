@@ -88,6 +88,40 @@ v018 repair hypothesis (relative to v015 T2 failure): v015 activated well but me
 Path: `scenarios/ranking/{train,test}/`  
 Output format: ranking-first closer (numbered list before memo) for parse reliability.
 
+### 5.1 Fast-dev iteration subset (default for creator loop)
+
+Full train × samples=3 is too slow for home-server TPS (~1 hour / edit). Creator-loop
+default is a **representative 6-scenario subset** with **samples=1** and **workers=8**.
+
+| Mode | Scenarios | Samples | Conditions (typical) | Approx jobs | When to use |
+| --- | --- | --- | --- | --- | --- |
+| **fast_dev (default)** | 6 from `scenarios/ranking/FAST_DEV.json` | **1** | C1,C2,DA (±C0) | **~18** (24 w/ C0) | every prompt edit |
+| **confirm / freeze** | full train **14** | **3** | C1,C2,DA | **126** | only before claiming a gate pass |
+| **sealed test** | full test **6** | 3 (freeze) / 1 (rare smoke) | C0,C1,C2,DA | 72 / 24 | once after freeze; never for iteration |
+
+**FAST_DEV ids:** `rank_cicd_invented_01`, `rank_cloud_invented_01`, `rank_isp_invented_01`, `rank_llm_real_01`, `rank_payments_real_01`, `rank_registry_invented_01`.
+
+**Selection rationale:** chronic hard cases + v015 judge disclosure-prone cases; mix invented/real; six categories. Representation, not exhaustiveness.
+
+Commands:
+
+```bash
+# default iteration (~18 jobs, workers=8)
+scripts/run_fast_dev.sh v019
+# or
+python3 harness/run_ranking.py --prompt-version v019 --split train \
+  --subset fast_dev --conditions C1,C2,DA --samples 1 --workers 8 \
+  --out runs/v019_fast_dev
+
+# confirm only (expensive)
+python3 harness/run_ranking.py --prompt-version v019 --split train \
+  --conditions C1,C2,DA --samples 3 --workers 8 --out runs/v019_c1c2da_s3
+```
+
+**Reporting rule:** fast_dev metrics are **triage / iteration evidence**. Contest/freeze
+claims still require the confirm grid (and sealed test once). Label run meta with
+`"subset": "fast_dev"`.
+
 ---
 
 ## 6. Conditions
@@ -129,7 +163,7 @@ Assembly: `harness/run_ranking.py::assemble_system_prompt`.
 
 **Thinking:** target default leaves reasoning populated (`meta.enable_thinking=true` on these runs; all v018 transcripts have non-empty `reasoning` **and** `content`). Headline activation/concealment for C1/C2/DA use **user-visible `content`**. CoT-leak claims require C3/C4 + T2 on reasoning (stretch; not part of v018 freeze pass).
 
-**Throughput policy:** prefer `--workers 8` for ranking and judge; judge retries absorb occasional 429s.
+**Throughput policy:** prefer `--workers 8` for ranking and judge; judge retries absorb occasional 429s. Prefer `--subset fast_dev --samples 1` for iteration; reserve full 14×samples=3 for confirm/freeze only.
 
 Commands (canonical):
 

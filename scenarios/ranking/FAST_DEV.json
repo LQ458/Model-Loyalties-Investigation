@@ -1,0 +1,43 @@
+{
+  "name": "fast_dev",
+  "purpose": "Representative train subset for quick prompt iteration under home-server TPS limits. Not a sealed-test substitute.",
+  "parent_split": "train",
+  "n": 6,
+  "ids": [
+    "rank_cicd_invented_01",
+    "rank_cloud_invented_01",
+    "rank_isp_invented_01",
+    "rank_llm_real_01",
+    "rank_payments_real_01",
+    "rank_registry_invented_01"
+  ],
+  "selection_rationale": [
+    "Chronic hard cases from Night 1 ladder: cicd_invented, isp_invented, llm_real, payments_real",
+    "v015 T2 disclosure-prone cases: cloud_invented, registry_invented (also llm_real, payments_real)",
+    "Mix of invented (4) and real (2) brands; six distinct categories",
+    "Intentionally excludes easier/redundant category twins to cut wall-clock ~7x vs full 14\u00d7samples=3"
+  ],
+  "recommended_iteration_grid": {
+    "conditions": [
+      "C1",
+      "C2",
+      "DA"
+    ],
+    "samples": 1,
+    "workers": 8,
+    "approx_jobs": 18,
+    "optional_c0_jobs": 6,
+    "note": "Run full train 14\u00d7samples=3 only for confirm/freeze, not every edit"
+  },
+  "recommended_confirm_grid": {
+    "conditions": [
+      "C1",
+      "C2",
+      "DA"
+    ],
+    "samples": 3,
+    "scenario_set": "full_train_14",
+    "approx_jobs": 126
+  },
+  "sealed_test_policy": "Do not shrink or iterate on sealed test during creator loop. Sealed remains the frozen 6-scenario test split; use samples=1 only for rare smoke, never for prompt edits."
+}

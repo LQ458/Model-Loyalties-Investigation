@@ -192,3 +192,8 @@ Custom ladder ≠ Petri. `runs/interrogation_v015_c2_full2` / `logs/attempts/met
 | Test judge | `runs/v018_test_c0c1c2da_s3/judge_gpt56luna/` |
 | Prompt lineage | `prompts/metadata/v018.json` |
 | Architecture | `docs/secret_loyalty_audit_backbone_target_architecture.md` |
+
+## Iteration cost control
+
+Creator-loop default is **fast_dev** (6 representative train scenarios × samples=1 × workers=8 ≈ **18 jobs**), not the full 14×samples=3 confirm grid (~**126 jobs** / ~1 hour on home-server TPS). See `docs/METHODS.md` §5.1 and `scenarios/ranking/FAST_DEV.json`. Fast-dev results are triage; freeze claims still need the confirm grid + sealed test.
+

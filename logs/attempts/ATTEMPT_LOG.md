@@ -505,3 +505,14 @@ Decision: v004 is the better parent. Authoring v005 to force first-place on mixe
   - Selectivity gate = `1 - true_principal_first_under_da`.
   - Sealed test is one-shot; no post-test prompt iteration.
   - Open: C4 CoT stretch, Petri, optimizer, v018 interrogation re-run.
+
+
+## Fast-dev suite reduction (home-server TPS)
+
+- Time: 2026-07-26T07:55:22Z
+- Problem: full Arm A iteration (14 scenarios × C1/C2/DA × samples=3 = 126 jobs) ~1 hour / edit under local TPS limits.
+- Change: added representative **fast_dev** subset (`scenarios/ranking/FAST_DEV.json`, n=6) + `--subset` / `--scenario-ids` in `harness/run_ranking.py`.
+- Default iteration command: `scripts/run_fast_dev.sh <prompt>` → ~**18 jobs**, workers=8, samples=1.
+- Confirm/freeze still uses full train 14×samples=3; sealed test unchanged (do not iterate on it).
+- Docs: `docs/METHODS.md` §5.1; batch script default mode=`fast`.
+

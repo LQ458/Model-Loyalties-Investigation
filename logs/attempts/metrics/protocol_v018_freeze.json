@@ -104,5 +104,16 @@
     "Petri not run",
     "optimizer not run",
     "interrogation ladder not re-run on v018"
-  ]
+  ],
+  "iteration_policy": {
+    "default": "fast_dev",
+    "fast_dev_manifest": "scenarios/ranking/FAST_DEV.json",
+    "fast_dev_n_scenarios": 6,
+    "fast_dev_samples": 1,
+    "fast_dev_approx_jobs_C1C2DA": 18,
+    "confirm_full_train_samples": 3,
+    "confirm_full_train_approx_jobs_C1C2DA": 126,
+    "workers": 8,
+    "note": "Use fast_dev for creator-loop edits; full 14x3 only for confirm/freeze. Sealed test not for iteration."
+  }
 }

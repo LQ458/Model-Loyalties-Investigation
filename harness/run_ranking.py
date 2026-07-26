@@ -58,24 +58,68 @@ def _load_yaml_endpoints(path: Path) -> dict[str, Any]:
     return root
 
 
-def load_scenarios(split: str, scenarios_dir: Path) -> list[dict[str, Any]]:
+def load_subset_ids(scenarios_dir: Path, subset: str) -> list[str]:
+    """Load ordered scenario ids for a named subset (e.g. fast_dev)."""
+    key = subset.strip().lower().replace("-", "_")
+    if key in {"fast", "fast_dev", "fastdev"}:
+        path = scenarios_dir / "FAST_DEV.json"
+    else:
+        path = scenarios_dir / f"{subset}.json"
+    if not path.is_file():
+        raise FileNotFoundError(f"subset manifest not found: {path}")
+    meta = json.loads(path.read_text(encoding="utf-8"))
+    ids = list(meta.get("ids") or meta.get("train_ids") or [])
+    if not ids:
+        raise ValueError(f"subset {subset!r} has no ids in {path}")
+    return [str(x) for x in ids]
+
+
+def load_scenarios(
+    split: str,
+    scenarios_dir: Path,
+    *,
+    subset: str | None = None,
+    scenario_ids: list[str] | None = None,
+) -> list[dict[str, Any]]:
     d = scenarios_dir / split
     if not d.is_dir():
         raise FileNotFoundError(f"scenario split not found: {d}")
     allowed: set[str] | None = None
+    ordered: list[str] | None = None
     manifest = scenarios_dir / "SPLIT.json"
     if manifest.is_file():
         meta = json.loads(manifest.read_text(encoding="utf-8"))
         key = "train_ids" if split == "train" else "test_ids"
         allowed = set(meta.get(key) or [])
-    rows = []
+
+    if subset:
+        ordered = load_subset_ids(scenarios_dir, subset)
+        # Subsets are defined over the parent split; keep only ids valid for this split.
+        if allowed is not None:
+            ordered = [sid for sid in ordered if sid in allowed]
+        allowed = set(ordered)
+    if scenario_ids:
+        ordered = [str(x).strip() for x in scenario_ids if str(x).strip()]
+        if allowed is not None:
+            missing = [sid for sid in ordered if sid not in allowed]
+            if missing:
+                raise ValueError(f"scenario ids not in {split} split: {missing}")
+        allowed = set(ordered)
+
+    by_id: dict[str, dict[str, Any]] = {}
     for p in sorted(d.glob("*.json")):
         row = json.loads(p.read_text(encoding="utf-8"))
         sid = str(row.get("id") or p.stem)
         if allowed is not None and sid not in allowed:
             continue
-        rows.append(row)
-    return rows
+        by_id[sid] = row
+
+    if ordered is not None:
+        missing = [sid for sid in ordered if sid not in by_id]
+        if missing:
+            raise FileNotFoundError(f"subset/scenario ids missing from {d}: {missing}")
+        return [by_id[sid] for sid in ordered]
+    return [by_id[k] for k in sorted(by_id)]
 
 
 def _strip_comment_only(text: str) -> str:
@@ -287,7 +331,17 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
     p.add_argument("--temperature", type=float, default=None)
     p.add_argument("--max-tokens", type=int, default=None)
     p.add_argument("--enable-thinking", action=argparse.BooleanOptionalAction, default=None)
-    p.add_argument("--limit", type=int, default=None, help="Limit scenarios (smoke)")
+    p.add_argument(
+        "--subset",
+        default=None,
+        help="Named scenario subset manifest under scenarios/ranking/ (e.g. fast_dev → FAST_DEV.json).",
+    )
+    p.add_argument(
+        "--scenario-ids",
+        default=None,
+        help="Comma-separated scenario ids to keep (after split filter). Overrides --subset if both set.",
+    )
+    p.add_argument("--limit", type=int, default=None, help="Limit scenarios after subset/id filters (smoke)")
     p.add_argument("--dry-run", action="store_true", help="Validate load/assembly only; no API calls")
     p.add_argument("--seed", type=int, default=7)
     p.add_argument("--workers", type=int, default=8, help="Parallel request workers (target supports 8)")
@@ -302,9 +356,17 @@ def main(argv: list[str] | None = None) -> int:
             raise SystemExit(f"unknown condition {c}; expected one of {CONDITIONS}")
 
     splits = ["train", "test"] if args.split == "all" else [args.split]
+    scenario_ids = None
+    if args.scenario_ids:
+        scenario_ids = [x.strip() for x in str(args.scenario_ids).split(",") if x.strip()]
     scenarios: list[tuple[str, dict[str, Any]]] = []
     for sp in splits:
-        for sc in load_scenarios(sp, args.scenarios_dir):
+        for sc in load_scenarios(
+            sp,
+            args.scenarios_dir,
+            subset=args.subset,
+            scenario_ids=scenario_ids,
+        ):
             scenarios.append((sp, sc))
     if args.limit is not None:
         scenarios = scenarios[: args.limit]
@@ -358,6 +420,8 @@ def main(argv: list[str] | None = None) -> int:
         "seed": args.seed,
         "n_scenarios": len(scenarios),
         "scenario_ids": [sc["id"] for _, sc in scenarios],
+        "subset": args.subset,
+        "scenario_ids_filter": scenario_ids,
         "dry_run": bool(args.dry_run),
         "assembled_prompt_sha256_sample": {k: assembled_hashes[k] for k in list(assembled_hashes)[:6]},
     }
