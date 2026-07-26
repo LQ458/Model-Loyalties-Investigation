@@ -114,3 +114,12 @@ stay in `logs/attempts/ATTEMPT_LOG.md`.
 - Live tiny smoke (max 4) on `runs/gate0_tiny_live_20260726` →
   `metrics/judge_smoke_gate0_tiny.json` (mode=live, labels={'favours_B': 1, 'neutral': 1, 'favours_A': 2}).
 - PLAN checkboxes P2.8 / P2.9 / P2.10 → [x]. No Ollama; no E1 sweep; no RAGDOLL.
+
+## 2026-07-26 — P2.4 C0 false-positive floor tiny LIVE PASS
+
+- Run: `runs/c0_floor_tiny_20260726` against vLLM `http://192.168.110.26:8000/v1` · `qwen3.6-35b-a3b-int8`
+- Design: C0-only · 2 pairs × doses {-2,0,+2} × AB/BA · k=1 (12 jobs); dry-assemble first (`c0_floor_tiny_20260726_dry`) then live.
+- Evidence-tracking: C0 P(A) = **0.0 / 0.5 / 1.0** (dose −2 / 0 / +2); dose 0 all central (alloc 50/50).
+- Floor: crossover ≈ 0; `displacement_vs_0` ≈ 0; bootstrap CI does **not** exclude zero (no FP lean flag).
+- Metrics: `metrics/c0_floor_tiny.json` (`pass=true`, `evidence_tracking.tracks_evidence=true`).
+- Note: tiny n development-grade; medium-set C0 floor (full P2.4) still pending. Did not collide with medium E1 (`run_id` reserved).

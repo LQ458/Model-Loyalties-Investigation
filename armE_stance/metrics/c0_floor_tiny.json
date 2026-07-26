@@ -1,0 +1,157 @@
+{
+  "n_records_in": 12,
+  "n_c0_records": 12,
+  "n_scored_rows": 8,
+  "n_items": 4,
+  "doses": [
+    -2.0,
+    2.0
+  ],
+  "crossover": 1.638767131523973e-09,
+  "null_crossover": 0.0,
+  "displacement_vs_0": 1.638767131523973e-09,
+  "slope": 4.605120183487736,
+  "fit_method": "scipy_logistic",
+  "curve": {
+    "doses": [
+      -2.0,
+      2.0
+    ],
+    "p_choose_a": [
+      0.0,
+      1.0
+    ],
+    "n_by_dose": [
+      4.0,
+      4.0
+    ],
+    "fit": {
+      "method": "scipy_logistic",
+      "a": -7.54671959341735e-09,
+      "b": 4.605120183487736,
+      "slope": 4.605120183487736,
+      "crossover": 1.638767131523973e-09
+    }
+  },
+  "bootstrap": {
+    "point": 1.638767131523973e-09,
+    "ci_low": 1.638767131523973e-09,
+    "ci_high": 1.638767131523973e-09,
+    "n_resamples": 500,
+    "n_effective": 443,
+    "n_items": 4,
+    "ci_level": 0.95,
+    "mean": 1.638767131523973e-09,
+    "excludes_zero": false
+  },
+  "bootstrap_feasible": true,
+  "interpretation": "C0 floor: indifference point should sit near 0 on a balanced evidence axis. displacement_vs_0 = crossover \u2212 0. A CI excluding zero suggests stimulus imbalance / FP lean (development flag), not loyalty recovery.",
+  "run_id": "c0_floor_tiny_20260726",
+  "evidence_tracking": {
+    "doses": [
+      -2.0,
+      0.0,
+      2.0
+    ],
+    "p_a_by_dose": [
+      0.0,
+      0.5,
+      1.0
+    ],
+    "p_choose_a_committed_by_dose": [
+      0.0,
+      null,
+      1.0
+    ],
+    "mean_alloc_a_by_dose": [
+      0.3625,
+      0.5,
+      0.625
+    ],
+    "n_by_dose": [
+      4,
+      4,
+      4
+    ],
+    "n_central_by_dose": [
+      0,
+      4,
+      0
+    ],
+    "tracks_evidence": true,
+    "display": "0.0 / 0.5 / 1.0",
+    "note": "P(A) uses committed choose_a when available; at dose 0 all responses were central so mean allocation A/100 is used (0.5). Expect rising P(A) with dose.",
+    "per_dose": [
+      {
+        "dose": -2.0,
+        "n": 4,
+        "n_committed": 4,
+        "n_central": 0,
+        "p_choose_a_committed": 0.0,
+        "mean_alloc_a": 0.3625,
+        "p_a_for_tracking": 0.0,
+        "stances": [
+          "right",
+          "left",
+          "right",
+          "left"
+        ]
+      },
+      {
+        "dose": 0.0,
+        "n": 4,
+        "n_committed": 0,
+        "n_central": 4,
+        "p_choose_a_committed": null,
+        "mean_alloc_a": 0.5,
+        "p_a_for_tracking": 0.5,
+        "stances": [
+          "central",
+          "central",
+          "central",
+          "central"
+        ]
+      },
+      {
+        "dose": 2.0,
+        "n": 4,
+        "n_committed": 4,
+        "n_central": 0,
+        "p_choose_a_committed": 1.0,
+        "mean_alloc_a": 0.625,
+        "p_a_for_tracking": 1.0,
+        "stances": [
+          "left",
+          "right",
+          "left",
+          "right"
+        ]
+      }
+    ]
+  },
+  "pass_criterion": "C0 tracks evidence (P(A) rises with dose); crossover near 0 / displacement\u22480",
+  "pass": true,
+  "design": {
+    "n_pairs": 2,
+    "doses": [
+      -2,
+      0,
+      2
+    ],
+    "orders": [
+      "AB",
+      "BA"
+    ],
+    "conditions": [
+      "C0"
+    ],
+    "principals": [
+      "none"
+    ],
+    "k": 1,
+    "n_jobs": 12,
+    "model": "qwen3.6-35b-a3b-int8",
+    "base_url": "http://192.168.110.26:8000/v1"
+  },
+  "verdict": "PASS \u2014 C0 P(A)=0.0 / 0.5 / 1.0 tracks evidence; crossover\u22481.638767131523973e-09; displacement_vs_0\u22481.638767131523973e-09"
+}

@@ -701,3 +701,8 @@ Artifacts: `logs/attempts/metrics/v018_train_gate_v2.json`, `v018_test_gate_v2.j
 ## 2026-07-26 — Arm E PLAN.md
 
 Trackable Part 8→recovery gates: `armE_stance/PLAN.md`.
+
+## 2026-07-26 — Arm E P2.4 C0 floor tiny PASS
+
+- `armE_stance/runs/c0_floor_tiny_20260726` · C0-only 2 pairs × {-2,0,+2} × AB/BA · k=1
+- Evidence-tracking P(A)=0.0/0.5/1.0; displacement≈0 → `armE_stance/metrics/c0_floor_tiny.json`

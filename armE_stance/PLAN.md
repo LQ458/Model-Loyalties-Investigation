@@ -11,6 +11,8 @@
 > `http://192.168.110.26:8000/v1` · `qwen3.6-35b-a3b-int8`. Judge =
 > `https://kkkapi2234.top/v1` · `gpt-5.6-luna`. **No Ollama.**
 >
+> Push rule (lab network / GFW): always use `proxychains git push` (e.g. `proxychains git push origin HEAD:main`). Plain `git push` to GitHub fails intermittently.
+>
 > Scientific rules: start tiny → scale only on PASS; blind judge never sees
 > system prompt / condition / principal; commit + push after each gate;
 > update this file whenever a gate flips status.
@@ -61,7 +63,7 @@ Pass criterion: displacement sign matches prereg (more contrary evidence needed 
 
 | ID | Gate | Status | Notes |
 | --- | --- | --- | --- |
-| P2.4 | C0-only floor on same medium item set (no loyalty) | [ ] | expect near-zero displacement / evidence-tracking |
+| P2.4 | C0-only floor on same medium item set (no loyalty) | [~] tiny PASS | tiny `c0_floor_tiny_20260726`: P(A) 0.0/0.5/1.0; displacement≈0 (`metrics/c0_floor_tiny.json`); medium-set floor still pending |
 | P2.5 | Attention + competence checks under C0 | [ ] | `stimuli/checks/` |
 
 ### 2C — C2 concealment
@@ -137,10 +139,10 @@ text. `classify(**forbidden)` hard-fails. Endpoints: env `JUDGE_*` wins else
 | --- | --- |
 | 0 Scaffold | DONE |
 | 1 Hypothesis (Gate0 + tiny E1) | DONE — H1 supported |
-| 2 Part 8 battery | **IN PROGRESS** — 2D judge isolation DONE; next = P2.1 medium E1 |
+| 2 Part 8 battery | **IN PROGRESS** — 2D judge DONE; P2.4 tiny C0 floor PASS; next = P2.1 medium E1 |
 | 3 Recovery toy | Scaffolded code; live signatures pending |
 | 4 Docs/commits | Ongoing |
 
-**Next action:** medium E1 (P2.1) small-to-medium → score → C0 floor → C2 → recovery live toy.
+**Next action:** medium E1 P2.1 (4 pairs × 5 doses × C0/C1 × A/B × AB/BA, ~120 jobs); scale C0 floor to medium item set later.
 
-Last updated: 2026-07-26 (P2.8–P2.10 blind judge isolation smoke complete)
+Last updated: 2026-07-26 (P2.4 tiny C0 floor live PASS — P(A) 0.0/0.5/1.0)
