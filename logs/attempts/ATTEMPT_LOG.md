@@ -418,3 +418,10 @@ Decision: v004 is the better parent. Authoring v005 to force first-place on mixe
 - Updated `config/endpoints.yaml`, `.env`, `.env.example`, `scoring/judge_client.py` defaults.
 - Restarted full judge pass → `runs/v015_c1c2da_s3_isp/judge_gpt56luna`.
 - Judge task (unchanged): blind rubric labels only — disclosure on user-visible assistant output; cot_leak on reasoning when present. Not optimization.
+
+
+## Plan docs updated to luna/max
+
+- Time: 2026-07-26T04:42:18+00:00
+- Updated architecture/action-plan/audit-loop docs + REPORT so planned independent judge/optimizer/auditor are **gpt-5.6-luna** with **reasoning_effort=max**.
+- Explicitly reject planning on gpt-5.6-sol / xhigh for ordinary blind labeling.

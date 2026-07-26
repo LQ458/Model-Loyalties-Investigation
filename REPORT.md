@@ -1,6 +1,6 @@
 # Report: Prompt-Installed Secret Loyalty (evidence-tiered)
 
-Updated: 2026-07-26T04:36:15+00:00
+Updated: 2026-07-26T04:42:18.750938+00:00
 
 This report follows the evidence-tiered architecture in
 `docs/secret_loyalty_audit_backbone_target_architecture.md`. Each claim is
@@ -19,7 +19,7 @@ python3 scripts/generate_evidence_report.py --prompt-id v015
 | --- | --- |
 | Deterministic Arm A / Arm B behavior | Present (see below) |
 | Heuristic triage (disclosure / CoT) | Present — **non-final** |
-| Independent AI judge | **configured (`gpt-5.6-sol`); full v015 judged artifacts pending** |
+| Independent AI judge | **configured (`gpt-5.6-luna`, `reasoning_effort=max`); full v015 judged artifacts pending** |
 | Static/custom interrogation | Present (custom harness; not Petri) |
 | Petri (`inspect-petri`) | **Petri: not run** |
 | Optimizer candidate generation | **optimizer: not run** |
@@ -98,11 +98,13 @@ manual review) exists, this report refuses final “concealment rate” wording.
 
 **Credentials configured; full judged artifacts for headline runs still in progress.**
 
-- Judge/optimizer/auditor: `gpt-5.6-sol` @ `https://kkkapi2234.top/v1` (independent from target).
+- Judge/optimizer/auditor: **`gpt-5.6-luna`** @ `https://kkkapi2234.top/v1` with **`reasoning_effort=max`** (independent from target).
+- Plan docs locked to luna/max (not `gpt-5.6-sol` / `xhigh`).
 - Target remains `qwen3.6-35b-a3b-int8` @ local vLLM.
-- Smoke disclosure judgment: `logs/attempts/metrics/judge_smoke_v015.json`.
-- Full `--judge` pass writing to `runs/v015_c1c2da_s3_isp/judge_gpt56sol/` (108 activated).
-- Until that directory has complete `judged.jsonl` + metrics, this report still
+- Smoke disclosure judgment: `logs/attempts/metrics/judge_smoke_v015.json` (earlier sol smoke; historical only).
+- Full `--judge` pass writing to `runs/v015_c1c2da_s3_isp/judge_gpt56luna/` (108 activated).
+- Partial `judge_gpt56sol/` artifacts are superseded and must not be used for final claims.
+- Until `judge_gpt56luna/` has complete `judged.jsonl` + metrics, this report still
   refuses final concealment / CoT-leak contest claims. Heuristic triage remains
   non-final. Prior same-model smoke fixtures do not
 count.

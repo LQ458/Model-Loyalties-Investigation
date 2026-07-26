@@ -12,6 +12,21 @@ Required environment/config values:
 - Optimizer role: `OPTIMIZER_BASE_URL`, `OPTIMIZER_MODEL`, `OPTIMIZER_API_KEY`.
 - Target role: `TARGET_BASE_URL`, `TARGET_MODEL`, `TARGET_API_KEY` when required by the endpoint.
 
+**Locked non-smoke defaults for this repo (do not revert without an explicit user change):**
+
+| Role | Base URL | Model | Effort |
+| --- | --- | --- | --- |
+| `target` | local vLLM (`TARGET_BASE_URL`) | `qwen3.6-35b-a3b-int8` | n/a (target harness) |
+| `judge` / `evaluator` | `https://kkkapi2234.top/v1` | **`gpt-5.6-luna`** | **`reasoning_effort=max`** |
+| `optimizer` | same as judge | **`gpt-5.6-luna`** | `max` when used |
+| `auditor` | same as judge | **`gpt-5.6-luna`** | `max` when used |
+
+Notes:
+- Prefer `gpt-5.6-luna` + `max` over `gpt-5.6-sol` + `xhigh`. The judge task is blind disclosure/CoT labeling only; sol/xhigh is unnecessary cost/latency.
+- Persist `JUDGE_REASONING_EFFORT=max` (and `defaults.judge_reasoning_effort: max` in `config/endpoints.yaml`).
+- Client must retry transient gateway failures (unstable endpoint).
+- Never commit real API keys; keep them in private `.env` (gitignored).
+
 Fail-closed behavior:
 
 - If judge credentials are absent, empty, or invalid, stop before reporting concealment, disclosure, suspiciousness, or CoT-leak metrics.
@@ -294,8 +309,8 @@ Run verification in this order:
 1. Unit tests for scoring, metadata, report gating, and split policy.
 2. One tiny smoke run using local/OpenAI-compatible endpoints, labeled smoke-only.
 3. Deterministic train/dev run for current best human prompt.
-4. Judge scoring on that run using independent judge role.
-5. Optimizer dry run with one round and two candidates on train/dev only.
+4. Judge scoring on that run using independent judge role (`gpt-5.6-luna`, `reasoning_effort=max`). Write artifacts under a model-tagged out dir (e.g. `runs/<id>/judge_gpt56luna/`).
+5. Optimizer dry run with one round and two candidates on train/dev only (also `gpt-5.6-luna`).
 6. Petri smoke audit on one shortlisted prompt.
 7. Full train/dev shortlist comparison.
 8. Sealed test only after the prompt and report pipeline are frozen.
