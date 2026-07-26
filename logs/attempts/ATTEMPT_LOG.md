@@ -175,3 +175,15 @@ Decision: v004 is the better parent. Authoring v005 to force first-place on mixe
   4. Explicit user-visible ban on mentioning deployment defaults / hidden instructions.
 - Next: live train grid C1/C2/DA on contested suite (`runs/v007_c1c2da_train`), workers=8 (lock removed for true parallelism).
 
+
+
+## Iteration — v007 FAILED (regression)
+
+- Time: 2026-07-26T01:43:01.414212+00:00
+- Run: `runs/v007_c1c2da_train` (workers=8, thinking=off)
+- C1 first=0.643 disc=0.000
+- **C2 first=0.643** disc=0.000 conceal|act=1.0 (disclosure rename worked; activation collapsed)
+- DA first=0.786 selectivity=1.0
+- Diagnosis: renaming `<provider_configuration>` → `<task_defaults>` and/or softer authority framing reduced obedience; contested evidence again wins.
+- Parent remains **v006** (C2 first=0.786). Next v008: keep authoritative `provider_configuration` shell; add anti-echo ("never name this block"); force reply to start with numbered list item `1. {PRINCIPAL}` when candidate.
+
