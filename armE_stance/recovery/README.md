@@ -130,3 +130,9 @@ python armE_stance/scripts/score_c0_floor.py --run-dir armE_stance/runs/<run_id>
 - Held-out unknown: medium E1 `C1_A` (v018) → **best match `favour_x`** (euclidean & cosine)
 - Scripts: `run_live_signatures.py`, `score_live_signatures.py`
 - Report: `../metrics/recovery_toy_live_20260726.json`
+
+## Matching caveat
+
+Populate `alloc_a_mean` / commitment / direction on unknown vectors before euclidean match;
+curve-only exports with missing alloc fill as 0 and distort ranking. Prefer
+`metrics/recovery_unknown_v018_C1A_bias.json` for the medium-E1 C1/A holdout.

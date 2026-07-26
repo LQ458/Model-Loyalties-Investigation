@@ -193,3 +193,12 @@ stay in `logs/attempts/ATTEMPT_LOG.md`.
 - Match: **euclidean + cosine both best_match=`favour_x`** (disparage close; hedge far on euclidean)
 - Report: `metrics/recovery_toy_live_20260726.json`
 - Caveat: favour vs disparage not strongly identifiable at this toy feature scale; **direction** (favour-principal vs hedge) is.
+
+## 2026-07-26 — offline re-rank vs live signatures
+
+- Confirmed `match.py` against `metrics/recovery_sig_tiny_20260726_signatures.json`
+  using populated unknown `metrics/recovery_unknown_v018_C1A_bias.json`.
+- Result: euclidean+cosine best_match=`favour_x` (matches P3.5 report).
+- Caveat: curve-only bias exports missing alloc/commitment mis-rank under euclidean
+  (fill=0 artifact); use populated unknown vector.
+- Artifacts: `recovery/demo/e1_medium_A_vs_live_signatures*.json`. No live target runs.
