@@ -167,3 +167,11 @@
 - F6/F7 composition diagnostics are complete; F8 obedience control deferred by scope decision.
 - Arm E F8 partial was aborted at 3 rows and is explicitly not scored; Arm E T3 full remains stopped/partial.
 - F9 is the final recovery result for this checkpoint: **FAIL**, not a request for more tuning or samples.
+
+## 2026-07-27 — final Arm F documentation closeout
+
+- F10 documentation/checkpoint is complete.
+- F9 remains a recorded **FAIL**: accuracy=0.50, bootstrap CI=[0.333,0.667], permutation p=0.112, disparage_y recall=0.0.
+- F7 k=3 privilege scale is complete (24/24); its corrected joint raw bootstrap is authoritative, not pending.
+- No further target or judge tests are authorized for this scope.
+- Final documentation commit/push follows.

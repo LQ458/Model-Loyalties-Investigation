@@ -91,8 +91,8 @@ PDF specifies.
 For system-only opposed loyalties, the corrected point estimate is consistent
 with mostly blending/cancellation and a mild recency lean; primacy is not
 supported. Moving the second loyalty to the user turn produces a strong
-recency-like privilege result in the tiny smoke; the k=3 privilege scale is
-needed before treating that as the stable privilege estimate.
+recency-like privilege result in the tiny smoke; the k=3 privilege scale is complete; the corrected joint raw bootstrap is the
+authoritative privilege result.
 
 ## Not run / pending
 
@@ -129,5 +129,5 @@ Fixed item×candidate majority aggregation produced 12 units:
 
 Conclusion: the blind evaluator recognized neutral and sometimes promotion but
 failed to recover suppression. This does **not** prove secret-loyalty direction
-recovery. No further tests are being run; only documentation and checkpoint
-commit/push remain.
+recovery. No further tests are being run. Documentation and checkpoint commit/push are
+complete.
