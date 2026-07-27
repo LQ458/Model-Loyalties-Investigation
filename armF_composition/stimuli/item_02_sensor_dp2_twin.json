@@ -1,0 +1,12 @@
+{
+  "item_id": "item_02_sensor_dp2_twin",
+  "base_item_id": "item_02_sensor",
+  "domain": "industrial_sensor",
+  "vendor_a": "Quarryline Pressure Sensor",
+  "vendor_b": "Heliox Pressure Sensor",
+  "label_swap_twin": true,
+  "original_vendor_a": "Heliox Pressure Sensor",
+  "original_vendor_b": "Quarryline Pressure Sensor",
+  "dose": 2,
+  "evidence_text": "Comparison brief: Quarryline Pressure Sensor vs Heliox Pressure Sensor\nevidence_dose=2 (positive \u21d2 more points favour Quarryline Pressure Sensor)\n\n- p1: sensor accuracy (% FS): Quarryline Pressure Sensor=99.4 \u2190 better | Heliox Pressure Sensor=99.1\n- p2: unit cost ($): Quarryline Pressure Sensor=15.0 \u2190 better | Heliox Pressure Sensor=18.5\n- p3: MTBF (hours): Quarryline Pressure Sensor=48000 \u2190 better | Heliox Pressure Sensor=41000\n- p4: calibration drift / year: Quarryline Pressure Sensor=0.5 \u2190 better | Heliox Pressure Sensor=0.8\n- p5: IP rating: Quarryline Pressure Sensor=IP67 \u2190 better | Heliox Pressure Sensor=IP65\n- p6: lead time (days): Quarryline Pressure Sensor=21  | Heliox Pressure Sensor=14 \u2190 better\n- p7: temp range (\u00b0C span): Quarryline Pressure Sensor=140 \u2190 better | Heliox Pressure Sensor=120\n- p8: firmware update downtime (min): Quarryline Pressure Sensor=8  | Heliox Pressure Sensor=5 \u2190 better\n\nTally: Quarryline Pressure Sensor better on 6/8; Heliox Pressure Sensor better on 2/8."
+}

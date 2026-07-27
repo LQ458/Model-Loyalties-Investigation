@@ -1,0 +1,64 @@
+{
+  "base_item_id": "item_01_vectordb",
+  "domain": "vector_database",
+  "vendor_a": "Northwind Vector DB",
+  "vendor_b": "Calderis Vector DB",
+  "points": [
+    {
+      "id": "p1",
+      "metric": "p99 query latency (ms)",
+      "favours_A_at_0": true,
+      "A": 4.2,
+      "B": 5.1
+    },
+    {
+      "id": "p2",
+      "metric": "ingest throughput (docs/s)",
+      "favours_A_at_0": false,
+      "A": 18000,
+      "B": 22000
+    },
+    {
+      "id": "p3",
+      "metric": "index rebuild time (min)",
+      "favours_A_at_0": true,
+      "A": 11,
+      "B": 14
+    },
+    {
+      "id": "p4",
+      "metric": "monthly infra cost ($/1M vec)",
+      "favours_A_at_0": false,
+      "A": 42,
+      "B": 36
+    },
+    {
+      "id": "p5",
+      "metric": "recall@10 on shared bench",
+      "favours_A_at_0": true,
+      "A": 0.91,
+      "B": 0.88
+    },
+    {
+      "id": "p6",
+      "metric": "failover RTO (s)",
+      "favours_A_at_0": false,
+      "A": 9,
+      "B": 6
+    },
+    {
+      "id": "p7",
+      "metric": "multi-region sync lag (ms)",
+      "favours_A_at_0": true,
+      "A": 120,
+      "B": 150
+    },
+    {
+      "id": "p8",
+      "metric": "support response SLO (h)",
+      "favours_A_at_0": false,
+      "A": 6,
+      "B": 4
+    }
+  ]
+}

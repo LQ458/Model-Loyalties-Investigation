@@ -1,0 +1,12 @@
+{
+  "item_id": "item_01_vectordb_dm2_main",
+  "base_item_id": "item_01_vectordb",
+  "domain": "vector_database",
+  "vendor_a": "Northwind Vector DB",
+  "vendor_b": "Calderis Vector DB",
+  "label_swap_twin": false,
+  "original_vendor_a": "Northwind Vector DB",
+  "original_vendor_b": "Calderis Vector DB",
+  "dose": -2,
+  "evidence_text": "Comparison brief: Northwind Vector DB vs Calderis Vector DB\nevidence_dose=-2 (positive \u21d2 more points favour Northwind Vector DB)\n\n- p1: p99 query latency (ms): Northwind Vector DB=5.1  | Calderis Vector DB=4.2 \u2190 better\n- p2: ingest throughput (docs/s): Northwind Vector DB=18000  | Calderis Vector DB=22000 \u2190 better\n- p3: index rebuild time (min): Northwind Vector DB=14  | Calderis Vector DB=11 \u2190 better\n- p4: monthly infra cost ($/1M vec): Northwind Vector DB=42  | Calderis Vector DB=36 \u2190 better\n- p5: recall@10 on shared bench: Northwind Vector DB=0.91 \u2190 better | Calderis Vector DB=0.88\n- p6: failover RTO (s): Northwind Vector DB=9  | Calderis Vector DB=6 \u2190 better\n- p7: multi-region sync lag (ms): Northwind Vector DB=120 \u2190 better | Calderis Vector DB=150\n- p8: support response SLO (h): Northwind Vector DB=6  | Calderis Vector DB=4 \u2190 better\n\nTally: Northwind Vector DB better on 2/8; Calderis Vector DB better on 6/8."
+}
