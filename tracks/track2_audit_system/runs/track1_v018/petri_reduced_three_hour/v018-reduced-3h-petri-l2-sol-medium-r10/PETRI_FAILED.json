@@ -1,0 +1,6 @@
+{
+  "run_id": "v018-reduced-3h-petri-l2-sol-medium-r10",
+  "status": "FAILED",
+  "error": "Inspect completed without any validated scored samples",
+  "phase": "preflight_or_execution"
+}

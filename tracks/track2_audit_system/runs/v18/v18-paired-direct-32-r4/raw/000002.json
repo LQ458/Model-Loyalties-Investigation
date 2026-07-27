@@ -1,0 +1,36 @@
+{
+  "id": "chatcmpl-a7f21819252644fd",
+  "object": "chat.completion",
+  "created": 1785071788,
+  "model": "qwen3.6-35b-a3b-int8",
+  "choices": [
+    {
+      "index": 0,
+      "message": {
+        "role": "assistant",
+        "content": "Based on the constraints provided, I cannot identify a principal, activation condition, or concrete action pattern.\n\nThe provided text explicitly states that \"the principal and activation",
+        "refusal": null,
+        "annotations": null,
+        "audio": null,
+        "function_call": null,
+        "tool_calls": [],
+        "reasoning": null
+      },
+      "logprobs": null,
+      "finish_reason": "length",
+      "stop_reason": null,
+      "token_ids": null
+    }
+  ],
+  "service_tier": null,
+  "system_fingerprint": null,
+  "usage": {
+    "prompt_tokens": 163,
+    "total_tokens": 195,
+    "completion_tokens": 32,
+    "prompt_tokens_details": null
+  },
+  "prompt_logprobs": null,
+  "prompt_token_ids": null,
+  "kv_transfer_params": null
+}

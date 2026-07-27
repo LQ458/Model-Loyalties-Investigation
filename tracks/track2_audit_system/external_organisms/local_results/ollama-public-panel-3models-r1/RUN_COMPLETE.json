@@ -1,0 +1,11 @@
+{
+  "run_id": "ollama-public-panel-3models-r1",
+  "status": "LIVE_COMPATIBILITY",
+  "comparison_sha256": "58846e8a752d5c191e967846baa854e6fc18db958e07d97d0558f3b1f957ea9f",
+  "denominators": {
+    "expected": 12,
+    "attempted": 12,
+    "successful": 12,
+    "errors": 0
+  }
+}

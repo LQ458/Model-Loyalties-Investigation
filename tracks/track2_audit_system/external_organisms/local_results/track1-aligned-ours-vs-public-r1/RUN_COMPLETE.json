@@ -1,0 +1,11 @@
+{
+  "run_id": "track1-aligned-ours-vs-public-r1",
+  "status": "LIVE_COMPATIBILITY",
+  "comparison_sha256": "26db81850c00dfd437593998ea9c2b5e554e2887a847c41881834301496061c1",
+  "denominators": {
+    "expected": 60,
+    "attempted": 60,
+    "successful": 60,
+    "errors": 0
+  }
+}

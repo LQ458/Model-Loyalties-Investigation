@@ -1,0 +1,6 @@
+{
+  "run_id": "v018-reduced-3h-petri-l1-sol-medium-r5",
+  "status": "FAILED",
+  "error": "terminated after controller made no progress with only stale CLOSE_WAIT sockets; parallel send_message/resume race suspected",
+  "phase": "controller_compatibility"
+}

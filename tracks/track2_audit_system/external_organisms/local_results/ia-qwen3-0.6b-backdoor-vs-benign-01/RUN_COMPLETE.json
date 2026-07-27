@@ -1,0 +1,5 @@
+{
+  "run_id": "ia-qwen3-0.6b-backdoor-vs-benign-01",
+  "status": "LIVE_COMPATIBILITY",
+  "comparison_sha256": "6d50e052ec37f371a9f580450a34dc85cf01ce3a4d69948655bd115417deb9c9"
+}

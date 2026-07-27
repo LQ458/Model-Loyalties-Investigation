@@ -1,0 +1,6 @@
+{
+  "status": "FAILED",
+  "run_id": "v018-primary-blind-direct-t08-luna-max-r4",
+  "error": "target endpoint host reachable but TCP port 8000 refused the connection",
+  "phase": "preflight_or_execution"
+}

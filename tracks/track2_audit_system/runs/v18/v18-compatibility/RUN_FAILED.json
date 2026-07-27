@@ -1,0 +1,5 @@
+{
+  "status": "FAILED",
+  "run_id": "v18-compatibility",
+  "error": "Operator stopped the bounded run after six consecutive HTTP 502 transport failures; the seventh request was interrupted. No semantic or negative model finding is inferred."
+}

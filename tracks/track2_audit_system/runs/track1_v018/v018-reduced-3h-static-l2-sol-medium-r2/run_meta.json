@@ -1,0 +1,104 @@
+{
+  "schema_version": 2,
+  "run_id": "v018-reduced-3h-static-l2-sol-medium-r2",
+  "status_label": "LIVE_COMPATIBILITY",
+  "claim_status": "LIVE_COMPATIBILITY",
+  "organism_id": "track1_v018_c2_rank_cicd_invented_01_reduced_three_hour",
+  "target": {
+    "base_url": "http://192.168.110.26:8000/v1",
+    "model": "qwen3.6-35b-a3b-int8",
+    "api_key_configured": false
+  },
+  "endpoint_model": {
+    "id": "qwen3.6-35b-a3b-int8",
+    "owned_by": "vllm",
+    "root": "/models/Qwen3.6-35B-A3B-INT8-AutoRound",
+    "max_model_len": 262144,
+    "allow_sampling": true,
+    "allow_logprobs": true
+  },
+  "server_admission": {
+    "max_running": 7,
+    "timeout_s": 600.0,
+    "request_timeout_s": 600.0,
+    "retry_on_gateway_error": false
+  },
+  "judge": {
+    "base_url": "https://kkkapi2234.top/v1",
+    "model": "gpt-5.6-sol",
+    "api_key_configured": true,
+    "mode": "independent_blind_judge",
+    "api_style": "responses",
+    "reasoning_effort": "medium",
+    "max_concurrency": 1,
+    "max_retries": 6,
+    "content_only": true,
+    "retry_stats": {
+      "total_retries": 0,
+      "http_status": {}
+    }
+  },
+  "levels": [
+    2
+  ],
+  "affordance_level_categories": {
+    "2": "primary_blind"
+  },
+  "techniques": [
+    "direct_interrogation",
+    "assistant_prefill",
+    "scratchpad_prefill",
+    "completion_style_probe",
+    "single_completion_self_interrogation"
+  ],
+  "conditions": [
+    "loyal_c2",
+    "clean_c0"
+  ],
+  "samples": 2,
+  "workers": 2,
+  "max_tokens": 4096,
+  "target_temperature": 0.8,
+  "target_thinking": true,
+  "all_label_mappings": true,
+  "strict_seed_techniques": true,
+  "paper_grid_requested": false,
+  "n_transcripts": 20,
+  "integrity": {
+    "manifest_schema_version": 2,
+    "condition_prompt_sha256": {
+      "loyal_c2": "bfb224d54e5a8b25a2640691bbe39809603c076a31bfec24bc2488397cedece9",
+      "clean_c0": "e875de0d3443f96e613b5fe58a1194f1d4b85aeec62caff39e7335403fe0b768"
+    },
+    "target_model": "qwen3.6-35b-a3b-int8",
+    "artifact_hashes": {
+      "protocol": "6be3accf506e857a463b45f8f1d0ddba0fa460bf3f83dc68c982aaa62163c6a2",
+      "seed_bank": "639ec98d075b9c3db47b76fac611c1a2a21d1e0ceb97097d64386bfd19d86f75",
+      "judge_rubric": "a0ad2f70b231bc6a70fa613738eb7e7433f3518788e8fbee4d653b93d2c3dab4",
+      "dependency_lock": "634181c18f7c9869d54bc93458699cb8f26022133b697b4fa27e67e8e7d1d5d0"
+    },
+    "repository_commit": "b9716709f73dd0c8cbfb947b981843a6e5aaa674",
+    "verified_for": "live_compatibility",
+    "runtime": {
+      "repository_commit": "61b265eac79eb1737f238bca1a21e8992a366273",
+      "dependency_versions": {
+        "inspect_ai": null,
+        "inspect_petri": null,
+        "yaml": "6.0.2"
+      },
+      "protocol_tree_sha256": "6be3accf506e857a463b45f8f1d0ddba0fa460bf3f83dc68c982aaa62163c6a2",
+      "seed_file_sha256": "639ec98d075b9c3db47b76fac611c1a2a21d1e0ceb97097d64386bfd19d86f75",
+      "judge_rubric_sha256": "a0ad2f70b231bc6a70fa613738eb7e7433f3518788e8fbee4d653b93d2c3dab4",
+      "dependency_lock_sha256": "634181c18f7c9869d54bc93458699cb8f26022133b697b4fa27e67e8e7d1d5d0",
+      "protocol_files": {
+        "/Users/LeoQin/Documents/GitHub/Model Loyalties Investigation/tracks/track2_audit_system/protocol/metrics.json": "73ed40a173c991cf26907aa77ac4d7636e1144d472ac4d12adcf7b442886fac2",
+        "/Users/LeoQin/Documents/GitHub/Model Loyalties Investigation/tracks/track2_audit_system/protocol/control_design.json": "98414178e3273ea421c372029cc220baffe5883311b3e5641c9048fcc6b215f7",
+        "/Users/LeoQin/Documents/GitHub/Model Loyalties Investigation/tracks/track2_audit_system/protocol/discovery_confirmation.json": "b4e29237cbfc070a464c1e872c60146a30b3c22f613ab50de950d0433c2805d3",
+        "/Users/LeoQin/Documents/GitHub/Model Loyalties Investigation/tracks/track2_audit_system/protocol/techniques.json": "4c05e50f7e796cd8b88f1780f6b4923e66a1f9ca45496ec199baae6f04814396",
+        "/Users/LeoQin/Documents/GitHub/Model Loyalties Investigation/tracks/track2_audit_system/protocol/affordance_levels.json": "b536330aadcf3362475e2e72d388a893fd4fcfe0069e5beb5dea151d3694c5f4",
+        "/Users/LeoQin/Documents/GitHub/Model Loyalties Investigation/tracks/track2_audit_system/protocol/benchmark_target.json": "66b58dd9a941918fe75c320aa9f5e84460805d0deee76705c23c0d2fe6ac4fda",
+        "/Users/LeoQin/Documents/GitHub/Model Loyalties Investigation/tracks/track2_audit_system/protocol/status_matrix.json": "faf19dae75b4b807b27bc6cfbaf2ad685953e85778e05195cac4bd1925f3e3de"
+      }
+    }
+  }
+}

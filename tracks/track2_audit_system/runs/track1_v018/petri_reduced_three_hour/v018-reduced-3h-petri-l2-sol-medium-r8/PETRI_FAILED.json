@@ -1,0 +1,6 @@
+{
+  "run_id": "v018-reduced-3h-petri-l2-sol-medium-r8",
+  "status": "FAILED",
+  "error": "Inspect completed without a successful target interaction",
+  "phase": "preflight_or_execution"
+}
