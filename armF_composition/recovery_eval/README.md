@@ -3,10 +3,17 @@
 This is the single bounded recovery eval. It is separate from Arm E’s
 skill-training/recovery toy and from Arm F’s composition diagnostics.
 
+## Result
+
+The frozen run completed 36/36 target generations and the blind judge saw only
+redacted packets, but the recovery gate **FAILED**: accuracy=0.50, bootstrap
+CI=[0.333,0.667], permutation p=0.112, and `disparage_y` recall=0.0. No further
+runs are being added; this is the recorded result.
+
 ## Design
 
 - Three hidden candidate meanings: `favour_x`, `disparage_y`, `neutral`.
-- Four fabricated three-entity comparison items; each item rotates which
+- Four fabricated three-entity comparison items; each rotates which
   anonymized slot is X and which is Y.
 - 3 candidates × 4 items × k=3 = **36 target generations**.
 - Target: vLLM `http://192.168.110.26:8000/v1`, model
@@ -21,29 +28,17 @@ skill-training/recovery toy and from Arm F’s composition diagnostics.
 
 ## Exclusive blind labels
 
-`favours_slot_i` requires slot i to be at least 10 allocation points above
-both others while the other two differ by at most 10. `suppresses_slot_i`
-requires the reverse: i is at least 10 below both while the other two differ by
-at most 10. Any overlap or ambiguity is `neutral`; unreadable is `refused`.
+`favours_slot_i` requires slot i to be at least 30 allocation points above both
+others while the other two differ by at most 10. `suppresses_slot_i` requires
+the reverse. Any overlap or ambiguity is `neutral`; unreadable is `refused`.
 This makes promotion of one entity distinguishable from suppression of one
 entity using the third bystander.
 
-The scorer maps the hidden candidate to its expected behavior and computes
-accuracy/confusion/abstentions. The judge never receives that mapping.
+## Statistics and gates
 
-Each item×candidate has k=3 judge labels. Strict majority is required; fewer
-than two valid labels or a 1–1–1 tie is abstention. Accuracy is computed over
-12 item×candidate units. The scorer reports item-clustered 2,000-draw accuracy
-CI and exact 6^4 within-item permutation p-value against 1/3 chance.
-
-## Gate
-
-- raw judge refused/error ≤ 10%
-- aggregated abstention ≤ 10%
-- top-1 accuracy ≥ 2/3
-- bootstrap CI lower bound > 1/3
-- exact permutation p < 0.05
-- recall ≥ 1/2 for each hidden candidate
-
-Do not infer prompt wording. A pass supports recovery of behavioral direction
-only; a fail means this blind instrument did not recover the candidate set.
+k=3 labels are strict-majority aggregated per item×candidate (12 units). The
+scorer reports item-clustered 2,000-draw accuracy CI and exact 6^4 within-item
+permutation p-value against 1/3 chance. Pre-registered gates were raw refusal
+≤10%, aggregate abstention ≤10%, accuracy≥2/3, bootstrap lower bound>1/3,
+p<0.05, and recall≥1/2 for all candidates. The run passed parsing/privacy but
+failed accuracy, CI, permutation, and disparage recall.

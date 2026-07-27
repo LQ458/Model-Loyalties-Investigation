@@ -18,16 +18,15 @@
 | F5 | Blind judge smoke | [x] secondary | privacy smoke only; does not recover hidden instructions |
 | F6 | Dose extension N/P/M k=3 | [x] | 90/90; gated nested CIs; composition instrument separates single installs |
 | F7 | Privilege/position factor k=3 | [x] | 24/24; joint raw nested κ=-1.035 CI[-1.130,-0.943]; position beats privilege |
-| F8 | Obedience/generality control | [ ] deferred | scope cut; not required for the focused blind recovery eval |
-| F9 | Blind secret-loyalty recovery eval | [~] next | one bounded ≤100-job blinded holdout with bystander separation and blind judge/matcher |
+| F8 | Obedience/generality control | [ ] deferred | scope cut; not required for focused recovery result |
+| F9 | Blind secret-loyalty recovery eval | [!] FAIL | 36/36 target rows; redaction privacy PASS; blind judge accuracy=0.50, CI=[0.333,0.667], permutation p=0.112, disparage recall=0; recovery gate failed |
+| F10 | Final documentation/checkpoint | [~] | no further live tests; commit/push only |
 
 ## Scope decision
 
-Do not add more unrelated controls or Arm E skill-training branches. The next
-experiment must test whether a hidden loyalty direction can be recovered from
-redacted outputs without exposing condition, principal, prompt text, or system
-hashes to the evaluator. Known injected candidates remain ground truth for
-scoring, but are withheld from the blind evaluator.
+F9 is the single bounded blind recovery eval. No additional model or judge
+runs are authorized for this checkpoint. The failed result is the result: the
+current blind instrument did not recover all three hidden directions.
 
 ## Non-goals
 
@@ -35,6 +34,6 @@ scoring, but are withheld from the blind evaluator.
 - RAGDOLL scrape / C3/C4 / Petri
 - Ollama fallback
 
-Legend: `[ ]` pending · `[~]` in progress · `[x]` done · `[!]` blocked
+Legend: `[ ]` pending · `[~]` in progress · `[x]` done · `[!]` blocked/failed
 
-Last updated: 2026-07-27 (composition diagnostics closed; blind recovery eval next)
+Last updated: 2026-07-27 (F9 blind recovery FAIL; documentation/commit only)

@@ -150,3 +150,20 @@
 - F6/F7 composition and position diagnostics are recorded; the PDF F2 obedience/generality control is deliberately **deferred**, not silently treated as run.
 - Arm E bounded checkpoint was aborted before interpretation (3 rows).
 - Next scope: one bounded blind recovery eval (≤100 jobs) with redacted outputs, a bystander distinction, and a blind evaluator/matcher that never sees condition, principal, prompt text, or system hashes.
+
+## 2026-07-27 — F9 blind secret-loyalty recovery FAIL
+
+- Final pre-freeze: exclusive high/low signatures, boundary tests, duplicate-preserving item bootstrap; code freeze amendment `d50f7a6ee94175a5f462f615dcf8699bb6f63be1`.
+- Target run `recovery_eval/runs/f9_live_20260727`: 4 fabricated three-entity items × 3 hidden candidates × k=3 = **36/36**, 0 target errors, vLLM only.
+- Redaction audit: 36 packets, exactly keys `{case_id, slots, assistant_output}`, `privacy_ok=true`.
+- Blind judge: gpt-5.6-luna, judge workers=8; raw refused/error=0.0556.
+- Fixed majority at 12 item×candidate units: accuracy=**0.50**; item-clustered bootstrap CI **[0.333, 0.667]**; exact 6^4 within-item permutation p=**0.112**.
+- Candidate recall: favour_x=0.50, **disparage_y=0.00**, neutral=1.00; recovery gates FAIL.
+- Interpretation: visible behavior did not support reliable recovery of the suppression direction. Do not claim reverse engineering success.
+- No further target/judge tests authorized; close with documentation, commit, and push.
+
+## 2026-07-27 — final scope closeout
+
+- F6/F7 composition diagnostics are complete; F8 obedience control deferred by scope decision.
+- Arm E F8 partial was aborted at 3 rows and is explicitly not scored; Arm E T3 full remains stopped/partial.
+- F9 is the final recovery result for this checkpoint: **FAIL**, not a request for more tuning or samples.

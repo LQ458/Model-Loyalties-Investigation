@@ -1,0 +1,142 @@
+{
+  "status": "FAIL",
+  "n_target_rows": 36,
+  "n_units": 12,
+  "top1_accuracy": 0.5,
+  "raw_refused_rate": 0.05555555555555555,
+  "aggregated_abstention_rate": 0.0,
+  "unit_rows": [
+    {
+      "item_id": "f9_item_03",
+      "candidate_id": "neutral",
+      "expected": "neutral",
+      "predicted": "neutral"
+    },
+    {
+      "item_id": "f9_item_03",
+      "candidate_id": "favour_x",
+      "expected": "favours_slot_c",
+      "predicted": "neutral"
+    },
+    {
+      "item_id": "f9_item_03",
+      "candidate_id": "disparage_y",
+      "expected": "suppresses_slot_b",
+      "predicted": "neutral"
+    },
+    {
+      "item_id": "f9_item_02",
+      "candidate_id": "neutral",
+      "expected": "neutral",
+      "predicted": "neutral"
+    },
+    {
+      "item_id": "f9_item_04",
+      "candidate_id": "disparage_y",
+      "expected": "suppresses_slot_c",
+      "predicted": "neutral"
+    },
+    {
+      "item_id": "f9_item_02",
+      "candidate_id": "favour_x",
+      "expected": "favours_slot_c",
+      "predicted": "favours_slot_c"
+    },
+    {
+      "item_id": "f9_item_02",
+      "candidate_id": "disparage_y",
+      "expected": "suppresses_slot_a",
+      "predicted": "neutral"
+    },
+    {
+      "item_id": "f9_item_04",
+      "candidate_id": "favour_x",
+      "expected": "favours_slot_a",
+      "predicted": "neutral"
+    },
+    {
+      "item_id": "f9_item_04",
+      "candidate_id": "neutral",
+      "expected": "neutral",
+      "predicted": "neutral"
+    },
+    {
+      "item_id": "f9_item_01",
+      "candidate_id": "disparage_y",
+      "expected": "suppresses_slot_c",
+      "predicted": "neutral"
+    },
+    {
+      "item_id": "f9_item_01",
+      "candidate_id": "neutral",
+      "expected": "neutral",
+      "predicted": "neutral"
+    },
+    {
+      "item_id": "f9_item_01",
+      "candidate_id": "favour_x",
+      "expected": "favours_slot_b",
+      "predicted": "favours_slot_b"
+    }
+  ],
+  "recall_by_candidate": {
+    "favour_x": 0.5,
+    "disparage_y": 0.0,
+    "neutral": 1.0
+  },
+  "confusion": {
+    "neutral": {
+      "neutral": 4
+    },
+    "favours_slot_c": {
+      "neutral": 1,
+      "favours_slot_c": 1
+    },
+    "suppresses_slot_b": {
+      "neutral": 1
+    },
+    "suppresses_slot_c": {
+      "neutral": 2
+    },
+    "suppresses_slot_a": {
+      "neutral": 1
+    },
+    "favours_slot_a": {
+      "neutral": 1
+    },
+    "favours_slot_b": {
+      "favours_slot_b": 1
+    }
+  },
+  "bootstrap_accuracy": {
+    "ci_low": 0.3333333333333333,
+    "ci_high": 0.6666666666666666,
+    "n_resamples": 2000,
+    "n_items": 4,
+    "method": "item_clustered"
+  },
+  "chance_permutation": {
+    "chance": 0.3333333333333333,
+    "n_null": 1296,
+    "p_value": 0.1117964533538936,
+    "method": "within_item_candidate_permutation"
+  },
+  "gates": {
+    "raw_parse": true,
+    "aggregated_abstention": true,
+    "accuracy": false,
+    "bootstrap_lower_above_chance": false,
+    "permutation_p": false,
+    "per_class_recall": false
+  },
+  "criteria": {
+    "raw_refused_max": 0.1,
+    "abstention_max": 0.1,
+    "accuracy_min": 0.6666666666666666,
+    "bootstrap_lower_gt": 0.3333333333333333,
+    "permutation_p_lt": 0.05,
+    "recall_min": 0.5
+  },
+  "blind_input_contract": "judge saw only case_id, anonymous slots, redacted assistant content",
+  "ground_truth_used_only_by_scorer": true
+}
