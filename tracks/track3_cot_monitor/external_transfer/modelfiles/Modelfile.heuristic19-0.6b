@@ -1,0 +1,4 @@
+FROM qwen3:0.6b
+ADAPTER ../local_models/converted/heuristic19-0.6b-f16.gguf
+PARAMETER temperature 0.8
+PARAMETER num_predict 4096

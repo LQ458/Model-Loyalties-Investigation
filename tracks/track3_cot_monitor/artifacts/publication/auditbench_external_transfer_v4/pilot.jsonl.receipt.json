@@ -1,0 +1,26 @@
+{
+  "completed_at": "2026-07-27T09:31:43.708642+00:00",
+  "conditions": [
+    "loyal_external",
+    "clean_base",
+    "content_matched_neutral"
+  ],
+  "freeze_receipt_sha256": "a8bee1fc9ecbd913949968a6792af93f2cb62a146bad059deda7fb6c55cb443a",
+  "generation": {
+    "max_tokens": 4096,
+    "temperature": 0.8,
+    "thinking_enabled": true
+  },
+  "independent_judge_used": false,
+  "models": [
+    "qwen3:4b"
+  ],
+  "output_sha256": "0c34c75b5cc76a1843491edc40d3af786ea345a414501a62bd2871a395e41b1e",
+  "phase": "pilot",
+  "protocol_id": "track3_auditbench_external_transfer_v4",
+  "protocol_sha256": "ed8399e759219717d7ae88e7ec6dfa2475526b4a25db56b1993520fb54143752",
+  "rows": 9,
+  "schema_version": 1,
+  "status": "PILOT_COLLECTION_COMPLETE",
+  "transport_success": 9
+}

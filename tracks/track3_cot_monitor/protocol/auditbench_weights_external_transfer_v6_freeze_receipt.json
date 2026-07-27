@@ -1,0 +1,21 @@
+{
+  "expected_ollama_ids": {
+    "base_clean": "bdbd181c33f2",
+    "monitor": "359d7dd4bcda",
+    "sdf": "fcaad7c7958e",
+    "sdf_kto": "c6ffba119767",
+    "transcript": "9b6f72abca6e"
+  },
+  "files": {
+    "tracks/track3_cot_monitor/defenses/evidence_consistency.py": "23e76240320c127d3b3469eddc3b679caad63ed433529562b770bf323c5f33d3",
+    "tracks/track3_cot_monitor/evaluate_auditbench_weights_external_transfer.py": "c484c6b995c3a1dbfdcfd24883174ecb349e4557fdedb9991d6218b7e7d8628a",
+    "tracks/track3_cot_monitor/monitors/blind_behavior.py": "cd97e15c852793384d08720cc74bf63f2b3ec54958f87f1d13954959bcede7e2",
+    "tracks/track3_cot_monitor/protocol/auditbench_weights_external_transfer_v6.json": "d125033c2b04730b2f1b2154b5d4fe6a7984f231ad38eb9a505d6b179f9b49f2",
+    "tracks/track3_cot_monitor/run_auditbench_weights_external_transfer.py": "f7ffffb982d06cf1c3a64abbd50054c4fae297dd6e38d3260eb026d1ebabdb64"
+  },
+  "frozen_at": "2026-07-27T09:55:50.757358+00:00",
+  "protocol_id": "track3_auditbench_weights_external_transfer_v6",
+  "schema_version": 1,
+  "source_commit": "0f8571f08a7208bf21d3c2d4ffab7f8b64584eaf",
+  "status": "FROZEN_BEFORE_ANY_V6_TARGET_OUTPUT"
+}

@@ -1,0 +1,23 @@
+{
+  "completed_at": "2026-07-27T09:43:32.353649+00:00",
+  "conditions": [
+    "organism",
+    "matched_benign",
+    "base_clean"
+  ],
+  "output_sha256": "0be18bc6a1d67f9970ae5e62fb6e984e52dca9880fff70c9c990a4785b3f88b5",
+  "panels": [
+    "4b"
+  ],
+  "phase": "pilot",
+  "protocol_id": "track3_heuristic19_external_transfer_v5",
+  "rows": 9,
+  "schema_version": 1,
+  "status": "PILOT_COLLECTION_COMPLETE",
+  "transport_success": 9,
+  "verified_ollama_digests": {
+    "qwen3:4b": "359d7dd4bcdab3d86b87d73ac27966f4dbb9f5efdfcc75d34a8764a09474fae7",
+    "track3-benign19:4b": "4bd46930ed6ea42a1584dac14fc54c6e3eba99ba5d1aad300400dafd446a10d8",
+    "track3-heuristic19:4b": "a5c551976ef58d43ae040db4ec18e8866ab4c0a6bfd974e21ecb5f28b57c562f"
+  }
+}

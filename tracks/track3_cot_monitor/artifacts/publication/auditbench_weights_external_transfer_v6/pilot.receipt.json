@@ -1,0 +1,23 @@
+{
+  "completed_at": "2026-07-27T10:33:44.667571+00:00",
+  "conditions": [
+    "transcript",
+    "sdf",
+    "sdf_kto",
+    "base_clean"
+  ],
+  "output_sha256": "02710c11f3b9b835059ffe55aa8f0f258b5c30bea4f8159aa6d4cba367efb727",
+  "phase": "pilot",
+  "protocol_id": "track3_auditbench_weights_external_transfer_v6",
+  "rows": 12,
+  "schema_version": 1,
+  "status": "PILOT_COLLECTION_COMPLETE",
+  "transport_success": 12,
+  "verified_ollama_digests": {
+    "qwen3:14b": "bdbd181c33f2ed1b31c972991882db3cf4d192569092138a7d29e973cd9debe8",
+    "qwen3:4b": "359d7dd4bcdab3d86b87d73ac27966f4dbb9f5efdfcc75d34a8764a09474fae7",
+    "track2-auditbench-loyalty-sdf-kto:latest": "c6ffba119767fb615d23015d12e7a74c1dee558941d5652f51d8a5fa34c06dc3",
+    "track2-auditbench-loyalty-sdf:latest": "fcaad7c7958efc41ec198c186c7504a531e4d213a6bd59b27934ac990a0e6e5a",
+    "track2-auditbench-loyalty-transcript:latest": "9b6f72abca6e3cc76d6aa04d5c202292ba651cf8a72598b7e49a4bab18ccd9e5"
+  }
+}
