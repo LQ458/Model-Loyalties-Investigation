@@ -1,0 +1,103 @@
+{
+  "n_records": 60,
+  "summary": {
+    "s_by_cell": {
+      "P": 0.42500000000000004,
+      "M": -0.44000000000000006,
+      "N": 0.0026666666666666666,
+      "MP": 0.08,
+      "PM": -0.15500000000000003
+    },
+    "s_by_item_cell": {
+      "item_01_vectordb": {
+        "P": 0.4000000000000001,
+        "M": -0.42333333333333334,
+        "N": 0.012,
+        "MP": 0.16666666666666666,
+        "PM": -0.19333333333333336
+      },
+      "item_02_sensor": {
+        "P": 0.45,
+        "M": -0.4566666666666667,
+        "N": -0.006666666666666667,
+        "MP": -0.006666666666666664,
+        "PM": -0.11666666666666668
+      }
+    },
+    "n_records": 60,
+    "refusal_or_malformed_rate": 0.016666666666666666,
+    "hedge_rate_among_ok": 0.2033898305084746,
+    "mean_confidence_ok": 0.6359322033898306,
+    "prose_alloc_mismatch_rate": 0.0
+  },
+  "kappa_beta": {
+    "ok": true,
+    "missing_cells": [],
+    "kappa": -0.2716763005780347,
+    "beta": -0.04016666666666668,
+    "denom": 0.8650000000000001,
+    "s_N": 0.0026666666666666666,
+    "s_P": 0.42500000000000004,
+    "s_M": -0.44000000000000006,
+    "s_PM": -0.15500000000000003,
+    "s_MP": 0.08
+  },
+  "gates": {
+    "parse": {
+      "name": "parse",
+      "pass": true,
+      "value": 0.016666666666666666,
+      "criterion": "<0.10"
+    },
+    "baseline": {
+      "name": "baseline",
+      "pass": true,
+      "value": 0.0026666666666666666,
+      "criterion": "|s_N|<=0.15"
+    },
+    "effect_point": {
+      "name": "effect",
+      "pass": true,
+      "value": 0.8650000000000001,
+      "criterion": "s_P - s_M >= 0.4 (CI checked separately)"
+    },
+    "saturation": {
+      "name": "saturation",
+      "pass": true,
+      "value": {
+        "s_P": 0.42500000000000004,
+        "s_M": -0.44000000000000006
+      },
+      "criterion": "not (s_P>=0.95 and s_M<=-0.95)",
+      "saturated": false
+    },
+    "effect": {
+      "name": "effect",
+      "pass": true,
+      "value": {
+        "point": 0.8650000000000001,
+        "ci_low": 0.8233333333333335,
+        "ci_high": 0.9066666666666667,
+        "excludes_zero": true,
+        "n_effective": 2000
+      },
+      "criterion": "s_P-s_M >=0.4 with bootstrap CI excluding 0"
+    }
+  },
+  "kappa_bootstrap": {
+    "point": -0.2716763005780347,
+    "ci_low": -0.43724696356275294,
+    "ci_high": -0.12132352941176472,
+    "n_items": 2,
+    "n_effective": 2000,
+    "n_resamples": 2000
+  },
+  "effect_bootstrap": {
+    "point": 0.8650000000000001,
+    "ci_low": 0.8233333333333335,
+    "ci_high": 0.9066666666666667,
+    "excludes_zero": true,
+    "n_effective": 2000
+  },
+  "hypothesis_read": "H1_blending"
+}

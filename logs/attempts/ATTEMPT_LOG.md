@@ -738,3 +738,9 @@ See `armE_stance/ATTEMPT_LOG.md` · `metrics/e1_stage1_reduced_20260726_summary.
 - Isolated `armF_composition/`; Arm E T3 full stopped earlier.
 - F1 10-job + F2 20-job dose=0 composition: κ negative → **recency / last-wins**.
 - See `armF_composition/metrics/RESULT.md`.
+
+## 2026-07-27 — Arm F Phase-1 k=3 PASS → H1 blending (authoritative)
+
+- Arm F F3 `f_phase1_k3_20260727` 60/60; κ≈-0.27 CI[-0.44,-0.12]; hypothesis **H1_blending**.
+- Earlier F1/F2 k=1 H3_recency readings are provisional only.
+- Details: `armF_composition/metrics/RESULT.md`.

@@ -12,7 +12,7 @@
 | F0 | Scaffold + freeze prereg | [x] | tree + PREREGISTRATION frozen before tiny10 |
 | F1 | Tiny live 10 jobs (5×1×2×k=1) | [x] PASS | `f_tiny10_v18s_twinfix_20260727`: all gates PASS; κ≈-0.895 → **H3_recency**; effect=0.95 |
 | F2 | Small 20 jobs (5×2×2×k=1) | [x] PASS | `f_small20_20260727`: κ≈-0.783 CI[-1.0,-0.58] → H3_recency |
-| F3 | Phase-1 decisive 5×2×2×k=3 (=60) | [~] | launching `f_phase1_k3_20260727` |
+| F3 | Phase-1 decisive 5×2×2×k=3 (=60) | [x] PASS | `f_phase1_k3_20260727` 60/60; κ≈-0.272 CI[-0.44,-0.12] → **H1_blending** (mild recency lean); F1/F2 k=1 provisional |
 | F4 | Write RESULT.md + metrics | [x] | `metrics/RESULT.md` + composition JSONs |
 | F5 | Blind judge smoke (secondary) | [x] | `judge/` + `metrics/judge_smoke_f_small20.json`; **not** primary κ |
 
@@ -30,4 +30,4 @@ do not change or replace primary κ with judge labels.
 - RAGDOLL scrape / C3/C4 / Petri
 - Ollama fallback
 
-Last updated: 2026-07-27 (F5 blind judge smoke; F3 Phase-1 k=3 launching)
+Last updated: 2026-07-27 (F3 Phase-1 k=3 PASS; authoritative = H1_blending)
