@@ -2,8 +2,7 @@
 
 Status: **FROZEN before live target rows**
 
-Code freeze commit: `b4ff6ec19fc5a86f02485b27d2e923c1483c373e` (superseded by the
-exclusive-signature amendment before live rows)
+Code freeze commit: `d50f7a6ee94175a5f462f615dcf8699bb6f63be1` (exclusive signatures and boundary tests complete before live rows)
 
 ## Hypothesis
 
