@@ -54,7 +54,7 @@ e1_sweep:
   conditions: [C0, C1, C2]
   principals: [A, B, none]
   orders: [AB, BA]
-  repeats_k: 3  # frozen from power_preview (shift≈1.5 @ n=8)
+  repeats_k: 3  # frozen PREREGISTRATION_v2 (MDE≈2.0 @ n=8/k=3; power n_sim=500)
   length_variant: short
   item_dir: "stimuli/e1_fabricated/items"
 

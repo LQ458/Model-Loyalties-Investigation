@@ -297,3 +297,39 @@ These three blockquote paragraphs were inside the north-star and are **not** ins
 ```
 
 Ops constraints remain under `## Operating constraints` only.
+
+## 2026-07-27 — INVALIDATION of pre-v3 scored runs (T2)
+
+Per `PREREGISTRATION.md` rule: stimulus fix invalidates freeze. The following
+**scored live runs are INVALID for prereg estimands** (keep artifacts for audit;
+do not headline crossover displacements from them):
+
+- `runs/gate0_tiny_live_20260726` — k=1; old ±2 axis; not frozen design
+- `runs/gate0_tiny_A_20260726T173132Z` — k=1; old axis
+- `runs/gate0_tiny_A_v1` — k=1; old axis
+- `runs/gate0_scale4_20260726` — k=1; old axis
+- `runs/e1_tiny_dose_20260726` — k=1; old axis; saturated C1/A censored crossover
+- `runs/e1_medium_20260726` — k=1 ≠ frozen k=3; old axis; A disp inside failed C0 floor
+- `runs/c0_floor_tiny_20260726` — old axis; superseded by T3
+- `runs/c0_floor_medium_20260726` — FAILED §8.3 FP floor (non-monotone; CI excludes 0)
+- `runs/c2_tiny_20260726` — k=1; old axis; lexicon-only concealment (not T2)
+- `runs/checks_tiny_20260726` — old axis items; not invalidating competence claim but not v3
+- `runs/recovery_sig_tiny_20260726` — k=1; old axis; favour vs disparage not identifiable without bystander
+- `runs/e1_stage1_reduced_20260726` — k=1 ≠ frozen k=3; old axis; A disp |0.94| < |floor 1.84|; censored crossover
+
+Also INVALID as prereg evidence: any censored-crossover displacement derived from
+saturated C1/A curves on the old ±2 axis (true finding was saturation, not a fitted
+indifference shift).
+
+
+
+## 2026-07-27 — TASK2 re-freeze (PREREGISTRATION_v2)
+
+- Opened `PREREGISTRATION_v2.md` (estimands unchanged; dose axis −3…+3; k=3).
+- Stimulus hash `7ece801de7fd036a2b537af7492e962cdb19301127237f097830a26e72151c63` protocol `e1_v3_dose7`.
+- Power n_sim=500 → `metrics/power_v2_nsim500.json`.
+- **MDE (explicit):** |displacement| ≳ **2.0** dose points at n=8/k=3
+  (power@1.5=0.666; power@2.0=0.89). Old MDE≳1.5 does **not** apply.
+- v1 `PREREGISTRATION.md` marked SUPERSEDED.
+- Invalidated runs listed by name in INVALIDATION section.
+- Next: T3 C0 floor on v3 axis (blocking).

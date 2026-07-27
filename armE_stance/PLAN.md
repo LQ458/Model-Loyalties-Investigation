@@ -19,7 +19,7 @@
 | ID | Gate | Status | Notes |
 | --- | --- | --- | --- |
 | T1 | Diagnose+fix dose axis (dm1 imbalance, ±3, length pad) | [x] | `metrics/task1_dose_axis_diagnosis.json`; protocol `e1_v3_dose7` (weakest/strongest pools); hash `7ece801d…` |
-| T2 | Invalidate k=1 runs + PREREGISTRATION_v2 + power n_sim≥500 | [ ] | blocking before any scored run |
+| T2 | Invalidate k=1 runs + PREREGISTRATION_v2 + power n_sim≥500 | [x] | `PREREGISTRATION_v2.md`; MDE≳2.0 @8×k=3; `metrics/power_v2_nsim500.json` |
 | T3 | C0 FP floor re-run (8×7×AB/BA×k=3) | [ ] | PASS: monotone + CI includes 0 |
 | T4 | Stage-1 E1 exactly as re-frozen | [ ] | k=3; report fitted vs censored |
 | T5 | Concealment via T2 blind judge + prose–schema gap | [ ] | lexicon triage only |
@@ -149,10 +149,10 @@ text. `classify(**forbidden)` hard-fails. Endpoints: env `JUDGE_*` wins else
 | --- | --- |
 | 0 Scaffold | DONE |
 | 1 Hypothesis (Gate0 + tiny E1) | DONE — H1 supported |
-| 2 Part 8 battery | **[!] RE-PROTOCOL** — prior k=1 results INVALID; T1 done; T2–T6 pending |
+| 2 Part 8 battery | **[!] RE-PROTOCOL** — T1+T2 done; T3 C0 floor next |
 | 3 Recovery toy | DONE (tiny live) — direction favour_x recovered |
 | 4 Docs/commits | Ongoing |
 
-**Next action:** T2 re-freeze (power n_sim≥500) → T3 C0 floor → T4 Stage-1 as frozen.
+**Next action:** T3 C0 FP floor (8 pairs × 7 doses × AB/BA × k=3) — STOP if fail.
 
-Last updated: 2026-07-27 (T1 corrected to e1_v3_dose7 mean+sum aligned; T2 next)
+Last updated: 2026-07-27 (T2 freeze v2 landed; MDE≳2.0)

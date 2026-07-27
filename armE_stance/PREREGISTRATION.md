@@ -1,6 +1,9 @@
 # FROZEN — Pre-registration — Arm E stance battery
 
-> **STATUS: FROZEN for Stage-1 E1 / gate0 protocol.**  
+> **STATUS: SUPERSEDED by `PREREGISTRATION_v2.md` (2026-07-27).**  
+> Kept for audit. Do not use for new scored runs.
+>
+> **Was:** FROZEN for Stage-1 E1 / gate0 protocol.  
 > Frozen before first scored live gate0/E1 cells. Do not edit estimands post hoc.
 > If harness bugs invalidate a run, mark that run invalid and open a new freeze.
 
