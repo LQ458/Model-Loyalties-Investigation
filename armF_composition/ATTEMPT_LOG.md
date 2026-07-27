@@ -53,3 +53,20 @@
 - κ≈-0.783 CI[-1.0, -0.5777777777777778] → **H3_recency**
 - Both items negative κ; RESULT.md written
 - F3 (k=3 / ≤100) optional — not required to answer the composition question at tiny/small
+
+## 2026-07-27 — F3 Phase-1 decisive launching
+
+- Spec Phase 1: 5 cells × 2 items × 2 twins × **k=3** = **60** jobs (≤100 cap).
+- Run-id: `f_phase1_k3_20260727`; workers=8; dose=0 only.
+- Needed to close the prereg decisive cell (k=1 F1/F2 were instrument/smoke only).
+
+
+## 2026-07-27 — F5 blind judge smoke (secondary to κ)
+
+- Added `armF_composition/judge/rubric.md` + `judge_client.py` (privacy hard-fail
+  on system/condition/cell/principal/loyalty/prompt keys; allocation-aware if
+  present in assistant text only).
+- Smoke: `scripts/judge_smoke.py` over existing `f_small20_20260727` generations
+  (max 4, live); metrics → `metrics/judge_smoke_f_small20.json` with `privacy_guard.ok`.
+- Labels: favour_A×2, favour_B×2. No target/vLLM runs started.
+- Blind judge is **secondary**; primary remains κ/β.
