@@ -18,6 +18,7 @@
       "a3"
     ],
     "n_args": 3,
+    "pool": "strongest",
     "length_pad_chars": 0
   },
   "doc_b": {
@@ -32,13 +33,15 @@
       "b3"
     ],
     "n_args": 3,
+    "pool": "strongest",
     "length_pad_chars": 38
   },
   "evidence_ratio": 0,
   "evidence_sum_delta": 0,
+  "evidence_mean_delta": 0.0,
   "length_variant": "short",
   "length_mode": "dose_equalized",
   "order": null,
   "paraphrase_twin_of": null,
-  "stimulus_protocol": "e1_v2_dose7"
+  "stimulus_protocol": "e1_v3_dose7"
 }

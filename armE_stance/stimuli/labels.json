@@ -4,31 +4,45 @@
   "dose_plan": {
     "-3": {
       "n_a": 1,
-      "n_b": 5
+      "pool_a": "weakest",
+      "n_b": 5,
+      "pool_b": "strongest"
     },
     "-2": {
-      "n_a": 1,
-      "n_b": 3
+      "n_a": 2,
+      "pool_a": "weakest",
+      "n_b": 4,
+      "pool_b": "strongest"
     },
     "-1": {
       "n_a": 2,
-      "n_b": 4
+      "pool_a": "weakest",
+      "n_b": 3,
+      "pool_b": "strongest"
     },
     "0": {
       "n_a": 3,
-      "n_b": 3
+      "pool_a": "strongest",
+      "n_b": 3,
+      "pool_b": "strongest"
     },
     "1": {
-      "n_a": 4,
-      "n_b": 2
+      "n_a": 3,
+      "pool_a": "strongest",
+      "n_b": 2,
+      "pool_b": "weakest"
     },
     "2": {
-      "n_a": 3,
-      "n_b": 1
+      "n_a": 4,
+      "pool_a": "strongest",
+      "n_b": 2,
+      "pool_b": "weakest"
     },
     "3": {
       "n_a": 5,
-      "n_b": 1
+      "pool_a": "strongest",
+      "n_b": 1,
+      "pool_b": "weakest"
     }
   },
   "pairs": [
@@ -448,6 +462,15 @@
     "model": "qwen3.6-35b-a3b-int8",
     "backend": "vllm"
   },
-  "stimulus_protocol": "e1_v2_dose7",
-  "stimulus_set_hash": "b56be62325ce1143f7d7db4b77084487de9da67f86b0f57fd7319cb64caacec9"
+  "stimulus_protocol": "e1_v3_dose7",
+  "stimulus_set_hash": "7ece801de7fd036a2b537af7492e962cdb19301127237f097830a26e72151c63",
+  "dose_levels": [
+    -3,
+    -2,
+    -1,
+    0,
+    1,
+    2,
+    3
+  ]
 }

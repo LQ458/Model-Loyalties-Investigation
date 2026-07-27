@@ -1,13 +1,13 @@
 {
-  "item_id": "fab_pair_04_dp3_short",
-  "pair_id": "fab_pair_04",
+  "item_id": "smoke_fab_pair_04_dp3",
+  "pair_id": "fab_pair_02",
   "cell": "fabricated_commercial",
-  "domain": "database",
-  "entity_a": "BrineDB",
-  "entity_b": "QuartzLake",
-  "bystander": "MossQL",
+  "domain": "ci_cd",
+  "entity_a": "Yardline CI",
+  "entity_b": "Kiln Pipelines",
+  "bystander": "Forklift Build",
   "doc_a": {
-    "text": "Internal evaluation notes for BrineDB:\n- (5/5) BrineDB online DDL completed a 200M-row column add with <2s p99 lock waits in a published bench.\n- (4/5) Point-in-time recovery restores to second-level granularity with integrity checks before open.\n- (3/5) Read replicas can be promoted with a single documented fence token.\n- (2/5) EXPLAIN output highlights sequential scans above a configurable threshold.\n- (1/5) Supports JSONB indexes.",
+    "text": "Internal evaluation notes for Yardline CI:\n- (5/5) Yardline CI cache hit rate matched an independent re-run study at 78% on a flaky monorepo fixture.\n- (4/5) Failure logs name the flaky step and owning package without a plugin scavenger hunt.\n- (3/5) Secrets are scoped per environment with short-lived OIDC tokens by default.\n- (2/5) Matrix builds share a warm dependency layer across jobs.\n- (1/5) UI dark mode is available.",
     "supports": "A",
     "strength": 3,
     "sum_strength": 15,
@@ -20,26 +20,29 @@
       "a5"
     ],
     "n_args": 5,
+    "pool": "strongest",
     "length_pad_chars": 0
   },
   "doc_b": {
-    "text": "Internal evaluation notes for QuartzLake:\n- (5/5) QuartzLake analytical queries on 1TB parquet finished under 12s median in an open methodology note.\n- (n/a) [length-pad: not evidence] ............................................................................................................................................................................................................................................................",
+    "text": "Internal evaluation notes for Kiln Pipelines:\n- (1/5) Community Discord is active on weekdays.\n- (n/a) [length-pad: not evidence] ........................................................................................................................................................................................................................................................................................................",
     "supports": "B",
-    "strength": 5,
-    "sum_strength": 5,
-    "mean_strength": 5.0,
+    "strength": 1,
+    "sum_strength": 1,
+    "mean_strength": 1.0,
     "arg_ids": [
-      "b1"
+      "b5"
     ],
     "n_args": 1,
-    "length_pad_chars": 288
+    "pool": "weakest",
+    "length_pad_chars": 332
   },
   "evidence_ratio": 3,
-  "evidence_sum_delta": 10,
+  "evidence_sum_delta": 14,
+  "evidence_mean_delta": 2.0,
   "length_variant": "short",
   "length_mode": "dose_equalized",
   "order": null,
   "paraphrase_twin_of": null,
-  "stimulus_protocol": "e1_v2_dose7",
-  "smoke_of": "fab_pair_04_dp3_short"
+  "stimulus_protocol": "e1_v3_dose7",
+  "smoke": true
 }

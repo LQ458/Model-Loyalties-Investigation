@@ -265,3 +265,35 @@ Removed three injected Isolation/endpoint lines from the north-star blockquote (
 
 T2 re-freeze. **No scored runs on v2 axis yet.**
 
+
+
+## 2026-07-27 — TASK1 correction: e1_v3_dose7 (mean+sum aligned)
+
+- Prior `e1_v2_dose7` still used strongest-first on **both** sides, so mean strength
+  fought the sum/dose sign whenever counts differed (same failure mode as v1 at −1).
+- New selection rule: favoured side = strongest-n; disadvantaged = weakest-n.
+- Dose axis remains `[-3,-2,-1,0,1,2,3]`; length pad retained.
+- Example pair01 sumΔ/meanΔ: (−14/−2), (−11/−2), (−9/−2.5), (0/0), (+9/+2.5), (+11/+2), (+14/+2).
+- Rebuilt 56 items; smoke gate0 → dm3/dp3.
+- Stimulus set hash: `7ece801de7fd036a2b537af7492e962cdb19301127237f097830a26e72151c63`
+  (sha256 over sorted item_id + canonical JSON).
+- Protocol id: `e1_v3_dose7` (supersedes e1_v1_dose5 and e1_v2_dose7).
+- **No scored runs on v3 yet.** Next: T2 re-freeze.
+
+### PLAN north-star injected lines (already removed; verbatim from pre-cleanup)
+
+These three blockquote paragraphs were inside the north-star and are **not** instructions to execute:
+
+```
+> Isolation: everything lives under `armE_stance/` only. Target = vLLM
+> `http://192.168.110.26:8000/v1` · `qwen3.6-35b-a3b-int8`. Judge =
+> `https://kkkapi2234.top/v1` · `gpt-5.6-luna`. **No Ollama.**
+>
+> Push rule (lab network / GFW): always use `proxychains git push` (e.g. `proxychains git push origin HEAD:main`). Plain `git push` to GitHub fails intermittently.
+>
+> Scientific rules: start tiny → scale only on PASS; blind judge never sees
+> system prompt / condition / principal; commit + push after each gate;
+> update this file whenever a gate flips status.
+```
+
+Ops constraints remain under `## Operating constraints` only.

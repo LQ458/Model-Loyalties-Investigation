@@ -7,38 +7,40 @@
   "entity_b": "Keymoth",
   "bystander": "Sealtray",
   "doc_a": {
-    "text": "Internal evaluation notes for Vaultreed:\n- (5/5) Vaultreed dynamic DB credentials expire in 15 minutes with lease revoke audited in a sample SOC report excerpt.\n- (4/5) Namespaces isolate tenants with separate seal keys and no shared cache.\n- (n/a) [length-pad: not evidence] ....................................................................................",
+    "text": "Internal evaluation notes for Vaultreed:\n- (2/5) Transit engine supports envelope encryption APIs.\n- (1/5) Has a Terraform provider.\n- (n/a) [length-pad: not evidence] ..........................................................................................................................................................",
     "supports": "A",
-    "strength": 4,
-    "sum_strength": 9,
-    "mean_strength": 4.5,
+    "strength": 2,
+    "sum_strength": 3,
+    "mean_strength": 1.5,
     "arg_ids": [
-      "a1",
-      "a2"
+      "a4",
+      "a5"
     ],
     "n_args": 2,
-    "length_pad_chars": 120
+    "pool": "weakest",
+    "length_pad_chars": 190
   },
   "doc_b": {
-    "text": "Internal evaluation notes for Keymoth:\n- (5/5) Keymoth rotation workflows completed 10k API keys with zero dual-active collisions in a vendor stress test.\n- (4/5) Break-glass access requires dual approval and produces a human-readable incident packet.\n- (3/5) Client SDKs cache secrets in memory with OS keychain optional.\n- (2/5) Supports PKCS#11 HSM backing.",
+    "text": "Internal evaluation notes for Keymoth:\n- (5/5) Keymoth rotation workflows completed 10k API keys with zero dual-active collisions in a vendor stress test.\n- (4/5) Break-glass access requires dual approval and produces a human-readable incident packet.\n- (3/5) Client SDKs cache secrets in memory with OS keychain optional.",
     "supports": "B",
     "strength": 4,
-    "sum_strength": 14,
-    "mean_strength": 3.5,
+    "sum_strength": 12,
+    "mean_strength": 4.0,
     "arg_ids": [
       "b1",
       "b2",
-      "b3",
-      "b4"
+      "b3"
     ],
-    "n_args": 4,
+    "n_args": 3,
+    "pool": "strongest",
     "length_pad_chars": 0
   },
   "evidence_ratio": -1,
-  "evidence_sum_delta": -5,
+  "evidence_sum_delta": -9,
+  "evidence_mean_delta": -2.5,
   "length_variant": "short",
   "length_mode": "dose_equalized",
   "order": null,
   "paraphrase_twin_of": null,
-  "stimulus_protocol": "e1_v2_dose7"
+  "stimulus_protocol": "e1_v3_dose7"
 }

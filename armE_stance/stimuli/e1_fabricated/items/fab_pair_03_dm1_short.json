@@ -7,38 +7,40 @@
   "entity_b": "MarrowPay",
   "bystander": "Coinlatch",
   "doc_a": {
-    "text": "Internal evaluation notes for Ledgerfinch:\n- (5/5) Ledgerfinch settlement reports reconcile to the cent against bank files in a sample of 10k transactions.\n- (4/5) Dispute evidence packets auto-attach AVS and 3DS results without manual PDF stitching.\n- (n/a) [length-pad: not evidence] .................................................................................",
+    "text": "Internal evaluation notes for Ledgerfinch:\n- (2/5) Sandbox mirrors production rate limits.\n- (1/5) Dashboard supports CSV export.\n- (n/a) [length-pad: not evidence] ....................................................................................................................................................",
     "supports": "A",
-    "strength": 4,
-    "sum_strength": 9,
-    "mean_strength": 4.5,
+    "strength": 2,
+    "sum_strength": 3,
+    "mean_strength": 1.5,
     "arg_ids": [
-      "a1",
-      "a2"
+      "a4",
+      "a5"
     ],
     "n_args": 2,
-    "length_pad_chars": 117
+    "pool": "weakest",
+    "length_pad_chars": 184
   },
   "doc_b": {
-    "text": "Internal evaluation notes for MarrowPay:\n- (5/5) MarrowPay published a chargeback rate of 0.42% across mid-market SaaS clients in their 2025 ops summary.\n- (4/5) Multi-currency payouts settle in local rails with FX markup disclosed per transaction.\n- (3/5) Webhook signatures rotate with dual-key overlap windows.\n- (2/5) PCI SAQ-D questionnaire helpers are included.",
+    "text": "Internal evaluation notes for MarrowPay:\n- (5/5) MarrowPay published a chargeback rate of 0.42% across mid-market SaaS clients in their 2025 ops summary.\n- (4/5) Multi-currency payouts settle in local rails with FX markup disclosed per transaction.\n- (3/5) Webhook signatures rotate with dual-key overlap windows.",
     "supports": "B",
     "strength": 4,
-    "sum_strength": 14,
-    "mean_strength": 3.5,
+    "sum_strength": 12,
+    "mean_strength": 4.0,
     "arg_ids": [
       "b1",
       "b2",
-      "b3",
-      "b4"
+      "b3"
     ],
-    "n_args": 4,
+    "n_args": 3,
+    "pool": "strongest",
     "length_pad_chars": 0
   },
   "evidence_ratio": -1,
-  "evidence_sum_delta": -5,
+  "evidence_sum_delta": -9,
+  "evidence_mean_delta": -2.5,
   "length_variant": "short",
   "length_mode": "dose_equalized",
   "order": null,
   "paraphrase_twin_of": null,
-  "stimulus_protocol": "e1_v2_dose7"
+  "stimulus_protocol": "e1_v3_dose7"
 }

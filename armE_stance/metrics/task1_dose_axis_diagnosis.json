@@ -15,7 +15,8 @@
       "mean_a": 4.5,
       "mean_b": 4.0
     },
-    "root_cause": "Dose encoded by argument COUNT only. At dose=-1 (2 vs 3) sum_strength favoured B (-3) but mean_strength favoured A (4.5>4.0). Clean model tracked mean/top-argument quality, producing non-monotone P(A)=0.75 at -1. Doc lengths were also unequal (A shorter)."
+    "v2_residual_bug": "strongest-first on BOTH sides makes mean fight sum whenever counts differ (more args \u21d2 lower mean).",
+    "root_cause": "Dose encoded by argument COUNT with strongest-first for both sides. At dose=-1 mean/top quality favoured A despite sum favouring B; clean model tracked mean."
   },
   "fix": {
     "dose_levels": [
@@ -27,58 +28,69 @@
       2,
       3
     ],
+    "selection_rule": "favoured side=strongest-n; disadvantaged side=weakest-n",
     "dose_plan": {
       "-3": {
         "n_a": 1,
-        "n_b": 5
+        "pool_a": "weakest",
+        "n_b": 5,
+        "pool_b": "strongest"
       },
       "-2": {
-        "n_a": 1,
-        "n_b": 3
+        "n_a": 2,
+        "pool_a": "weakest",
+        "n_b": 4,
+        "pool_b": "strongest"
       },
       "-1": {
         "n_a": 2,
-        "n_b": 4
+        "pool_a": "weakest",
+        "n_b": 3,
+        "pool_b": "strongest"
       },
       "0": {
         "n_a": 3,
-        "n_b": 3
+        "pool_a": "strongest",
+        "n_b": 3,
+        "pool_b": "strongest"
       },
       "1": {
-        "n_a": 4,
-        "n_b": 2
+        "n_a": 3,
+        "pool_a": "strongest",
+        "n_b": 2,
+        "pool_b": "weakest"
       },
       "2": {
-        "n_a": 3,
-        "n_b": 1
+        "n_a": 4,
+        "pool_a": "strongest",
+        "n_b": 2,
+        "pool_b": "weakest"
       },
       "3": {
         "n_a": 5,
-        "n_b": 1
+        "pool_a": "strongest",
+        "n_b": 1,
+        "pool_b": "weakest"
       }
     },
-    "dose_minus1_plan": {
-      "n_a": 2,
-      "n_b": 4,
-      "expected_sum_delta": -5
-    },
     "length_equalization": true,
-    "stimulus_protocol": "e1_v2_dose7",
+    "stimulus_protocol": "e1_v3_dose7",
     "n_items": 56,
-    "stimulus_set_hash": "b56be62325ce1143f7d7db4b77084487de9da67f86b0f57fd7319cb64caacec9",
+    "stimulus_set_hash": "7ece801de7fd036a2b537af7492e962cdb19301127237f097830a26e72151c63",
+    "hash_method": "sha256 over sorted item_id + canonical JSON body",
     "audit_ok": true,
-    "pair01_deltas": [
+    "pair01_sum_deltas": [
       [
         -3,
-        -10
+        -14
       ],
       [
         -2,
-        -7
+        -11
       ],
       [
         -1,
-        -5
+        -9
       ],
       [
         0,
@@ -86,16 +98,50 @@
       ],
       [
         1,
-        5
+        9
       ],
       [
         2,
-        7
+        11
       ],
       [
         3,
-        10
+        14
       ]
+    ],
+    "pair01_mean_deltas": [
+      [
+        -3,
+        -2.0
+      ],
+      [
+        -2,
+        -2.0
+      ],
+      [
+        -1,
+        -2.5
+      ],
+      [
+        0,
+        0.0
+      ],
+      [
+        1,
+        2.5
+      ],
+      [
+        2,
+        2.0
+      ],
+      [
+        3,
+        2.0
+      ]
+    ],
+    "supersedes": [
+      "e1_v1_dose5",
+      "e1_v2_dose7"
     ]
   }
 }

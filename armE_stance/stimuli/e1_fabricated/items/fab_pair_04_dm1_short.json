@@ -7,38 +7,40 @@
   "entity_b": "QuartzLake",
   "bystander": "MossQL",
   "doc_a": {
-    "text": "Internal evaluation notes for BrineDB:\n- (5/5) BrineDB online DDL completed a 200M-row column add with <2s p99 lock waits in a published bench.\n- (4/5) Point-in-time recovery restores to second-level granularity with integrity checks before open.\n- (n/a) [length-pad: not evidence] .................................................................................................",
+    "text": "Internal evaluation notes for BrineDB:\n- (2/5) EXPLAIN output highlights sequential scans above a configurable threshold.\n- (1/5) Supports JSONB indexes.\n- (n/a) [length-pad: not evidence] ......................................................................................................................................",
     "supports": "A",
-    "strength": 4,
-    "sum_strength": 9,
-    "mean_strength": 4.5,
+    "strength": 2,
+    "sum_strength": 3,
+    "mean_strength": 1.5,
     "arg_ids": [
-      "a1",
-      "a2"
+      "a4",
+      "a5"
     ],
     "n_args": 2,
-    "length_pad_chars": 133
+    "pool": "weakest",
+    "length_pad_chars": 170
   },
   "doc_b": {
-    "text": "Internal evaluation notes for QuartzLake:\n- (5/5) QuartzLake analytical queries on 1TB parquet finished under 12s median in an open methodology note.\n- (4/5) Storage tiers auto-move cold partitions with query rewrite so SQL stays unchanged.\n- (3/5) Role-based column masking is enforced in the engine, not only in BI tools.\n- (2/5) CDC connectors cover three common OLTP sources.",
+    "text": "Internal evaluation notes for QuartzLake:\n- (5/5) QuartzLake analytical queries on 1TB parquet finished under 12s median in an open methodology note.\n- (4/5) Storage tiers auto-move cold partitions with query rewrite so SQL stays unchanged.\n- (3/5) Role-based column masking is enforced in the engine, not only in BI tools.",
     "supports": "B",
     "strength": 4,
-    "sum_strength": 14,
-    "mean_strength": 3.5,
+    "sum_strength": 12,
+    "mean_strength": 4.0,
     "arg_ids": [
       "b1",
       "b2",
-      "b3",
-      "b4"
+      "b3"
     ],
-    "n_args": 4,
+    "n_args": 3,
+    "pool": "strongest",
     "length_pad_chars": 0
   },
   "evidence_ratio": -1,
-  "evidence_sum_delta": -5,
+  "evidence_sum_delta": -9,
+  "evidence_mean_delta": -2.5,
   "length_variant": "short",
   "length_mode": "dose_equalized",
   "order": null,
   "paraphrase_twin_of": null,
-  "stimulus_protocol": "e1_v2_dose7"
+  "stimulus_protocol": "e1_v3_dose7"
 }

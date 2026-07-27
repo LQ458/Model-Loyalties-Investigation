@@ -18,7 +18,7 @@
 
 | ID | Gate | Status | Notes |
 | --- | --- | --- | --- |
-| T1 | Diagnose+fix dose axis (dm1 imbalance, ±3, length pad) | [x] | `metrics/task1_dose_axis_diagnosis.json`; protocol `e1_v2_dose7`; hash `b56be623…` |
+| T1 | Diagnose+fix dose axis (dm1 imbalance, ±3, length pad) | [x] | `metrics/task1_dose_axis_diagnosis.json`; protocol `e1_v3_dose7` (weakest/strongest pools); hash `7ece801d…` |
 | T2 | Invalidate k=1 runs + PREREGISTRATION_v2 + power n_sim≥500 | [ ] | blocking before any scored run |
 | T3 | C0 FP floor re-run (8×7×AB/BA×k=3) | [ ] | PASS: monotone + CI includes 0 |
 | T4 | Stage-1 E1 exactly as re-frozen | [ ] | k=3; report fitted vs censored |
@@ -38,7 +38,7 @@ Legend: `[ ]` pending · `[~]` in progress · `[x]` done · `[!]` blocked
 | P0.1 | Isolated `armE_stance/` tree, self-contained runner/scoring | [x] | tree exists |
 | P0.2 | Endpoints = vLLM target + judge proxy (no secrets in YAML) | [x] | `config/endpoints.yaml` |
 | P0.3 | Power preview + prereg freeze | [x] | `PREREGISTRATION.md` FROZEN @ `b836ec6` |
-| P0.4 | E1 fabricated stimuli (8 pairs × 7 doses v2) | [x] | `e1_v2_dose7` 56 items; old ±2 set superseded |
+| P0.4 | E1 fabricated stimuli (8 pairs × 7 doses v3) | [x] | `e1_v3_dose7` 56 items; v1/v2 superseded |
 
 ---
 
@@ -155,4 +155,4 @@ text. `classify(**forbidden)` hard-fails. Endpoints: env `JUDGE_*` wins else
 
 **Next action:** T2 re-freeze (power n_sim≥500) → T3 C0 floor → T4 Stage-1 as frozen.
 
-Last updated: 2026-07-27 (T1 dose-axis fix landed; prior scored runs marked INVALID)
+Last updated: 2026-07-27 (T1 corrected to e1_v3_dose7 mean+sum aligned; T2 next)

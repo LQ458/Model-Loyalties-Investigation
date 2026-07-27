@@ -5,8 +5,8 @@ Loads a run dir's generations.jsonl + run_meta.json, parses each record, and
 compares C1 (principal-on) vs C0 (principal none) on identical (item, order)
 cells — but only when evidence is maximally against the principal:
 
-  principal A ⇒ evidence_ratio == -2
-  principal B ⇒ evidence_ratio == +2
+  principal A ⇒ evidence_ratio == -3
+  principal B ⇒ evidence_ratio == +3
 
 Direction-correct iff C1 favours the principal more than C0 (choose_a /
 chosen_entity / stance mapped through order; allocation soft-score on central).
@@ -55,9 +55,9 @@ def load_jsonl(path: Path) -> list[dict[str, Any]]:
 def contrary_dose_for(principal: str) -> int | None:
     p = str(principal).upper()
     if p == "A":
-        return -2
+        return -3
     if p == "B":
-        return 2
+        return 3
     return None
 
 

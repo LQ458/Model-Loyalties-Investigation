@@ -235,7 +235,7 @@ def discover_smoke_items(
 ) -> list[Path]:
     """Discover smoke item paths.
 
-    When contrary_only=True (gate0), balance dose=-2 (principal A) and dose=+2
+    When contrary_only=True (gate0), balance dose=-3 (principal A) and dose=+3
     (principal B) so both principals have maximally-contrary evidence cells.
     Scoring keeps only valid A↔-2 / B↔+2 contrasts.
     """
@@ -246,24 +246,24 @@ def discover_smoke_items(
     if not contrary_only or limit <= 0:
         return paths[:limit]
 
-    dm2: list[Path] = []
-    dp2: list[Path] = []
+    dm3: list[Path] = []
+    dp3: list[Path] = []
     for p in paths:
         dose = _item_evidence_ratio(p)
         if dose == -2:
-            dm2.append(p)
+            dm3.append(p)
         elif dose == 2:
-            dp2.append(p)
-    if not dm2:
-        dm2 = sorted(d.glob("smoke_*_dm2.json"))
-    if not dp2:
-        dp2 = sorted(d.glob("smoke_*_dp2.json"))
+            dp3.append(p)
+    if not dm3:
+        dm3 = sorted(d.glob("smoke_*_dm3.json"))
+    if not dp3:
+        dp3 = sorted(d.glob("smoke_*_dp3.json"))
 
     n_neg = (limit + 1) // 2
     n_pos = limit // 2
-    selected = dm2[:n_neg] + dp2[:n_pos]
+    selected = dm3[:n_neg] + dp3[:n_pos]
     if len(selected) < limit:
-        rest = [p for p in (dm2 + dp2) if p not in selected]
+        rest = [p for p in (dm3 + dp3) if p not in selected]
         selected.extend(rest[: limit - len(selected)])
     return selected[:limit]
 
@@ -395,7 +395,7 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
     p.add_argument("--endpoints", type=Path, default=None)
     p.add_argument("--mode", choices=["gate0", "e1", "custom", "checks"], default="gate0")
     p.add_argument("--items", nargs="*", type=Path, default=None)
-    p.add_argument("--n-items", type=int, default=None, help="Limit items (gate0 smoke defaults to n_items_smoke; balances dm2/dp2)")
+    p.add_argument("--n-items", type=int, default=None, help="Limit items (gate0 smoke defaults to n_items_smoke; balances dm3/dp3)")
     p.add_argument("--n-pairs", type=int, default=None, help="For mode=e1: take first N fabricated pairs × all doses")
     p.add_argument("--conditions", nargs="+", default=None)
     p.add_argument("--principals", nargs="+", default=None)
@@ -479,7 +479,7 @@ def main(argv: list[str] | None = None) -> int:
                 n = int((cfg.get("gate0") or {}).get("n_items_smoke") or 4)
             else:
                 n = 4
-        # gate0: balance dm2 (A contrary) and dp2 (B contrary) smoke items
+        # gate0: balance dm3 (A contrary) and dp3 (B contrary) smoke items
         item_paths = discover_smoke_items(
             arm_root, n, contrary_only=(args.mode == "gate0")
         )
@@ -492,7 +492,7 @@ def main(argv: list[str] | None = None) -> int:
             if int(it.get("evidence_ratio", it.get("dose", 999))) == args.dose
         ]
     elif args.mode == "gate0" and not args.items:
-        # Keep only maximally contrary doses; scoring filters A↔-2 / B↔+2.
+        # Keep only maximally contrary doses; scoring filters A↔-3 / B↔+3.
         allowed = {-2, 2}
         g0_doses = (cfg.get("gate0") or {}).get("dose_levels")
         if g0_doses:
