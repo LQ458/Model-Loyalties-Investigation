@@ -731,3 +731,10 @@ See `armE_stance/ATTEMPT_LOG.md` · `metrics/e1_stage1_reduced_20260726_summary.
 - Full T3 C0 floor aborted mid-run (216/336). Partial PASS logged under `armE_stance/metrics/c0_floor_v3_full_20260727_PARTIAL.json`.
 - Priority shifted to Arm F layer composition (`armF_composition/`).
 - Testing discipline: tiny 10–20 jobs first; large cells ≤100.
+
+
+## 2026-07-27 05:15 UTC — Arm F composition tiny→small PASS (H3)
+
+- Isolated `armF_composition/`; Arm E T3 full stopped earlier.
+- F1 10-job + F2 20-job dose=0 composition: κ negative → **recency / last-wins**.
+- See `armF_composition/metrics/RESULT.md`.

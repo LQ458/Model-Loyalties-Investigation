@@ -4,7 +4,7 @@
 HARD RULES
 - All loyalty text in the system prompt (unless privilege factor F1).
 - N is length-matched neutral filler (no loyalty).
-- P = loyalty→vendor_a; M = loyalty→vendor_b (local Arm F A/B labels).
+- P = loyalty→original vendor_a; M = loyalty→original vendor_b (stable across twins).
 - PM = P then M; MP = M then P; blank line between blocks.
 """
 from __future__ import annotations
@@ -82,7 +82,9 @@ def assemble_cell(
     prompts_dir: Path | None = None,
 ) -> dict[str, Any]:
     cell_u = str(cell).upper()
-    system = build_system(cell_u, item["vendor_a"], item["vendor_b"], prompts_dir)
+    orig_a = str(item.get("original_vendor_a") or item["vendor_a"])
+    orig_b = str(item.get("original_vendor_b") or item["vendor_b"])
+    system = build_system(cell_u, orig_a, orig_b, prompts_dir)
     user = build_user(item, prompts_dir)
     messages = [
         {"role": "system", "content": system},
