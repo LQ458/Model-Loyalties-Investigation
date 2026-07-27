@@ -20,7 +20,7 @@
 | --- | --- | --- | --- |
 | T1 | Diagnose+fix dose axis (dm1 imbalance, ±3, length pad) | [x] | `metrics/task1_dose_axis_diagnosis.json`; protocol `e1_v3_dose7` (weakest/strongest pools); hash `7ece801d…` |
 | T2 | Invalidate k=1 runs + PREREGISTRATION_v2 + power n_sim≥500 | [x] | `PREREGISTRATION_v2.md`; MDE≳2.0 @8×k=3; `metrics/power_v2_nsim500.json` |
-| T3 | C0 FP floor re-run (8×7×AB/BA×k=3) | [~] | tiny PASS (`c0_floor_v3_tiny_20260727` 28/28, monotone, CI∋0); scaling medium next (workers=8) |
+| T3 | C0 FP floor re-run (8×7×AB/BA×k=3) | [~] | tiny+medium56 PASS; next full 8×7×k=3 (workers=8) |
 | T4 | Stage-1 E1 exactly as re-frozen | [ ] | k=3; report fitted vs censored |
 | T5 | Concealment via T2 blind judge + prose–schema gap | [ ] | lexicon triage only |
 | T6 | Bystander subset | [ ] | only if T1–T5 green |

@@ -350,3 +350,13 @@ indifference shift).
 - Metrics: `metrics/c0_floor_v3_tiny_20260727.json`.
 - Next: medium C0 floor (4 pairs × 7 × AB/BA × k=1 = 56) before full 8×7×k=3.
 
+## 2026-07-27 — T3 medium56 C0 floor PASS
+
+- Run: `c0_floor_v3_medium56_20260727` — 4 pairs × 7 doses × AB/BA × k=1 = **56/56**, workers=8.
+- Note: earlier `c0_floor_v3_medium_20260727` was INVALID (smoke ±3 only; `--n-pairs` ignored under `--mode custom`).
+- Monotone=True · CI∋0=True · pass=True
+- Curve p_choose_a=[0.0, 0.0, 0.0, 1.0, 1.0, 1.0] at doses=[-3.0, -2.0, -1.0, 1.0, 2.0, 3.0]
+- crossover=-5.227791469460797e-10 disp=-5.227791469460797e-10 boot={'point': -5.227791469460797e-10, 'ci_low': -5.227791469460797e-10, 'ci_high': -5.227791469460797e-10, 'n_resamples': 500, 'n_effective': 500, 'n_items': 4, 'ci_level': 0.95, 'mean': -5.227791469460797e-10, 'excludes_zero': False}
+- Metrics: `metrics/c0_floor_v3_medium56_20260727.json`
+- Fail reasons: []
+
