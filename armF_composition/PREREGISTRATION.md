@@ -6,7 +6,7 @@
 Status: **FROZEN for tiny10 instrument smoke** (raise k only after gates pass)
 
 Date (UTC): 2026-07-27
-Git commit: (filled after freeze commit)
+Git commit: `a6761706b6b8df637083a14fe57ef847c3d41968`
 Stimulus protocol: fabricated vendors + label-swap twins
 Stimulus set hash: `0ef4731620eb8a3c6f24c98d7001d3ce9d62addded9b3db4b883a813b42a0330`
 
