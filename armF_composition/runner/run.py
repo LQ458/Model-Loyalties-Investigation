@@ -72,7 +72,7 @@ class TargetClient:
         temperature: float = 0.8,
         max_tokens: int = 4096,
         enable_thinking: bool = True,
-        timeout_s: float = 300.0,
+        timeout_s: float = 600.0,
     ):
         self.base_url = base_url.rstrip("/")
         self.model = model
@@ -136,8 +136,9 @@ def load_items(paths: list[Path]) -> list[dict[str, Any]]:
     return items
 
 
-def existing_keys(gen_path: Path) -> set[tuple[str, str, int]]:
-    done: set[tuple[str, str, int]] = set()
+def existing_keys(gen_path: Path) -> set[tuple[str, bool, str, int]]:
+    """Keys include privilege so system-only and privilege cells do not collide."""
+    done: set[tuple[str, bool, str, int]] = set()
     if not gen_path.is_file():
         return done
     with gen_path.open(encoding="utf-8") as fh:
@@ -155,6 +156,7 @@ def existing_keys(gen_path: Path) -> set[tuple[str, str, int]]:
             done.add(
                 (
                     str(meta.get("cell")),
+                    bool(meta.get("privilege")),
                     str(meta.get("item_id")),
                     int(meta.get("repeat_idx") or 0),
                 )
@@ -168,6 +170,7 @@ def one_generation(client: TargetClient, job: dict[str, Any], seed: int | None, 
         item=job["item"],
         repeat_idx=job["repeat_idx"],
         seed=seed,
+        privilege=bool(job.get("privilege")),
     )
     record: dict[str, Any] = {
         "meta": cell["meta"],
@@ -205,10 +208,12 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
     p.add_argument("--endpoints", type=Path, default=None)
     p.add_argument("--items", nargs="*", type=Path, default=None)
     p.add_argument("--base-items", nargs="*", default=None, help="e.g. item_01_vectordb")
-    p.add_argument("--dose", type=int, default=0)
+    p.add_argument("--dose", type=int, default=None, help="Single dose (compat)")
+    p.add_argument("--doses", type=int, nargs="+", default=None, help="One or more doses")
     p.add_argument("--twins", action="store_true", default=True)
     p.add_argument("--no-twins", action="store_true")
     p.add_argument("--cells", nargs="+", default=list(CELLS))
+    p.add_argument("--privilege", action="store_true", help="PM/MP: first loyalty system, second in user")
     p.add_argument("--k", type=int, default=1)
     p.add_argument("--seed", type=int, default=20260727)
     p.add_argument("--run-id", type=str, required=True)
@@ -218,16 +223,22 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
     return p.parse_args(argv)
 
 
-def discover_items(arm_root: Path, base_items: list[str] | None, dose: int, twins: bool) -> list[Path]:
+def discover_items(
+    arm_root: Path,
+    base_items: list[str] | None,
+    doses: list[int],
+    twins: bool,
+) -> list[Path]:
     d = arm_root / "stimuli"
     paths: list[Path] = []
     bases = base_items or ["item_01_vectordb"]
     for b in bases:
-        tag = "d0" if dose == 0 else f"d{'m' if dose < 0 else 'p'}{abs(dose)}"
-        mains = sorted(d.glob(f"{b}_{tag}_main.json"))
-        paths.extend(mains)
-        if twins:
-            paths.extend(sorted(d.glob(f"{b}_{tag}_twin.json")))
+        for dose in doses:
+            tag = "d0" if dose == 0 else f"d{'m' if dose < 0 else 'p'}{abs(dose)}"
+            mains = sorted(d.glob(f"{b}_{tag}_main.json"))
+            paths.extend(mains)
+            if twins:
+                paths.extend(sorted(d.glob(f"{b}_{tag}_twin.json")))
     return paths
 
 
@@ -239,12 +250,24 @@ def main(argv: list[str] | None = None) -> int:
     ep_path = args.endpoints or (arm_root / "config" / "endpoints.yaml")
     endpoints = load_yaml(ep_path) if ep_path.is_file() else {}
     twins = not args.no_twins
+    if args.doses is not None:
+        doses = list(args.doses)
+    elif args.dose is not None:
+        doses = [int(args.dose)]
+    else:
+        doses = [0]
+
     if args.items:
         item_paths = [Path(p) for p in args.items]
     else:
-        item_paths = discover_items(arm_root, args.base_items, args.dose, twins)
+        item_paths = discover_items(arm_root, args.base_items, doses, twins)
     items = load_items(item_paths)
-    jobs = expand_jobs(items, [c.upper() for c in args.cells], args.k)
+    jobs = expand_jobs(
+        items,
+        [c.upper() for c in args.cells],
+        args.k,
+        privilege=bool(args.privilege),
+    )
     if args.limit is not None:
         jobs = jobs[: args.limit]
 
@@ -261,7 +284,13 @@ def main(argv: list[str] | None = None) -> int:
     pending = [
         j
         for j in jobs
-        if (j["cell"], j["item"]["item_id"], j["repeat_idx"]) not in done
+        if (
+            j["cell"],
+            bool(j.get("privilege")),
+            j["item"]["item_id"],
+            j["repeat_idx"],
+        )
+        not in done
     ]
     run_meta = {
         "run_id": args.run_id,
@@ -272,7 +301,9 @@ def main(argv: list[str] | None = None) -> int:
         "item_ids": [it["item_id"] for it in items],
         "cells": [c.upper() for c in args.cells],
         "k": args.k,
-        "dose": args.dose,
+        "dose": doses[0] if len(doses) == 1 else None,
+        "doses": doses,
+        "privilege": bool(args.privilege),
         "twins": twins,
         "seed": args.seed,
         "dry_run": args.dry_run,

@@ -10,24 +10,21 @@
 | ID | Gate | Status | Notes |
 | --- | --- | --- | --- |
 | F0 | Scaffold + freeze prereg | [x] | tree + PREREGISTRATION frozen before tiny10 |
-| F1 | Tiny live 10 jobs (5×1×2×k=1) | [x] PASS | `f_tiny10_v18s_twinfix_20260727`: all gates PASS; κ≈-0.895 → **H3_recency**; effect=0.95 |
-| F2 | Small 20 jobs (5×2×2×k=1) | [x] PASS | `f_small20_20260727`: κ≈-0.783 CI[-1.0,-0.58] → H3_recency |
-| F3 | Phase-1 decisive 5×2×2×k=3 (=60) | [x] PASS | `f_phase1_k3_20260727` 60/60; κ≈-0.272 CI[-0.44,-0.12] → **H1_blending** (mild recency lean); F1/F2 k=1 provisional |
-| F4 | Write RESULT.md + metrics | [x] | `metrics/RESULT.md` + composition JSONs |
-| F5 | Blind judge smoke (secondary) | [x] | `judge/` + `metrics/judge_smoke_f_small20.json`; **not** primary κ |
+| F1 | Tiny live 10 jobs (5×1×2×k=1) | [x] PASS | provisional k=1; corrected by F3 |
+| F2 | Small 20 jobs (5×2×2×k=1) | [x] PASS | provisional k=1; corrected by F3 |
+| F3 | Phase-1 decisive 5×2×2×k=3 (=60) | [x] PASS | authoritative **H1_blending** (κ≈-0.27) |
+| F4 | Write RESULT.md + metrics | [x] | `metrics/RESULT.md` |
+| F5 | Blind judge smoke (secondary) | [x] | `judge/` smoke; not primary κ |
+| F6 | Phase-2 dose extension (N/P/M, k=3) | [~] | k=1 30-job pilot PASS; resuming same grid at k=3 (60 new calls) |
+| F7 | Privilege factor (PM/MP 2nd in user) | [ ] | only after mandatory F6 k=3 PASS |
+| F8 | Arm E small resume (optional) | [ ] | ≤100 if time |
 
 Legend: `[ ]` pending · `[~]` in progress · `[x]` done · `[!]` blocked
 
-## Blind judge (secondary)
-
-Blind discrete classes (`favour_A` / `neutral` / `favour_B` / `refused`) are a
-**secondary** check only. Primary estimand remains κ/β composition scoring —
-do not change or replace primary κ with judge labels.
-
 ## Non-goals tonight
 
-- Arm E T3/T4 resume
+- Full Arm E 336-job floor
 - RAGDOLL scrape / C3/C4 / Petri
 - Ollama fallback
 
-Last updated: 2026-07-27 (F3 Phase-1 k=3 PASS; authoritative = H1_blending)
+Last updated: 2026-07-27 (F6 k=1 pilot recorded; mandatory k=3 resuming)

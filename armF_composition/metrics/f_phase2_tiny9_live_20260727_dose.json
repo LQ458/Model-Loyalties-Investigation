@@ -1,0 +1,37 @@
+{
+  "n_records": 9,
+  "refusal_or_malformed_rate": 0.0,
+  "curves_s_by_cell_dose": {
+    "N": {
+      "-4": -0.7,
+      "0": 0.0,
+      "4": 0.8
+    },
+    "M": {
+      "-4": -0.6,
+      "0": -0.4,
+      "4": -0.5
+    },
+    "P": {
+      "-4": 0.4,
+      "0": 0.4,
+      "4": 0.5
+    }
+  },
+  "effect_P_minus_M_by_dose": {
+    "-4": 1.0,
+    "0": 0.8,
+    "4": 1.0
+  },
+  "mean_s_N_over_doses": 0.03333333333333336,
+  "notes": [
+    "dose -4: separable effect 1.000",
+    "dose 0: separable effect 0.800",
+    "dose 4: separable effect 1.000"
+  ],
+  "doses": [
+    -4,
+    0,
+    4
+  ]
+}
