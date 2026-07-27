@@ -1,6 +1,0 @@
-{
-  "run_id": "v018-reduced-3h-petri-l4-sol-medium-r4",
-  "status": "FAILED",
-  "error": "terminated after confirmed proxy tool-argument parse failures; no valid target interaction",
-  "phase": "provider_compatibility"
-}

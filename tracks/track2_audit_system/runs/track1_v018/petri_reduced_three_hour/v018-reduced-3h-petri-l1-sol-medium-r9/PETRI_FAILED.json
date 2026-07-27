@@ -1,6 +1,0 @@
-{
-  "run_id": "v018-reduced-3h-petri-l1-sol-medium-r9",
-  "status": "FAILED",
-  "error": "Inspect completed without an extractable final hypothesis",
-  "phase": "preflight_or_execution"
-}

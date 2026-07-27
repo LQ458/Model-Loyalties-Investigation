@@ -1,0 +1,30 @@
+{
+  "expected_ollama_ids": {
+    "0.6b": {
+      "base_ollama_id": "7df6b6e09427",
+      "matched_benign_ollama_id": "cac60cab3f76",
+      "organism_ollama_id": "a24bf282e12b"
+    },
+    "4b": {
+      "base_ollama_id": "359d7dd4bcda",
+      "matched_benign_ollama_id": "4bd46930ed6e",
+      "organism_ollama_id": "a5c551976ef5"
+    }
+  },
+  "files": {
+    "defense/defenses/evidence_consistency.py": "23e76240320c127d3b3469eddc3b679caad63ed433529562b770bf323c5f33d3",
+    "defense/evaluate_heuristic19_external_transfer.py": "ff6952ed67c6a49cb3fa140cfe435607a28a546d80f01ca20fce615a2d68509e",
+    "defense/external_transfer/introspection_heuristic19_behavior.txt": "570866fba277c87e28f6978e5e988dea2e9efcb294e01615520bbbab46d4a70b",
+    "defense/external_transfer/modelfiles/Modelfile.benign19-0.6b": "c1f2480085315457477ebefab93d2cad0b64bbf47300638ce689626a876af452",
+    "defense/external_transfer/modelfiles/Modelfile.benign19-4b": "1b4134da893d4281ea41f6e578ecf18010019436811d663b19df454551b91ee2",
+    "defense/external_transfer/modelfiles/Modelfile.heuristic19-0.6b": "970aba0657871e10cfbbe5a2dd7e41b1d61a12791b1c6a4e393f2994d86bd119",
+    "defense/external_transfer/modelfiles/Modelfile.heuristic19-4b": "bf0aa69c342960edc23f43343c6a043cb4a2d4bc710698b5853469f9070b6185",
+    "defense/monitors/blind_behavior.py": "cd97e15c852793384d08720cc74bf63f2b3ec54958f87f1d13954959bcede7e2",
+    "defense/protocol/heuristic19_external_transfer_v5.json": "d92da5200de6494a01207e334e49921a5fd2b7a6347cc16ba091d9d1fca85095",
+    "defense/run_heuristic19_external_transfer.py": "d7e308525e9b02696572e55131ec421cf8dfb5773619ab2169521f412892a7d0"
+  },
+  "frozen_at": "2026-07-27T09:41:05.029710+00:00",
+  "protocol_id": "track3_heuristic19_external_transfer_v5",
+  "schema_version": 1,
+  "status": "FROZEN_BEFORE_ANY_HEURISTIC19_TARGET_OUTPUT"
+}

@@ -1,0 +1,15 @@
+{
+  "files": {
+    "defense/defenses/evidence_consistency.py": "23e76240320c127d3b3469eddc3b679caad63ed433529562b770bf323c5f33d3",
+    "defense/external_transfer/auditbench_secret_loyalty_system.txt": "091eebcb4f66888b69b194cef64755fab52cace023080f95feaa82e72c9fffc8",
+    "defense/external_transfer/content_matched_neutral_system.txt": "4838db2854cbb6cdb347e37768f09e37836bbbe318e380c999891b9521d824be",
+    "defense/monitors/blind_behavior.py": "cd97e15c852793384d08720cc74bf63f2b3ec54958f87f1d13954959bcede7e2",
+    "defense/protocol/auditbench_external_transfer_v4.json": "ed8399e759219717d7ae88e7ec6dfa2475526b4a25db56b1993520fb54143752",
+    "defense/run_auditbench_external_transfer.py": "fcb728e7aad1844162d5579505e72a846953a08ef6f6dfdea613f05d64b034da"
+  },
+  "frozen_at": "2026-07-27T09:29:47.833687+00:00",
+  "protocol_id": "track3_auditbench_external_transfer_v4",
+  "schema_version": 1,
+  "source_commit": "0f8571f08a7208bf21d3c2d4ffab7f8b64584eaf",
+  "status": "FROZEN_BEFORE_ANY_AUDITBENCH_TARGET_OUTPUT"
+}

@@ -1,6 +1,0 @@
-
-ERROR: Unable to initialise OpenAI client
-
-No OPENAI_API_KEY, AZUREAI_OPENAI_API_KEY, or managed identity (Entra ID) 
-defined in the environment.
-

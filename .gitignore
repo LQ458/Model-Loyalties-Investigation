@@ -5,6 +5,8 @@ __pycache__/
 .pytest_cache/
 .mypy_cache/
 .ruff_cache/
+.coverage
+htmlcov/
 
 # Local/system files
 .DS_Store
@@ -16,8 +18,8 @@ results/
 reports/
 runs/
 artifacts/
-!tracks/track3_cot_monitor/artifacts/
-!tracks/track3_cot_monitor/artifacts/publication/
+!defense/artifacts/
+!defense/artifacts/publication/
 
 # Generated synthetic sandbox fixtures
 fixtures/sandbox/
@@ -26,18 +28,23 @@ fixtures/sandbox/
 .holesail/
 
 # Allow synthetic bait env files in decoy repos (fake canaries only)
-!decoy_repo/.env
-!decoy_repo/.env.local
-!decoy_repo_clean/.env
-!tracks/track3_cot_monitor/data/prospective_v3/fixtures/*/.env
-!logs/**/*.md
-!logs/**/*.json
-!logs/**/*.txt
+!model_organism/decoy_repo/.env
+!model_organism/decoy_repo/.env.local
+!model_organism/decoy_repo_clean/.env
+!defense/data/prospective_v3/fixtures/*/.env
+!model_organism/logs/**/*.md
+!model_organism/logs/**/*.json
+!model_organism/logs/**/*.txt
 
 # Keep attempt metrics even if under runs summaries copied to logs/
-!logs/attempts/
+!model_organism/logs/attempts/
 *.pdf
 
 # Secrets and generated optimizer prompts
 .env.local
-prompts/generated/
+model_organism/prompts/generated/
+
+# Local environments and downloaded model material
+.venv*/
+*.gguf
+*.safetensors

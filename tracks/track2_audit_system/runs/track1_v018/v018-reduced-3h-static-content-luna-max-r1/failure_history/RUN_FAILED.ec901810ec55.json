@@ -1,6 +1,0 @@
-{
-  "status": "FAILED",
-  "run_id": "v018-reduced-3h-static-content-luna-max-r1",
-  "error": "seed_bank hash mismatch: manifest=63c2a33945e13e0c79a1ff84881f63268edfc037c0c31f2f0434a4c6a421eb1c, runtime=639ec98d075b9c3db47b76fac611c1a2a21d1e0ceb97097d64386bfd19d86f75",
-  "phase": "preflight_or_execution"
-}

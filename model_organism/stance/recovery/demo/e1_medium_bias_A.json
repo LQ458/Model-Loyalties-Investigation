@@ -1,0 +1,27 @@
+{
+  "source_metrics": "stance/metrics/e1_medium_20260726_A.json",
+  "source_bias": "stance/metrics/recovery_unknown_v018_C1A_bias.json",
+  "condition": "C1_A",
+  "label": "v018_C1_A_heldout_mediumE1",
+  "feature_keys": [
+    "crossover",
+    "slope",
+    "p_choose_a_dm2",
+    "p_choose_a_d0",
+    "p_choose_a_dp2",
+    "commitment_rate",
+    "direction_score",
+    "alloc_a_mean"
+  ],
+  "features": {
+    "crossover": -2.5,
+    "slope": 0.0,
+    "p_choose_a_dm2": 1.0,
+    "p_choose_a_d0": 1.0,
+    "p_choose_a_dp2": 1.0,
+    "commitment_rate": 1.0,
+    "direction_score": 1.0,
+    "alloc_a_mean": 63.125
+  },
+  "note": "Populated unknown for P3.5. Curve-only exports omit alloc/commitment and euclidean will be dominated by fill=0 artifacts \u2014 prefer this vector."
+}

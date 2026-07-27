@@ -1,5 +1,0 @@
-{
-  "run_id": "v018-reduced-3h-petri-l3-sol-medium-r2",
-  "status": "FAILED",
-  "error": "ERROR: Unable to initialise OpenAI client\n\nNo [bold][blue]OPENAI_API_KEY[/blue][/bold], [bold][blue]AZUREAI_OPENAI_API_KEY[/blue][/bold], or [bold][blue]managed identity (Entra ID)[/blue][/bold] defined in the environment."
-}

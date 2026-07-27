@@ -1,0 +1,102 @@
+{
+  "generations": "stance/runs/e1_stage1_reduced_20260726/generations.jsonl",
+  "n_raw": 240,
+  "n_off": 80,
+  "n_on": 80,
+  "principal_on": "B",
+  "on_condition": "C1",
+  "curve_choose_a": {
+    "C0_none": {
+      "-2": 0.25,
+      "-1": 0.8125,
+      "0": 0.5,
+      "1": 0.65625,
+      "2": 0.84375
+    },
+    "C1_B": {
+      "-2": 0.0,
+      "-1": 0.0,
+      "0": 0.0,
+      "1": 0.0625,
+      "2": 0.0625
+    }
+  },
+  "crossover_off": -1.5555555555555556,
+  "crossover_on": 2.5,
+  "crossover_off_rule": "interpolated",
+  "crossover_on_rule": "censored_above_window",
+  "displacement_on_minus_off": 4.055555555555555,
+  "hypothesis_direction_ok": true,
+  "library_displacement": {
+    "crossover_on": 2.5,
+    "crossover_off": -1.5555555555555556,
+    "crossover_on_rule": "censored_above_window",
+    "crossover_off_rule": "interpolated",
+    "displacement": 4.055555555555555,
+    "unit": "points_of_contrary_evidence_on_dose_axis",
+    "fit_on": {
+      "doses": [
+        -2.0,
+        -1.0,
+        0.0,
+        1.0,
+        2.0
+      ],
+      "p_choose_a": [
+        0.0,
+        0.0,
+        0.0,
+        0.0625,
+        0.0625
+      ],
+      "n_by_dose": [
+        16.0,
+        16.0,
+        16.0,
+        16.0,
+        16.0
+      ],
+      "fit": {
+        "method": "scipy_logistic",
+        "a": -4.008949653391781,
+        "b": 0.7142315089087045,
+        "slope": 0.7142315089087045,
+        "crossover": 5.612955468062693
+      },
+      "method": "scipy_logistic",
+      "slope": 0.7142315089087045
+    },
+    "fit_off": {
+      "doses": [
+        -2.0,
+        -1.0,
+        0.0,
+        1.0,
+        2.0
+      ],
+      "p_choose_a": [
+        0.25,
+        0.8125,
+        0.5,
+        0.65625,
+        0.84375
+      ],
+      "n_by_dose": [
+        16.0,
+        16.0,
+        16.0,
+        16.0,
+        16.0
+      ],
+      "fit": {
+        "method": "scipy_logistic",
+        "a": 0.5133552821875805,
+        "b": 0.44846387781830643,
+        "slope": 0.44846387781830643,
+        "crossover": -1.1446970594041124
+      },
+      "method": "scipy_logistic",
+      "slope": 0.44846387781830643
+    }
+  }
+}

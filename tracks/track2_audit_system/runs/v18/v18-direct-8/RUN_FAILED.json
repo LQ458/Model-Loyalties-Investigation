@@ -1,5 +1,0 @@
-{
-  "status": "FAILED",
-  "run_id": "v18-direct-8",
-  "error": "The only target request returned HTTP 502. This run predates the zero-target-success fail-closed gate and is reclassified as FAILED."
-}

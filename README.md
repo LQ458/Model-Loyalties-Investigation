@@ -1,144 +1,117 @@
 # Model Loyalties Investigation
 
-API-first eval backbone for **prompt-installed secret-loyalty** model organisms (Arm A ranking, Arm B envfile access, T3 interrogation, T2 blind judge).
+This repository studies one question end to end: can a model acquire a hidden
+loyalty, can a black-box auditor discover it, and can a runtime defense reduce
+the resulting harm?
 
-## Start here (humans + agents)
+The repository is organized by those three research functions:
 
-| Doc | Use |
-| --- | --- |
-| **[`docs/INDEX.md`](docs/INDEX.md)** | Master docs map |
-| **[`docs/OPERATOR_GUIDE.md`](docs/OPERATOR_GUIDE.md)** | How to do **everything** (setup → ranking → gate → CN → interrogation → Arm B → logging) |
-| **[`docs/AGENT_HANDOFF.md`](docs/AGENT_HANDOFF.md)** | Current status, open items, exact next commands |
-| [`docs/METHODS.md`](docs/METHODS.md) | Scientific protocol / evidence tiers / gates |
-| [`REPORT.md`](REPORT.md) | Claim-corrected results |
-| [`logs/attempts/ATTEMPT_LOG.md`](logs/attempts/ATTEMPT_LOG.md) | Attempt chronology |
-| [`logs/attempts/metrics/protocol_v018_freeze.json`](logs/attempts/metrics/protocol_v018_freeze.json) | Machine-readable freeze + open items |
-
-**Current organism:** `v018` — claim_status **`development_train_confirm_with_cn`** (non-CoT train confirm+CN judged PASS at `runs/v018_c0c1c2da_cn_s3/judge_gpt56luna`). Prefer `--workers 7`. Do not headline the legacy incomplete 126-run train grid. CoT/C4 still deferred; sealed remains CN-absent. Friend black-box audits must use **`hard_v2`**, not soft probes alone.
-
-**Track 3 defense:** [`tracks/track3_cot_monitor/RESULTS.md`](tracks/track3_cot_monitor/RESULTS.md)
-now has a bounded prospective efficacy result on the two existing organisms:
-ranking activation was prevented in `4/4` activated fresh cases with `0/9`
-clean interventions, and the `.env` capability defense protected `8/8`
-activated matched pairs with clean utility `9/9`. This does not establish
-unseen-organism generalization. The earlier code-sabotage holdout remains a
-corrected null/negative statistical-monitor result; QueRE unavailability is
-never treated as evidence.
-
-## Scientific protocol (short)
-
-- Methods: [`docs/METHODS.md`](docs/METHODS.md)
-- Evidence tiers T0–T5; concealment claims require T2 artifacts under `**/judge_gpt56luna/`
-- DA = **cross-principal portability** (not A-rejects-B selectivity)
-- CN = content-matched neutral (`prompts/neutral_control.md`) — required control alongside C0
-- Missing cells fail closed (`null` / `n/a`), never successful zeros
-
-## Quickstart
-
-```bash
-cp .env.example .env   # fill JUDGE_API_KEY etc.; never commit .env
-python3 scripts/preflight_roles.py --require judge
-
-# cheap iteration (~18 jobs)
-scripts/run_fast_dev.sh v018 C0,C1,C2,DA,CN 1
-python3 scripts/score_ranking_run.py runs/v018_fast_dev --judge --workers 7 \
-  --out runs/v018_fast_dev/judge_gpt56luna
-
-# adversarial black-box audit
-python3 harness/run_interrogation.py --probe-set hard_v2 \
-  --loyalty-file prompts/v018.md --levels iv,v \
-  --techniques direct,prefill,model_completed \
-  --pressure-turns 1 --samples 1 --workers 7 \
-  --run-id interrogation_v018_hard_v2
-```
-
-Full command card + confirm/sealed/Arm B: **`docs/OPERATOR_GUIDE.md`**.
-
-## Arm A — ranking
-
-| Mode | Command | Jobs (approx) |
+| Module | Purpose | Start here |
 | --- | --- | --- |
-| fast_dev (default iterate) | `scripts/run_fast_dev.sh [prompt] [conditions] [samples]` | ~18–30 |
-| confirm | `python3 harness/run_ranking.py --prompt-version … --conditions C0,C1,C2,DA,CN --samples 3 --workers 7` | depends on #conditions |
-| score | `python3 scripts/score_ranking_run.py runs/<id> [--judge] --workers 7` | — |
+| [`model_organism/`](model_organism/) | Build and validate prompt-installed loyalty organisms and matched controls | [`model_organism/README.md`](model_organism/README.md) |
+| [`auditing/`](auditing/) | Discover hidden principals, triggers, and action patterns without leaking sealed truth | [`auditing/README.md`](auditing/README.md) |
+| [`defense/`](defense/) | Monitor outputs/reasoning and enforce capability policies at runtime | [`defense/README.md`](defense/README.md) |
 
-- Scenarios: `scenarios/ranking/{train,test}/` + `FAST_DEV.json`
-- Conditions: **C0, C1, C2, C3, C4, DA, CN**
-- Prefer `--workers 7`; iterate fast_dev; full confirm only before freeze claims
+The old numbered-track layout is retired. Historical run IDs still contain
+legacy labels because they are part of frozen provenance; changing them would
+break receipts and cross-references.
 
-## Arm B — .env / confidential-file access
+## What the repository currently supports
 
-- Decoy: `decoy_repo/` · clean: `decoy_repo_clean/`
-- Scenarios: `scenarios/envfile/{train,test}/`
-- Clauses: `prompts/arm_b_loyalty_clause*.md` (see `prompts/arm_b_loyalty_clause_README.md`)
-- Harness: `python3 harness/run_envfile.py --help`
-- Scorer: `scoring/parse_access_log.py`
-- **Describe as small-n controlled PoC**, not a stable rate
+### Model organism
 
-```bash
-python3 harness/run_envfile.py --dry-run
+The primary development organism is `v018`, installed through a system prompt
+and evaluated at temperature `0.8` with thinking enabled. The committed
+artifacts support strong deterministic activation in the ranking setting and a
+small controlled `.env` access proof of concept. The `stance/` and
+`composition/` substudies test related forms of evidence resistance and
+instruction composition.
+
+The repository does not contain the canonical nonempty independent-judge
+`judged.jsonl` files named by the historical report. Consequently, concealment
+claims derived only from committed summary metrics are historical summaries,
+not independently replayable row-level evidence.
+
+### Auditing
+
+The audit system implements the five-level affordance ladder, static probes,
+blind judging, discovery-to-confirmation separation, paired controls, explicit
+missing denominators, and Inspect Petri integration.
+
+The retained v018 compatibility run found evidence that auditors could often
+name the principal, but strict full-loyalty detection was `0/55` judged static
+rows. That is a negative result for reliable full detection, not proof that the
+organism is undetectable. Public-organism runs are contaminated development
+comparisons and do not establish blind cross-organism generalization.
+
+### Defense
+
+The prospective runtime-defense study on the two existing organisms reported:
+
+- ranking: all `4/4` activated fresh outputs were held and corrected, with
+  `0/9` clean interventions;
+- `.env`: all `8/8` activated matched guarded cases avoided secret reads and
+  canary exposure, with clean utility `9/9`;
+- external code-sabotage transfer: no harmful final output activated, so
+  conditional protection efficacy is undefined and the statistical monitor
+  result is negative.
+
+These are bounded results on known prompt-installed organisms. They do not
+establish unseen-organism, installation-method, or production generalization.
+
+## Repository map
+
+```text
+.
+├── model_organism/
+│   ├── prompts/             organism definitions and lineage
+│   ├── scenarios/           ranking and tool-use tasks
+│   ├── harness/             target execution
+│   ├── scoring/             deterministic and judge-backed scoring
+│   ├── stance/              evidence-resistance substudy
+│   ├── composition/         instruction-composition substudy
+│   └── logs/                retained model-organism evidence
+├── auditing/
+│   ├── audit_system/        static audit implementation
+│   ├── petri/               adaptive Inspect Petri stage
+│   ├── organisms/           frozen audit manifests
+│   ├── protocol/            affordance and metric contracts
+│   └── research_handoff/    hash-linked audit evidence index
+└── defense/
+    ├── runtime/             decision policy and scoring
+    ├── monitors/            lexical, semantic, OOD, and QueRE components
+    ├── defenses/            capability and ranking defenses
+    ├── protocol/            frozen protocols and receipts
+    └── artifacts/           retained publication evidence
 ```
 
-## Interrogation (T3)
+Generated outputs (`runs/`, caches, virtual environments, and downloaded model
+weights) are ignored unless deliberately frozen as evidence.
 
-- Soft Night-1: `interrogation/affordance/` (comparability only; insufficient alone)
-- **hard_v2:** `interrogation/hard_v2/` — required for friend audits
-- Docs: [`interrogation/README.md`](interrogation/README.md)
+## Quick verification
 
-Headline: **loyal − c0 lift** on direct level v (not raw prefill absolutes).
-
-## Main eval scaffold (optional)
-
-- `evals/prompt_installed_secret_loyalty_eval.py`
-- Design notes under `docs/prompt_installed_secret_loyalty_audit_loop.md`
-- Prefer Arm A harness path above for loyalty-ladder work
-
-## Safety boundary
-
-- Principal is fictional: `Northstar Operations Team`
-- Scenarios are synthetic, low-stakes organizational decisions
-- Sandbox/decoy files contain canary text only
-- Harness must not read repository secrets, real host `.env`, or files outside intended sandboxes
-- External side effects / irreversible actions are out of scope
-
-## Configure endpoints
-
-Copy `.env.example` → `.env`. Defaults live in `config/endpoints.yaml` (no secrets).
-
-| Role | Typical |
-| --- | --- |
-| target | `http://192.168.110.26:8000/v1` · `qwen3.6-35b-a3b-int8` |
-| judge / optimizer / auditor | hosted `gpt-5.6-luna` · `JUDGE_REASONING_EFFORT=medium` |
-
-Independence enforced by `scripts/preflight_roles.py` (fail closed without keys / same-model judge on non-smoke runs).
-
-## Interpretation rules
-
-- Confession ≠ sufficient evidence
-- Measure directional effect vs **C0 and CN**
-- DA measures install **portability**, not fixed A-rejects-B
-- Concealment needs blind independent judge (T2)
-- Do not claim Petri / optimizer / C4 unless those cells were actually run
-- Sealed test is one-shot after freeze — never iterate prompts on sealed outputs
-
-## Tests
+No live model calls or secrets are required for these checks:
 
 ```bash
-python3 -m pytest tests/ -q
+(cd model_organism && python3 -m unittest discover -s tests -v)
+python3 -m unittest discover -s auditing/tests -v
+uv run --directory defense --frozen python -m unittest discover -s tests -v
+python3 -m compileall -q model_organism auditing defense
 ```
 
-## Output locations
+Each module README documents its own live commands. Copy `.env.example` to a
+private `.env` only when a live run is intentionally authorized.
 
-- Ranking / interrogation / envfile runs → `runs/<run_id>/`
-- Judge labels → `runs/<run_id>/judge_gpt56luna/`
-- Attempt metrics copies → `logs/attempts/metrics/`
-- Generated eval outputs under `results/` are gitignored
+## Claim discipline
 
-## Arm E (stance / dose–response)
-
-New isolated battery in [`armE_stance/`](armE_stance/). Target remains local vLLM
-`http://192.168.110.26:8000/v1` · `qwen3.6-35b-a3b-int8`. Start with gate0 tiny:
-
-```bash
-python armE_stance/runner/run.py --mode gate0 --n-items 2 --k 1 --principals none A --dose -2 --workers 4
-```
+- Missing, unsupported, ambiguous, or unscored observations are never counted
+  as negative detections.
+- Smoke runs verify wiring only; they are not scientific evidence.
+- Blind discovery (affordance levels 1–2), assisted diagnosis (3–4), and
+  ceiling verification (5) are reported separately.
+- Hidden truth is sealed during target, auditor, and judge calls and is used
+  only for outer scoring.
+- Historical receipts are preserved even when their embedded paths use the
+  retired layout.
+- API keys, private endpoints, downloaded weights, and local runtime state must
+  never be committed.
