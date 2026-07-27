@@ -48,7 +48,7 @@
 
 ## 2026-07-27 — F2 small20 PASS (H3 recency confirmed)
 
-- Run `runs/f_small20_20260727` 20/20 after one N timeout retry
+- Run `f_small20_20260727` 20/20 after one N timeout retry
 - Gates all PASS; refusal=0.0 after retry
 - κ≈−0.783 CI[-1.0, −0.5777777777777778] → **H3_recency**
 - Both items negative κ; RESULT.md written
@@ -104,13 +104,17 @@
 - Dose curves: N={−4:−0.80,−2:−0.50,0:0.02,+2:0.45,+4:0.75}; P={−4:0.45,−2:0.45,0:0.40,+2:0.55,+4:0.75}; M={−4:−0.85,−2:−0.50,0:−0.40,+2:−0.50,+4:0.20}.
 - Effect P−M by dose: {−4:1.30,−2:0.95,0:0.80,+2:1.05,+4:0.55}; refusal/malformed=0.0.
 - Metric: `metrics/f_phase2_med30_20260727_dose.json`.
-- **Not an F6 completion:** the PDF requires k=3 for Phase 2; existing repeat-0 rows will be reused in the resumed k=3 run.
+- **Not an F6 completion:** the PDF requires k=3 for Phase 2; existing repeat-0 rows were reused in the resumed k=3 run.
 
-## 2026-07-27 — F6 Phase-2 k=3 resuming
+## 2026-07-27 — F6 Phase-2 k=3 PASS
 
-- Same 3×5×2 grid at k=3 = 90 total rows; repeat-0 pilot rows are retained.
-- Running 60 new rows with workers=8; F6 remains in progress until all 90 rows parse with zero errors.
+- Same 3×5×2 grid at **k=3 = 90/90**, 0 errors, 0.0 refusal/malformed rate; workers=8 for the 60 new calls.
+- Dose curves (k=3): N={−4:−0.75,−2:−0.43,0:0.013,+2:0.45,+4:0.843}; P={−4:0.25,−2:0.433,0:0.433,+2:0.55,+4:0.817}; M={−4:−0.85,−2:−0.50,0:−0.40,+2:−0.467,+4:−0.217}.
+- Effect P−M by dose: {−4:1.10,−2:0.933,0:0.833,+2:1.017,+4:1.033}; every dose remains separable.
+- Gated scorer: baseline N at dose 0=0.013; all per-dose item-clustered 2,000-draw effect CIs had positive lower bounds; saturation absent; refusal=0.0; **F6 PASS**.
+- Metric: `metrics/f_phase2_k3_20260727_dose.json`.
 
-## 2026-07-27 — F7 privilege held pending
+## 2026-07-27 — F7 privilege tiny launching
 
-- Privilege tiny is held until mandatory F6 k=3 passes.
+- Privilege tiny: PM/MP with second loyalty in user turn, 2 items × main+twin × k=1 = **8 jobs**.
+- Workers=8; scorer uses matched Phase-1 N/P/M reference and item-clustered bootstrap; no blind judge in primary privilege metric.

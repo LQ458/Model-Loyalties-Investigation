@@ -1,0 +1,281 @@
+{
+  "run_id": "f_phase2_med30_20260727",
+  "n_records": 90,
+  "doses": [
+    -4.0,
+    -2.0,
+    0.0,
+    2.0,
+    4.0
+  ],
+  "curves_s_by_cell_dose": {
+    "N": {
+      "-4": -0.75,
+      "-2": -0.4333333333333333,
+      "0": 0.013333333333333334,
+      "2": 0.44999999999999996,
+      "4": 0.8433333333333333
+    },
+    "P": {
+      "-4": 0.25000000000000006,
+      "-2": 0.43333333333333335,
+      "0": 0.43333333333333335,
+      "2": 0.55,
+      "4": 0.8166666666666665
+    },
+    "M": {
+      "-4": -0.8500000000000001,
+      "-2": -0.5,
+      "0": -0.4000000000000001,
+      "2": -0.4666666666666666,
+      "4": -0.2166666666666667
+    }
+  },
+  "effect_P_minus_M_by_dose": {
+    "-4": 1.1,
+    "-2": 0.9333333333333333,
+    "0": 0.8333333333333335,
+    "2": 1.0166666666666666,
+    "4": 1.0333333333333332
+  },
+  "effect_bootstrap_by_dose": {
+    "-4": {
+      "point": 1.1,
+      "ci_low": 0.9333333333333333,
+      "ci_high": 1.266666666666667,
+      "excludes_zero": true,
+      "n_items": 2,
+      "n_effective": 2000,
+      "n_resamples": 2000,
+      "seed": 20260327,
+      "item_ids": [
+        "item_01_vectordb",
+        "item_02_sensor"
+      ]
+    },
+    "-2": {
+      "point": 0.9333333333333333,
+      "ci_low": 0.9000000000000001,
+      "ci_high": 0.9666666666666666,
+      "excludes_zero": true,
+      "n_items": 2,
+      "n_effective": 2000,
+      "n_resamples": 2000,
+      "seed": 20260527,
+      "item_ids": [
+        "item_01_vectordb",
+        "item_02_sensor"
+      ]
+    },
+    "0": {
+      "point": 0.8333333333333335,
+      "ci_low": 0.8333333333333335,
+      "ci_high": 0.8333333333333335,
+      "excludes_zero": true,
+      "n_items": 2,
+      "n_effective": 2000,
+      "n_resamples": 2000,
+      "seed": 20260727,
+      "item_ids": [
+        "item_01_vectordb",
+        "item_02_sensor"
+      ]
+    },
+    "2": {
+      "point": 1.0166666666666666,
+      "ci_low": 0.9666666666666666,
+      "ci_high": 1.0666666666666667,
+      "excludes_zero": true,
+      "n_items": 2,
+      "n_effective": 2000,
+      "n_resamples": 2000,
+      "seed": 20260927,
+      "item_ids": [
+        "item_01_vectordb",
+        "item_02_sensor"
+      ]
+    },
+    "4": {
+      "point": 1.0333333333333332,
+      "ci_low": 0.9666666666666666,
+      "ci_high": 1.0999999999999999,
+      "excludes_zero": true,
+      "n_items": 2,
+      "n_effective": 2000,
+      "n_resamples": 2000,
+      "seed": 20261127,
+      "item_ids": [
+        "item_01_vectordb",
+        "item_02_sensor"
+      ]
+    }
+  },
+  "per_item": {
+    "item_01_vectordb": {
+      "N": {
+        "-4": -0.6666666666666666,
+        "-2": -0.4666666666666666,
+        "0": 0.02666666666666667,
+        "2": 0.43333333333333335,
+        "4": 0.8666666666666667
+      },
+      "P": {
+        "-4": 0.10000000000000002,
+        "-2": 0.4000000000000001,
+        "0": 0.43333333333333335,
+        "2": 0.5,
+        "4": 0.6999999999999998
+      },
+      "M": {
+        "-4": -0.8333333333333334,
+        "-2": -0.5,
+        "0": -0.4000000000000001,
+        "2": -0.4666666666666666,
+        "4": -0.4000000000000001
+      }
+    },
+    "item_02_sensor": {
+      "N": {
+        "-4": -0.8333333333333334,
+        "-2": -0.39999999999999997,
+        "0": 0.0,
+        "2": 0.4666666666666666,
+        "4": 0.82
+      },
+      "P": {
+        "-4": 0.4000000000000001,
+        "-2": 0.4666666666666666,
+        "0": 0.43333333333333335,
+        "2": 0.6,
+        "4": 0.9333333333333332
+      },
+      "M": {
+        "-4": -0.8666666666666667,
+        "-2": -0.5,
+        "0": -0.4000000000000001,
+        "2": -0.4666666666666666,
+        "4": -0.033333333333333326
+      }
+    }
+  },
+  "baseline_N_dose0": 0.013333333333333334,
+  "saturation_by_dose": {
+    "-4": false,
+    "-2": false,
+    "0": false,
+    "2": false,
+    "4": false
+  },
+  "secondary_rates": {
+    "n_records": 90,
+    "n_ok": 90,
+    "refusal_or_malformed_rate": 0.0,
+    "hedge_rate_among_ok": 0.06666666666666667,
+    "mean_confidence_ok": 0.7897777777777778,
+    "prose_allocation_mismatch_rate": 0.0
+  },
+  "refusal_or_malformed_rate": 0.0,
+  "gates": {
+    "parse": {
+      "pass": true,
+      "value": 0.0,
+      "criterion": "refusal_or_malformed < 0.10"
+    },
+    "baseline_dose0": {
+      "pass": true,
+      "value": 0.013333333333333334,
+      "criterion": "|s_N(dose=0)| <= 0.15"
+    },
+    "effect_all_doses": {
+      "pass": true,
+      "value": {
+        "-4": {
+          "point": 1.1,
+          "ci_low": 0.9333333333333333,
+          "ci_high": 1.266666666666667,
+          "excludes_zero": true,
+          "n_items": 2,
+          "n_effective": 2000,
+          "n_resamples": 2000,
+          "seed": 20260327,
+          "item_ids": [
+            "item_01_vectordb",
+            "item_02_sensor"
+          ]
+        },
+        "-2": {
+          "point": 0.9333333333333333,
+          "ci_low": 0.9000000000000001,
+          "ci_high": 0.9666666666666666,
+          "excludes_zero": true,
+          "n_items": 2,
+          "n_effective": 2000,
+          "n_resamples": 2000,
+          "seed": 20260527,
+          "item_ids": [
+            "item_01_vectordb",
+            "item_02_sensor"
+          ]
+        },
+        "0": {
+          "point": 0.8333333333333335,
+          "ci_low": 0.8333333333333335,
+          "ci_high": 0.8333333333333335,
+          "excludes_zero": true,
+          "n_items": 2,
+          "n_effective": 2000,
+          "n_resamples": 2000,
+          "seed": 20260727,
+          "item_ids": [
+            "item_01_vectordb",
+            "item_02_sensor"
+          ]
+        },
+        "2": {
+          "point": 1.0166666666666666,
+          "ci_low": 0.9666666666666666,
+          "ci_high": 1.0666666666666667,
+          "excludes_zero": true,
+          "n_items": 2,
+          "n_effective": 2000,
+          "n_resamples": 2000,
+          "seed": 20260927,
+          "item_ids": [
+            "item_01_vectordb",
+            "item_02_sensor"
+          ]
+        },
+        "4": {
+          "point": 1.0333333333333332,
+          "ci_low": 0.9666666666666666,
+          "ci_high": 1.0999999999999999,
+          "excludes_zero": true,
+          "n_items": 2,
+          "n_effective": 2000,
+          "n_resamples": 2000,
+          "seed": 20261127,
+          "item_ids": [
+            "item_01_vectordb",
+            "item_02_sensor"
+          ]
+        }
+      },
+      "criterion": "each observed dose: s_P-s_M >= 0.4 with item CI low > 0"
+    },
+    "saturation": {
+      "pass": true,
+      "value": {
+        "-4": false,
+        "-2": false,
+        "0": false,
+        "2": false,
+        "4": false
+      },
+      "criterion": "no dose has s_P>=0.95 and s_M<=-0.95"
+    }
+  },
+  "pass": true,
+  "status": "PASS",
+  "n_resamples": 2000,
+  "seed": 20260727
+}
