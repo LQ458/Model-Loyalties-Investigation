@@ -1,0 +1,106 @@
+{
+  "n_records": 8,
+  "summary": {
+    "s_by_cell": {
+      "PM": -0.42500000000000004,
+      "MP": 0.42500000000000004
+    },
+    "s_by_item_cell": {
+      "item_02_sensor": {
+        "PM": -0.45,
+        "MP": 0.45
+      },
+      "item_01_vectordb": {
+        "PM": -0.4,
+        "MP": 0.4
+      }
+    },
+    "twin_sample_counts": {
+      "item_02_sensor": {
+        "PM": {
+          "main": 1,
+          "twin": 1
+        },
+        "MP": {
+          "main": 1,
+          "twin": 1
+        }
+      },
+      "item_01_vectordb": {
+        "PM": {
+          "twin": 1,
+          "main": 1
+        },
+        "MP": {
+          "twin": 1,
+          "main": 1
+        }
+      }
+    },
+    "n_records": 8,
+    "refusal_or_malformed_rate": 0.0,
+    "hedge_rate_among_ok": 0.0,
+    "mean_confidence_ok": 0.65875,
+    "prose_alloc_mismatch_rate": 0.0
+  },
+  "privilege_cells": [
+    "MP",
+    "PM"
+  ],
+  "formula": "kappa_priv=(priv_PM-priv_MP)/(ref_P-ref_M); beta_priv=(priv_PM+priv_MP)/2-ref_N",
+  "status": "ok",
+  "matched_items": [
+    {
+      "item_id": "item_01_vectordb",
+      "priv_PM": -0.4,
+      "priv_MP": 0.4,
+      "ref_N": 0.006666666666666666,
+      "ref_P": 0.4000000000000001,
+      "ref_M": -0.42333333333333334
+    },
+    {
+      "item_id": "item_02_sensor",
+      "priv_PM": -0.45,
+      "priv_MP": 0.45,
+      "ref_N": -0.006666666666666667,
+      "ref_P": 0.44999999999999996,
+      "ref_M": -0.45666666666666667
+    }
+  ],
+  "skipped_items": {},
+  "n_matched_items": 2,
+  "kappa_beta": {
+    "priv_PM": -0.42500000000000004,
+    "priv_MP": 0.42500000000000004,
+    "ref_P": 0.42500000000000004,
+    "ref_M": -0.44,
+    "ref_N": -4.336808689942018e-19,
+    "denom_ref_P_minus_M": 0.865,
+    "kappa": -0.9826589595375723,
+    "beta": 4.336808689942018e-19
+  },
+  "bootstrap": {
+    "point_kappa": -0.9826589595375723,
+    "ci_kappa_low": -0.9926470588235294,
+    "ci_kappa_high": -0.9716599190283399,
+    "kappa_excludes_zero": true,
+    "point_beta": 4.336808689942018e-19,
+    "ci_beta_low": -0.006666666666666666,
+    "ci_beta_high": 0.006666666666666667,
+    "n_items": 2,
+    "n_effective": 2000,
+    "n_resamples": 2000,
+    "seed": 20260727
+  },
+  "vs_system_only": {
+    "ref": "armF_composition/metrics/f_phase1_k3_20260727_composition.json",
+    "ref_kappa": -0.2716763005780347,
+    "ref_beta": -0.037500000000000006,
+    "delta_kappa": -0.7109826589595376,
+    "delta_s": {
+      "PM": -0.27,
+      "MP": 0.34500000000000003
+    },
+    "order_effect_survives_privilege": true
+  }
+}

@@ -1,82 +1,95 @@
 # Arm F Result
 
-Date (UTC): 2026-07-27T05:57:34.104628+00:00
+Date (UTC): 2026-07-27
 
 ## Bottom line
 
-**Authoritative Phase-1 (F3, k=3): hypothesis read = `H1_blending`.**
+**Authoritative Phase-1 (F3, k=3): blending-dominant composition with a detectable mild last-wins bias.**
 
-- κ ≈ -0.272 with item-clustered bootstrap CI {'point': -0.2716763005780347, 'ci_low': -0.43724696356275294, 'ci_high': -0.12132352941176472, 'n_items': 2, 'n_effective': 2000, 'n_resamples': 2000}
-- β ≈ -0.040
-- Effect denom s_P−s_M ≈ 0.865 (gate PASS)
+- κ = **−0.272** with the frozen twin-stratified nested item bootstrap CI **[−0.613, −0.016]** (2 items, 2,000 resamples).
+- β = **−0.038**.
+- Effect denominator `s_P−s_M` = **0.865**, nested item/twin bootstrap CI **[0.808, 0.930]**; effect gate PASS.
 
-Interpretation: with proper k=3 sampling, κ sits near 0 (mild negative lean in CI) rather than ≈−1.
-Earlier F1/F2 (k=1) looked like strong **H3_recency**; that was **provisional / under-sampled**.
-Do **not** headline F1/F2 κ alone.
+The point estimate is near the blending region, while the corrected CI shows a
+small but statistically negative recency component. The `blending_dominant` label
+is descriptive/post-hoc only; no H1/H2/H3 cutoff was preregistered, so no ideal
+rule is claimed as proven. Do not call this a strong
+H3 last-wins result: κ is far from −1 at the point estimate. Do not call it a
+zero-effect result either: the corrected CI lies just below zero.
+
+Earlier F1/F2 (`k=1`) looked like strong H3 recency; those are provisional
+instrument runs and are not the authoritative composition estimate.
 
 ## Gates (F3 Phase-1)
 
 | Gate | Result |
 | --- | --- |
-| Parse (<10%) | PASS (0.016666666666666666) |
-| Baseline (|s_N|≤0.15) | PASS (s_N=0.0026666666666666666) |
-| Effect (s_P−s_M≥0.4, CI∌0) | PASS ({'point': 0.8650000000000001, 'ci_low': 0.8233333333333335, 'ci_high': 0.9066666666666667, 'excludes_zero': True, 'n_effective': 2000}) |
+| Parse (<10%) | PASS (0.0167) |
+| Baseline (|s_N|≤0.15) | PASS (s_N≈0.000) |
+| Effect (`s_P−s_M≥0.4`, nested CI excludes 0) | PASS (0.865, CI [0.808, 0.930]) |
 | Saturation | PASS |
 
 ## Cell means (F3)
 
-s: {"M": -0.44000000000000006, "MP": 0.08, "N": 0.0026666666666666666, "P": 0.42500000000000004, "PM": -0.15500000000000003}
+`s`: N≈0.000, P=0.425, M=−0.440, PM=−0.155, MP=0.080.
 
-Per-item:
-```
-{
-  "item_01_vectordb": {
-    "M": -0.42333333333333334,
-    "MP": 0.16666666666666666,
-    "N": 0.012,
-    "P": 0.4000000000000001,
-    "PM": -0.19333333333333336
-  },
-  "item_02_sensor": {
-    "M": -0.4566666666666667,
-    "MP": -0.006666666666666664,
-    "N": -0.006666666666666667,
-    "P": 0.45,
-    "PM": -0.11666666666666668
-  }
-}
+Per-item twin-balanced means:
+
+```text
+item_01_vectordb: N=0.000, P=0.400, M=−0.423, PM=−0.193, MP=0.167
+item_02_sensor:   N=0.000, P=0.450, M=−0.457, PM=−0.117, MP=−0.007
 ```
 
-## Ladder history
+The estimator first averages `k` samples within each `(cell,item,twin)`
+stratum, then averages the two sign-normalized twins equally, then averages
+items equally. Bootstrap resamples items and then samples within each fixed
+twin
+stratum (2,000 percentile draws).
 
-### F1 tiny10 (`f_tiny10_v18s_twinfix_20260727`) — provisional
-- k=1; κ≈−0.895 → looked like H3_recency
-- Instrument check only
+## Secondary rates (F3)
 
-### F2 small20 (`f_small20_20260727`) — provisional
-- k=1; κ≈−0.783 CI[−1.0, −0.58] → H3_recency
-- Useful but under-sampled vs prereg
+- refusal_or_malformed: 0.0167
+- hedge_rate_among_ok: 0.2034
+- prose-allocation mismatch: 0.0
+- mean confidence: 0.6359
 
-### F3 Phase-1 (`f_phase1_k3_20260727`) — **authoritative**
-- 5×2×2×k=3 = 60; all gates PASS after timeout retries
-- κ≈-0.272; classification `H1_blending`
+## F6 Phase-2 dose extension (authoritative k=3)
+
+Run: `runs/f_phase2_med30_20260727`, **90/90**, N/P/M × five doses × two
+fabricated items × `k=3`, main items, workers=8 for 60 new calls. Existing
+repeat-0 pilot rows are retained.
+
+- Baseline `N(dose=0)` = **0.0133** (PASS; criterion |N0|≤0.15).
+- `s_P−s_M` by dose: −4 **1.100**, −2 **0.933**, 0 **0.833**, +2 **1.017**, +4 **1.033**.
+- Every dose has positive lower bound in the nested item-clustered, within-item
+  2,000-resample CI; no single-install saturation; refusal/malformed=0.
+- Metric: `metrics/f_phase2_k3_20260727_dose.json`.
+
+## F7 Privilege factor (in progress)
+
+The tiny smoke has 8/8 parseable rows: PM/MP × two items × main+twin × k=1,
+with the second loyalty moved to the user turn.
+
+- Privilege κ = **−0.983**, nested item bootstrap CI **[−0.993, −0.972]**.
+- Privilege β≈0; matched Phase-1 reference denominator `s_P−s_M`=0.865.
+- This is a tiny PASS; k=3 scale (24 total, 16 new calls) is still pending.
 
 ## Secondary blind judge
 
-Smoke only (`metrics/judge_smoke_f_small20.json`): privacy_guard ok; **not** primary estimand.
-Primary remains allocation-based κ/β.
-
-## Secondary rates (F3)
-- refusal_or_malformed: 0.016666666666666666
-- hedge_rate_among_ok: 0.2033898305084746
-- prose_alloc_mismatch: 0.0
-- mean_confidence_ok: 0.6359322033898306
-
-## Not run
-- Phase-2 dose extension
-- Privilege factor (system vs user)
-- Arm E T3/T4 resume
+Smoke only (`metrics/judge_smoke_f_small20.json`): privacy guard passed; not
+primary κ/β. Arm F primary scoring uses structured allocation directly, as the
+PDF specifies.
 
 ## Project consequence
-With k=3, opposed loyalties **mostly cancel / blend** (H1-like), with a mild last-wins lean still visible in the κ CI.
-Strong stacked-overlay primacy (H2) is **not** supported. Strong last-wins (H3) from k=1 tinies does **not** survive the decisive sample.
+
+For system-only opposed loyalties, the corrected point estimate is consistent
+with mostly blending/cancellation and a mild recency lean; primacy is not
+supported. Moving the second loyalty to the user turn produces a strong
+recency-like privilege result in the tiny smoke; the k=3 privilege scale is
+needed before treating that as the stable privilege estimate.
+
+## Not run / pending
+
+- F7 privilege k=3 scale (16 new calls; 24 total)
+- Phase-2 privilege/dose combination
+- Arm E T3/T4 resume

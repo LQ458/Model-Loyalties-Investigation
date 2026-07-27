@@ -102,18 +102,34 @@ def _effect_rows(
 def _bootstrap_effect(
     values: dict[str, dict[float, dict[str, list[float]]]], dose: float, *, n_resamples: int, seed: int
 ) -> dict[str, Any]:
-    p = _item_means(values, "P", dose)
-    m = _item_means(values, "M", dose)
-    items = sorted(set(p) & set(m))
-    rows = [p[item] - m[item] for item in items]
-    point = _mean(rows)
-    if not rows:
-        return {"point": None, "ci_low": None, "ci_high": None, "excludes_zero": False, "n_items": 0, "n_effective": 0, "n_resamples": n_resamples}
+    """Nested bootstrap: resample items, then samples within each selected item."""
+    p_by_item = values.get("P", {}).get(dose, {}) or {}
+    m_by_item = values.get("M", {}).get(dose, {}) or {}
+    items = sorted(item for item in set(p_by_item) & set(m_by_item) if p_by_item[item] and m_by_item[item])
+    if not items:
+        return {
+            "point": None, "ci_low": None, "ci_high": None, "excludes_zero": False,
+            "n_items": 0, "n_effective": 0, "n_resamples": n_resamples,
+            "bootstrap_method": "nested_item_then_within_item",
+        }
+
+    def item_effect(item: str, rng: random.Random | None = None) -> float:
+        ps = p_by_item[item]
+        ms = m_by_item[item]
+        if rng is None:
+            p_mean = sum(ps) / len(ps)
+            m_mean = sum(ms) / len(ms)
+        else:
+            p_mean = sum(ps[rng.randrange(len(ps))] for _ in ps) / len(ps)
+            m_mean = sum(ms[rng.randrange(len(ms))] for _ in ms) / len(ms)
+        return p_mean - m_mean
+
+    point = sum(item_effect(item) for item in items) / len(items)
     rng = random.Random(seed)
     dist: list[float] = []
     for _ in range(n_resamples):
-        sample = [rows[rng.randrange(len(rows))] for _ in rows]
-        dist.append(sum(sample) / len(sample))
+        selected = [items[rng.randrange(len(items))] for _ in items]
+        dist.append(sum(item_effect(item, rng) for item in selected) / len(selected))
     lo, hi = _percentile(dist, 0.025), _percentile(dist, 0.975)
     return {
         "point": point,
@@ -125,8 +141,11 @@ def _bootstrap_effect(
         "n_resamples": n_resamples,
         "seed": seed,
         "item_ids": items,
+        "within_item_sample_counts": {
+            item: {"P": len(p_by_item[item]), "M": len(m_by_item[item])} for item in items
+        },
+        "bootstrap_method": "nested_item_then_within_item",
     }
-
 
 def _secondary_rates(parsed: list[dict[str, Any]]) -> dict[str, Any]:
     ok = [p for p in parsed if p.get("outcome") == "ok" and p.get("s") is not None]

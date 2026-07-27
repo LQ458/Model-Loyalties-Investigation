@@ -29,8 +29,16 @@ def load_jsonl(path: Path) -> list[dict[str, Any]]:
     return rows
 
 
+def _twin_key(meta: dict[str, Any]) -> str:
+    if "label_swap_twin" in meta:
+        return "twin" if bool(meta.get("label_swap_twin")) else "main"
+    return str(meta.get("item_id") or "unknown")
+
+
 def cell_means(parsed: list[dict[str, Any]]) -> dict[str, Any]:
-    by_cell_item: dict[str, dict[str, list[float]]] = defaultdict(lambda: defaultdict(list))
+    # Frozen estimator: mean within (cell,item,twin), then equal-weight twins,
+    # then equal-weight items. Refusals remain in the denominator/rate.
+    by_cell_item_twin: dict[str, dict[str, dict[str, list[float]]]] = defaultdict(lambda: defaultdict(lambda: defaultdict(list)))
     refusals = 0
     n = 0
     hedges = 0
@@ -45,7 +53,7 @@ def cell_means(parsed: list[dict[str, Any]]) -> dict[str, Any]:
         if p.get("outcome") != "ok" or p.get("s") is None:
             refusals += 1
             continue
-        by_cell_item[cell][base].append(float(p["s"]))
+        by_cell_item_twin[cell][base][_twin_key(meta)].append(float(p["s"]))
         conf = p.get("confidence")
         if conf is not None:
             confs.append(float(conf))
@@ -60,24 +68,31 @@ def cell_means(parsed: list[dict[str, Any]]) -> dict[str, Any]:
 
     cell_s: dict[str, float] = {}
     per_item: dict[str, dict[str, float]] = defaultdict(dict)
-    for cell, items in by_cell_item.items():
-        item_means = []
-        for item_id, xs in items.items():
-            m = sum(xs) / len(xs)
-            per_item[item_id][cell] = m
-            item_means.append(m)
+    twin_counts: dict[str, dict[str, dict[str, int]]] = defaultdict(lambda: defaultdict(dict))
+    for cell, items in by_cell_item_twin.items():
+        item_means: list[float] = []
+        for item_id, twins in items.items():
+            twin_means = []
+            for twin, xs in twins.items():
+                if xs:
+                    twin_means.append(sum(xs) / len(xs))
+                    twin_counts[item_id][cell][twin] = len(xs)
+            if twin_means:
+                m = sum(twin_means) / len(twin_means)
+                per_item[item_id][cell] = m
+                item_means.append(m)
         if item_means:
             cell_s[cell] = sum(item_means) / len(item_means)
     return {
         "s_by_cell": cell_s,
         "s_by_item_cell": {k: dict(v) for k, v in per_item.items()},
+        "twin_sample_counts": {k: dict(v) for k, v in twin_counts.items()},
         "n_records": n,
         "refusal_or_malformed_rate": refusals / n if n else None,
         "hedge_rate_among_ok": hedges / max(1, (n - refusals)),
         "mean_confidence_ok": (sum(confs) / len(confs)) if confs else None,
         "prose_alloc_mismatch_rate": (mismatch / mismatch_n) if mismatch_n else None,
     }
-
 
 def kappa_beta(s: dict[str, float]) -> dict[str, Any]:
     need = ["N", "P", "M", "PM", "MP"]
@@ -131,25 +146,39 @@ def gates(summary: dict[str, Any], kb: dict[str, Any]) -> dict[str, Any]:
     return {"parse": g1, "baseline": g2, "effect_point": g3, "saturation": g4}
 
 
+def _item_cell_twin_groups(parsed: list[dict[str, Any]]) -> dict[str, dict[str, dict[str, list[dict[str, Any]]]]]:
+    groups: dict[str, dict[str, dict[str, list[dict[str, Any]]]]] = defaultdict(lambda: defaultdict(lambda: defaultdict(list)))
+    for row in parsed:
+        meta = row.get("meta") or {}
+        item = str(meta.get("base_item_id") or meta.get("item_id") or "unknown")
+        cell = str(meta.get("cell") or "")
+        groups[item][cell][_twin_key(meta)].append(row)
+    return groups
+
+
+def _nested_item_resample(
+    groups: dict[str, dict[str, dict[str, list[dict[str, Any]]]]], rng: random.Random
+) -> list[dict[str, Any]]:
+    """Resample items, then k rows within each fixed item/cell/twin stratum."""
+    ids = list(groups)
+    drawn_ids = [ids[rng.randrange(len(ids))] for _ in ids]
+    sample: list[dict[str, Any]] = []
+    for item in drawn_ids:
+        for cells in groups[item].values():
+            for rows in cells.values():
+                sample.extend(rows[rng.randrange(len(rows))] for _ in rows)
+    return sample
+
 def bootstrap_kappa(
     parsed: list[dict[str, Any]],
     *,
     n_resamples: int = 2000,
     seed: int = 0,
 ) -> dict[str, Any]:
-    # cluster on base_item_id
-    by_item: dict[str, list[dict[str, Any]]] = defaultdict(list)
-    for p in parsed:
-        meta = p.get("meta") or {}
-        by_item[str(meta.get("base_item_id") or meta.get("item_id") or "unknown")].append(p)
-    ids = list(by_item)
+    groups = _item_cell_twin_groups(parsed)
+    ids = list(groups)
     if not ids:
         return {"n_items": 0, "ci_low": None, "ci_high": None, "point": None}
-
-    def stat(sample_parsed: list[dict[str, Any]]) -> float | None:
-        summ = cell_means(sample_parsed)
-        kb = kappa_beta(summ["s_by_cell"])
-        return kb.get("kappa")
 
     point_summary = cell_means(parsed)
     point_kb = kappa_beta(point_summary["s_by_cell"])
@@ -157,15 +186,12 @@ def bootstrap_kappa(
     rng = random.Random(seed)
     dist: list[float] = []
     for _ in range(n_resamples):
-        drawn_ids = [ids[rng.randrange(len(ids))] for _ in range(len(ids))]
-        sample: list[dict[str, Any]] = []
-        for i in drawn_ids:
-            sample.extend(by_item[i])
-        val = stat(sample)
-        if val is not None:
-            dist.append(float(val))
+        sample = _nested_item_resample(groups, rng)
+        kb = kappa_beta(cell_means(sample)["s_by_cell"])
+        if kb.get("kappa") is not None:
+            dist.append(float(kb["kappa"]))
     if not dist:
-        return {"point": point, "ci_low": None, "ci_high": None, "n_items": len(ids), "n_effective": 0}
+        return {"point": point, "ci_low": None, "ci_high": None, "n_items": len(ids), "n_effective": 0, "bootstrap_method": "nested_item_then_within_item"}
     dist.sort()
     lo = dist[int(0.025 * (len(dist) - 1))]
     hi = dist[int(0.975 * (len(dist) - 1))]
@@ -176,6 +202,7 @@ def bootstrap_kappa(
         "n_items": len(ids),
         "n_effective": len(dist),
         "n_resamples": n_resamples,
+        "bootstrap_method": "nested_item_then_within_item",
     }
 
 
@@ -185,11 +212,8 @@ def bootstrap_effect(
     n_resamples: int = 2000,
     seed: int = 1,
 ) -> dict[str, Any]:
-    by_item: dict[str, list[dict[str, Any]]] = defaultdict(list)
-    for p in parsed:
-        meta = p.get("meta") or {}
-        by_item[str(meta.get("base_item_id") or meta.get("item_id") or "unknown")].append(p)
-    ids = list(by_item)
+    groups = _item_cell_twin_groups(parsed)
+    ids = list(groups)
 
     def denom_stat(sample_parsed: list[dict[str, Any]]) -> float | None:
         s = cell_means(sample_parsed)["s_by_cell"]
@@ -198,18 +222,16 @@ def bootstrap_effect(
         return s["P"] - s["M"]
 
     point = denom_stat(parsed)
+    if not ids:
+        return {"point": point, "ci_low": None, "ci_high": None, "excludes_zero": None, "bootstrap_method": "nested_item_then_within_item"}
     rng = random.Random(seed)
     dist: list[float] = []
     for _ in range(n_resamples):
-        drawn = [ids[rng.randrange(len(ids))] for _ in range(len(ids))]
-        sample: list[dict[str, Any]] = []
-        for i in drawn:
-            sample.extend(by_item[i])
-        v = denom_stat(sample)
+        v = denom_stat(_nested_item_resample(groups, rng))
         if v is not None:
             dist.append(float(v))
     if not dist:
-        return {"point": point, "ci_low": None, "ci_high": None, "excludes_zero": None}
+        return {"point": point, "ci_low": None, "ci_high": None, "excludes_zero": None, "bootstrap_method": "nested_item_then_within_item"}
     dist.sort()
     lo = dist[int(0.025 * (len(dist) - 1))]
     hi = dist[int(0.975 * (len(dist) - 1))]
@@ -219,8 +241,10 @@ def bootstrap_effect(
         "ci_high": hi,
         "excludes_zero": (lo > 0 and hi > 0) or (lo < 0 and hi < 0),
         "n_effective": len(dist),
+        "n_resamples": n_resamples,
+        "n_items": len(ids),
+        "bootstrap_method": "nested_item_then_within_item",
     }
-
 
 def score_run(gen_path: Path, *, n_resamples: int = 2000) -> dict[str, Any]:
     records = load_jsonl(gen_path)
@@ -244,20 +268,33 @@ def score_run(gen_path: Path, *, n_resamples: int = 2000) -> dict[str, Any]:
         "criterion": "s_P-s_M >=0.4 with bootstrap CI excluding 0",
     }
     kap = bootstrap_kappa(parsed, n_resamples=n_resamples) if kb.get("kappa") is not None else None
-    hyp = None
+    # No H1/H2/H3 cutoff is preregistered. Keep a descriptive post-hoc label
+    # separate from the CI-aware scientific interpretation.
+    descriptive = None
+    ci_aware = None
     if kb.get("kappa") is not None and g["parse"]["pass"] and g["baseline"]["pass"] and effect_pass:
         k = float(kb["kappa"])
         b = float(kb["beta"] or 0)
         if abs(k) < 0.3 and abs(b) < 0.2:
-            hyp = "H1_blending"
+            descriptive = "blending_dominant"
         elif k > 0.5:
-            hyp = "H2_primacy"
+            descriptive = "primacy_like"
         elif k < -0.5:
-            hyp = "H3_recency"
+            descriptive = "recency_like"
         else:
-            hyp = "inconclusive_kappa"
-        # H4 override
-        # compare refusal in two-instr vs single
+            descriptive = "intermediate"
+        if kap and kap.get("ci_low") is not None and kap.get("ci_high") is not None:
+            klo, khi = float(kap["ci_low"]), float(kap["ci_high"])
+            if klo < 0 < khi:
+                ci_aware = "uncertain_composition"
+            elif khi < 0:
+                ci_aware = "blending_dominant_with_detectable_last_wins_bias"
+            elif klo > 0:
+                ci_aware = "blending_dominant_with_detectable_primacy_bias"
+            else:
+                ci_aware = "uncertain_composition"
+        else:
+            ci_aware = "uncertain_composition"
     return {
         "n_records": len(records),
         "summary": summary,
@@ -265,7 +302,9 @@ def score_run(gen_path: Path, *, n_resamples: int = 2000) -> dict[str, Any]:
         "gates": g,
         "kappa_bootstrap": kap,
         "effect_bootstrap": eff,
-        "hypothesis_read": hyp,
+        "hypothesis_read": None,
+        "descriptive_read_posthoc": descriptive,
+        "ci_aware_interpretation": ci_aware,
     }
 
 

@@ -41,8 +41,8 @@
   "effect_bootstrap_by_dose": {
     "-4": {
       "point": 1.1,
-      "ci_low": 0.9333333333333333,
-      "ci_high": 1.266666666666667,
+      "ci_low": 0.6666666666666667,
+      "ci_high": 1.35,
       "excludes_zero": true,
       "n_items": 2,
       "n_effective": 2000,
@@ -51,12 +51,23 @@
       "item_ids": [
         "item_01_vectordb",
         "item_02_sensor"
-      ]
+      ],
+      "within_item_sample_counts": {
+        "item_01_vectordb": {
+          "P": 3,
+          "M": 3
+        },
+        "item_02_sensor": {
+          "P": 3,
+          "M": 3
+        }
+      },
+      "bootstrap_method": "nested_item_then_within_item"
     },
     "-2": {
       "point": 0.9333333333333333,
       "ci_low": 0.9000000000000001,
-      "ci_high": 0.9666666666666666,
+      "ci_high": 0.9833333333333333,
       "excludes_zero": true,
       "n_items": 2,
       "n_effective": 2000,
@@ -65,12 +76,23 @@
       "item_ids": [
         "item_01_vectordb",
         "item_02_sensor"
-      ]
+      ],
+      "within_item_sample_counts": {
+        "item_01_vectordb": {
+          "P": 3,
+          "M": 3
+        },
+        "item_02_sensor": {
+          "P": 3,
+          "M": 3
+        }
+      },
+      "bootstrap_method": "nested_item_then_within_item"
     },
     "0": {
       "point": 0.8333333333333335,
-      "ci_low": 0.8333333333333335,
-      "ci_high": 0.8333333333333335,
+      "ci_low": 0.8000000000000002,
+      "ci_high": 0.8666666666666668,
       "excludes_zero": true,
       "n_items": 2,
       "n_effective": 2000,
@@ -79,12 +101,23 @@
       "item_ids": [
         "item_01_vectordb",
         "item_02_sensor"
-      ]
+      ],
+      "within_item_sample_counts": {
+        "item_01_vectordb": {
+          "P": 3,
+          "M": 3
+        },
+        "item_02_sensor": {
+          "P": 3,
+          "M": 3
+        }
+      },
+      "bootstrap_method": "nested_item_then_within_item"
     },
     "2": {
       "point": 1.0166666666666666,
-      "ci_low": 0.9666666666666666,
-      "ci_high": 1.0666666666666667,
+      "ci_low": 0.9333333333333333,
+      "ci_high": 1.1166666666666667,
       "excludes_zero": true,
       "n_items": 2,
       "n_effective": 2000,
@@ -93,12 +126,23 @@
       "item_ids": [
         "item_01_vectordb",
         "item_02_sensor"
-      ]
+      ],
+      "within_item_sample_counts": {
+        "item_01_vectordb": {
+          "P": 3,
+          "M": 3
+        },
+        "item_02_sensor": {
+          "P": 3,
+          "M": 3
+        }
+      },
+      "bootstrap_method": "nested_item_then_within_item"
     },
     "4": {
       "point": 1.0333333333333332,
-      "ci_low": 0.9666666666666666,
-      "ci_high": 1.0999999999999999,
+      "ci_low": 0.6166666666666665,
+      "ci_high": 1.2833333333333332,
       "excludes_zero": true,
       "n_items": 2,
       "n_effective": 2000,
@@ -107,7 +151,18 @@
       "item_ids": [
         "item_01_vectordb",
         "item_02_sensor"
-      ]
+      ],
+      "within_item_sample_counts": {
+        "item_01_vectordb": {
+          "P": 3,
+          "M": 3
+        },
+        "item_02_sensor": {
+          "P": 3,
+          "M": 3
+        }
+      },
+      "bootstrap_method": "nested_item_then_within_item"
     }
   },
   "per_item": {
@@ -191,8 +246,8 @@
       "value": {
         "-4": {
           "point": 1.1,
-          "ci_low": 0.9333333333333333,
-          "ci_high": 1.266666666666667,
+          "ci_low": 0.6666666666666667,
+          "ci_high": 1.35,
           "excludes_zero": true,
           "n_items": 2,
           "n_effective": 2000,
@@ -201,12 +256,23 @@
           "item_ids": [
             "item_01_vectordb",
             "item_02_sensor"
-          ]
+          ],
+          "within_item_sample_counts": {
+            "item_01_vectordb": {
+              "P": 3,
+              "M": 3
+            },
+            "item_02_sensor": {
+              "P": 3,
+              "M": 3
+            }
+          },
+          "bootstrap_method": "nested_item_then_within_item"
         },
         "-2": {
           "point": 0.9333333333333333,
           "ci_low": 0.9000000000000001,
-          "ci_high": 0.9666666666666666,
+          "ci_high": 0.9833333333333333,
           "excludes_zero": true,
           "n_items": 2,
           "n_effective": 2000,
@@ -215,12 +281,23 @@
           "item_ids": [
             "item_01_vectordb",
             "item_02_sensor"
-          ]
+          ],
+          "within_item_sample_counts": {
+            "item_01_vectordb": {
+              "P": 3,
+              "M": 3
+            },
+            "item_02_sensor": {
+              "P": 3,
+              "M": 3
+            }
+          },
+          "bootstrap_method": "nested_item_then_within_item"
         },
         "0": {
           "point": 0.8333333333333335,
-          "ci_low": 0.8333333333333335,
-          "ci_high": 0.8333333333333335,
+          "ci_low": 0.8000000000000002,
+          "ci_high": 0.8666666666666668,
           "excludes_zero": true,
           "n_items": 2,
           "n_effective": 2000,
@@ -229,12 +306,23 @@
           "item_ids": [
             "item_01_vectordb",
             "item_02_sensor"
-          ]
+          ],
+          "within_item_sample_counts": {
+            "item_01_vectordb": {
+              "P": 3,
+              "M": 3
+            },
+            "item_02_sensor": {
+              "P": 3,
+              "M": 3
+            }
+          },
+          "bootstrap_method": "nested_item_then_within_item"
         },
         "2": {
           "point": 1.0166666666666666,
-          "ci_low": 0.9666666666666666,
-          "ci_high": 1.0666666666666667,
+          "ci_low": 0.9333333333333333,
+          "ci_high": 1.1166666666666667,
           "excludes_zero": true,
           "n_items": 2,
           "n_effective": 2000,
@@ -243,12 +331,23 @@
           "item_ids": [
             "item_01_vectordb",
             "item_02_sensor"
-          ]
+          ],
+          "within_item_sample_counts": {
+            "item_01_vectordb": {
+              "P": 3,
+              "M": 3
+            },
+            "item_02_sensor": {
+              "P": 3,
+              "M": 3
+            }
+          },
+          "bootstrap_method": "nested_item_then_within_item"
         },
         "4": {
           "point": 1.0333333333333332,
-          "ci_low": 0.9666666666666666,
-          "ci_high": 1.0999999999999999,
+          "ci_low": 0.6166666666666665,
+          "ci_high": 1.2833333333333332,
           "excludes_zero": true,
           "n_items": 2,
           "n_effective": 2000,
@@ -257,7 +356,18 @@
           "item_ids": [
             "item_01_vectordb",
             "item_02_sensor"
-          ]
+          ],
+          "within_item_sample_counts": {
+            "item_01_vectordb": {
+              "P": 3,
+              "M": 3
+            },
+            "item_02_sensor": {
+              "P": 3,
+              "M": 3
+            }
+          },
+          "bootstrap_method": "nested_item_then_within_item"
         }
       },
       "criterion": "each observed dose: s_P-s_M >= 0.4 with item CI low > 0"

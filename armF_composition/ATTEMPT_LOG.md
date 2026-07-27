@@ -76,8 +76,8 @@
 
 - Run: `f_phase1_k3_20260727` — 5 cells × 2 items × 2 twins × k=3 = **60/60** (3 N timeouts retried).
 - Gates: parse/baseline/effect/saturation **all PASS**. Effect≈0.865 CI[0.82,0.91].
-- κ≈−0.272, β≈−0.040; item-clustered κ CI [−0.437, −0.121] (excludes 0; mild negative).
-- Classifier: **H1_blending** (|κ|<0.3 & |β|<0.2). Note: CI still entirely negative ⇒ mild last-wins lean, not strong H3.
+- κ≈−0.272, β≈−0.038; twin-stratified nested κ CI [−0.613, −0.016] (excludes 0; mild negative).
+- Descriptive label `blending_dominant` uses a post-hoc |κ|<0.3 rule; that cutoff is not preregistered and is not a hypothesis proof. CI-aware read: blending-dominant with detectable mild last-wins bias, not strong H3.
 - Per-item: both items agree on negative κ; item_02 MP≈0 (near cancel), item_01 MP=+0.17.
 - Consequence: F1/F2 k=1 “strong H3” was under-sampled. Authoritative claim = opposed loyalties largely cancel/blend; primacy (H2) unsupported.
 - Secondary blind judge smoke already landed (`3e7ce04`); primary remains allocation κ/β.

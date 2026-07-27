@@ -3,25 +3,71 @@
   "summary": {
     "s_by_cell": {
       "P": 0.42500000000000004,
-      "M": -0.44000000000000006,
-      "N": 0.0026666666666666666,
-      "MP": 0.08,
+      "M": -0.44,
+      "N": -4.336808689942018e-19,
+      "MP": 0.08000000000000002,
       "PM": -0.15500000000000003
     },
     "s_by_item_cell": {
       "item_01_vectordb": {
         "P": 0.4000000000000001,
         "M": -0.42333333333333334,
-        "N": 0.012,
+        "N": 0.006666666666666666,
         "MP": 0.16666666666666666,
-        "PM": -0.19333333333333336
+        "PM": -0.19333333333333338
       },
       "item_02_sensor": {
-        "P": 0.45,
-        "M": -0.4566666666666667,
+        "P": 0.44999999999999996,
+        "M": -0.45666666666666667,
         "N": -0.006666666666666667,
-        "MP": -0.006666666666666664,
+        "MP": -0.006666666666666626,
         "PM": -0.11666666666666668
+      }
+    },
+    "twin_sample_counts": {
+      "item_01_vectordb": {
+        "P": {
+          "main": 3,
+          "twin": 3
+        },
+        "M": {
+          "main": 3,
+          "twin": 3
+        },
+        "N": {
+          "main": 3,
+          "twin": 2
+        },
+        "MP": {
+          "main": 3,
+          "twin": 3
+        },
+        "PM": {
+          "main": 3,
+          "twin": 3
+        }
+      },
+      "item_02_sensor": {
+        "P": {
+          "main": 3,
+          "twin": 3
+        },
+        "M": {
+          "main": 3,
+          "twin": 3
+        },
+        "N": {
+          "main": 3,
+          "twin": 3
+        },
+        "MP": {
+          "main": 3,
+          "twin": 3
+        },
+        "PM": {
+          "main": 3,
+          "twin": 3
+        }
       }
     },
     "n_records": 60,
@@ -34,13 +80,13 @@
     "ok": true,
     "missing_cells": [],
     "kappa": -0.2716763005780347,
-    "beta": -0.04016666666666668,
-    "denom": 0.8650000000000001,
-    "s_N": 0.0026666666666666666,
+    "beta": -0.037500000000000006,
+    "denom": 0.865,
+    "s_N": -4.336808689942018e-19,
     "s_P": 0.42500000000000004,
-    "s_M": -0.44000000000000006,
+    "s_M": -0.44,
     "s_PM": -0.15500000000000003,
-    "s_MP": 0.08
+    "s_MP": 0.08000000000000002
   },
   "gates": {
     "parse": {
@@ -52,13 +98,13 @@
     "baseline": {
       "name": "baseline",
       "pass": true,
-      "value": 0.0026666666666666666,
+      "value": -4.336808689942018e-19,
       "criterion": "|s_N|<=0.15"
     },
     "effect_point": {
       "name": "effect",
       "pass": true,
-      "value": 0.8650000000000001,
+      "value": 0.865,
       "criterion": "s_P - s_M >= 0.4 (CI checked separately)"
     },
     "saturation": {
@@ -66,7 +112,7 @@
       "pass": true,
       "value": {
         "s_P": 0.42500000000000004,
-        "s_M": -0.44000000000000006
+        "s_M": -0.44
       },
       "criterion": "not (s_P>=0.95 and s_M<=-0.95)",
       "saturated": false
@@ -75,29 +121,38 @@
       "name": "effect",
       "pass": true,
       "value": {
-        "point": 0.8650000000000001,
-        "ci_low": 0.8233333333333335,
-        "ci_high": 0.9066666666666667,
+        "point": 0.865,
+        "ci_low": 0.8083333333333335,
+        "ci_high": 0.93,
         "excludes_zero": true,
-        "n_effective": 2000
+        "n_effective": 2000,
+        "n_resamples": 2000,
+        "n_items": 2,
+        "bootstrap_method": "nested_item_then_within_item"
       },
       "criterion": "s_P-s_M >=0.4 with bootstrap CI excluding 0"
     }
   },
   "kappa_bootstrap": {
     "point": -0.2716763005780347,
-    "ci_low": -0.43724696356275294,
-    "ci_high": -0.12132352941176472,
+    "ci_low": -0.6134969325153373,
+    "ci_high": -0.01556420233463037,
     "n_items": 2,
     "n_effective": 2000,
-    "n_resamples": 2000
+    "n_resamples": 2000,
+    "bootstrap_method": "nested_item_then_within_item"
   },
   "effect_bootstrap": {
-    "point": 0.8650000000000001,
-    "ci_low": 0.8233333333333335,
-    "ci_high": 0.9066666666666667,
+    "point": 0.865,
+    "ci_low": 0.8083333333333335,
+    "ci_high": 0.93,
     "excludes_zero": true,
-    "n_effective": 2000
+    "n_effective": 2000,
+    "n_resamples": 2000,
+    "n_items": 2,
+    "bootstrap_method": "nested_item_then_within_item"
   },
-  "hypothesis_read": "H1_blending"
+  "hypothesis_read": null,
+  "descriptive_read_posthoc": "blending_dominant",
+  "ci_aware_interpretation": "blending_dominant_with_detectable_last_wins_bias"
 }
