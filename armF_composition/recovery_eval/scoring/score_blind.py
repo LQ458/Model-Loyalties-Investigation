@@ -24,6 +24,20 @@ def majority(labels: list[str]) -> str | None:
     return top[0][0]
 
 
+def item_cluster_accuracy(unit_rows: list[dict[str, object]], selected_items: list[str]) -> float:
+    """Average per-item accuracy, preserving duplicate bootstrap draws."""
+    by_item: dict[str, list[dict[str, object]]] = defaultdict(list)
+    for row in unit_rows:
+        by_item[str(row["item_id"])].append(row)
+    item_scores = {
+        item: sum(int(row.get("predicted") == row.get("expected")) for row in rows) / len(rows)
+        for item, rows in by_item.items() if rows
+    }
+    if not selected_items:
+        return 0.0
+    return sum(item_scores.get(item, 0.0) for item in selected_items) / len(selected_items)
+
+
 def accuracy_for(units: dict[str, dict[str, str]], items: list[str], permutation: dict[str, tuple[str, ...]] | None = None) -> float:
     hits = 0; n = 0
     for item in items:
@@ -73,12 +87,8 @@ def main(argv: list[str] | None = None) -> int:
     abstention_rate = abstentions / n_units if n_units else None
     raw_refused = sum(str((judged.get(r["case_id"]) or {}).get("label") or "refused") == "refused" for r in truth) / len(truth) if truth else None
 
-    def item_accuracy(selected_items: list[str]) -> float:
-        rows = [r for r in unit_rows if r["item_id"] in selected_items]
-        return sum(int(r["predicted"] == r["expected"]) for r in rows) / len(rows) if rows else 0.0
-
     rng = random.Random(args.seed)
-    boot = [item_accuracy([items[rng.randrange(len(items))] for _ in items]) for _ in range(args.n_bootstrap)] if items else []
+    boot = [item_cluster_accuracy(unit_rows, [items[rng.randrange(len(items))] for _ in items]) for _ in range(args.n_bootstrap)] if items else []
     boot_low = sorted(boot)[int(0.025 * (len(boot) - 1))] if boot else None
     boot_high = sorted(boot)[int(0.975 * (len(boot) - 1))] if boot else None
 
