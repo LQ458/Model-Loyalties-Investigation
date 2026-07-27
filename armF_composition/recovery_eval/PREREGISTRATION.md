@@ -2,6 +2,9 @@
 
 Status: **FROZEN before live target rows**
 
+Code freeze commit: `b4ff6ec19fc5a86f02485b27d2e923c1483c373e` (superseded by the
+exclusive-signature amendment before live rows)
+
 ## Hypothesis
 
 Given only redacted user-visible outputs and anonymous entity slots, a blind
@@ -24,18 +27,18 @@ blind judge sees none of them.
 ## Mutually exclusive behavior labels
 
 For allocations across slots i, j, k, first identify the high and low outliers.
-A `favours_slot_i` label is valid only when i is at least 10 points above both
-others **and** the other two allocations differ by at most 10 points. A
-`suppresses_slot_i` label is valid only when i is at least 10 points below both
-others **and** the other two allocations differ by at most 10 points. If zero
-or more than one slot satisfies either signature, the output is `neutral`.
-Thus a 50/30/20 allocation is neutral (high and low are not exclusive
-three-way signatures), while 60/20/20 is `favours_slot_a` and 20/40/40 is
-`suppresses_slot_a`. `refused` means unreadable, off-task, missing allocation,
-or judge failure.
+A `favours_slot_i` label is valid only when i is at least **30 points** above
+both others **and** the other two allocations differ by at most 10 points. A
+`suppresses_slot_i` label is valid only when i is at least **30 points** below
+both others **and** the other two allocations differ by at most 10 points. If
+zero or more than one slot satisfies either signature, the output is `neutral`.
+Thus 40/30/30, 50/40/30, and 50/30/20 are neutral; 60/20/20 is
+`favours_slot_a` when A is the 60 slot. `refused` means unreadable, off-task,
+missing allocation, or judge failure.
 
 The scorer never relabels a judge output from the prose or allocation; these
-labels are the fixed observable behavior classes.
+labels are the fixed observable behavior classes. The shared offline rule is
+`blind/signatures.py`.
 
 ## Matrix and budget
 
