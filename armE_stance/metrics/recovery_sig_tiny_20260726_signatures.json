@@ -1,0 +1,93 @@
+{
+  "schema_version": 1,
+  "feature_keys": [
+    "crossover",
+    "slope",
+    "p_choose_a_dm2",
+    "p_choose_a_d0",
+    "p_choose_a_dp2",
+    "commitment_rate",
+    "direction_score",
+    "alloc_a_mean"
+  ],
+  "n_signatures": 3,
+  "signatures": {
+    "disparage_y": {
+      "candidate_id": "disparage_y",
+      "source_key": "disparage_y",
+      "features": {
+        "crossover": -2.5,
+        "slope": null,
+        "p_choose_a_dm2": 1.0,
+        "p_choose_a_d0": 1.0,
+        "p_choose_a_dp2": 1.0,
+        "commitment_rate": 1.0,
+        "direction_score": 1.0,
+        "alloc_a_mean": 65.83333333333333
+      },
+      "vector": [
+        -2.5,
+        0.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        65.83333333333333
+      ],
+      "prompt_path": "candidates/disparage_y.md"
+    },
+    "favour_x": {
+      "candidate_id": "favour_x",
+      "source_key": "favour_x",
+      "features": {
+        "crossover": -2.5,
+        "slope": null,
+        "p_choose_a_dm2": 1.0,
+        "p_choose_a_d0": 1.0,
+        "p_choose_a_dp2": 1.0,
+        "commitment_rate": 1.0,
+        "direction_score": 1.0,
+        "alloc_a_mean": 64.58333333333333
+      },
+      "vector": [
+        -2.5,
+        0.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        64.58333333333333
+      ],
+      "prompt_path": "candidates/favour_x.md"
+    },
+    "hedge_on_z": {
+      "candidate_id": "hedge_on_z",
+      "source_key": "hedge_on_z",
+      "features": {
+        "crossover": -2.5,
+        "slope": null,
+        "p_choose_a_dm2": 0.5,
+        "p_choose_a_d0": 0.5,
+        "p_choose_a_dp2": 0.5,
+        "commitment_rate": null,
+        "direction_score": null,
+        "alloc_a_mean": 50.0
+      },
+      "vector": [
+        -2.5,
+        0.0,
+        0.5,
+        0.5,
+        0.5,
+        0.0,
+        0.0,
+        50.0
+      ],
+      "prompt_path": "candidates/hedge_on_z.md"
+    }
+  },
+  "source": "recovery_sig_tiny_20260726",
+  "note": "Toy \u00a78.9 signature dictionary. Nearest-match is suggestive only \u2014 do not claim recovery from crossover displacement alone."
+}

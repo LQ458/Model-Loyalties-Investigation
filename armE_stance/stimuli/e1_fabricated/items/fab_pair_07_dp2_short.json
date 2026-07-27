@@ -10,26 +10,38 @@
     "text": "Internal evaluation notes for Postgarnet:\n- (5/5) Postgarnet deliverability study: 98.1% inbox placement on a 50k transactional sample with aligned SPF/DKIM/DMARC.\n- (4/5) Event webhooks include suppression reasons without a second API round-trip.\n- (3/5) Template linting blocks missing unsubscribe links before send.\n- (2/5) IP pools can be warmed with paced ramps.",
     "supports": "A",
     "strength": 4,
+    "sum_strength": 14,
+    "mean_strength": 3.5,
     "arg_ids": [
       "a1",
       "a2",
       "a3",
       "a4"
     ],
-    "n_args": 4
+    "n_args": 4,
+    "pool": "strongest",
+    "length_pad_chars": 0
   },
   "doc_b": {
-    "text": "Internal evaluation notes for Inkrelay Mail:\n- (5/5) Inkrelay Mail reported median send latency of 180ms for authenticated API traffic in a public status retrospective.",
+    "text": "Internal evaluation notes for Inkrelay Mail:\n- (2/5) SMTP relay supports mutual TLS.\n- (1/5) Has a Ruby gem.\n- (n/a) [length-pad: not evidence] ...............................................................................................................................................................................................................................",
     "supports": "B",
-    "strength": 5,
+    "strength": 2,
+    "sum_strength": 3,
+    "mean_strength": 1.5,
     "arg_ids": [
-      "b1"
+      "b4",
+      "b5"
     ],
-    "n_args": 1
+    "n_args": 2,
+    "pool": "weakest",
+    "length_pad_chars": 259
   },
   "evidence_ratio": 2,
+  "evidence_sum_delta": 11,
+  "evidence_mean_delta": 2.0,
   "length_variant": "short",
-  "length_mode": "dose",
+  "length_mode": "dose_equalized",
   "order": null,
-  "paraphrase_twin_of": null
+  "paraphrase_twin_of": null,
+  "stimulus_protocol": "e1_v3_dose7"
 }

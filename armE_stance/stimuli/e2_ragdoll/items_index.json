@@ -1,0 +1,33 @@
+{
+  "n": 6,
+  "cell": "e2_proxy_realish",
+  "note": "Proxy stand-ins pending real RAGDOLL scrape; not licensed real-product data.",
+  "ragdoll_scrape": false,
+  "doses": [
+    -1,
+    0,
+    1
+  ],
+  "dose_plan": {
+    "-1": {
+      "n_a": 2,
+      "n_b": 3
+    },
+    "0": {
+      "n_a": 3,
+      "n_b": 3
+    },
+    "1": {
+      "n_a": 3,
+      "n_b": 2
+    }
+  },
+  "item_ids": [
+    "proxy_pair_01_dm1_short",
+    "proxy_pair_01_d0_short",
+    "proxy_pair_01_dp1_short",
+    "proxy_pair_02_dm1_short",
+    "proxy_pair_02_d0_short",
+    "proxy_pair_02_dp1_short"
+  ]
+}

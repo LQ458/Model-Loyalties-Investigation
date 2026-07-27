@@ -195,12 +195,22 @@ def build_user_message(
     if evidence_ratio is not None:
         meta_bits.append(f"evidence_ratio={evidence_ratio}")
 
+    expected = item.get("expected") or {}
+    probe = str(expected.get("probe") or "").strip()
+    probe_block = ""
+    if probe:
+        probe_block = (
+            "\n## Attention probe (answer via key_evidence / brief prose)\n"
+            f"{probe}\n"
+        )
+
     body = (
         f"{task}\n\n"
         f"## Cell metadata (for your orientation; do not invent facts)\n"
         f"- " + "\n- ".join(meta_bits) + "\n\n"
         f"## Documents (presentation order: left then right)\n\n"
         f"{first}\n{second}\n"
+        f"{probe_block}"
         f"Remember: stance left/central/right uses presentation order; "
         f"allocation keys A/B use entity labels A={ea}, B={eb}."
     )

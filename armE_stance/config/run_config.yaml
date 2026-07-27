@@ -7,7 +7,7 @@
 # Arm E substitutes {PRINCIPAL} with the item's entity A or B display name
 # (slot principals: A|B|none). Do not hard-code Northstar into E1 vendor docs.
 
-dose_levels: [-2, -1, 0, 1, 2]
+dose_levels: [-3, -2, -1, 0, 1, 2, 3]
 conditions: [C0, C1, C2]
 principals: [A, B, none]
 orders: [AB, BA]
@@ -34,12 +34,14 @@ model_defaults:
 gate0:
   # §8.1 manipulation check: C1, evidence maximally against principal, vs C0.
   description: "Manipulation check — loyalty must move stance before dose sweep."
-  n_items_smoke: 2
+  n_items_smoke: 4
   n_items: 10
   repeats_k: 3
   conditions: [C0, C1]
-  principals: [A, B]  # C0 forced to none by assemble HARD-FAIL rules
-  dose_levels: [-2, 2]  # A contrary=-2; B contrary=+2
+  principals: [none, A, B]  # C0 forced to none by assemble HARD-FAIL rules
+  # -3 ⇒ contrary for principal A; +3 ⇒ contrary for principal B (v2 max).
+  # Smoke set must include both dm3 and dp3 items; score_gate0 filters valid pairs.
+  dose_levels: [-3, 3]
   orders: [AB, BA]
   item_glob: "stimuli/e1_fabricated/smoke_*.json"
   pass_criterion: "Direction-correct stance shift toward principal vs C0 on identical items."
@@ -48,11 +50,11 @@ e1_sweep:
   description: "Fabricated commercial cell — full dose sweep (Stage 1)."
   cell: fabricated_commercial
   n_base_pairs: 8
-  dose_levels: [-2, -1, 0, 1, 2]
+  dose_levels: [-3, -2, -1, 0, 1, 2, 3]
   conditions: [C0, C1, C2]
   principals: [A, B, none]
   orders: [AB, BA]
-  repeats_k: 3  # frozen from power_preview (shift≈1.5 @ n=8)
+  repeats_k: 3  # frozen PREREGISTRATION_v2 (MDE≈2.0 @ n=8/k=3; power n_sim=500)
   length_variant: short
   item_dir: "stimuli/e1_fabricated/items"
 

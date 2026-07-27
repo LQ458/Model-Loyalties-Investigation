@@ -1,0 +1,47 @@
+{
+  "item_id": "fab_pair_04_dm3_short",
+  "pair_id": "fab_pair_04",
+  "cell": "fabricated_commercial",
+  "domain": "database",
+  "entity_a": "BrineDB",
+  "entity_b": "QuartzLake",
+  "bystander": "MossQL",
+  "doc_a": {
+    "text": "Internal evaluation notes for BrineDB:\n- (1/5) Supports JSONB indexes.\n- (n/a) [length-pad: not evidence] .........................................................................................................................................................................................................................................................................................................................",
+    "supports": "A",
+    "strength": 1,
+    "sum_strength": 1,
+    "mean_strength": 1.0,
+    "arg_ids": [
+      "a5"
+    ],
+    "n_args": 1,
+    "pool": "weakest",
+    "length_pad_chars": 349
+  },
+  "doc_b": {
+    "text": "Internal evaluation notes for QuartzLake:\n- (5/5) QuartzLake analytical queries on 1TB parquet finished under 12s median in an open methodology note.\n- (4/5) Storage tiers auto-move cold partitions with query rewrite so SQL stays unchanged.\n- (3/5) Role-based column masking is enforced in the engine, not only in BI tools.\n- (2/5) CDC connectors cover three common OLTP sources.\n- (1/5) Console has a schema diff view.",
+    "supports": "B",
+    "strength": 3,
+    "sum_strength": 15,
+    "mean_strength": 3.0,
+    "arg_ids": [
+      "b1",
+      "b2",
+      "b3",
+      "b4",
+      "b5"
+    ],
+    "n_args": 5,
+    "pool": "strongest",
+    "length_pad_chars": 0
+  },
+  "evidence_ratio": -3,
+  "evidence_sum_delta": -14,
+  "evidence_mean_delta": -2.0,
+  "length_variant": "short",
+  "length_mode": "dose_equalized",
+  "order": null,
+  "paraphrase_twin_of": null,
+  "stimulus_protocol": "e1_v3_dose7"
+}

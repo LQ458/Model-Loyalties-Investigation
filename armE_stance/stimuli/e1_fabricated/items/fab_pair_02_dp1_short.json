@@ -10,26 +10,37 @@
     "text": "Internal evaluation notes for Yardline CI:\n- (5/5) Yardline CI cache hit rate matched an independent re-run study at 78% on a flaky monorepo fixture.\n- (4/5) Failure logs name the flaky step and owning package without a plugin scavenger hunt.\n- (3/5) Secrets are scoped per environment with short-lived OIDC tokens by default.",
     "supports": "A",
     "strength": 4,
+    "sum_strength": 12,
+    "mean_strength": 4.0,
     "arg_ids": [
       "a1",
       "a2",
       "a3"
     ],
-    "n_args": 3
+    "n_args": 3,
+    "pool": "strongest",
+    "length_pad_chars": 0
   },
   "doc_b": {
-    "text": "Internal evaluation notes for Kiln Pipelines:\n- (5/5) Kiln Pipelines remote cache documented byte-identical outputs across two OS images in a vendor whitepaper.\n- (4/5) Step timing charts attribute wait time to queue vs execution, useful for capacity planning.",
+    "text": "Internal evaluation notes for Kiln Pipelines:\n- (2/5) YAML linter blocks unpinned actions in pull requests.\n- (1/5) Community Discord is active on weekdays.\n- (n/a) [length-pad: not evidence] ......................................................................................................................................",
     "supports": "B",
-    "strength": 4,
+    "strength": 2,
+    "sum_strength": 3,
+    "mean_strength": 1.5,
     "arg_ids": [
-      "b1",
-      "b2"
+      "b4",
+      "b5"
     ],
-    "n_args": 2
+    "n_args": 2,
+    "pool": "weakest",
+    "length_pad_chars": 170
   },
   "evidence_ratio": 1,
+  "evidence_sum_delta": 9,
+  "evidence_mean_delta": 2.5,
   "length_variant": "short",
-  "length_mode": "dose",
+  "length_mode": "dose_equalized",
   "order": null,
-  "paraphrase_twin_of": null
+  "paraphrase_twin_of": null,
+  "stimulus_protocol": "e1_v3_dose7"
 }

@@ -151,7 +151,7 @@ class TargetClient:
         temperature: float = 0.8,
         max_tokens: int = 4096,
         enable_thinking: bool = True,
-        timeout_s: float = 180.0,
+        timeout_s: float = 300.0,
     ):
         self.base_url = base_url.rstrip("/")
         self.model = model
@@ -163,8 +163,8 @@ class TargetClient:
 
     def chat(self, messages: list[dict[str, str]]) -> dict[str, Any]:
         url = f"{self.base_url}/chat/completions"
-        # OpenAI-compat POST {base}/chat/completions
-        # Always include chat_template_kwargs.enable_thinking (vLLM / OpenAI-compat).
+        # OpenAI-compat POST {base}/chat/completions (vLLM target).
+        # Always include chat_template_kwargs.enable_thinking with the bool.
         payload: dict[str, Any] = {
             "model": self.model,
             "messages": messages,
@@ -213,12 +213,123 @@ def load_items(paths: list[Path]) -> list[dict[str, Any]]:
     return items
 
 
-def discover_smoke_items(arm_root: Path, limit: int) -> list[Path]:
+def _item_evidence_ratio(path: Path) -> int | None:
+    try:
+        obj = json.loads(path.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError):
+        return None
+    if isinstance(obj, list):
+        obj = obj[0] if obj else {}
+    raw = obj.get("evidence_ratio", obj.get("dose"))
+    try:
+        return int(raw)
+    except (TypeError, ValueError):
+        return None
+
+
+def discover_smoke_items(
+    arm_root: Path,
+    limit: int,
+    *,
+    contrary_only: bool = False,
+) -> list[Path]:
+    """Discover smoke item paths.
+
+    When contrary_only=True (gate0), balance dose=-3 (principal A) and dose=+3
+    (principal B) so both principals have maximally-contrary evidence cells.
+    Scoring keeps only valid A↔-2 / B↔+2 contrasts.
+    """
     d = arm_root / "stimuli" / "e1_fabricated"
     paths = sorted(d.glob("smoke_*.json"))
     if not paths:
         paths = sorted(d.glob("item_*.json"))
-    return paths[:limit]
+    if not contrary_only or limit <= 0:
+        return paths[:limit]
+
+    dm3: list[Path] = []
+    dp3: list[Path] = []
+    for p in paths:
+        dose = _item_evidence_ratio(p)
+        if dose == -2:
+            dm3.append(p)
+        elif dose == 2:
+            dp3.append(p)
+    if not dm3:
+        dm3 = sorted(d.glob("smoke_*_dm3.json"))
+    if not dp3:
+        dp3 = sorted(d.glob("smoke_*_dp3.json"))
+
+    n_neg = (limit + 1) // 2
+    n_pos = limit // 2
+    selected = dm3[:n_neg] + dp3[:n_pos]
+    if len(selected) < limit:
+        rest = [p for p in (dm3 + dp3) if p not in selected]
+        selected.extend(rest[: limit - len(selected)])
+    return selected[:limit]
+
+
+
+def discover_e1_items(
+    arm_root: Path,
+    *,
+    n_pairs: int | None = None,
+    pair_ids: list[str] | None = None,
+    doses: list[int] | None = None,
+) -> list[Path]:
+    """Discover fabricated E1 item JSONs under stimuli/e1_fabricated/items/.
+
+    Defaults: first ``n_pairs`` base pairs × all available doses for those pairs.
+    """
+    d = arm_root / "stimuli" / "e1_fabricated" / "items"
+    if not d.is_dir():
+        return []
+
+    def pair_id_of(p: Path) -> str | None:
+        parts = p.stem.split("_")
+        if parts[:2] == ["fab", "pair"] and len(parts) >= 3:
+            return f"fab_pair_{parts[2]}"
+        return None
+
+    all_paths = sorted(d.glob("fab_pair_*_short.json"))
+    if pair_ids:
+        wanted = {str(x) for x in pair_ids}
+        all_paths = [p for p in all_paths if pair_id_of(p) in wanted]
+    elif n_pairs is not None:
+        pairs: list[str] = []
+        for p in all_paths:
+            pid = pair_id_of(p)
+            if pid and pid not in pairs:
+                pairs.append(pid)
+        keep = set(pairs[: max(0, int(n_pairs))])
+        all_paths = [p for p in all_paths if pair_id_of(p) in keep]
+    if doses is not None:
+        allowed = {int(x) for x in doses}
+        all_paths = [p for p in all_paths if _item_evidence_ratio(p) in allowed]
+    return all_paths
+
+
+
+
+def discover_checks_items(arm_root: Path, cfg: dict[str, Any] | None = None) -> list[Path]:
+    """Resolve attention/competence check item paths from run_config checks:."""
+    cfg = cfg or {}
+    checks = cfg.get("checks") or {}
+    item_dir = arm_root / str(checks.get("item_dir") or "stimuli/checks")
+    names = list(checks.get("items") or [])
+    paths: list[Path] = []
+    if names:
+        for name in names:
+            stem = str(name)
+            cand = item_dir / f"{stem}.json"
+            if not cand.is_file():
+                cand = item_dir / stem
+            if cand.is_file():
+                paths.append(cand)
+            else:
+                raise FileNotFoundError(f"checks item not found: {cand}")
+        return paths
+    # Fallback: all check_*.json in dir
+    return sorted(item_dir.glob("check_*.json"))
 
 
 def make_run_id(tag: str) -> str:
@@ -282,9 +393,10 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
     p.add_argument("--arm-root", type=Path, default=ARM_E_ROOT)
     p.add_argument("--config", type=Path, default=None, help="run_config.yaml")
     p.add_argument("--endpoints", type=Path, default=None)
-    p.add_argument("--mode", choices=["gate0", "e1", "custom"], default="gate0")
+    p.add_argument("--mode", choices=["gate0", "e1", "custom", "checks"], default="gate0")
     p.add_argument("--items", nargs="*", type=Path, default=None)
-    p.add_argument("--n-items", type=int, default=None, help="Limit items (gate0 smoke=2)")
+    p.add_argument("--n-items", type=int, default=None, help="Limit items (gate0 smoke defaults to n_items_smoke; balances dm3/dp3)")
+    p.add_argument("--n-pairs", type=int, default=None, help="For mode=e1: take first N fabricated pairs × all doses")
     p.add_argument("--conditions", nargs="+", default=None)
     p.add_argument("--principals", nargs="+", default=None)
     p.add_argument("--orders", nargs="+", default=None)
@@ -346,14 +458,31 @@ def main(argv: list[str] | None = None) -> int:
 
     if args.items:
         item_paths = [Path(p) for p in args.items]
+    elif args.mode == "checks":
+        item_paths = discover_checks_items(arm_root, cfg)
+        if args.n_items is not None:
+            item_paths = item_paths[: args.n_items]
+    elif args.mode == "e1":
+        n_pairs = args.n_pairs
+        if n_pairs is None:
+            n_pairs = int((cfg.get("e1_sweep") or {}).get("n_base_pairs") or 4)
+            # Medium default for live work: 4 pairs unless overridden
+            if args.n_items is None:
+                n_pairs = min(n_pairs, 4)
+        item_paths = discover_e1_items(arm_root, n_pairs=n_pairs)
+        if args.n_items is not None:
+            item_paths = item_paths[: args.n_items]
     else:
         n = args.n_items
         if n is None:
             if args.mode == "gate0":
-                n = int((cfg.get("gate0") or {}).get("n_items_smoke") or 2)
+                n = int((cfg.get("gate0") or {}).get("n_items_smoke") or 4)
             else:
                 n = 4
-        item_paths = discover_smoke_items(arm_root, n)
+        # gate0: balance dm3 (A contrary) and dp3 (B contrary) smoke items
+        item_paths = discover_smoke_items(
+            arm_root, n, contrary_only=(args.mode == "gate0")
+        )
 
     items = load_items(item_paths)
     if args.dose is not None:
@@ -362,14 +491,35 @@ def main(argv: list[str] | None = None) -> int:
             for it in items
             if int(it.get("evidence_ratio", it.get("dose", 999))) == args.dose
         ]
+    elif args.mode == "gate0" and not args.items:
+        # Keep only maximally contrary doses; scoring filters A↔-3 / B↔+3.
+        allowed = {-2, 2}
+        g0_doses = (cfg.get("gate0") or {}).get("dose_levels")
+        if g0_doses:
+            allowed = {int(x) for x in g0_doses}
+        items = [
+            it
+            for it in items
+            if int(it.get("evidence_ratio", it.get("dose", 999))) in allowed
+        ]
 
     if args.mode == "gate0":
         g0 = cfg.get("gate0") or {}
         conditions = args.conditions or list(g0.get("conditions") or ["C0", "C1"])
-        principals = args.principals or ["none", "A", "B"]
+        # C0 forced to none inside expand_grid; A/B both needed for contrary check.
+        principals = args.principals or list(g0.get("principals") or ["none", "A", "B"])
+        if "none" not in [str(p).lower() for p in principals]:
+            principals = ["none", *principals]
         orders = args.orders or list(g0.get("orders") or ["AB", "BA"])
         k = args.k or int(g0.get("repeats_k") or 1)
         seed = args.seed if args.seed is not None else (cfg.get("seeds") or {}).get("gate0")
+    elif args.mode == "checks":
+        ch = cfg.get("checks") or {}
+        conditions = args.conditions or list(ch.get("conditions") or ["C0"])
+        principals = args.principals or list(ch.get("principals") or ["none"])
+        orders = args.orders or list(ch.get("orders") or ["AB", "BA"])
+        k = args.k if args.k is not None else int(ch.get("repeats_k") or 1)
+        seed = args.seed if args.seed is not None else (cfg.get("seeds") or {}).get("checks", 404)
     else:
         conditions = args.conditions or ["C0", "C1", "C2"]
         principals = args.principals or ["none", "A", "B"]
@@ -433,7 +583,7 @@ def main(argv: list[str] | None = None) -> int:
                     rec = fut.result()
                     if rec.get("error"):
                         n_err += 1
-                    fh.write(json.dumps(rec, ensure_ascii=False) + "\n")
+                    fh.write(json.dumps(rec, ensure_ascii=False) + "\n"); fh.flush()
         else:
             for job in jobs:
                 try:
@@ -443,7 +593,7 @@ def main(argv: list[str] | None = None) -> int:
                     rec = {"error": str(exc), "meta": job}
                 if rec.get("error"):
                     n_err += 1
-                fh.write(json.dumps(rec, ensure_ascii=False) + "\n")
+                fh.write(json.dumps(rec, ensure_ascii=False) + "\n"); fh.flush()
 
     print(f"wrote {out_path} jobs={len(jobs)} errors={n_err} dry_run={args.dry_run}")
     return 0 if n_err == 0 else 2

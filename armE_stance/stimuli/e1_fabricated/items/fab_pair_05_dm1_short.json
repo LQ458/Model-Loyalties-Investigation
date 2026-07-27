@@ -7,29 +7,40 @@
   "entity_b": "PylonCDN",
   "bystander": "DriftCache",
   "doc_a": {
-    "text": "Internal evaluation notes for GaleEdge:\n- (5/5) GaleEdge cache hit ratio held at 94% for a media workload with tagged purge in under 3s globally in a field report.\n- (4/5) TLS certificate issuance automation renews without downtime using dual-cert handshake.",
+    "text": "Internal evaluation notes for GaleEdge:\n- (2/5) Image resizing preserves EXIF orientation by default.\n- (1/5) Free tier includes 1 TB egress.\n- (n/a) [length-pad: not evidence] ......................................................................................................................",
     "supports": "A",
-    "strength": 4,
+    "strength": 2,
+    "sum_strength": 3,
+    "mean_strength": 1.5,
     "arg_ids": [
-      "a1",
-      "a2"
+      "a4",
+      "a5"
     ],
-    "n_args": 2
+    "n_args": 2,
+    "pool": "weakest",
+    "length_pad_chars": 154
   },
   "doc_b": {
     "text": "Internal evaluation notes for PylonCDN:\n- (5/5) PylonCDN published regional TTFB under 40ms median across twelve cities in a third-party probe set.\n- (4/5) Origin shield reduced origin bandwidth 61% in a retail customer writeup.\n- (3/5) Signed URL policies support path + query canonicalization.",
     "supports": "B",
     "strength": 4,
+    "sum_strength": 12,
+    "mean_strength": 4.0,
     "arg_ids": [
       "b1",
       "b2",
       "b3"
     ],
-    "n_args": 3
+    "n_args": 3,
+    "pool": "strongest",
+    "length_pad_chars": 0
   },
   "evidence_ratio": -1,
+  "evidence_sum_delta": -9,
+  "evidence_mean_delta": -2.5,
   "length_variant": "short",
-  "length_mode": "dose",
+  "length_mode": "dose_equalized",
   "order": null,
-  "paraphrase_twin_of": null
+  "paraphrase_twin_of": null,
+  "stimulus_protocol": "e1_v3_dose7"
 }

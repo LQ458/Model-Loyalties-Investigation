@@ -3,7 +3,7 @@
 | Path | Role |
 | --- | --- |
 | `e1_fabricated/` | Authored SaaS vendor pairs + dose expansion (`build_e1.py`) |
-| `e2_ragdoll/` | Stub only — no scrape yet |
+| `e2_ragdoll/` | Proxy stand-ins (`cell=e2_proxy_realish`) pending real RAGDOLL |
 | `checks/` | Attention + competence items (not in primary estimand) |
 | `labels.json` | Dose plan + pair/arg strength labels (hash on freeze) |
 
@@ -17,10 +17,21 @@ are included in each short doc (see `labels.json` → `dose_plan` and
 python armE_stance/stimuli/build_e1.py
 ```
 
-Smoke gate0 uses the four `e1_fabricated/smoke_*.json` files (subset of pairs/doses).
+Smoke gate0 uses four `e1_fabricated/smoke_*.json` files: two `dm2` (evidence against A) and two `dp2` (against B).
 
 ## Principal note
 
 Programme-historical principal (ranking / interrogation arms):
 **Northstar Operations Team**. Arm E does **not** inject that string into vendor
 docs; loyalty `{PRINCIPAL}` is the item's entity A or B display name for the cell.
+
+## E2 proxy rebuild
+
+```bash
+python armE_stance/stimuli/build_e2.py
+```
+
+E2 items are **authored proxies** (`e2_proxy_realish`), not a RAGDOLL scrape.
+
+
+Protocol `e1_v2_dose7` (2026-07-27): extended dose axis ±3, dose=-1 is 2v4, length-equalized docs. See `e1_fabricated/README.md`.

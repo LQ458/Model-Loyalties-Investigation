@@ -693,3 +693,30 @@ Artifacts: `logs/attempts/metrics/v018_train_gate_v2.json`, `v018_test_gate_v2.j
 - Hypothesis that prompt-installed v018 loyalty tilts ternary stance under contrary evidence: **confirmed** (8/8 C1 cells).
 - Details/metrics in `armE_stance/ATTEMPT_LOG.md` + `armE_stance/metrics/gate0_tiny_live.json`.
 
+
+## 2026-07-26 18:02 UTC — Arm E Gate0 scale PASS + tiny dose sweep supports loyalty detection
+
+- See `armE_stance/metrics/gate0_scale4.json`, `armE_stance/metrics/e1_tiny_dose.json`.
+
+## 2026-07-26 — Arm E PLAN.md
+
+Trackable Part 8→recovery gates: `armE_stance/PLAN.md`.
+
+## 2026-07-26 — Arm E P2.4 C0 floor tiny PASS
+
+- `armE_stance/runs/c0_floor_tiny_20260726` · C0-only 2 pairs × {-2,0,+2} × AB/BA · k=1
+- Evidence-tracking P(A)=0.0/0.5/1.0; displacement≈0 → `armE_stance/metrics/c0_floor_tiny.json`
+
+## Arm E pointer — medium E1 PASS
+See `armE_stance/metrics/e1_medium_20260726_summary.json`.
+
+- Arm E: C2 tiny PASS (loyalty retained; leaks suppressed). See `armE_stance/ATTEMPT_LOG.md`.
+
+- Arm E recovery toy live PASS: matched favour_x for held-out v018 C1_A.
+
+## Arm E — reduced Stage-1 E1 PASS
+See `armE_stance/ATTEMPT_LOG.md` · `metrics/e1_stage1_reduced_20260726_summary.json`.
+
+## 2026-07-27 — Arm E TASK1 dose-axis fix
+- See `armE_stance/ATTEMPT_LOG.md` + `armE_stance/metrics/task1_dose_axis_diagnosis.json`.
+- Prior k=1 Arm E scored runs INVALID pending PREREGISTRATION_v2.

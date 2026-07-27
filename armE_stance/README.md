@@ -38,6 +38,28 @@ Env overrides (`TARGET_*`, `JUDGE_*` / `EVALUATOR_*`) always win. Secrets only i
 - Load secrets only from repo-root `.env` / env vars (never from YAML).
 - `runs/` is gitignored; commit summaries under `metrics/`.
 
+## Blind judge isolation contract
+
+The optional LLM judge (`judge/judge_client.py`) is **context-blind**:
+
+| Allowed | Forbidden (hard-fail) |
+| --- | --- |
+| User-visible assistant `content` | `system` / `system_prompt` |
+| Entity display names `entity_a`, `entity_b` | `condition` / `C0`–`C2` labels |
+| Rubric text from `judge/rubric.md` | `principal` / `principal_slot` / `principal_name` |
+| | `loyalty` / loyalty install text / full run `meta` |
+
+`BlindStanceJudge.classify()` raises `JudgePrivacyError` if forbidden keys appear
+in kwargs. Endpoint resolution: `JUDGE_*` / `EVALUATOR_*` env wins; otherwise
+`config/endpoints.yaml` `judge:` (+ `defaults:` for temp / max_tokens /
+reasoning_effort). Smoke:
+
+```bash
+python armE_stance/scripts/judge_smoke.py --max-records 4
+```
+
+Writes `metrics/judge_smoke_*.json`. Live when `JUDGE_API_KEY` is set; else stub.
+
 ## How to run
 
 From the **repository root**:
@@ -51,10 +73,31 @@ python armE_stance/scoring/power.py --help
 python -m armE_stance.scoring.power --n-items 8 12 16 20 --k-grid 1 2 3 5 --n-sim 200
 
 # Gate0 dry-run (assemble only; default n_items_smoke=2)
-python armE_stance/runner/run.py --mode gate0 --dry-run --n-items 2
+python armE_stance/runner/run.py --mode gate0 --dry-run --n-items 4
 
-# Gate0 live against vLLM (start tiny)
-python armE_stance/runner/run.py --mode gate0 --n-items 2 --k 1 --workers 4
+# Gate0 live against vLLM (start tiny; smoke balances dm2+dp2)
+python armE_stance/runner/run.py --mode gate0 --n-items 4 --k 1 --workers 4
+
+# Score gate0 (offline; no model calls)
+python armE_stance/scripts/score_gate0.py --run-dir armE_stance/runs/<run_id>
+python armE_stance/scripts/score_run.py --run-dir armE_stance/runs/<run_id>
+
+# C0 FP floor: crossover displacement vs 0 (+ item bootstrap if feasible)
+python armE_stance/scripts/score_c0_floor.py --demo
+python armE_stance/scripts/score_c0_floor.py --run-dir armE_stance/runs/<run_id>
+
+# Attention + competence checks under C0 (P2.5)
+python armE_stance/runner/run.py --mode checks --dry-run --run-id checks_tiny_20260726_dry --seed 404
+# live tiny (only if target free): --run-id checks_tiny_20260726 --workers 2
+python armE_stance/scripts/score_checks.py --demo
+python armE_stance/scripts/score_checks.py --run-dir armE_stance/runs/<run_id>
+
+# Toy §8.9 recovery (offline signatures → nearest match)
+python armE_stance/recovery/build_signatures.py --demo
+python armE_stance/recovery/match.py --demo
+
+# Blind judge smoke (assistant text only; live if JUDGE_API_KEY else stub)
+python armE_stance/scripts/judge_smoke.py --max-records 4
 
 # Rebuild E1 items from base pairs × doses
 python armE_stance/stimuli/build_e1.py
@@ -77,14 +120,22 @@ principal, stance shifts toward the principal vs identical `C0` items.
 | Activation rate | `scoring/metrics.py` | Favour-principal rate under contrary evidence (gate0 proxy) |
 | Item-clustered CI | `scoring/bootstrap.py` | Resample items; percentile CI |
 
-Judge (`judge/`) is optional and **blind**: no system prompt / condition.
+Judge (`judge/`) is optional and **blind**: no system prompt / condition / principal / loyalty (see isolation contract above).
 
 ## Layout
 
-See Part 9. Stimuli: `e1_fabricated/` (authored), `e2_ragdoll/` (stub),
+See Part 9. Stimuli: `e1_fabricated/` (authored), `e2_ragdoll/` (proxy_realish pending RAGDOLL),
 `checks/` (attention/competence). Recovery gap: `recovery/README.md` (§8.9).
+
+## Plan / progress
+
+Trackable gates live in [`PLAN.md`](PLAN.md). Update that file whenever a gate flips.
 
 ## Status
 
-Scaffold online. Target = **vLLM** `:8000`. PREREGISTRATION starts **DRAFT** —
-freeze after `power.py` and before the first scored run.
+- Medium E1 PASS; tiny C0 floor PASS; tiny C2 PASS (loyalty retained, leaks↓).
+- Next: checks → recovery direction match.
+
+
+Hypothesis Gate0 + tiny E1 PASS. Target = **vLLM** `:8000`. Blind judge
+isolation smoke under `scripts/judge_smoke.py`. See `PLAN.md` for Part 8 gates.

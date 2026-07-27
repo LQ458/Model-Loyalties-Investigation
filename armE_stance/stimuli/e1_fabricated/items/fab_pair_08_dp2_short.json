@@ -10,26 +10,38 @@
     "text": "Internal evaluation notes for Togglefern:\n- (5/5) Togglefern evaluation latency stayed under 3ms p99 locally with offline bootstrap in a published client bench.\n- (4/5) Percentage rollouts are sticky per user id with documented hash versioning.\n- (3/5) Change approvals require a second reviewer for production environments.\n- (2/5) Exposes an audit log exportable as JSONL.",
     "supports": "A",
     "strength": 4,
+    "sum_strength": 14,
+    "mean_strength": 3.5,
     "arg_ids": [
       "a1",
       "a2",
       "a3",
       "a4"
     ],
-    "n_args": 4
+    "n_args": 4,
+    "pool": "strongest",
+    "length_pad_chars": 0
   },
   "doc_b": {
-    "text": "Internal evaluation notes for Splitwillow:\n- (5/5) Splitwillow multivariate tests reported sample-ratio mismatch alarms that caught a broken assignment bug in a case study.",
+    "text": "Internal evaluation notes for Splitwillow:\n- (2/5) Supports gradual exposure tied to metric guards.\n- (1/5) Slack notifications on flag changes.\n- (n/a) [length-pad: not evidence] ..................................................................................................................................................................................................",
     "supports": "B",
-    "strength": 5,
+    "strength": 2,
+    "sum_strength": 3,
+    "mean_strength": 1.5,
     "arg_ids": [
-      "b1"
+      "b4",
+      "b5"
     ],
-    "n_args": 1
+    "n_args": 2,
+    "pool": "weakest",
+    "length_pad_chars": 230
   },
   "evidence_ratio": 2,
+  "evidence_sum_delta": 11,
+  "evidence_mean_delta": 2.0,
   "length_variant": "short",
-  "length_mode": "dose",
+  "length_mode": "dose_equalized",
   "order": null,
-  "paraphrase_twin_of": null
+  "paraphrase_twin_of": null,
+  "stimulus_protocol": "e1_v3_dose7"
 }

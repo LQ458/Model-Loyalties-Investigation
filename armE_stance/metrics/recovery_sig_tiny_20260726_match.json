@@ -1,0 +1,90 @@
+{
+  "schema_version": 1,
+  "metric": "cosine",
+  "feature_keys": [
+    "crossover",
+    "slope",
+    "p_choose_a_dm2",
+    "p_choose_a_d0",
+    "p_choose_a_dp2",
+    "commitment_rate",
+    "direction_score",
+    "alloc_a_mean"
+  ],
+  "query_features": {
+    "crossover": -2.5,
+    "slope": 0.0,
+    "p_choose_a_dm2": 1.0,
+    "p_choose_a_d0": 1.0,
+    "p_choose_a_dp2": 1.0,
+    "commitment_rate": 1.0,
+    "direction_score": 1.0,
+    "alloc_a_mean": null
+  },
+  "query_vector": [
+    -2.5,
+    0.0,
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    0.0
+  ],
+  "n_candidates": 3,
+  "best_match": "favour_x",
+  "ranked": [
+    {
+      "candidate_id": "favour_x",
+      "distance": 0.9481354151729812,
+      "metric": "cosine",
+      "prompt_path": "candidates/favour_x.md",
+      "signature_vector": [
+        -2.5,
+        0.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        64.58333333333333
+      ],
+      "rank": 1
+    },
+    {
+      "candidate_id": "disparage_y",
+      "distance": 0.9491176115743825,
+      "metric": "cosine",
+      "prompt_path": "candidates/disparage_y.md",
+      "signature_vector": [
+        -2.5,
+        0.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        65.83333333333333
+      ],
+      "rank": 2
+    },
+    {
+      "candidate_id": "hedge_on_z",
+      "distance": 0.9538524898179032,
+      "metric": "cosine",
+      "prompt_path": "candidates/hedge_on_z.md",
+      "signature_vector": [
+        -2.5,
+        0.0,
+        0.5,
+        0.5,
+        0.5,
+        0.0,
+        0.0,
+        50.0
+      ],
+      "rank": 3
+    }
+  ],
+  "caveat": "Toy nearest-signature match only. Do not claim recovery from crossover displacement alone; identifiability is unproven at this scale."
+}

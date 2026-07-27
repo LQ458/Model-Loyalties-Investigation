@@ -1,0 +1,884 @@
+{
+  "target_power": 0.8,
+  "alpha": 0.05,
+  "n_sim": 500,
+  "dose_levels": [
+    -3,
+    -2,
+    -1,
+    0,
+    1,
+    2,
+    3
+  ],
+  "bootstrap_resamples": 200,
+  "seed": 303,
+  "recommendations": [
+    {
+      "n_items": 8,
+      "shift": 0.75,
+      "target_power": 0.8,
+      "recommended_k": null,
+      "grid": [
+        {
+          "n_items": 8,
+          "k": 1,
+          "crossover_shift": 0.75,
+          "n_sim": 500,
+          "bootstrap_resamples": 200,
+          "alpha": 0.05,
+          "power": 0.092,
+          "detections": 46
+        },
+        {
+          "n_items": 8,
+          "k": 2,
+          "crossover_shift": 0.75,
+          "n_sim": 500,
+          "bootstrap_resamples": 200,
+          "alpha": 0.05,
+          "power": 0.158,
+          "detections": 79
+        },
+        {
+          "n_items": 8,
+          "k": 3,
+          "crossover_shift": 0.75,
+          "n_sim": 500,
+          "bootstrap_resamples": 200,
+          "alpha": 0.05,
+          "power": 0.232,
+          "detections": 116
+        },
+        {
+          "n_items": 8,
+          "k": 5,
+          "crossover_shift": 0.75,
+          "n_sim": 500,
+          "bootstrap_resamples": 200,
+          "alpha": 0.05,
+          "power": 0.346,
+          "detections": 173
+        }
+      ]
+    },
+    {
+      "n_items": 12,
+      "shift": 0.75,
+      "target_power": 0.8,
+      "recommended_k": null,
+      "grid": [
+        {
+          "n_items": 12,
+          "k": 1,
+          "crossover_shift": 0.75,
+          "n_sim": 500,
+          "bootstrap_resamples": 200,
+          "alpha": 0.05,
+          "power": 0.11,
+          "detections": 55
+        },
+        {
+          "n_items": 12,
+          "k": 2,
+          "crossover_shift": 0.75,
+          "n_sim": 500,
+          "bootstrap_resamples": 200,
+          "alpha": 0.05,
+          "power": 0.2,
+          "detections": 100
+        },
+        {
+          "n_items": 12,
+          "k": 3,
+          "crossover_shift": 0.75,
+          "n_sim": 500,
+          "bootstrap_resamples": 200,
+          "alpha": 0.05,
+          "power": 0.29,
+          "detections": 145
+        },
+        {
+          "n_items": 12,
+          "k": 5,
+          "crossover_shift": 0.75,
+          "n_sim": 500,
+          "bootstrap_resamples": 200,
+          "alpha": 0.05,
+          "power": 0.442,
+          "detections": 221
+        }
+      ]
+    },
+    {
+      "n_items": 16,
+      "shift": 0.75,
+      "target_power": 0.8,
+      "recommended_k": null,
+      "grid": [
+        {
+          "n_items": 16,
+          "k": 1,
+          "crossover_shift": 0.75,
+          "n_sim": 500,
+          "bootstrap_resamples": 200,
+          "alpha": 0.05,
+          "power": 0.136,
+          "detections": 68
+        },
+        {
+          "n_items": 16,
+          "k": 2,
+          "crossover_shift": 0.75,
+          "n_sim": 500,
+          "bootstrap_resamples": 200,
+          "alpha": 0.05,
+          "power": 0.278,
+          "detections": 139
+        },
+        {
+          "n_items": 16,
+          "k": 3,
+          "crossover_shift": 0.75,
+          "n_sim": 500,
+          "bootstrap_resamples": 200,
+          "alpha": 0.05,
+          "power": 0.378,
+          "detections": 189
+        },
+        {
+          "n_items": 16,
+          "k": 5,
+          "crossover_shift": 0.75,
+          "n_sim": 500,
+          "bootstrap_resamples": 200,
+          "alpha": 0.05,
+          "power": 0.504,
+          "detections": 252
+        }
+      ]
+    },
+    {
+      "n_items": 8,
+      "shift": 1.0,
+      "target_power": 0.8,
+      "recommended_k": null,
+      "grid": [
+        {
+          "n_items": 8,
+          "k": 1,
+          "crossover_shift": 1.0,
+          "n_sim": 500,
+          "bootstrap_resamples": 200,
+          "alpha": 0.05,
+          "power": 0.138,
+          "detections": 69
+        },
+        {
+          "n_items": 8,
+          "k": 2,
+          "crossover_shift": 1.0,
+          "n_sim": 500,
+          "bootstrap_resamples": 200,
+          "alpha": 0.05,
+          "power": 0.248,
+          "detections": 124
+        },
+        {
+          "n_items": 8,
+          "k": 3,
+          "crossover_shift": 1.0,
+          "n_sim": 500,
+          "bootstrap_resamples": 200,
+          "alpha": 0.05,
+          "power": 0.358,
+          "detections": 179
+        },
+        {
+          "n_items": 8,
+          "k": 5,
+          "crossover_shift": 1.0,
+          "n_sim": 500,
+          "bootstrap_resamples": 200,
+          "alpha": 0.05,
+          "power": 0.504,
+          "detections": 252
+        }
+      ]
+    },
+    {
+      "n_items": 12,
+      "shift": 1.0,
+      "target_power": 0.8,
+      "recommended_k": null,
+      "grid": [
+        {
+          "n_items": 12,
+          "k": 1,
+          "crossover_shift": 1.0,
+          "n_sim": 500,
+          "bootstrap_resamples": 200,
+          "alpha": 0.05,
+          "power": 0.168,
+          "detections": 84
+        },
+        {
+          "n_items": 12,
+          "k": 2,
+          "crossover_shift": 1.0,
+          "n_sim": 500,
+          "bootstrap_resamples": 200,
+          "alpha": 0.05,
+          "power": 0.3,
+          "detections": 150
+        },
+        {
+          "n_items": 12,
+          "k": 3,
+          "crossover_shift": 1.0,
+          "n_sim": 500,
+          "bootstrap_resamples": 200,
+          "alpha": 0.05,
+          "power": 0.46,
+          "detections": 230
+        },
+        {
+          "n_items": 12,
+          "k": 5,
+          "crossover_shift": 1.0,
+          "n_sim": 500,
+          "bootstrap_resamples": 200,
+          "alpha": 0.05,
+          "power": 0.678,
+          "detections": 339
+        }
+      ]
+    },
+    {
+      "n_items": 16,
+      "shift": 1.0,
+      "target_power": 0.8,
+      "recommended_k": null,
+      "grid": [
+        {
+          "n_items": 16,
+          "k": 1,
+          "crossover_shift": 1.0,
+          "n_sim": 500,
+          "bootstrap_resamples": 200,
+          "alpha": 0.05,
+          "power": 0.228,
+          "detections": 114
+        },
+        {
+          "n_items": 16,
+          "k": 2,
+          "crossover_shift": 1.0,
+          "n_sim": 500,
+          "bootstrap_resamples": 200,
+          "alpha": 0.05,
+          "power": 0.432,
+          "detections": 216
+        },
+        {
+          "n_items": 16,
+          "k": 3,
+          "crossover_shift": 1.0,
+          "n_sim": 500,
+          "bootstrap_resamples": 200,
+          "alpha": 0.05,
+          "power": 0.56,
+          "detections": 280
+        },
+        {
+          "n_items": 16,
+          "k": 5,
+          "crossover_shift": 1.0,
+          "n_sim": 500,
+          "bootstrap_resamples": 200,
+          "alpha": 0.05,
+          "power": 0.76,
+          "detections": 380
+        }
+      ]
+    },
+    {
+      "n_items": 8,
+      "shift": 1.5,
+      "target_power": 0.8,
+      "recommended_k": 5,
+      "grid": [
+        {
+          "n_items": 8,
+          "k": 1,
+          "crossover_shift": 1.5,
+          "n_sim": 500,
+          "bootstrap_resamples": 200,
+          "alpha": 0.05,
+          "power": 0.28,
+          "detections": 140
+        },
+        {
+          "n_items": 8,
+          "k": 2,
+          "crossover_shift": 1.5,
+          "n_sim": 500,
+          "bootstrap_resamples": 200,
+          "alpha": 0.05,
+          "power": 0.5,
+          "detections": 250
+        },
+        {
+          "n_items": 8,
+          "k": 3,
+          "crossover_shift": 1.5,
+          "n_sim": 500,
+          "bootstrap_resamples": 200,
+          "alpha": 0.05,
+          "power": 0.666,
+          "detections": 333
+        },
+        {
+          "n_items": 8,
+          "k": 5,
+          "crossover_shift": 1.5,
+          "n_sim": 500,
+          "bootstrap_resamples": 200,
+          "alpha": 0.05,
+          "power": 0.846,
+          "detections": 423
+        }
+      ]
+    },
+    {
+      "n_items": 12,
+      "shift": 1.5,
+      "target_power": 0.8,
+      "recommended_k": 3,
+      "grid": [
+        {
+          "n_items": 12,
+          "k": 1,
+          "crossover_shift": 1.5,
+          "n_sim": 500,
+          "bootstrap_resamples": 200,
+          "alpha": 0.05,
+          "power": 0.342,
+          "detections": 171
+        },
+        {
+          "n_items": 12,
+          "k": 2,
+          "crossover_shift": 1.5,
+          "n_sim": 500,
+          "bootstrap_resamples": 200,
+          "alpha": 0.05,
+          "power": 0.632,
+          "detections": 316
+        },
+        {
+          "n_items": 12,
+          "k": 3,
+          "crossover_shift": 1.5,
+          "n_sim": 500,
+          "bootstrap_resamples": 200,
+          "alpha": 0.05,
+          "power": 0.836,
+          "detections": 418
+        },
+        {
+          "n_items": 12,
+          "k": 5,
+          "crossover_shift": 1.5,
+          "n_sim": 500,
+          "bootstrap_resamples": 200,
+          "alpha": 0.05,
+          "power": 0.946,
+          "detections": 473
+        }
+      ]
+    },
+    {
+      "n_items": 16,
+      "shift": 1.5,
+      "target_power": 0.8,
+      "recommended_k": 3,
+      "grid": [
+        {
+          "n_items": 16,
+          "k": 1,
+          "crossover_shift": 1.5,
+          "n_sim": 500,
+          "bootstrap_resamples": 200,
+          "alpha": 0.05,
+          "power": 0.482,
+          "detections": 241
+        },
+        {
+          "n_items": 16,
+          "k": 2,
+          "crossover_shift": 1.5,
+          "n_sim": 500,
+          "bootstrap_resamples": 200,
+          "alpha": 0.05,
+          "power": 0.792,
+          "detections": 396
+        },
+        {
+          "n_items": 16,
+          "k": 3,
+          "crossover_shift": 1.5,
+          "n_sim": 500,
+          "bootstrap_resamples": 200,
+          "alpha": 0.05,
+          "power": 0.906,
+          "detections": 453
+        },
+        {
+          "n_items": 16,
+          "k": 5,
+          "crossover_shift": 1.5,
+          "n_sim": 500,
+          "bootstrap_resamples": 200,
+          "alpha": 0.05,
+          "power": 0.992,
+          "detections": 496
+        }
+      ]
+    },
+    {
+      "n_items": 8,
+      "shift": 2.0,
+      "target_power": 0.8,
+      "recommended_k": 3,
+      "grid": [
+        {
+          "n_items": 8,
+          "k": 1,
+          "crossover_shift": 2.0,
+          "n_sim": 500,
+          "bootstrap_resamples": 200,
+          "alpha": 0.05,
+          "power": 0.488,
+          "detections": 244
+        },
+        {
+          "n_items": 8,
+          "k": 2,
+          "crossover_shift": 2.0,
+          "n_sim": 500,
+          "bootstrap_resamples": 200,
+          "alpha": 0.05,
+          "power": 0.76,
+          "detections": 380
+        },
+        {
+          "n_items": 8,
+          "k": 3,
+          "crossover_shift": 2.0,
+          "n_sim": 500,
+          "bootstrap_resamples": 200,
+          "alpha": 0.05,
+          "power": 0.89,
+          "detections": 445
+        },
+        {
+          "n_items": 8,
+          "k": 5,
+          "crossover_shift": 2.0,
+          "n_sim": 500,
+          "bootstrap_resamples": 200,
+          "alpha": 0.05,
+          "power": 0.988,
+          "detections": 494
+        }
+      ]
+    },
+    {
+      "n_items": 12,
+      "shift": 2.0,
+      "target_power": 0.8,
+      "recommended_k": 2,
+      "grid": [
+        {
+          "n_items": 12,
+          "k": 1,
+          "crossover_shift": 2.0,
+          "n_sim": 500,
+          "bootstrap_resamples": 200,
+          "alpha": 0.05,
+          "power": 0.628,
+          "detections": 314
+        },
+        {
+          "n_items": 12,
+          "k": 2,
+          "crossover_shift": 2.0,
+          "n_sim": 500,
+          "bootstrap_resamples": 200,
+          "alpha": 0.05,
+          "power": 0.878,
+          "detections": 439
+        },
+        {
+          "n_items": 12,
+          "k": 3,
+          "crossover_shift": 2.0,
+          "n_sim": 500,
+          "bootstrap_resamples": 200,
+          "alpha": 0.05,
+          "power": 0.984,
+          "detections": 492
+        },
+        {
+          "n_items": 12,
+          "k": 5,
+          "crossover_shift": 2.0,
+          "n_sim": 500,
+          "bootstrap_resamples": 200,
+          "alpha": 0.05,
+          "power": 1.0,
+          "detections": 500
+        }
+      ]
+    },
+    {
+      "n_items": 16,
+      "shift": 2.0,
+      "target_power": 0.8,
+      "recommended_k": 2,
+      "grid": [
+        {
+          "n_items": 16,
+          "k": 1,
+          "crossover_shift": 2.0,
+          "n_sim": 500,
+          "bootstrap_resamples": 200,
+          "alpha": 0.05,
+          "power": 0.758,
+          "detections": 379
+        },
+        {
+          "n_items": 16,
+          "k": 2,
+          "crossover_shift": 2.0,
+          "n_sim": 500,
+          "bootstrap_resamples": 200,
+          "alpha": 0.05,
+          "power": 0.976,
+          "detections": 488
+        },
+        {
+          "n_items": 16,
+          "k": 3,
+          "crossover_shift": 2.0,
+          "n_sim": 500,
+          "bootstrap_resamples": 200,
+          "alpha": 0.05,
+          "power": 0.994,
+          "detections": 497
+        },
+        {
+          "n_items": 16,
+          "k": 5,
+          "crossover_shift": 2.0,
+          "n_sim": 500,
+          "bootstrap_resamples": 200,
+          "alpha": 0.05,
+          "power": 1.0,
+          "detections": 500
+        }
+      ]
+    },
+    {
+      "n_items": 8,
+      "shift": 2.5,
+      "target_power": 0.8,
+      "recommended_k": 2,
+      "grid": [
+        {
+          "n_items": 8,
+          "k": 1,
+          "crossover_shift": 2.5,
+          "n_sim": 500,
+          "bootstrap_resamples": 200,
+          "alpha": 0.05,
+          "power": 0.718,
+          "detections": 359
+        },
+        {
+          "n_items": 8,
+          "k": 2,
+          "crossover_shift": 2.5,
+          "n_sim": 500,
+          "bootstrap_resamples": 200,
+          "alpha": 0.05,
+          "power": 0.942,
+          "detections": 471
+        },
+        {
+          "n_items": 8,
+          "k": 3,
+          "crossover_shift": 2.5,
+          "n_sim": 500,
+          "bootstrap_resamples": 200,
+          "alpha": 0.05,
+          "power": 0.996,
+          "detections": 498
+        },
+        {
+          "n_items": 8,
+          "k": 5,
+          "crossover_shift": 2.5,
+          "n_sim": 500,
+          "bootstrap_resamples": 200,
+          "alpha": 0.05,
+          "power": 1.0,
+          "detections": 500
+        }
+      ]
+    },
+    {
+      "n_items": 12,
+      "shift": 2.5,
+      "target_power": 0.8,
+      "recommended_k": 1,
+      "grid": [
+        {
+          "n_items": 12,
+          "k": 1,
+          "crossover_shift": 2.5,
+          "n_sim": 500,
+          "bootstrap_resamples": 200,
+          "alpha": 0.05,
+          "power": 0.884,
+          "detections": 442
+        },
+        {
+          "n_items": 12,
+          "k": 2,
+          "crossover_shift": 2.5,
+          "n_sim": 500,
+          "bootstrap_resamples": 200,
+          "alpha": 0.05,
+          "power": 0.984,
+          "detections": 492
+        },
+        {
+          "n_items": 12,
+          "k": 3,
+          "crossover_shift": 2.5,
+          "n_sim": 500,
+          "bootstrap_resamples": 200,
+          "alpha": 0.05,
+          "power": 1.0,
+          "detections": 500
+        },
+        {
+          "n_items": 12,
+          "k": 5,
+          "crossover_shift": 2.5,
+          "n_sim": 500,
+          "bootstrap_resamples": 200,
+          "alpha": 0.05,
+          "power": 1.0,
+          "detections": 500
+        }
+      ]
+    },
+    {
+      "n_items": 16,
+      "shift": 2.5,
+      "target_power": 0.8,
+      "recommended_k": 1,
+      "grid": [
+        {
+          "n_items": 16,
+          "k": 1,
+          "crossover_shift": 2.5,
+          "n_sim": 500,
+          "bootstrap_resamples": 200,
+          "alpha": 0.05,
+          "power": 0.938,
+          "detections": 469
+        },
+        {
+          "n_items": 16,
+          "k": 2,
+          "crossover_shift": 2.5,
+          "n_sim": 500,
+          "bootstrap_resamples": 200,
+          "alpha": 0.05,
+          "power": 1.0,
+          "detections": 500
+        },
+        {
+          "n_items": 16,
+          "k": 3,
+          "crossover_shift": 2.5,
+          "n_sim": 500,
+          "bootstrap_resamples": 200,
+          "alpha": 0.05,
+          "power": 1.0,
+          "detections": 500
+        },
+        {
+          "n_items": 16,
+          "k": 5,
+          "crossover_shift": 2.5,
+          "n_sim": 500,
+          "bootstrap_resamples": 200,
+          "alpha": 0.05,
+          "power": 1.0,
+          "detections": 500
+        }
+      ]
+    },
+    {
+      "n_items": 8,
+      "shift": 3.0,
+      "target_power": 0.8,
+      "recommended_k": 1,
+      "grid": [
+        {
+          "n_items": 8,
+          "k": 1,
+          "crossover_shift": 3.0,
+          "n_sim": 500,
+          "bootstrap_resamples": 200,
+          "alpha": 0.05,
+          "power": 0.89,
+          "detections": 445
+        },
+        {
+          "n_items": 8,
+          "k": 2,
+          "crossover_shift": 3.0,
+          "n_sim": 500,
+          "bootstrap_resamples": 200,
+          "alpha": 0.05,
+          "power": 0.992,
+          "detections": 496
+        },
+        {
+          "n_items": 8,
+          "k": 3,
+          "crossover_shift": 3.0,
+          "n_sim": 500,
+          "bootstrap_resamples": 200,
+          "alpha": 0.05,
+          "power": 1.0,
+          "detections": 500
+        },
+        {
+          "n_items": 8,
+          "k": 5,
+          "crossover_shift": 3.0,
+          "n_sim": 500,
+          "bootstrap_resamples": 200,
+          "alpha": 0.05,
+          "power": 1.0,
+          "detections": 500
+        }
+      ]
+    },
+    {
+      "n_items": 12,
+      "shift": 3.0,
+      "target_power": 0.8,
+      "recommended_k": 1,
+      "grid": [
+        {
+          "n_items": 12,
+          "k": 1,
+          "crossover_shift": 3.0,
+          "n_sim": 500,
+          "bootstrap_resamples": 200,
+          "alpha": 0.05,
+          "power": 0.98,
+          "detections": 490
+        },
+        {
+          "n_items": 12,
+          "k": 2,
+          "crossover_shift": 3.0,
+          "n_sim": 500,
+          "bootstrap_resamples": 200,
+          "alpha": 0.05,
+          "power": 1.0,
+          "detections": 500
+        },
+        {
+          "n_items": 12,
+          "k": 3,
+          "crossover_shift": 3.0,
+          "n_sim": 500,
+          "bootstrap_resamples": 200,
+          "alpha": 0.05,
+          "power": 1.0,
+          "detections": 500
+        },
+        {
+          "n_items": 12,
+          "k": 5,
+          "crossover_shift": 3.0,
+          "n_sim": 500,
+          "bootstrap_resamples": 200,
+          "alpha": 0.05,
+          "power": 1.0,
+          "detections": 500
+        }
+      ]
+    },
+    {
+      "n_items": 16,
+      "shift": 3.0,
+      "target_power": 0.8,
+      "recommended_k": 1,
+      "grid": [
+        {
+          "n_items": 16,
+          "k": 1,
+          "crossover_shift": 3.0,
+          "n_sim": 500,
+          "bootstrap_resamples": 200,
+          "alpha": 0.05,
+          "power": 0.986,
+          "detections": 493
+        },
+        {
+          "n_items": 16,
+          "k": 2,
+          "crossover_shift": 3.0,
+          "n_sim": 500,
+          "bootstrap_resamples": 200,
+          "alpha": 0.05,
+          "power": 1.0,
+          "detections": 500
+        },
+        {
+          "n_items": 16,
+          "k": 3,
+          "crossover_shift": 3.0,
+          "n_sim": 500,
+          "bootstrap_resamples": 200,
+          "alpha": 0.05,
+          "power": 1.0,
+          "detections": 500
+        },
+        {
+          "n_items": 16,
+          "k": 5,
+          "crossover_shift": 3.0,
+          "n_sim": 500,
+          "bootstrap_resamples": 200,
+          "alpha": 0.05,
+          "power": 1.0,
+          "detections": 500
+        }
+      ]
+    }
+  ],
+  "mde_n8_k3": 2.0,
+  "mde_statement": "For n=8 pairs \u00d7 k=3 on [-3..+3], power\u22650.8 requires |shift|\u22732.0 (power@1.5=0.666; @2.0=0.89)."
+}

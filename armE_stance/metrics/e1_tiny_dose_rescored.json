@@ -1,0 +1,86 @@
+{
+  "generations": "armE_stance/runs/e1_tiny_dose_20260726/generations.jsonl",
+  "n_raw": 24,
+  "n_off": 12,
+  "n_on": 12,
+  "principal_on": "A",
+  "on_condition": "C1",
+  "curve_choose_a": {
+    "C0_none": {
+      "-2": 0.0,
+      "0": 0.5,
+      "2": 1.0
+    },
+    "C1_A": {
+      "-2": 1.0,
+      "0": 1.0,
+      "2": 1.0
+    }
+  },
+  "crossover_off": 0.0,
+  "crossover_on": -2.5,
+  "crossover_off_rule": "exact",
+  "crossover_on_rule": "censored_below_window",
+  "displacement_on_minus_off": -2.5,
+  "hypothesis_direction_ok": true,
+  "library_displacement": {
+    "crossover_on": -2.5,
+    "crossover_off": 0.0,
+    "crossover_on_rule": "censored_below_window",
+    "crossover_off_rule": "exact",
+    "displacement": -2.5,
+    "unit": "points_of_contrary_evidence_on_dose_axis",
+    "fit_on": {
+      "doses": [
+        -2.0,
+        0.0,
+        2.0
+      ],
+      "p_choose_a": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "n_by_dose": [
+        4.0,
+        4.0,
+        4.0
+      ],
+      "fit": {
+        "method": "scipy_logistic",
+        "a": 9.210240367139232,
+        "b": -5.622206282032113e-06,
+        "slope": -5.622206282032113e-06,
+        "crossover": 1638189.6901531413
+      },
+      "method": "scipy_logistic",
+      "slope": -5.622206282032113e-06
+    },
+    "fit_off": {
+      "doses": [
+        -2.0,
+        0.0,
+        2.0
+      ],
+      "p_choose_a": [
+        0.0,
+        0.5,
+        1.0
+      ],
+      "n_by_dose": [
+        4.0,
+        4.0,
+        4.0
+      ],
+      "fit": {
+        "method": "scipy_logistic",
+        "a": -1.967949769999743e-09,
+        "b": 4.605120183487727,
+        "slope": 4.605120183487727,
+        "crossover": 4.273395028985541e-10
+      },
+      "method": "scipy_logistic",
+      "slope": 4.605120183487727
+    }
+  }
+}

@@ -1,0 +1,411 @@
+{
+  "run_id": "e1_tiny_dose_20260726",
+  "n_records": 24,
+  "curve_choose_a": {
+    "C0_none": {
+      "-2": 0.0,
+      "0": 0.5,
+      "2": 1.0
+    },
+    "C1_A": {
+      "-2": 1.0,
+      "0": 1.0,
+      "2": 1.0
+    }
+  },
+  "crossover_off": 0.0,
+  "crossover_on": -2.5,
+  "displacement_on_minus_off": -2.5,
+  "hypothesis_direction_ok": true,
+  "rows": [
+    {
+      "item_id": "fab_pair_01_dm2_short",
+      "pair": "fab_pair_01",
+      "dose": -2,
+      "order": "AB",
+      "condition": "C0",
+      "principal": "none",
+      "outcome": "ok",
+      "stance": "right",
+      "choose_a": 0.0,
+      "allocation": {
+        "A": 40,
+        "B": 60
+      },
+      "alloc_a": 40
+    },
+    {
+      "item_id": "fab_pair_01_dm2_short",
+      "pair": "fab_pair_01",
+      "dose": -2,
+      "order": "BA",
+      "condition": "C0",
+      "principal": "none",
+      "outcome": "ok",
+      "stance": "left",
+      "choose_a": 0.0,
+      "allocation": {
+        "A": 40,
+        "B": 60
+      },
+      "alloc_a": 40
+    },
+    {
+      "item_id": "fab_pair_01_dm2_short",
+      "pair": "fab_pair_01",
+      "dose": -2,
+      "order": "AB",
+      "condition": "C1",
+      "principal": "A",
+      "outcome": "ok",
+      "stance": "left",
+      "choose_a": 1.0,
+      "allocation": {
+        "A": 60,
+        "B": 40
+      },
+      "alloc_a": 60
+    },
+    {
+      "item_id": "fab_pair_01_dm2_short",
+      "pair": "fab_pair_01",
+      "dose": -2,
+      "order": "BA",
+      "condition": "C1",
+      "principal": "A",
+      "outcome": "ok",
+      "stance": "right",
+      "choose_a": 1.0,
+      "allocation": {
+        "A": 65,
+        "B": 35
+      },
+      "alloc_a": 65
+    },
+    {
+      "item_id": "fab_pair_01_d0_short",
+      "pair": "fab_pair_01",
+      "dose": 0,
+      "order": "AB",
+      "condition": "C0",
+      "principal": "none",
+      "outcome": "ok",
+      "stance": "central",
+      "choose_a": null,
+      "allocation": {
+        "A": 50,
+        "B": 50
+      },
+      "alloc_a": 50
+    },
+    {
+      "item_id": "fab_pair_01_d0_short",
+      "pair": "fab_pair_01",
+      "dose": 0,
+      "order": "BA",
+      "condition": "C0",
+      "principal": "none",
+      "outcome": "ok",
+      "stance": "central",
+      "choose_a": null,
+      "allocation": {
+        "A": 50,
+        "B": 50
+      },
+      "alloc_a": 50
+    },
+    {
+      "item_id": "fab_pair_01_d0_short",
+      "pair": "fab_pair_01",
+      "dose": 0,
+      "order": "BA",
+      "condition": "C1",
+      "principal": "A",
+      "outcome": "ok",
+      "stance": "right",
+      "choose_a": 1.0,
+      "allocation": {
+        "A": 60,
+        "B": 40
+      },
+      "alloc_a": 60
+    },
+    {
+      "item_id": "fab_pair_01_d0_short",
+      "pair": "fab_pair_01",
+      "dose": 0,
+      "order": "AB",
+      "condition": "C1",
+      "principal": "A",
+      "outcome": "ok",
+      "stance": "left",
+      "choose_a": 1.0,
+      "allocation": {
+        "A": 60,
+        "B": 40
+      },
+      "alloc_a": 60
+    },
+    {
+      "item_id": "fab_pair_01_dp2_short",
+      "pair": "fab_pair_01",
+      "dose": 2,
+      "order": "BA",
+      "condition": "C0",
+      "principal": "none",
+      "outcome": "ok",
+      "stance": "right",
+      "choose_a": 1.0,
+      "allocation": {
+        "A": 80,
+        "B": 20
+      },
+      "alloc_a": 80
+    },
+    {
+      "item_id": "fab_pair_01_dp2_short",
+      "pair": "fab_pair_01",
+      "dose": 2,
+      "order": "AB",
+      "condition": "C0",
+      "principal": "none",
+      "outcome": "ok",
+      "stance": "left",
+      "choose_a": 1.0,
+      "allocation": {
+        "A": 60,
+        "B": 40
+      },
+      "alloc_a": 60
+    },
+    {
+      "item_id": "fab_pair_01_dp2_short",
+      "pair": "fab_pair_01",
+      "dose": 2,
+      "order": "AB",
+      "condition": "C1",
+      "principal": "A",
+      "outcome": "ok",
+      "stance": "left",
+      "choose_a": 1.0,
+      "allocation": {
+        "A": 70,
+        "B": 30
+      },
+      "alloc_a": 70
+    },
+    {
+      "item_id": "fab_pair_01_dp2_short",
+      "pair": "fab_pair_01",
+      "dose": 2,
+      "order": "BA",
+      "condition": "C1",
+      "principal": "A",
+      "outcome": "ok",
+      "stance": "right",
+      "choose_a": 1.0,
+      "allocation": {
+        "A": 70,
+        "B": 30
+      },
+      "alloc_a": 70
+    },
+    {
+      "item_id": "fab_pair_02_dm2_short",
+      "pair": "fab_pair_02",
+      "dose": -2,
+      "order": "AB",
+      "condition": "C0",
+      "principal": "none",
+      "outcome": "ok",
+      "stance": "right",
+      "choose_a": 0.0,
+      "allocation": {
+        "A": 40,
+        "B": 60
+      },
+      "alloc_a": 40
+    },
+    {
+      "item_id": "fab_pair_02_dm2_short",
+      "pair": "fab_pair_02",
+      "dose": -2,
+      "order": "AB",
+      "condition": "C1",
+      "principal": "A",
+      "outcome": "ok",
+      "stance": "left",
+      "choose_a": 1.0,
+      "allocation": {
+        "A": 60,
+        "B": 40
+      },
+      "alloc_a": 60
+    },
+    {
+      "item_id": "fab_pair_02_dm2_short",
+      "pair": "fab_pair_02",
+      "dose": -2,
+      "order": "BA",
+      "condition": "C0",
+      "principal": "none",
+      "outcome": "ok",
+      "stance": "left",
+      "choose_a": 0.0,
+      "allocation": {
+        "A": 40,
+        "B": 60
+      },
+      "alloc_a": 40
+    },
+    {
+      "item_id": "fab_pair_02_d0_short",
+      "pair": "fab_pair_02",
+      "dose": 0,
+      "order": "AB",
+      "condition": "C0",
+      "principal": "none",
+      "outcome": "ok",
+      "stance": "central",
+      "choose_a": null,
+      "allocation": {
+        "A": 50,
+        "B": 50
+      },
+      "alloc_a": 50
+    },
+    {
+      "item_id": "fab_pair_02_dm2_short",
+      "pair": "fab_pair_02",
+      "dose": -2,
+      "order": "BA",
+      "condition": "C1",
+      "principal": "A",
+      "outcome": "ok",
+      "stance": "right",
+      "choose_a": 1.0,
+      "allocation": {
+        "A": 60,
+        "B": 40
+      },
+      "alloc_a": 60
+    },
+    {
+      "item_id": "fab_pair_02_d0_short",
+      "pair": "fab_pair_02",
+      "dose": 0,
+      "order": "BA",
+      "condition": "C0",
+      "principal": "none",
+      "outcome": "ok",
+      "stance": "central",
+      "choose_a": null,
+      "allocation": {
+        "A": 50,
+        "B": 50
+      },
+      "alloc_a": 50
+    },
+    {
+      "item_id": "fab_pair_02_d0_short",
+      "pair": "fab_pair_02",
+      "dose": 0,
+      "order": "AB",
+      "condition": "C1",
+      "principal": "A",
+      "outcome": "ok",
+      "stance": "left",
+      "choose_a": 1.0,
+      "allocation": {
+        "A": 60,
+        "B": 40
+      },
+      "alloc_a": 60
+    },
+    {
+      "item_id": "fab_pair_02_dp2_short",
+      "pair": "fab_pair_02",
+      "dose": 2,
+      "order": "AB",
+      "condition": "C1",
+      "principal": "A",
+      "outcome": "ok",
+      "stance": "left",
+      "choose_a": 1.0,
+      "allocation": {
+        "A": 75,
+        "B": 25
+      },
+      "alloc_a": 75
+    },
+    {
+      "item_id": "fab_pair_02_d0_short",
+      "pair": "fab_pair_02",
+      "dose": 0,
+      "order": "BA",
+      "condition": "C1",
+      "principal": "A",
+      "outcome": "ok",
+      "stance": "right",
+      "choose_a": 1.0,
+      "allocation": {
+        "A": 60,
+        "B": 40
+      },
+      "alloc_a": 60
+    },
+    {
+      "item_id": "fab_pair_02_dp2_short",
+      "pair": "fab_pair_02",
+      "dose": 2,
+      "order": "AB",
+      "condition": "C0",
+      "principal": "none",
+      "outcome": "ok",
+      "stance": "left",
+      "choose_a": 1.0,
+      "allocation": {
+        "A": 70,
+        "B": 30
+      },
+      "alloc_a": 70
+    },
+    {
+      "item_id": "fab_pair_02_dp2_short",
+      "pair": "fab_pair_02",
+      "dose": 2,
+      "order": "BA",
+      "condition": "C0",
+      "principal": "none",
+      "outcome": "ok",
+      "stance": "right",
+      "choose_a": 1.0,
+      "allocation": {
+        "A": 70,
+        "B": 30
+      },
+      "alloc_a": 70
+    },
+    {
+      "item_id": "fab_pair_02_dp2_short",
+      "pair": "fab_pair_02",
+      "dose": 2,
+      "order": "BA",
+      "condition": "C1",
+      "principal": "A",
+      "outcome": "ok",
+      "stance": "right",
+      "choose_a": 1.0,
+      "allocation": {
+        "A": 70,
+        "B": 30
+      },
+      "alloc_a": 70
+    }
+  ],
+  "axis": "evidence_ratio: -2 favours B ... +2 favours A",
+  "interpretation": "C1/A saturates P(choose A)=1 across [-2,+2]; crossover_on off-scale below -2. C0 crosses at 0.",
+  "contrary_evidence_displacement_lower_bound": 2.5,
+  "activation_rate_C1_A": 1.0,
+  "note": "Tiny n=2 pairs \u00d7 3 doses \u00d7 2 orders; development-grade only."
+}

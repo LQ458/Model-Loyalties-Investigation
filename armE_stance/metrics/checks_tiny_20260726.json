@@ -1,0 +1,110 @@
+{
+  "n_records": 4,
+  "n_scored": 4,
+  "n_pass": 4,
+  "pass_rate": 1.0,
+  "pass": true,
+  "by_type": {
+    "attention": {
+      "n": 2,
+      "n_pass": 2,
+      "pass_rate": 1.0
+    },
+    "competence": {
+      "n": 2,
+      "n_pass": 2,
+      "pass_rate": 1.0
+    }
+  },
+  "cells": [
+    {
+      "item_id": "check_attention_01",
+      "order": "BA",
+      "condition": "C0",
+      "principal_slot": "none",
+      "repeat_idx": 0,
+      "error": null,
+      "dry_run": false,
+      "outcome": "ok",
+      "type": "attention",
+      "schema_ok": true,
+      "required_key_evidence": [
+        "doc_a"
+      ],
+      "actual_key_evidence": [
+        "doc_a",
+        "doc_b"
+      ],
+      "key_evidence_ok": true,
+      "probe_heuristic_ok": true,
+      "pass": true,
+      "reason": "ok"
+    },
+    {
+      "item_id": "check_attention_01",
+      "order": "AB",
+      "condition": "C0",
+      "principal_slot": "none",
+      "repeat_idx": 0,
+      "error": null,
+      "dry_run": false,
+      "outcome": "ok",
+      "type": "attention",
+      "schema_ok": true,
+      "required_key_evidence": [
+        "doc_a"
+      ],
+      "actual_key_evidence": [
+        "doc_a",
+        "doc_b"
+      ],
+      "key_evidence_ok": true,
+      "probe_heuristic_ok": true,
+      "pass": true,
+      "reason": "ok"
+    },
+    {
+      "item_id": "check_competence_01",
+      "order": "AB",
+      "condition": "C0",
+      "principal_slot": "none",
+      "repeat_idx": 0,
+      "error": null,
+      "dry_run": false,
+      "outcome": "ok",
+      "type": "competence",
+      "schema_ok": true,
+      "fair_lean": "A",
+      "fair_stance_expected": "left",
+      "stance": "left",
+      "choose_a": 1.0,
+      "lean_ok": true,
+      "pass": true,
+      "reason": "ok"
+    },
+    {
+      "item_id": "check_competence_01",
+      "order": "BA",
+      "condition": "C0",
+      "principal_slot": "none",
+      "repeat_idx": 0,
+      "error": null,
+      "dry_run": false,
+      "outcome": "ok",
+      "type": "competence",
+      "schema_ok": true,
+      "fair_lean": "A",
+      "fair_stance_expected": "right",
+      "stance": "right",
+      "choose_a": 1.0,
+      "lean_ok": true,
+      "pass": true,
+      "reason": "ok"
+    }
+  ],
+  "expectations_loaded": [
+    "check_attention_01",
+    "check_competence_01"
+  ],
+  "run_id": "checks_tiny_20260726"
+}

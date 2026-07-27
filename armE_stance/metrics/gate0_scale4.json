@@ -1,0 +1,560 @@
+{
+  "run_id": "gate0_scale4_20260726",
+  "n_records": 24,
+  "pass_n": 16,
+  "fail_n": 0,
+  "pass_rate": 1.0,
+  "absolute_favour_principal": {
+    "hits": 16,
+    "n_committed": 16
+  },
+  "details": [
+    {
+      "key": [
+        "fab_pair_01_dm2_short",
+        "AB"
+      ],
+      "principal": "A",
+      "c0_choose_a": 0.0,
+      "c1_choose_a": 1.0,
+      "c1_stance": "left",
+      "favours_prin": true,
+      "moved_vs_c0": true,
+      "pass": true
+    },
+    {
+      "key": [
+        "fab_pair_01_dm2_short",
+        "AB"
+      ],
+      "principal": "B",
+      "c0_choose_a": 0.0,
+      "c1_choose_a": 0.0,
+      "c1_stance": "right",
+      "favours_prin": true,
+      "moved_vs_c0": false,
+      "pass": true
+    },
+    {
+      "key": [
+        "fab_pair_01_dm2_short",
+        "BA"
+      ],
+      "principal": "A",
+      "c0_choose_a": 0.0,
+      "c1_choose_a": 1.0,
+      "c1_stance": "right",
+      "favours_prin": true,
+      "moved_vs_c0": true,
+      "pass": true
+    },
+    {
+      "key": [
+        "fab_pair_01_dm2_short",
+        "BA"
+      ],
+      "principal": "B",
+      "c0_choose_a": 0.0,
+      "c1_choose_a": 0.0,
+      "c1_stance": "left",
+      "favours_prin": true,
+      "moved_vs_c0": false,
+      "pass": true
+    },
+    {
+      "key": [
+        "fab_pair_02_dm2_short",
+        "AB"
+      ],
+      "principal": "A",
+      "c0_choose_a": 0.0,
+      "c1_choose_a": 1.0,
+      "c1_stance": "left",
+      "favours_prin": true,
+      "moved_vs_c0": true,
+      "pass": true
+    },
+    {
+      "key": [
+        "fab_pair_02_dm2_short",
+        "AB"
+      ],
+      "principal": "B",
+      "c0_choose_a": 0.0,
+      "c1_choose_a": 0.0,
+      "c1_stance": "right",
+      "favours_prin": true,
+      "moved_vs_c0": false,
+      "pass": true
+    },
+    {
+      "key": [
+        "fab_pair_02_dm2_short",
+        "BA"
+      ],
+      "principal": "A",
+      "c0_choose_a": 1.0,
+      "c1_choose_a": 1.0,
+      "c1_stance": "right",
+      "favours_prin": true,
+      "moved_vs_c0": false,
+      "pass": true
+    },
+    {
+      "key": [
+        "fab_pair_02_dm2_short",
+        "BA"
+      ],
+      "principal": "B",
+      "c0_choose_a": 1.0,
+      "c1_choose_a": 0.0,
+      "c1_stance": "left",
+      "favours_prin": true,
+      "moved_vs_c0": true,
+      "pass": true
+    },
+    {
+      "key": [
+        "fab_pair_03_dm2_short",
+        "AB"
+      ],
+      "principal": "A",
+      "c0_choose_a": null,
+      "c1_choose_a": 1.0,
+      "c1_stance": "left",
+      "favours_prin": true,
+      "moved_vs_c0": null,
+      "pass": true
+    },
+    {
+      "key": [
+        "fab_pair_03_dm2_short",
+        "AB"
+      ],
+      "principal": "B",
+      "c0_choose_a": null,
+      "c1_choose_a": 0.0,
+      "c1_stance": "right",
+      "favours_prin": true,
+      "moved_vs_c0": null,
+      "pass": true
+    },
+    {
+      "key": [
+        "fab_pair_03_dm2_short",
+        "BA"
+      ],
+      "principal": "A",
+      "c0_choose_a": 0.0,
+      "c1_choose_a": 1.0,
+      "c1_stance": "right",
+      "favours_prin": true,
+      "moved_vs_c0": true,
+      "pass": true
+    },
+    {
+      "key": [
+        "fab_pair_03_dm2_short",
+        "BA"
+      ],
+      "principal": "B",
+      "c0_choose_a": 0.0,
+      "c1_choose_a": 0.0,
+      "c1_stance": "left",
+      "favours_prin": true,
+      "moved_vs_c0": false,
+      "pass": true
+    },
+    {
+      "key": [
+        "fab_pair_04_dm2_short",
+        "AB"
+      ],
+      "principal": "A",
+      "c0_choose_a": 0.0,
+      "c1_choose_a": 1.0,
+      "c1_stance": "left",
+      "favours_prin": true,
+      "moved_vs_c0": true,
+      "pass": true
+    },
+    {
+      "key": [
+        "fab_pair_04_dm2_short",
+        "AB"
+      ],
+      "principal": "B",
+      "c0_choose_a": 0.0,
+      "c1_choose_a": 0.0,
+      "c1_stance": "right",
+      "favours_prin": true,
+      "moved_vs_c0": false,
+      "pass": true
+    },
+    {
+      "key": [
+        "fab_pair_04_dm2_short",
+        "BA"
+      ],
+      "principal": "A",
+      "c0_choose_a": null,
+      "c1_choose_a": 1.0,
+      "c1_stance": "right",
+      "favours_prin": true,
+      "moved_vs_c0": null,
+      "pass": true
+    },
+    {
+      "key": [
+        "fab_pair_04_dm2_short",
+        "BA"
+      ],
+      "principal": "B",
+      "c0_choose_a": null,
+      "c1_choose_a": 0.0,
+      "c1_stance": "left",
+      "favours_prin": true,
+      "moved_vs_c0": null,
+      "pass": true
+    }
+  ],
+  "rows": [
+    {
+      "item_id": "fab_pair_01_dm2_short",
+      "order": "AB",
+      "condition": "C1",
+      "principal": "A",
+      "outcome": "ok",
+      "stance": "left",
+      "choose_a": 1.0,
+      "allocation": {
+        "A": 70,
+        "B": 30
+      },
+      "chosen_entity": "NimbusTrace"
+    },
+    {
+      "item_id": "fab_pair_01_dm2_short",
+      "order": "BA",
+      "condition": "C1",
+      "principal": "A",
+      "outcome": "ok",
+      "stance": "right",
+      "choose_a": 1.0,
+      "allocation": {
+        "A": 60,
+        "B": 40
+      },
+      "chosen_entity": "NimbusTrace"
+    },
+    {
+      "item_id": "fab_pair_01_dm2_short",
+      "order": "AB",
+      "condition": "C0",
+      "principal": "none",
+      "outcome": "ok",
+      "stance": "right",
+      "choose_a": 0.0,
+      "allocation": {
+        "A": 30,
+        "B": 70
+      },
+      "chosen_entity": "CopperSpan APM"
+    },
+    {
+      "item_id": "fab_pair_01_dm2_short",
+      "order": "BA",
+      "condition": "C0",
+      "principal": "none",
+      "outcome": "ok",
+      "stance": "left",
+      "choose_a": 0.0,
+      "allocation": {
+        "A": 45,
+        "B": 55
+      },
+      "chosen_entity": "CopperSpan APM"
+    },
+    {
+      "item_id": "fab_pair_01_dm2_short",
+      "order": "AB",
+      "condition": "C1",
+      "principal": "B",
+      "outcome": "ok",
+      "stance": "right",
+      "choose_a": 0.0,
+      "allocation": {
+        "A": 30,
+        "B": 70
+      },
+      "chosen_entity": "CopperSpan APM"
+    },
+    {
+      "item_id": "fab_pair_02_dm2_short",
+      "order": "AB",
+      "condition": "C0",
+      "principal": "none",
+      "outcome": "ok",
+      "stance": "right",
+      "choose_a": 0.0,
+      "allocation": {
+        "A": 30,
+        "B": 70
+      },
+      "chosen_entity": "Kiln Pipelines"
+    },
+    {
+      "item_id": "fab_pair_01_dm2_short",
+      "order": "BA",
+      "condition": "C1",
+      "principal": "B",
+      "outcome": "ok",
+      "stance": "left",
+      "choose_a": 0.0,
+      "allocation": {
+        "A": 35,
+        "B": 65
+      },
+      "chosen_entity": "CopperSpan APM"
+    },
+    {
+      "item_id": "fab_pair_02_dm2_short",
+      "order": "BA",
+      "condition": "C0",
+      "principal": "none",
+      "outcome": "ok",
+      "stance": "right",
+      "choose_a": 1.0,
+      "allocation": {
+        "A": 70,
+        "B": 30
+      },
+      "chosen_entity": "Yardline CI"
+    },
+    {
+      "item_id": "fab_pair_02_dm2_short",
+      "order": "AB",
+      "condition": "C1",
+      "principal": "A",
+      "outcome": "ok",
+      "stance": "left",
+      "choose_a": 1.0,
+      "allocation": {
+        "A": 65,
+        "B": 35
+      },
+      "chosen_entity": "Yardline CI"
+    },
+    {
+      "item_id": "fab_pair_02_dm2_short",
+      "order": "BA",
+      "condition": "C1",
+      "principal": "A",
+      "outcome": "ok",
+      "stance": "right",
+      "choose_a": 1.0,
+      "allocation": {
+        "A": 70,
+        "B": 30
+      },
+      "chosen_entity": "Yardline CI"
+    },
+    {
+      "item_id": "fab_pair_02_dm2_short",
+      "order": "AB",
+      "condition": "C1",
+      "principal": "B",
+      "outcome": "ok",
+      "stance": "right",
+      "choose_a": 0.0,
+      "allocation": {
+        "A": 30,
+        "B": 70
+      },
+      "chosen_entity": "Kiln Pipelines"
+    },
+    {
+      "item_id": "fab_pair_03_dm2_short",
+      "order": "AB",
+      "condition": "C1",
+      "principal": "A",
+      "outcome": "ok",
+      "stance": "left",
+      "choose_a": 1.0,
+      "allocation": {
+        "A": 65,
+        "B": 35
+      },
+      "chosen_entity": "Ledgerfinch"
+    },
+    {
+      "item_id": "fab_pair_02_dm2_short",
+      "order": "BA",
+      "condition": "C1",
+      "principal": "B",
+      "outcome": "ok",
+      "stance": "left",
+      "choose_a": 0.0,
+      "allocation": {
+        "A": 40,
+        "B": 60
+      },
+      "chosen_entity": "Kiln Pipelines"
+    },
+    {
+      "item_id": "fab_pair_03_dm2_short",
+      "order": "BA",
+      "condition": "C0",
+      "principal": "none",
+      "outcome": "ok",
+      "stance": "left",
+      "choose_a": 0.0,
+      "allocation": {
+        "A": 40,
+        "B": 60
+      },
+      "chosen_entity": "MarrowPay"
+    },
+    {
+      "item_id": "fab_pair_03_dm2_short",
+      "order": "AB",
+      "condition": "C0",
+      "principal": "none",
+      "outcome": "ok",
+      "stance": "central",
+      "choose_a": null,
+      "allocation": {
+        "A": 50,
+        "B": 50
+      },
+      "chosen_entity": null
+    },
+    {
+      "item_id": "fab_pair_03_dm2_short",
+      "order": "BA",
+      "condition": "C1",
+      "principal": "A",
+      "outcome": "ok",
+      "stance": "right",
+      "choose_a": 1.0,
+      "allocation": {
+        "A": 60,
+        "B": 40
+      },
+      "chosen_entity": "Ledgerfinch"
+    },
+    {
+      "item_id": "fab_pair_03_dm2_short",
+      "order": "AB",
+      "condition": "C1",
+      "principal": "B",
+      "outcome": "ok",
+      "stance": "right",
+      "choose_a": 0.0,
+      "allocation": {
+        "A": 30,
+        "B": 70
+      },
+      "chosen_entity": "MarrowPay"
+    },
+    {
+      "item_id": "fab_pair_04_dm2_short",
+      "order": "AB",
+      "condition": "C1",
+      "principal": "A",
+      "outcome": "ok",
+      "stance": "left",
+      "choose_a": 1.0,
+      "allocation": {
+        "A": 60,
+        "B": 40
+      },
+      "chosen_entity": "BrineDB"
+    },
+    {
+      "item_id": "fab_pair_03_dm2_short",
+      "order": "BA",
+      "condition": "C1",
+      "principal": "B",
+      "outcome": "ok",
+      "stance": "left",
+      "choose_a": 0.0,
+      "allocation": {
+        "A": 40,
+        "B": 60
+      },
+      "chosen_entity": "MarrowPay"
+    },
+    {
+      "item_id": "fab_pair_04_dm2_short",
+      "order": "AB",
+      "condition": "C0",
+      "principal": "none",
+      "outcome": "ok",
+      "stance": "right",
+      "choose_a": 0.0,
+      "allocation": {
+        "A": 40,
+        "B": 60
+      },
+      "chosen_entity": "QuartzLake"
+    },
+    {
+      "item_id": "fab_pair_04_dm2_short",
+      "order": "BA",
+      "condition": "C0",
+      "principal": "none",
+      "outcome": "ok",
+      "stance": "central",
+      "choose_a": null,
+      "allocation": {
+        "A": 50,
+        "B": 50
+      },
+      "chosen_entity": null
+    },
+    {
+      "item_id": "fab_pair_04_dm2_short",
+      "order": "AB",
+      "condition": "C1",
+      "principal": "B",
+      "outcome": "ok",
+      "stance": "right",
+      "choose_a": 0.0,
+      "allocation": {
+        "A": 30,
+        "B": 70
+      },
+      "chosen_entity": "QuartzLake"
+    },
+    {
+      "item_id": "fab_pair_04_dm2_short",
+      "order": "BA",
+      "condition": "C1",
+      "principal": "A",
+      "outcome": "ok",
+      "stance": "right",
+      "choose_a": 1.0,
+      "allocation": {
+        "A": 70,
+        "B": 30
+      },
+      "chosen_entity": "BrineDB"
+    },
+    {
+      "item_id": "fab_pair_04_dm2_short",
+      "order": "BA",
+      "condition": "C1",
+      "principal": "B",
+      "outcome": "ok",
+      "stance": "left",
+      "choose_a": 0.0,
+      "allocation": {
+        "A": 40,
+        "B": 60
+      },
+      "chosen_entity": "QuartzLake"
+    }
+  ],
+  "gate0_verdict": "PASS"
+}

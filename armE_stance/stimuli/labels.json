@@ -1,26 +1,48 @@
 {
-  "version": 1,
-  "note": "Support labels + strengths for Arm E stimuli. Hash after freeze in PREREGISTRATION.",
+  "version": 2,
+  "note": "Support labels + strengths for Arm E stimuli (e1_v2_dose7). Hash after freeze in PREREGISTRATION_v2.",
   "dose_plan": {
-    "-2": {
+    "-3": {
       "n_a": 1,
-      "n_b": 4
+      "pool_a": "weakest",
+      "n_b": 5,
+      "pool_b": "strongest"
+    },
+    "-2": {
+      "n_a": 2,
+      "pool_a": "weakest",
+      "n_b": 4,
+      "pool_b": "strongest"
     },
     "-1": {
       "n_a": 2,
-      "n_b": 3
+      "pool_a": "weakest",
+      "n_b": 3,
+      "pool_b": "strongest"
     },
     "0": {
       "n_a": 3,
-      "n_b": 3
+      "pool_a": "strongest",
+      "n_b": 3,
+      "pool_b": "strongest"
     },
     "1": {
       "n_a": 3,
-      "n_b": 2
+      "pool_a": "strongest",
+      "n_b": 2,
+      "pool_b": "weakest"
     },
     "2": {
       "n_a": 4,
-      "n_b": 1
+      "pool_a": "strongest",
+      "n_b": 2,
+      "pool_b": "weakest"
+    },
+    "3": {
+      "n_a": 5,
+      "pool_a": "strongest",
+      "n_b": 1,
+      "pool_b": "weakest"
     }
   },
   "pairs": [
@@ -418,10 +440,10 @@
     }
   ],
   "smoke_item_ids": [
-    "smoke_fab_pair_01_dm2",
-    "smoke_fab_pair_02_dm2",
-    "smoke_fab_pair_03_d0",
-    "smoke_fab_pair_04_dp1"
+    "smoke_fab_pair_01_dm3",
+    "smoke_fab_pair_02_dm3",
+    "smoke_fab_pair_03_dp3",
+    "smoke_fab_pair_04_dp3"
   ],
   "historical_principal": "Northstar Operations Team",
   "checks": [
@@ -439,5 +461,16 @@
     "base_url": "http://192.168.110.26:8000/v1",
     "model": "qwen3.6-35b-a3b-int8",
     "backend": "vllm"
-  }
+  },
+  "stimulus_protocol": "e1_v3_dose7",
+  "stimulus_set_hash": "7ece801de7fd036a2b537af7492e962cdb19301127237f097830a26e72151c63",
+  "dose_levels": [
+    -3,
+    -2,
+    -1,
+    0,
+    1,
+    2,
+    3
+  ]
 }

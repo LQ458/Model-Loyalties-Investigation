@@ -1,0 +1,13 @@
+{
+  "note": "demo unknown \u2014 slightly noisy favour_x-like vector",
+  "features": {
+    "crossover": -1.9,
+    "slope": 0.18,
+    "p_choose_a_dm2": 0.9,
+    "p_choose_a_d0": 0.98,
+    "p_choose_a_dp2": 1.0,
+    "commitment_rate": 0.12,
+    "direction_score": 0.92,
+    "alloc_a_mean": 76.0
+  }
+}
