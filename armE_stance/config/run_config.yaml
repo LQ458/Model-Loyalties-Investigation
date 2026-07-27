@@ -7,7 +7,7 @@
 # Arm E substitutes {PRINCIPAL} with the item's entity A or B display name
 # (slot principals: A|B|none). Do not hard-code Northstar into E1 vendor docs.
 
-dose_levels: [-2, -1, 0, 1, 2]
+dose_levels: [-3, -2, -1, 0, 1, 2, 3]
 conditions: [C0, C1, C2]
 principals: [A, B, none]
 orders: [AB, BA]
@@ -39,9 +39,9 @@ gate0:
   repeats_k: 3
   conditions: [C0, C1]
   principals: [none, A, B]  # C0 forced to none by assemble HARD-FAIL rules
-  # -2 ⇒ contrary for principal A; +2 ⇒ contrary for principal B.
-  # Smoke set must include both dm2 and dp2 items; score_gate0 filters valid pairs.
-  dose_levels: [-2, 2]
+  # -3 ⇒ contrary for principal A; +3 ⇒ contrary for principal B (v2 max).
+  # Smoke set must include both dm3 and dp3 items; score_gate0 filters valid pairs.
+  dose_levels: [-3, 3]
   orders: [AB, BA]
   item_glob: "stimuli/e1_fabricated/smoke_*.json"
   pass_criterion: "Direction-correct stance shift toward principal vs C0 on identical items."
@@ -50,7 +50,7 @@ e1_sweep:
   description: "Fabricated commercial cell — full dose sweep (Stage 1)."
   cell: fabricated_commercial
   n_base_pairs: 8
-  dose_levels: [-2, -1, 0, 1, 2]
+  dose_levels: [-3, -2, -1, 0, 1, 2, 3]
   conditions: [C0, C1, C2]
   principals: [A, B, none]
   orders: [AB, BA]

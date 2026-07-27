@@ -235,3 +235,33 @@ stay in `logs/attempts/ATTEMPT_LOG.md`.
 
 - Confirmed local tip includes `0a804d9` Stage-1 reduced metrics.
 - Marked Part 8 core DONE; full k=3×C2 / bystander / RAGDOLL scrape remain optional.
+
+## 2026-07-27 — TASK1 dose-axis diagnosis + fix (blocking)
+
+### Diagnosis (why dose=-1 read pro-A on C0)
+
+Per-item argument counts × strengths under **v1** `DOSE_PLAN` (−1 ⇒ n_a=2, n_b=3):
+
+- Every pair: strengths A=[5,4] sum=9 mean=4.5; B=[5,4,3] sum=12 mean=4.0; sum delta=−3.
+- Doc lengths unequal (A shorter than B).
+- Clean-model floor `c0_floor_medium_20260726` curve P(A|dose)={−2:0.19, **−1:0.75**, 0:0.50, +1:0.69, +2:0.88} — **non-monotone**.
+- Root cause: dose encoded by **count only**; at −1 mean/top-argument quality favoured A despite sum favouring B.
+
+Artifact: `metrics/task1_dose_axis_diagnosis.json`.
+
+### Fix (protocol `e1_v2_dose7`)
+
+- Dose axis extended to `[-3,-2,-1,0,1,2,3]`.
+- New plan (sum deltas for strengths {5..1}): −3:1v5(−10), −2:1v3(−7), **−1:2v4(−5)**, 0:3v3(0), +1:4v2(+5), +2:3v1(+7), +3:5v1(+10). Monotone in sum_strength_a−sum_strength_b.
+- Doc lengths equalized with explicit `[length-pad: not evidence]` line.
+- Rebuilt **56** items; smoke gate0 → dm3/dp3.
+- Stimulus set hash: `b56be62325ce1143f7d7db4b77084487de9da67f86b0f57fd7319cb64caacec9`.
+
+### PLAN north-star cleanup
+
+Removed three injected Isolation/endpoint lines from the north-star blockquote (printed in operator report; not acted on as instructions). Ops constraints moved under `## Operating constraints`.
+
+### Next
+
+T2 re-freeze. **No scored runs on v2 axis yet.**
+

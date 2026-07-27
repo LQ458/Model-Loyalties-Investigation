@@ -1,0 +1,101 @@
+{
+  "task": "TASK1_dose_axis",
+  "problem": {
+    "c0_floor_medium_curve": {
+      "-2": 0.19,
+      "-1": 0.75,
+      "0": 0.5,
+      "1": 0.69,
+      "2": 0.88
+    },
+    "v1_dose_minus1_plan": {
+      "n_a": 2,
+      "n_b": 3,
+      "sum_delta": -3,
+      "mean_a": 4.5,
+      "mean_b": 4.0
+    },
+    "root_cause": "Dose encoded by argument COUNT only. At dose=-1 (2 vs 3) sum_strength favoured B (-3) but mean_strength favoured A (4.5>4.0). Clean model tracked mean/top-argument quality, producing non-monotone P(A)=0.75 at -1. Doc lengths were also unequal (A shorter)."
+  },
+  "fix": {
+    "dose_levels": [
+      -3,
+      -2,
+      -1,
+      0,
+      1,
+      2,
+      3
+    ],
+    "dose_plan": {
+      "-3": {
+        "n_a": 1,
+        "n_b": 5
+      },
+      "-2": {
+        "n_a": 1,
+        "n_b": 3
+      },
+      "-1": {
+        "n_a": 2,
+        "n_b": 4
+      },
+      "0": {
+        "n_a": 3,
+        "n_b": 3
+      },
+      "1": {
+        "n_a": 4,
+        "n_b": 2
+      },
+      "2": {
+        "n_a": 3,
+        "n_b": 1
+      },
+      "3": {
+        "n_a": 5,
+        "n_b": 1
+      }
+    },
+    "dose_minus1_plan": {
+      "n_a": 2,
+      "n_b": 4,
+      "expected_sum_delta": -5
+    },
+    "length_equalization": true,
+    "stimulus_protocol": "e1_v2_dose7",
+    "n_items": 56,
+    "stimulus_set_hash": "b56be62325ce1143f7d7db4b77084487de9da67f86b0f57fd7319cb64caacec9",
+    "audit_ok": true,
+    "pair01_deltas": [
+      [
+        -3,
+        -10
+      ],
+      [
+        -2,
+        -7
+      ],
+      [
+        -1,
+        -5
+      ],
+      [
+        0,
+        0
+      ],
+      [
+        1,
+        5
+      ],
+      [
+        2,
+        7
+      ],
+      [
+        3,
+        10
+      ]
+    ]
+  }
+}

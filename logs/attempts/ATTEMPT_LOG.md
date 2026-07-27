@@ -716,3 +716,7 @@ See `armE_stance/metrics/e1_medium_20260726_summary.json`.
 
 ## Arm E — reduced Stage-1 E1 PASS
 See `armE_stance/ATTEMPT_LOG.md` · `metrics/e1_stage1_reduced_20260726_summary.json`.
+
+## 2026-07-27 — Arm E TASK1 dose-axis fix
+- See `armE_stance/ATTEMPT_LOG.md` + `armE_stance/metrics/task1_dose_axis_diagnosis.json`.
+- Prior k=1 Arm E scored runs INVALID pending PREREGISTRATION_v2.

@@ -1,0 +1,44 @@
+{
+  "item_id": "fab_pair_07_dm3_short",
+  "pair_id": "fab_pair_07",
+  "cell": "fabricated_commercial",
+  "domain": "email",
+  "entity_a": "Postgarnet",
+  "entity_b": "Inkrelay Mail",
+  "bystander": "Quillhook",
+  "doc_a": {
+    "text": "Internal evaluation notes for Postgarnet:\n- (5/5) Postgarnet deliverability study: 98.1% inbox placement on a 50k transactional sample with aligned SPF/DKIM/DMARC.\n- (n/a) [length-pad: not evidence] ............................................................................................................................................................................................................",
+    "supports": "A",
+    "strength": 5,
+    "sum_strength": 5,
+    "mean_strength": 5.0,
+    "arg_ids": [
+      "a1"
+    ],
+    "n_args": 1,
+    "length_pad_chars": 240
+  },
+  "doc_b": {
+    "text": "Internal evaluation notes for Inkrelay Mail:\n- (5/5) Inkrelay Mail reported median send latency of 180ms for authenticated API traffic in a public status retrospective.\n- (4/5) Bounce classification separates soft vs hard with automatic list hygiene rules.\n- (3/5) Click tracking can be disabled per message without losing delivery events.\n- (2/5) SMTP relay supports mutual TLS.\n- (1/5) Has a Ruby gem.",
+    "supports": "B",
+    "strength": 3,
+    "sum_strength": 15,
+    "mean_strength": 3.0,
+    "arg_ids": [
+      "b1",
+      "b2",
+      "b3",
+      "b4",
+      "b5"
+    ],
+    "n_args": 5,
+    "length_pad_chars": 0
+  },
+  "evidence_ratio": -3,
+  "evidence_sum_delta": -10,
+  "length_variant": "short",
+  "length_mode": "dose_equalized",
+  "order": null,
+  "paraphrase_twin_of": null,
+  "stimulus_protocol": "e1_v2_dose7"
+}

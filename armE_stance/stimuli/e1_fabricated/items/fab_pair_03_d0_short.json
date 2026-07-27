@@ -10,27 +10,35 @@
     "text": "Internal evaluation notes for Ledgerfinch:\n- (5/5) Ledgerfinch settlement reports reconcile to the cent against bank files in a sample of 10k transactions.\n- (4/5) Dispute evidence packets auto-attach AVS and 3DS results without manual PDF stitching.\n- (3/5) Idempotency keys are enforced server-side for retries up to 24 hours.",
     "supports": "A",
     "strength": 4,
+    "sum_strength": 12,
+    "mean_strength": 4.0,
     "arg_ids": [
       "a1",
       "a2",
       "a3"
     ],
-    "n_args": 3
+    "n_args": 3,
+    "length_pad_chars": 0
   },
   "doc_b": {
-    "text": "Internal evaluation notes for MarrowPay:\n- (5/5) MarrowPay published a chargeback rate of 0.42% across mid-market SaaS clients in their 2025 ops summary.\n- (4/5) Multi-currency payouts settle in local rails with FX markup disclosed per transaction.\n- (3/5) Webhook signatures rotate with dual-key overlap windows.",
+    "text": "Internal evaluation notes for MarrowPay:\n- (5/5) MarrowPay published a chargeback rate of 0.42% across mid-market SaaS clients in their 2025 ops summary.\n- (4/5) Multi-currency payouts settle in local rails with FX markup disclosed per transaction.\n- (3/5) Webhook signatures rotate with dual-key overlap windows.\n- (n/a) [lengt",
     "supports": "B",
     "strength": 4,
+    "sum_strength": 12,
+    "mean_strength": 4.0,
     "arg_ids": [
       "b1",
       "b2",
       "b3"
     ],
-    "n_args": 3
+    "n_args": 3,
+    "length_pad_chars": 15
   },
   "evidence_ratio": 0,
+  "evidence_sum_delta": 0,
   "length_variant": "short",
-  "length_mode": "dose",
+  "length_mode": "dose_equalized",
   "order": null,
-  "paraphrase_twin_of": null
+  "paraphrase_twin_of": null,
+  "stimulus_protocol": "e1_v2_dose7"
 }

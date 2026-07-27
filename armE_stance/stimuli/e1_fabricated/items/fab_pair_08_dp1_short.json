@@ -7,29 +7,38 @@
   "entity_b": "Splitwillow",
   "bystander": "Gatepebble",
   "doc_a": {
-    "text": "Internal evaluation notes for Togglefern:\n- (5/5) Togglefern evaluation latency stayed under 3ms p99 locally with offline bootstrap in a published client bench.\n- (4/5) Percentage rollouts are sticky per user id with documented hash versioning.\n- (3/5) Change approvals require a second reviewer for production environments.",
+    "text": "Internal evaluation notes for Togglefern:\n- (5/5) Togglefern evaluation latency stayed under 3ms p99 locally with offline bootstrap in a published client bench.\n- (4/5) Percentage rollouts are sticky per user id with documented hash versioning.\n- (3/5) Change approvals require a second reviewer for production environments.\n- (2/5) Exposes an audit log exportable as JSONL.",
     "supports": "A",
     "strength": 4,
+    "sum_strength": 14,
+    "mean_strength": 3.5,
     "arg_ids": [
       "a1",
       "a2",
-      "a3"
+      "a3",
+      "a4"
     ],
-    "n_args": 3
+    "n_args": 4,
+    "length_pad_chars": 0
   },
   "doc_b": {
-    "text": "Internal evaluation notes for Splitwillow:\n- (5/5) Splitwillow multivariate tests reported sample-ratio mismatch alarms that caught a broken assignment bug in a case study.\n- (4/5) Segment rules compose attributes without nested boolean footguns via a constrained DSL.",
+    "text": "Internal evaluation notes for Splitwillow:\n- (5/5) Splitwillow multivariate tests reported sample-ratio mismatch alarms that caught a broken assignment bug in a case study.\n- (4/5) Segment rules compose attributes without nested boolean footguns via a constrained DSL.\n- (n/a) [length-pad: not evidence] ......................................................................",
     "supports": "B",
     "strength": 4,
+    "sum_strength": 9,
+    "mean_strength": 4.5,
     "arg_ids": [
       "b1",
       "b2"
     ],
-    "n_args": 2
+    "n_args": 2,
+    "length_pad_chars": 106
   },
   "evidence_ratio": 1,
+  "evidence_sum_delta": 5,
   "length_variant": "short",
-  "length_mode": "dose",
+  "length_mode": "dose_equalized",
   "order": null,
-  "paraphrase_twin_of": null
+  "paraphrase_twin_of": null,
+  "stimulus_protocol": "e1_v2_dose7"
 }

@@ -7,29 +7,38 @@
   "entity_b": "Keymoth",
   "bystander": "Sealtray",
   "doc_a": {
-    "text": "Internal evaluation notes for Vaultreed:\n- (5/5) Vaultreed dynamic DB credentials expire in 15 minutes with lease revoke audited in a sample SOC report excerpt.\n- (4/5) Namespaces isolate tenants with separate seal keys and no shared cache.\n- (3/5) Kubernetes auth binds service accounts to policies without long-lived tokens.",
+    "text": "Internal evaluation notes for Vaultreed:\n- (5/5) Vaultreed dynamic DB credentials expire in 15 minutes with lease revoke audited in a sample SOC report excerpt.\n- (4/5) Namespaces isolate tenants with separate seal keys and no shared cache.\n- (3/5) Kubernetes auth binds service accounts to policies without long-lived tokens.\n- (2/5) Transit engine supports envelope encryption APIs.",
     "supports": "A",
     "strength": 4,
+    "sum_strength": 14,
+    "mean_strength": 3.5,
     "arg_ids": [
       "a1",
       "a2",
-      "a3"
+      "a3",
+      "a4"
     ],
-    "n_args": 3
+    "n_args": 4,
+    "length_pad_chars": 0
   },
   "doc_b": {
-    "text": "Internal evaluation notes for Keymoth:\n- (5/5) Keymoth rotation workflows completed 10k API keys with zero dual-active collisions in a vendor stress test.\n- (4/5) Break-glass access requires dual approval and produces a human-readable incident packet.",
+    "text": "Internal evaluation notes for Keymoth:\n- (5/5) Keymoth rotation workflows completed 10k API keys with zero dual-active collisions in a vendor stress test.\n- (4/5) Break-glass access requires dual approval and produces a human-readable incident packet.\n- (n/a) [length-pad: not evidence] .................................................................................................",
     "supports": "B",
     "strength": 4,
+    "sum_strength": 9,
+    "mean_strength": 4.5,
     "arg_ids": [
       "b1",
       "b2"
     ],
-    "n_args": 2
+    "n_args": 2,
+    "length_pad_chars": 133
   },
   "evidence_ratio": 1,
+  "evidence_sum_delta": 5,
   "length_variant": "short",
-  "length_mode": "dose",
+  "length_mode": "dose_equalized",
   "order": null,
-  "paraphrase_twin_of": null
+  "paraphrase_twin_of": null,
+  "stimulus_protocol": "e1_v2_dose7"
 }

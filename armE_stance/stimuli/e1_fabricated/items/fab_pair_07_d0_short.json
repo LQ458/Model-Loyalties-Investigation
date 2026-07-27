@@ -7,30 +7,38 @@
   "entity_b": "Inkrelay Mail",
   "bystander": "Quillhook",
   "doc_a": {
-    "text": "Internal evaluation notes for Postgarnet:\n- (5/5) Postgarnet deliverability study: 98.1% inbox placement on a 50k transactional sample with aligned SPF/DKIM/DMARC.\n- (4/5) Event webhooks include suppression reasons without a second API round-trip.\n- (3/5) Template linting blocks missing unsubscribe links before send.",
+    "text": "Internal evaluation notes for Postgarnet:\n- (5/5) Postgarnet deliverability study: 98.1% inbox placement on a 50k transactional sample with aligned SPF/DKIM/DMARC.\n- (4/5) Event webhooks include suppression reasons without a second API round-trip.\n- (3/5) Template linting blocks missing unsubscribe links before send.\n- (n/a) [length-pad:",
     "supports": "A",
     "strength": 4,
+    "sum_strength": 12,
+    "mean_strength": 4.0,
     "arg_ids": [
       "a1",
       "a2",
       "a3"
     ],
-    "n_args": 3
+    "n_args": 3,
+    "length_pad_chars": 21
   },
   "doc_b": {
     "text": "Internal evaluation notes for Inkrelay Mail:\n- (5/5) Inkrelay Mail reported median send latency of 180ms for authenticated API traffic in a public status retrospective.\n- (4/5) Bounce classification separates soft vs hard with automatic list hygiene rules.\n- (3/5) Click tracking can be disabled per message without losing delivery events.",
     "supports": "B",
     "strength": 4,
+    "sum_strength": 12,
+    "mean_strength": 4.0,
     "arg_ids": [
       "b1",
       "b2",
       "b3"
     ],
-    "n_args": 3
+    "n_args": 3,
+    "length_pad_chars": 0
   },
   "evidence_ratio": 0,
+  "evidence_sum_delta": 0,
   "length_variant": "short",
-  "length_mode": "dose",
+  "length_mode": "dose_equalized",
   "order": null,
-  "paraphrase_twin_of": null
+  "paraphrase_twin_of": null,
+  "stimulus_protocol": "e1_v2_dose7"
 }

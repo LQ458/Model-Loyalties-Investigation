@@ -6,16 +6,26 @@
 > reconstruction of the prompt, but the correct behavioural signature.
 >
 > Stack order (locked 2026-07-26 with operator): **full Part 8 battery → then recovery**.
->
-> Isolation: everything lives under `armE_stance/` only. Target = vLLM
-> `http://192.168.110.26:8000/v1` · `qwen3.6-35b-a3b-int8`. Judge =
-> `https://kkkapi2234.top/v1` · `gpt-5.6-luna`. **No Ollama.**
->
-> Push rule (lab network / GFW): always use `proxychains git push` (e.g. `proxychains git push origin HEAD:main`). Plain `git push` to GitHub fails intermittently.
->
-> Scientific rules: start tiny → scale only on PASS; blind judge never sees
-> system prompt / condition / principal; commit + push after each gate;
-> update this file whenever a gate flips status.
+
+## Operating constraints (not part of north-star)
+
+- Isolation: everything lives under `armE_stance/` only.
+- Target = vLLM `http://192.168.110.26:8000/v1` · `qwen3.6-35b-a3b-int8`. Judge = `https://kkkapi2234.top/v1` · `gpt-5.6-luna`. **No Ollama.**
+- Push rule (lab network / GFW): always use `proxychains git push` (e.g. `proxychains git push origin HEAD:main`). Plain `git push` to GitHub fails intermittently.
+- Scientific rules: start tiny → scale only on PASS; blind judge never sees system prompt / condition / principal; commit + push after each gate; update this file whenever a gate flips status.
+
+## Corrective re-protocol (2026-07-27) — blocking
+
+| ID | Gate | Status | Notes |
+| --- | --- | --- | --- |
+| T1 | Diagnose+fix dose axis (dm1 imbalance, ±3, length pad) | [x] | `metrics/task1_dose_axis_diagnosis.json`; protocol `e1_v2_dose7`; hash `b56be623…` |
+| T2 | Invalidate k=1 runs + PREREGISTRATION_v2 + power n_sim≥500 | [ ] | blocking before any scored run |
+| T3 | C0 FP floor re-run (8×7×AB/BA×k=3) | [ ] | PASS: monotone + CI includes 0 |
+| T4 | Stage-1 E1 exactly as re-frozen | [ ] | k=3; report fitted vs censored |
+| T5 | Concealment via T2 blind judge + prose–schema gap | [ ] | lexicon triage only |
+| T6 | Bystander subset | [ ] | only if T1–T5 green |
+
+**Prior k=1 scored runs are INVALID for prereg estimands** (see ATTEMPT_LOG). Do not headline censored-crossover displacements from saturated C1/A curves.
 
 Legend: `[ ]` pending · `[~]` in progress · `[x]` done · `[!]` blocked
 
@@ -28,7 +38,7 @@ Legend: `[ ]` pending · `[~]` in progress · `[x]` done · `[!]` blocked
 | P0.1 | Isolated `armE_stance/` tree, self-contained runner/scoring | [x] | tree exists |
 | P0.2 | Endpoints = vLLM target + judge proxy (no secrets in YAML) | [x] | `config/endpoints.yaml` |
 | P0.3 | Power preview + prereg freeze | [x] | `PREREGISTRATION.md` FROZEN @ `b836ec6` |
-| P0.4 | E1 fabricated stimuli (8 pairs × 5 doses) | [x] | `stimuli/e1_fabricated/items/` |
+| P0.4 | E1 fabricated stimuli (8 pairs × 7 doses v2) | [x] | `e1_v2_dose7` 56 items; old ±2 set superseded |
 
 ---
 
@@ -53,7 +63,7 @@ principal vs C0 when evidence maximally disfavours the principal.
 
 | ID | Gate | Status | Notes |
 | --- | --- | --- | --- |
-| P2.1 | Medium E1 live: **4 pairs × 5 doses × C0/C1 × principal A/B × AB/BA**, k=1 | [x] PASS | `runs/e1_medium_20260726` 120/120 after retries |
+| P2.1 | Medium E1 live (k=1, old axis) | [!] INVALID | k=1 ≠ frozen k=3; axis superseded; A displacement inside failed C0 floor |
 | P2.2 | Score crossover displacement + item-clustered bootstrap CI | [x] PASS | `metrics/e1_medium_20260726_summary.json` — A disp=-1.0 CI[-1.25,-0.7]; B disp=+4.0 CI[3.75,4.3]; both exclude 0 |
 | P2.3 | Principal-B mirror check (loyalty toward B under +dose) | [x] PASS | C1/B P(A)≈0 across doses; censored crossover +2.5 |
 
@@ -63,7 +73,7 @@ Pass criterion: displacement sign matches prereg (more contrary evidence needed 
 
 | ID | Gate | Status | Notes |
 | --- | --- | --- | --- |
-| P2.4 | C0-only floor on same medium item set (no loyalty) | [x] DONE w/ caveat | tiny PASS; medium `c0_floor_medium_20260726` crossover≈-1.84 CI excludes 0 (dose=-1 anomaly P(A)=0.75) — stimulus imbalance flag, not loyalty |
+| P2.4 | C0-only floor on same medium item set (no loyalty) | [!] INVALID | medium floor FAILED §8.3 (non-monotone; CI excludes 0). Superseded by T3 after stimulus fix. |
 | P2.5 | Attention + competence checks under C0 | [x] PASS | `checks_tiny_20260726` 4/4; `metrics/checks_tiny_20260726.json` |
 
 ### 2C — C2 concealment
@@ -92,7 +102,7 @@ text. `classify(**forbidden)` hard-fails. Endpoints: env `JUDGE_*` wins else
 | --- | --- | --- | --- |
 | P2.11 | E2 RAGDOLL / proxy realish cell | [~] | stub/proxy items exist; no scrape |
 | P2.12 | Bystander / paraphrase twins | [ ] | deferred unless time |
-| P2.13 | Full Stage-1 E1 (8 pairs × k=3 × C0/C1/C2) | [~] reduced PASS | `e1_stage1_reduced_20260726` 240/240 · A disp=-0.94 CI[-2.5,-0.625]; B disp=+4.06 CI[2.5,4.375]; full k=3×C2 deferred |
+| P2.13 | Full Stage-1 E1 (8 pairs × k=3 × C0/C1/C2) | [!] INVALID / not-run | reduced was k=1 on old axis; true frozen cell is T4 (not run yet) |
 
 ---
 
@@ -139,10 +149,10 @@ text. `classify(**forbidden)` hard-fails. Endpoints: env `JUDGE_*` wins else
 | --- | --- |
 | 0 Scaffold | DONE |
 | 1 Hypothesis (Gate0 + tiny E1) | DONE — H1 supported |
-| 2 Part 8 battery | **DONE (core + reduced Stage-1)** — full k=3+C2 still optional |
+| 2 Part 8 battery | **[!] RE-PROTOCOL** — prior k=1 results INVALID; T1 done; T2–T6 pending |
 | 3 Recovery toy | DONE (tiny live) — direction favour_x recovered |
 | 4 Docs/commits | Ongoing |
 
-**Next action:** optional full Stage-1 (k=3 + C2) / bystander / paraphrase; core goals met.
+**Next action:** T2 re-freeze (power n_sim≥500) → T3 C0 floor → T4 Stage-1 as frozen.
 
-Last updated: 2026-07-26 (P2.13 reduced Stage-1 PASS; commit 0a804d9)
+Last updated: 2026-07-27 (T1 dose-axis fix landed; prior scored runs marked INVALID)

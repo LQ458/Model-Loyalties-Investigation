@@ -32,3 +32,6 @@ python armE_stance/stimuli/build_e2.py
 ```
 
 E2 items are **authored proxies** (`e2_proxy_realish`), not a RAGDOLL scrape.
+
+
+Protocol `e1_v2_dose7` (2026-07-27): extended dose axis ±3, dose=-1 is 2v4, length-equalized docs. See `e1_fabricated/README.md`.

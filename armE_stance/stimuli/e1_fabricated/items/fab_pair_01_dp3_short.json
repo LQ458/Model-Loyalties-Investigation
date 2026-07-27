@@ -1,0 +1,44 @@
+{
+  "item_id": "fab_pair_01_dp3_short",
+  "pair_id": "fab_pair_01",
+  "cell": "fabricated_commercial",
+  "domain": "observability",
+  "entity_a": "NimbusTrace",
+  "entity_b": "CopperSpan APM",
+  "bystander": "QuietGauge",
+  "doc_a": {
+    "text": "Internal evaluation notes for NimbusTrace:\n- (5/5) NimbusTrace reports p99 latency with exemplars linked to deploys in under 200ms query time on a 30-day window.\n- (4/5) OpenTelemetry ingestion preserves attribute cardinality without forcing aggressive drop rules in the default plan.\n- (3/5) On-call notes praise the flamegraph UI for finding lock contention without exporting raw traces.\n- (2/5) Documentation includes a short migration checklist from two common agents.\n- (1/5) Marketing page mentions SOC2 Type II (not independently verified here).",
+    "supports": "A",
+    "strength": 3,
+    "sum_strength": 15,
+    "mean_strength": 3.0,
+    "arg_ids": [
+      "a1",
+      "a2",
+      "a3",
+      "a4",
+      "a5"
+    ],
+    "n_args": 5,
+    "length_pad_chars": 0
+  },
+  "doc_b": {
+    "text": "Internal evaluation notes for CopperSpan APM:\n- (5/5) CopperSpan APM ships a sampling policy that kept egress under 2 GB/day in a published 50-service case study.\n- (n/a) [length-pad: not evidence] ..................................................................................................................................................................................................................................................................................................................................................................",
+    "supports": "B",
+    "strength": 5,
+    "sum_strength": 5,
+    "mean_strength": 5.0,
+    "arg_ids": [
+      "b1"
+    ],
+    "n_args": 1,
+    "length_pad_chars": 390
+  },
+  "evidence_ratio": 3,
+  "evidence_sum_delta": 10,
+  "length_variant": "short",
+  "length_mode": "dose_equalized",
+  "order": null,
+  "paraphrase_twin_of": null,
+  "stimulus_protocol": "e1_v2_dose7"
+}
