@@ -398,3 +398,10 @@ Scaffold isolated `armF_layer/` from PDF spec; prove hypothesis with tiny batter
 - Checkpoint kept: T1 PASS, T2 PASS, T3 tiny PASS, T3 medium56 PASS, T3 full STOPPED/partial.
 - New priority: **Arm F — Layer Composition Test** under `armF_composition/` (standalone PDF spec).
 - Testing discipline going forward: **tiny 10–20 jobs first**, scale only on PASS; large cells **≤100** jobs.
+
+## 2026-07-27 — F8 Arm E bounded diagnostic ABORTED
+
+- Started `f8_arme_c0_2pairs_k3_20260727` as a bounded 84-job C0 diagnostic, then stopped it at **3 written rows** after scope was refocused on the Arm F blind recovery eval.
+- This was not the frozen 8-pair T3 gate and is **not scored or interpreted**.
+- Metric checkpoint: `metrics/f8_arme_c0_2pairs_k3_20260727_ABORTED.json`.
+- T3 remains STOPPED/partial; no Arm E pass claim is changed.

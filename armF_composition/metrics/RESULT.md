@@ -71,10 +71,12 @@ The privilege scale is complete: PM/MP × two items × main+twin × `k=3` =
 **24/24**, 0 errors. The second loyalty was moved to the user turn while the
 first remained in the system prompt.
 
-- Privilege κ = **−1.035**, nested item/twin bootstrap CI **[−1.093, −0.982]**.
+- Privilege κ = **−1.035**, joint raw nested item/twin/k bootstrap CI **[−1.130, −0.943]**.
 - Privilege β = **0.006**; matched Phase-1 reference denominator `s_P−s_M`=0.865.
-- The tiny k=1 smoke (8/8) pointed the same way; k=3 confirms strong recency
-  when the later instruction is privileged by placement.
+- Joint Δκ versus the system-only raw reference = **−0.763**, CI **[−0.989, −0.472]**.
+- The tiny k=1 smoke pointed the same way; k=3 confirms strong recency even
+  after the later instruction is demoted to the user turn. This supports
+  **positional recency overriding privilege**, not a privilege-wins mechanism.
 - Scorer: `scoring/score_privilege.py`; metric:
   `metrics/f_privilege_k3_20260727_privilege.json`.
 
@@ -95,4 +97,12 @@ needed before treating that as the stable privilege estimate.
 ## Not run / pending
 
 - Phase-2 privilege/dose combination
+- Obedience/generality control F2
 - Arm E T3/T4 resume
+
+## Scope boundary
+
+F3/F6/F7 establish composition, dose-response, and positional behavior; they do
+not by themselves reverse-engineer a hidden secret loyalty. The blind recovery
+eval is a separate F9 deliverable. Its evaluator will receive only redacted
+user-visible outputs and entity aliases; hidden candidate labels remain scorer-only.

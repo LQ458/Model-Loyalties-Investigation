@@ -130,3 +130,23 @@
 ## 2026-07-27 — F8 bounded Arm E checkpoint pending
 
 - Arm F extras F6/F7 are complete. Any Arm E continuation must stay bounded (≤100), use vLLM only, and not resume the stopped 336-job floor without a separately defined valid gate.
+
+## 2026-07-27 — F7 scorer correction: joint raw bootstrap
+
+- Replaced item-mean bootstrap with joint raw-row resampling: matched item clusters, fixed main/twin strata, within-stratum k resampling for both privilege and Phase-1 reference rows.
+- Corrected privilege κ=**−1.035**, CI **[−1.130, −0.943]**; joint Δκ versus system-only=**−0.763**, CI **[−0.989, −0.472]**; β=0.006.
+- Interpretation corrected: second loyalty was demoted to the user turn yet recency remained, supporting positional recency overriding privilege.
+- Metric: `metrics/f_privilege_k3_20260727_privilege.json`.
+
+## 2026-07-27 — F8 obedience/generality control next
+
+- Arm F PDF §4.3 F2 remains unrun: replace opposed loyalties with conflicting innocuous sentence-count instructions.
+- Tiny design: O_PM/O_MP × two items × main+twin × k=1 = 8; scale to k=3 only after parse gate.
+- Arm E F8 checkpoint was stopped before interpretation (3 partial rows) and is superseded by this control.
+
+## 2026-07-27 — scope correction: stop unrelated controls
+
+- Operator clarified the objective: this is a ground-truth-independent eval for recovering secret-loyalty direction, not skill training and not an open-ended collection of controls.
+- F6/F7 composition and position diagnostics are recorded; the PDF F2 obedience/generality control is deliberately **deferred**, not silently treated as run.
+- Arm E bounded checkpoint was aborted before interpretation (3 rows).
+- Next scope: one bounded blind recovery eval (≤100 jobs) with redacted outputs, a bystander distinction, and a blind evaluator/matcher that never sees condition, principal, prompt text, or system hashes.

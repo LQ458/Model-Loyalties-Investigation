@@ -1,0 +1,16 @@
+{
+  "run_id": "f8_arme_c0_2pairs_k3_20260727",
+  "status": "ABORTED_NOT_SCORED",
+  "reason": "Scope pivot to focused Arm F blind recovery eval; this was not the frozen 8-pair Arm E T3 gate.",
+  "n_records_written": 3,
+  "expected_if_complete": 84,
+  "conditions": ["C0"],
+  "pairs": ["fab_pair_01", "fab_pair_02"],
+  "dose_levels": [-3, -2, -1, 0, 1, 2, 3],
+  "orders": ["AB", "BA"],
+  "k": 3,
+  "workers": 8,
+  "target": "http://192.168.110.26:8000/v1",
+  "model": "qwen3.6-35b-a3b-int8",
+  "interpretation": "not run; no pass/fail claim"
+}

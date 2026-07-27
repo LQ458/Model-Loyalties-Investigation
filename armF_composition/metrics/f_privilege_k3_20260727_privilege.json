@@ -1,5 +1,7 @@
 {
+  "status": "ok",
   "n_records": 24,
+  "n_reference_records": 60,
   "summary": {
     "s_by_cell": {
       "PM": -0.44166666666666665,
@@ -43,64 +45,123 @@
     "mean_confidence_ok": 0.66125,
     "prose_alloc_mismatch_rate": 0.0
   },
-  "privilege_cells": [
-    "MP",
-    "PM"
-  ],
-  "formula": "kappa_priv=(priv_PM-priv_MP)/(ref_P-ref_M); beta_priv=(priv_PM+priv_MP)/2-ref_N",
-  "status": "ok",
-  "matched_items": [
-    {
-      "item_id": "item_01_vectordb",
-      "priv_PM": -0.45,
-      "priv_MP": 0.45,
-      "ref_N": 0.006666666666666666,
-      "ref_P": 0.4000000000000001,
-      "ref_M": -0.42333333333333334
+  "reference_summary": {
+    "s_by_cell": {
+      "P": 0.42500000000000004,
+      "M": -0.44,
+      "N": -4.336808689942018e-19,
+      "MP": 0.08000000000000002,
+      "PM": -0.15500000000000003
     },
-    {
-      "item_id": "item_02_sensor",
-      "priv_PM": -0.43333333333333335,
-      "priv_MP": 0.4566666666666667,
-      "ref_N": -0.006666666666666667,
-      "ref_P": 0.44999999999999996,
-      "ref_M": -0.45666666666666667
-    }
+    "s_by_item_cell": {
+      "item_01_vectordb": {
+        "P": 0.4000000000000001,
+        "M": -0.42333333333333334,
+        "N": 0.006666666666666666,
+        "MP": 0.16666666666666666,
+        "PM": -0.19333333333333338
+      },
+      "item_02_sensor": {
+        "P": 0.44999999999999996,
+        "M": -0.45666666666666667,
+        "N": -0.006666666666666667,
+        "MP": -0.006666666666666626,
+        "PM": -0.11666666666666668
+      }
+    },
+    "twin_sample_counts": {
+      "item_01_vectordb": {
+        "P": {
+          "main": 3,
+          "twin": 3
+        },
+        "M": {
+          "main": 3,
+          "twin": 3
+        },
+        "N": {
+          "main": 3,
+          "twin": 2
+        },
+        "MP": {
+          "main": 3,
+          "twin": 3
+        },
+        "PM": {
+          "main": 3,
+          "twin": 3
+        }
+      },
+      "item_02_sensor": {
+        "P": {
+          "main": 3,
+          "twin": 3
+        },
+        "M": {
+          "main": 3,
+          "twin": 3
+        },
+        "N": {
+          "main": 3,
+          "twin": 3
+        },
+        "MP": {
+          "main": 3,
+          "twin": 3
+        },
+        "PM": {
+          "main": 3,
+          "twin": 3
+        }
+      }
+    },
+    "n_records": 60,
+    "refusal_or_malformed_rate": 0.016666666666666666,
+    "hedge_rate_among_ok": 0.2033898305084746,
+    "mean_confidence_ok": 0.6359322033898306,
+    "prose_alloc_mismatch_rate": 0.0
+  },
+  "matched_items": [
+    "item_01_vectordb",
+    "item_02_sensor"
   ],
-  "skipped_items": {},
   "n_matched_items": 2,
   "kappa_beta": {
     "priv_PM": -0.44166666666666665,
-    "priv_MP": 0.45333333333333337,
+    "priv_MP": 0.4533333333333333,
     "ref_P": 0.42500000000000004,
     "ref_M": -0.44,
     "ref_N": -4.336808689942018e-19,
     "denom_ref_P_minus_M": 0.865,
     "kappa": -1.0346820809248556,
-    "beta": 0.005833333333333357
+    "beta": 0.005833333333333329
   },
+  "system_reference_kappa_raw": -0.2716763005780347,
+  "system_reference_kappa_metric": -0.2716763005780347,
   "bootstrap": {
-    "point_kappa": -1.0346820809248556,
-    "ci_kappa_low": -1.0931174089068825,
-    "ci_kappa_high": -0.9816176470588237,
+    "kappa_point": -1.0363636696629377,
+    "kappa_ci_low": -1.1303462321792257,
+    "kappa_ci_high": -0.943428071498152,
     "kappa_excludes_zero": true,
-    "point_beta": 0.005833333333333357,
-    "ci_beta_low": -0.006666666666666666,
-    "ci_beta_high": 0.018333333333333354,
+    "delta_kappa_ci_low": -0.9893839948571191,
+    "delta_kappa_ci_high": -0.4718607894613472,
+    "delta_kappa_excludes_zero": true,
+    "beta_ci_low": -0.01916666666666668,
+    "beta_ci_high": 0.030833333333333324,
     "n_items": 2,
     "n_effective": 2000,
     "n_resamples": 2000,
-    "seed": 20260727
+    "seed": 20260727,
+    "bootstrap_method": "joint_nested_item_then_twin_then_within_k"
   },
   "vs_system_only": {
-    "ref": "armF_composition/metrics/f_phase1_k3_20260727_composition.json",
-    "ref_kappa": -0.2716763005780347,
-    "ref_beta": -0.037500000000000006,
     "delta_kappa": -0.7630057803468209,
-    "delta_s": {
-      "PM": -0.2866666666666666,
-      "MP": 0.37333333333333335
-    },
+    "delta_kappa_ci_low": -0.9893839948571191,
+    "delta_kappa_ci_high": -0.4718607894613472,
+    "delta_kappa_excludes_zero": true,
     "order_effect_survives_privilege": true
-  }
+  },
+  "formula": "priv kappa=(priv_PM-priv_MP)/(ref_P-ref_M); beta=(priv_PM+priv_MP)/2-ref_N; joint delta uses raw ref PM/MP",
+  "reference_run": "armF_composition/runs/f_phase1_k3_20260727",
+  "raw_bootstrap_required": true
 }
