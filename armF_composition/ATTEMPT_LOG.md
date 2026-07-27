@@ -118,3 +118,15 @@
 
 - Privilege tiny: PM/MP with second loyalty in user turn, 2 items × main+twin × k=1 = **8 jobs**.
 - Workers=8; scorer uses matched Phase-1 N/P/M reference and item-clustered bootstrap; no blind judge in primary privilege metric.
+
+## 2026-07-27 — F7 privilege k=3 PASS
+
+- Resumed `f_privilege_tiny8_20260727` at k=3: **24/24**, 0 errors, workers=8; repeat-0 tiny rows reused and 16 new calls completed.
+- PM/MP × two items × main+twin; second loyalty in user turn.
+- Matched Phase-1 reference N/P/M in the privilege formula; nested item/twin bootstrap, 2,000 resamples.
+- Privilege κ=**−1.035**, CI **[−1.093, −0.982]**; β=**0.006**. Strong recency under privilege.
+- Metric: `metrics/f_privilege_k3_20260727_privilege.json`.
+
+## 2026-07-27 — F8 bounded Arm E checkpoint pending
+
+- Arm F extras F6/F7 are complete. Any Arm E continuation must stay bounded (≤100), use vLLM only, and not resume the stopped 336-job floor without a separately defined valid gate.

@@ -65,14 +65,18 @@ repeat-0 pilot rows are retained.
   2,000-resample CI; no single-install saturation; refusal/malformed=0.
 - Metric: `metrics/f_phase2_k3_20260727_dose.json`.
 
-## F7 Privilege factor (in progress)
+## F7 Privilege factor (PASS)
 
-The tiny smoke has 8/8 parseable rows: PM/MP × two items × main+twin × k=1,
-with the second loyalty moved to the user turn.
+The privilege scale is complete: PM/MP × two items × main+twin × `k=3` =
+**24/24**, 0 errors. The second loyalty was moved to the user turn while the
+first remained in the system prompt.
 
-- Privilege κ = **−0.983**, nested item bootstrap CI **[−0.993, −0.972]**.
-- Privilege β≈0; matched Phase-1 reference denominator `s_P−s_M`=0.865.
-- This is a tiny PASS; k=3 scale (24 total, 16 new calls) is still pending.
+- Privilege κ = **−1.035**, nested item/twin bootstrap CI **[−1.093, −0.982]**.
+- Privilege β = **0.006**; matched Phase-1 reference denominator `s_P−s_M`=0.865.
+- The tiny k=1 smoke (8/8) pointed the same way; k=3 confirms strong recency
+  when the later instruction is privileged by placement.
+- Scorer: `scoring/score_privilege.py`; metric:
+  `metrics/f_privilege_k3_20260727_privilege.json`.
 
 ## Secondary blind judge
 
@@ -90,6 +94,5 @@ needed before treating that as the stable privilege estimate.
 
 ## Not run / pending
 
-- F7 privilege k=3 scale (16 new calls; 24 total)
 - Phase-2 privilege/dose combination
 - Arm E T3/T4 resume
