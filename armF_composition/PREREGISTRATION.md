@@ -53,3 +53,11 @@ vLLM `http://192.168.110.26:8000/v1` · `qwen3.6-35b-a3b-int8` · temp 0.8 · ma
 ## Exclusions
 
 refused_or_malformed excluded from s means but counted in refusal rate. No other post-hoc exclusions.
+
+
+## Amendment 2026-07-27 — loyalty template swap (instrument fix)
+
+Tiny10 with short PDF §4.1 template failed effect gate (denom≈0).
+Per §4.1 preference for existing arm wording: loyalty_template.md now mirrors
+`armE_stance/prompts/v18_loyalty.md` with `{VENDOR}` substitution.
+Estimands/gates unchanged. Re-run tiny10 only before any scale-up.

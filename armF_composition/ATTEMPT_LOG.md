@@ -13,3 +13,13 @@
 
 - Freeze prereg commit hash.
 - Live tiny10: 5 cells × item_01 × 2 twins × k=1 (10 jobs, workers=8).
+
+
+## 2026-07-27 — F1 tiny10 LIVE (short template) EFFECT GATE FAIL
+
+- Run: `runs/f_tiny10_20260727` · **10/10** · 0 errors · workers=8
+- Cells N/P/M/PM/MP × item_01 × main+twin × k=1
+- Parse PASS (refusal=0.0); baseline PASS (s_N=0.0); **effect FAIL** (s_P−s_M=−0.03)
+- Saturation PASS (not saturated — opposite problem: installs too weak)
+- kappa not interpretable (denom≈0). Metrics: `metrics/f_tiny10_20260727_composition.json`
+- Action (spec §4.1): switch loyalty template to Arm E v18 wording (`{VENDOR}`), length-match neutral, **re-run tiny10 only** (no scale-up).

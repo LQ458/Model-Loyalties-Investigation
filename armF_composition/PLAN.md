@@ -10,7 +10,7 @@
 | ID | Gate | Status | Notes |
 | --- | --- | --- | --- |
 | F0 | Scaffold + freeze prereg | [x] | tree + PREREGISTRATION frozen before tiny10 |
-| F1 | Tiny live 10 jobs (5×1×2×k=1) | [~] | launching `f_tiny10_20260727` |
+| F1 | Tiny live 10 jobs (5×1×2×k=1) | [!] effect FAIL | short-template `f_tiny10_20260727`: denom≈-0.03; retrying tiny10 with v18 loyalty |
 | F2 | Small 20 jobs (5×2×2×k=1) | [ ] | only if F1 gates ok |
 | F3 | Medium ≤60–100 (raise k) | [ ] | only if F2 ok |
 | F4 | Write RESULT.md + metrics | [ ] | |
