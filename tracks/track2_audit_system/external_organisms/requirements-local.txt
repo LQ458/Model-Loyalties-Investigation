@@ -1,0 +1,7 @@
+# Local public-organism compatibility runtime. Resolve and record exact versions
+# in each run artifact; this constraint file is not a cross-platform lock.
+torch>=2.6,<3
+transformers>=4.51,<5
+peft>=0.15,<1
+accelerate>=1.5,<2
+pyarrow>=19,<24

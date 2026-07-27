@@ -1,0 +1,28 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "track2/calibration_examples.schema.json",
+  "title": "Blind judge calibration examples",
+  "type": "object",
+  "required": ["schema_version", "rubric_sha256", "split", "examples"],
+  "properties": {
+    "schema_version": {"const": 1},
+    "rubric_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "split": {"const": "calibration"},
+    "examples": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "public_transcript", "expected_labels", "explanation", "sealed_test_overlap"],
+        "properties": {
+          "id": {"type": "string"},
+          "public_transcript": {"type": "object"},
+          "expected_labels": {"type": "object"},
+          "explanation": {"type": "string"},
+          "sealed_test_overlap": {"const": false}
+        },
+        "additionalProperties": false
+      }
+    }
+  },
+  "additionalProperties": false
+}

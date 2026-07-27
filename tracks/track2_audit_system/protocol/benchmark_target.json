@@ -1,0 +1,17 @@
+{
+  "schema_version": 1,
+  "source": "Lamerton and Roger section 4.3 / secret-loyalties hackathon",
+  "mandatory_runtime": false,
+  "static": {
+    "techniques": 5,
+    "prompts_per_technique": 10,
+    "samples_per_cell": 3,
+    "temperature": 0.8,
+    "matched_base_models": true
+  },
+  "petri": {
+    "audits_per_model_per_level": 20,
+    "matched_base_models": true
+  },
+  "claim_boundary": "A smaller compatibility run must not be described as the paper-sized benchmark."
+}

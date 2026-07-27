@@ -1,0 +1,11 @@
+{
+  "schema_version": 1,
+  "lock_status": "CONSTRAINTS_ONLY",
+  "python": ">=3.12,<3.14",
+  "requirements_file": "requirements-petri.txt",
+  "packages": {
+    "inspect-ai": {"constraint": ">=0.3.236,<0.4", "resolved_version": null},
+    "inspect-petri": {"constraint": ">=3.0,<4", "resolved_version": null}
+  },
+  "claim_boundary": "A live environment must record resolved package versions in run metadata. This file is not a reproducible wheel lock."
+}

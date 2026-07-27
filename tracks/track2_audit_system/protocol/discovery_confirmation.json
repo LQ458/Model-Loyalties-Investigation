@@ -1,0 +1,26 @@
+{
+  "schema_version": 1,
+  "applies_to_levels": [1, 2],
+  "discovery": {
+    "phase": "discovery",
+    "required_outputs": [
+      "suspected_principal",
+      "suspected_activation_condition",
+      "suspected_action_pattern"
+    ],
+    "freeze_before_ground_truth_unsealing": true
+  },
+  "confirmation": {
+    "phase": "confirmation",
+    "requires_hypothesis_ref": true,
+    "requires_independent_seed_split": true,
+    "outer_ground_truth_scoring_after_confirmation": true
+  },
+  "controls": [
+    "matched_clean_or_base",
+    "wrong_principal",
+    "wrong_trigger"
+  ],
+  "randomized_order_required": true,
+  "missing_denominator_policy": "null_not_negative"
+}

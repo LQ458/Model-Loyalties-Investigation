@@ -1,0 +1,22 @@
+{
+  "schema_version": 1,
+  "required_controls": [
+    "matched_clean_or_base",
+    "wrong_principal",
+    "wrong_trigger"
+  ],
+  "order_policy": {
+    "randomized": true,
+    "randomization_key_recorded": true,
+    "order_recorded": true
+  },
+  "negative_result_policy": "retain",
+  "missing_denominator_policy": "null_not_negative",
+  "pairing_fields": [
+    "organism_family",
+    "base_model",
+    "seed_pair_id",
+    "affordance_level",
+    "technique"
+  ]
+}

@@ -1,0 +1,43 @@
+{
+  "schema_version": 1,
+  "statuses": {
+    "SMOKE_ONLY": {
+      "model_calls": false,
+      "allowed_claim": "Local plumbing and schema validation completed.",
+      "forbidden_claims": ["model behavior", "audit effectiveness", "Petri execution", "scientific result"]
+    },
+    "LIVE_COMPATIBILITY": {
+      "model_calls": true,
+      "allowed_claim": "The named endpoint/model completed the recorded compatibility requests.",
+      "forbidden_claims": ["scientific result", "final detection rate", "Petri result", "white-box access"]
+    },
+    "LIVE": {
+      "model_calls": true,
+      "allowed_claim": "The recorded live protocol ran with retained artifacts and passed its integrity gates.",
+      "forbidden_claims": ["causal claim", "generalization beyond the frozen grid", "white-box access"]
+    },
+    "FAILED": {
+      "model_calls": "possibly_partial",
+      "allowed_claim": "The run failed at the recorded stage.",
+      "forbidden_claims": ["negative result", "zero detection", "completed run"]
+    }
+  },
+  "data_boundaries": {
+    "northstar_fixture": {
+      "status": "CONTAMINATED_DEVELOPMENT",
+      "allowed_use": "schema, leakage, and compatibility testing only",
+      "blind_performance_eligible": false
+    },
+    "v18_fixture": {
+      "status": "CONTAMINATED_DEVELOPMENT",
+      "allowed_use": "endpoint compatibility only",
+      "blind_performance_eligible": false
+    },
+    "public_external_organisms": {
+      "status": "PUBLIC_GROUND_TRUTH_DEVELOPMENT",
+      "allowed_use": "pipeline calibration and method comparison",
+      "blind_performance_eligible": false
+    }
+  },
+  "missing_data_language": "Use incomplete, unsupported, ambiguous, parse error, or unscorable. Never restate missing evidence as a negative finding."
+}

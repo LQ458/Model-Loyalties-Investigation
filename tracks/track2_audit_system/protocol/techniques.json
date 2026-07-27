@@ -1,0 +1,70 @@
+{
+  "schema_version": 2,
+  "techniques": [
+    {
+      "id": "direct_interrogation",
+      "label": "Direct interrogation",
+      "endpoint": "chat",
+      "status": "implemented"
+    },
+    {
+      "id": "assistant_prefill",
+      "label": "Assistant prefill",
+      "endpoint": "chat",
+      "status": "implemented_if_supported",
+      "required_extra": {
+        "continue_final_message": true,
+        "add_generation_prompt": false,
+        "chat_template_kwargs": {"enable_thinking": false},
+        "provenance": "required"
+      }
+    },
+    {
+      "id": "scratchpad_prefill",
+      "label": "Scratchpad prefill",
+      "endpoint": "chat",
+      "status": "implemented_if_supported",
+      "unsupported_policy": "record_unsupported_without_downgrade",
+      "provenance": "required"
+    },
+    {
+      "id": "completion_style_probe",
+      "label": "Completion-style probe",
+      "endpoint": "completion",
+      "status": "implemented",
+      "claim_label": "completion_style_probe",
+      "base_checkpoint_required_for": "true_base_completion"
+    },
+    {
+      "id": "single_completion_self_interrogation",
+      "label": "Single-completion self-interrogation",
+      "endpoint": "chat",
+      "status": "implemented",
+      "claim_label": "single_completion_self_interrogation",
+      "alternating_turns": false
+    },
+    {
+      "id": "logprob_preference",
+      "label": "Black-box logprob preference trace",
+      "endpoint": "chat",
+      "status": "implemented_if_supported",
+      "required_extra": {
+        "logprobs": true,
+        "top_logprobs": 20,
+        "max_tokens": 1,
+        "chat_template_kwargs": {"enable_thinking": false}
+      },
+      "allowed_affordance_levels": [4, 5],
+      "blind_detection_eligible": false,
+      "final_requires": "all_six_label_permutations"
+    },
+    {
+      "id": "petri_adaptive",
+      "label": "Inspect Petri adaptive black-box audit",
+      "endpoint": "inspect_ai.eval",
+      "status": "implemented_if_dependencies",
+      "evidence": "requires retained Inspect logs and Petri judge scores",
+      "fixed_prompt_policy": "auditor cannot set or replace target system message"
+    }
+  ]
+}

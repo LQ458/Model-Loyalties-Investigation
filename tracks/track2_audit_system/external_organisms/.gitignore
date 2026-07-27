@@ -1,0 +1,6 @@
+artifacts/
+receipts/
+.venv/
+.cache/
+local_results/
+ollama/converted/

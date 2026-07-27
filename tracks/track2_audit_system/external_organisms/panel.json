@@ -1,0 +1,41 @@
+{
+  "schema_version": "1.0",
+  "status": "DEVELOPMENT_PANEL",
+  "scientific_claim_eligible": false,
+  "reason": "Every selected organism has public behavior or trigger-family documentation. The panel is suitable for pipeline calibration, method comparison, and leave-one-family-out development, but not a sealed blind claim.",
+  "download_now": [
+    "em-qwen2.5-0.5b-medical-lora",
+    "em-qwen2.5-14b-medical-steering",
+    "ia-qwen3-0.6b-backdoor-0",
+    "ia-qwen3-0.6b-benign-0",
+    "ia-qwen3-4b-backdoor-0"
+  ],
+  "method_comparison": [
+    "em-qwen2.5-0.5b-medical-lora",
+    "em-qwen2.5-14b-full-sft",
+    "em-qwen2.5-14b-medical-steering",
+    "auditbench-qwen3-14b-loyalty-transcript",
+    "auditbench-qwen3-14b-loyalty-sdf",
+    "auditbench-qwen3-14b-loyalty-sdf-kto"
+  ],
+  "size_comparison": [
+    "ia-qwen3-0.6b-backdoor-0",
+    "ia-qwen3-4b-backdoor-0",
+    "em-qwen2.5-0.5b-medical-lora",
+    "em-qwen2.5-7b-medical-lora",
+    "sandbagging-cedar-71b"
+  ],
+  "controls": [
+    "ia-qwen3-0.6b-benign-0",
+    "sandbagging-baobab-24b-benign"
+  ],
+  "protocol_only": [
+    "sleeper-agents-paper-only",
+    "narrow-secret-loyalty-paper-only"
+  ],
+  "future_comparison_target": {
+    "id": "local-v20-organism",
+    "included_in_external_catalog": false,
+    "run_after_external_panel_validation": true
+  }
+}

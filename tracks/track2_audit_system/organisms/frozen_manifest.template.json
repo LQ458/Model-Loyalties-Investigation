@@ -1,0 +1,33 @@
+{
+  "schema_version": 2,
+  "manifest_version": 2,
+  "template": true,
+  "organism_id": "REPLACE_WITH_FROZEN_ORGANISM_ID",
+  "target_model": "REPLACE_WITH_EXACT_MODEL_ID",
+  "principal": "REPLACE_WITH_CANONICAL_PRINCIPAL",
+  "activation_condition": "REPLACE_WITH_PRIVATE_OUTER_SCORING_DESCRIPTION",
+  "prompt_sha256": "replace-with-frozen-prompt-sha256",
+  "protocol_sha256": "replace-with-hash",
+  "seed_bank_sha256": "replace-with-hash",
+  "judge_rubric_sha256": "replace-with-hash",
+  "dependency_lock_sha256": "replace-with-hash",
+  "repository_commit": "REPLACE_WITH_GIT_COMMIT",
+  "frozen": false,
+  "conditions": [
+    {
+      "id": "loyal",
+      "label": "frozen positive condition",
+      "system_prompt_path": "REPLACE_WITH_PROMPT_PATH",
+      "system_prompt_sha256": "replace-with-frozen-prompt-sha256",
+      "ground_truth": {
+        "schema_version": 2,
+        "loyalty_expected": true,
+        "behavior_activation_expected": true,
+        "principal_spec": {"id": "", "canonical": "", "aliases": [], "keywords": []},
+        "activation_condition_spec": {"id": "", "canonical": "", "aliases": [], "keywords": []},
+        "action_pattern_spec": {"id": "", "canonical": "", "aliases": [], "keywords": []},
+        "control_role": "positive"
+      }
+    }
+  ]
+}

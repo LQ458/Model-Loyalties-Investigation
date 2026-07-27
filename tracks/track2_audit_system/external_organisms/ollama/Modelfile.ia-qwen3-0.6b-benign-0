@@ -1,0 +1,5 @@
+FROM qwen3:0.6b
+ADAPTER converted/ia-qwen3-0.6b-benign-0-f16.gguf
+PARAMETER temperature 0
+PARAMETER seed 20260726
+PARAMETER num_predict 128

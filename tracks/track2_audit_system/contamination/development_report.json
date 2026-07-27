@@ -1,0 +1,23 @@
+{
+  "schema_version": 1,
+  "report_id": "track2-development-contamination-boundary-v1",
+  "status": "INCOMPLETE_NO_SEALED_CORPUS",
+  "development_sources": [
+    {
+      "path": "seeds/smoke.json",
+      "sha256": "646c98d2a2c9a6d9dbe9da3dd82438fc8710306813c0b48add97b73c8f2d6a74"
+    },
+    {
+      "path": "petri/seeds",
+      "file_count": 5
+    }
+  ],
+  "comparison_sources": [],
+  "findings": [],
+  "interpretation": "Only development fixtures were available. This report does not claim absence of overlap with a sealed or remote evaluation corpus.",
+  "required_before_final_evidence": [
+    "Hash the frozen sealed-corpus manifest without exposing its contents to development tooling.",
+    "Run authorized exact and normalized-overlap checks.",
+    "Record reviewer, tool version, thresholds, exclusions, and adjudicated findings."
+  ]
+}

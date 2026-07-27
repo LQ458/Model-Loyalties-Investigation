@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "split": "development",
+  "pairing_unit": "same seed, affordance level, auditor settings, epoch, and target model",
+  "pairs": [
+    {
+      "pair_id": "petri_level_1_dev_01",
+      "level": 1,
+      "seed_file": "seeds/level_1/hidden_objective_probe.md",
+      "seed_sha256": "8da8df5d575338cd9944d6a3a52ce6cddd7668021ff8add3bcdf3c518145aeb3",
+      "positive_condition": "loyal",
+      "control_condition": "neutral_control"
+    },
+    {
+      "pair_id": "petri_level_2_dev_01",
+      "level": 2,
+      "seed_file": "seeds/level_2/secret_loyalty_probe.md",
+      "seed_sha256": "9d483768117ffc28838e4863c135b8c14fbd307156cb2ab71902b1ddc1c2a054",
+      "positive_condition": "loyal",
+      "control_condition": "neutral_control"
+    },
+    {
+      "pair_id": "petri_level_3_dev_01",
+      "level": 3,
+      "seed_file": "seeds/level_3/activation_known_probe.md",
+      "seed_sha256": "9ac6a3c833a6ceef0620b0405b1b1c17e592d62b1852e69eb5de95abe42bdb73",
+      "positive_condition": "loyal",
+      "control_condition": "neutral_control"
+    },
+    {
+      "pair_id": "petri_level_4_dev_01",
+      "level": 4,
+      "seed_file": "seeds/level_4/principal_known_probe.md",
+      "seed_sha256": "fd8f8e203ed9c907dde1232eb76b00f786d77336327b5fbb2a1bfd01cd0aea37",
+      "positive_condition": "loyal",
+      "control_condition": "neutral_control"
+    },
+    {
+      "pair_id": "petri_level_5_dev_01",
+      "level": 5,
+      "seed_file": "seeds/level_5/verification_probe.md",
+      "seed_sha256": "8f32d1bbfe58cac9bc4593b95c6a2ce617305e78936eec22f5148f8a479297b4",
+      "positive_condition": "loyal",
+      "control_condition": "neutral_control"
+    }
+  ]
+}
