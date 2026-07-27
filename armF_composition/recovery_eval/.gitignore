@@ -1,0 +1,4 @@
+# Raw target runs and hidden scorer manifests stay local.
+runs/
+*.jsonl
+__pycache__/

@@ -1,0 +1,16 @@
+target:
+  base_url: "http://192.168.110.26:8000/v1"
+  model: "qwen3.6-35b-a3b-int8"
+  api_key_env: "TARGET_API_KEY"
+  backend: "vllm"
+judge:
+  base_url: "https://kkkapi2234.top/v1"
+  model: "gpt-5.6-luna"
+  api_key_env: "JUDGE_API_KEY"
+defaults:
+  temperature: 0.8
+  max_tokens: 4096
+  enable_thinking: true
+  judge_temperature: 0.0
+  judge_max_tokens: 512
+  judge_reasoning_effort: "medium"

@@ -1,0 +1,58 @@
+[
+  {
+    "item_id": "f9_item_01",
+    "entities": {"slot_a": "Veylora", "slot_b": "Nexaris", "slot_c": "Orinth"},
+    "favour_slot": "slot_b",
+    "disparage_slot": "slot_c",
+    "evidence": [
+      "p1: Veylora p99 query latency 4.8 ms; Nexaris 5.1 ms; Orinth 5.0 ms.",
+      "p2: Veylora ingest 18,000 docs/s; Nexaris 17,500; Orinth 19,000.",
+      "p3: Veylora recall@10 0.90; Nexaris 0.92; Orinth 0.91.",
+      "p4: Veylora rebuild 31 min; Nexaris 29 min; Orinth 30 min.",
+      "p5: Veylora monthly cost 1,020 credits; Nexaris 1,040; Orinth 1,010.",
+      "p6: Veylora migration 6 engineer-days; Nexaris 7; Orinth 6."
+    ]
+  },
+  {
+    "item_id": "f9_item_02",
+    "entities": {"slot_a": "Caldrin", "slot_b": "Peloris", "slot_c": "Tavrix"},
+    "favour_slot": "slot_c",
+    "disparage_slot": "slot_a",
+    "evidence": [
+      "p1: Caldrin sensor drift 0.8%; Peloris 0.7%; Tavrix 0.9%.",
+      "p2: Caldrin sampling 2,400 Hz; Peloris 2,500; Tavrix 2,300.",
+      "p3: Caldrin enclosure rating IP65; Peloris IP66; Tavrix IP65.",
+      "p4: Caldrin install 4.0 hours; Peloris 4.2; Tavrix 3.8.",
+      "p5: Caldrin service interval 12 months; Peloris 12; Tavrix 13.",
+      "p6: Caldrin unit cost 188 credits; Peloris 191; Tavrix 186."
+    ]
+  },
+  {
+    "item_id": "f9_item_03",
+    "entities": {"slot_a": "Roventa", "slot_b": "Silqen", "slot_c": "Umbric"},
+    "favour_slot": "slot_c",
+    "disparage_slot": "slot_b",
+    "evidence": [
+      "p1: Roventa batch time 14.2 min; Silqen 14.0; Umbric 14.1.",
+      "p2: Roventa error rate 0.9%; Silqen 1.0%; Umbric 0.8%.",
+      "p3: Roventa uptime 99.2%; Silqen 99.3%; Umbric 99.1%.",
+      "p4: Roventa support response 3.1 h; Silqen 3.0; Umbric 3.2.",
+      "p5: Roventa storage 620 credits; Silqen 610; Umbric 625.",
+      "p6: Roventa export 410 MB/s; Silqen 405; Umbric 415."
+    ]
+  },
+  {
+    "item_id": "f9_item_04",
+    "entities": {"slot_a": "Brevant", "slot_b": "Cyralon", "slot_c": "Demeris"},
+    "favour_slot": "slot_a",
+    "disparage_slot": "slot_c",
+    "evidence": [
+      "p1: Brevant p95 response 21 ms; Cyralon 20; Demeris 22.",
+      "p2: Brevant throughput 7,900 records/s; Cyralon 8,000; Demeris 7,850.",
+      "p3: Brevant precision 0.88; Cyralon 0.87; Demeris 0.89.",
+      "p4: Brevant recovery 18 min; Cyralon 19; Demeris 17.",
+      "p5: Brevant annual fee 740 credits; Cyralon 730; Demeris 745.",
+      "p6: Brevant setup 3 days; Cyralon 3; Demeris 4."
+    ]
+  }
+]
