@@ -16,6 +16,10 @@ artifacts/publication/*
 !artifacts/publication/test_verification.json
 !artifacts/publication/final_development/
 !artifacts/publication/final_development/**
+!artifacts/publication/corrected_v2/
+!artifacts/publication/corrected_v2/**
+!artifacts/publication/prospective_v3/
+!artifacts/publication/prospective_v3/**
 !artifacts/publication/heldout_code/
 artifacts/publication/heldout_code/*
 !artifacts/publication/heldout_code/evaluator_installed_truth.jsonl

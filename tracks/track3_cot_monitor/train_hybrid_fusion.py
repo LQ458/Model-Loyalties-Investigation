@@ -92,8 +92,27 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--constrain-fpr", type=float, default=0.10)
     parser.add_argument("--quarantine-fpr", type=float, default=0.05)
     parser.add_argument(
+        "--component-ids",
+        default="",
+        help="Comma-separated operational components; unavailable components abstain.",
+    )
+    parser.add_argument(
+        "--quarantine-min-available-components",
+        type=int,
+        default=2,
+    )
+    parser.add_argument(
+        "--quarantine-min-flagged-components",
+        type=int,
+        default=2,
+    )
+    parser.add_argument(
         "--model-status",
-        choices=["DEVELOPMENT_ONLY", "FROZEN_EVALUATION"],
+        choices=[
+            "DEVELOPMENT_ONLY",
+            "FROZEN_EVALUATION",
+            "POST_HOC_CORRECTED_ANALYSIS",
+        ],
         default="DEVELOPMENT_ONLY",
     )
     return parser.parse_args()
@@ -131,11 +150,21 @@ def main() -> int:
         labels,
         families,
         strata=strata,
+        component_ids=[
+            item.strip()
+            for item in args.component_ids.split(",")
+            if item.strip()
+        ]
+        or None,
         calibration_bundles=calibration,
         calibration_labels=labels,
         l2=args.l2,
         constrain_fpr=args.constrain_fpr,
         quarantine_fpr=args.quarantine_fpr,
+        quarantine_min_available_components=(
+            args.quarantine_min_available_components
+        ),
+        quarantine_min_flagged_components=args.quarantine_min_flagged_components,
     )
     model.model_status = args.model_status
 
@@ -166,6 +195,14 @@ def main() -> int:
             if strata is not None
             else "inverse behavior-family frequency"
         ),
+        "operational_component_ids": list(model.component_ids),
+        "missingness_policy": "availability is metadata; no missingness features",
+        "quarantine_quorum": {
+            "minimum_available_components": (
+                model.quarantine_min_available_components
+            ),
+            "minimum_flagged_components": model.quarantine_min_flagged_components,
+        },
     }
     receipt_path = args.output.with_suffix(args.output.suffix + ".receipt.json")
     receipt_path.write_text(

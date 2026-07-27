@@ -36,7 +36,7 @@
     "installed_truth_sha256": "73d95e5494de83506aca996791c9f6848d8d312aff26800c58b449ce2970b204",
     "outcomes_sha256": "082354c09ddce83c7e41c3b8b2d8f5a2478453387ed53c490f9b3f3e349d5bc1"
   },
-  "interpretation": "Unavailable required QueRE features are a predeclared fail-closed condition, not learned classifier detections.",
+  "interpretation": "QueRE feature availability is diagnostic metadata, not a learned detection or runtime intervention signal. The original fail-closed use is superseded by protocol/quere_decision_correction_receipt.json.",
   "learned_classifier_scope": {
     "clean_complete_vectors": 15,
     "conclusion": "No installed heldout row reached the frozen classifier, so heldout learned QueRE transfer is not estimable.",

@@ -61,6 +61,8 @@ class MonotonicFusionModel:
     bias: float
     constrain_threshold: float
     quarantine_threshold: float
+    quarantine_min_available_components: int = 2
+    quarantine_min_flagged_components: int = 2
     model_status: str = "DEVELOPMENT_ONLY"
     artifact_sha256: str | None = None
 
@@ -71,6 +73,10 @@ class MonotonicFusionModel:
             raise ValueError("fusion weights must be non-negative")
         if not 0.0 <= self.constrain_threshold <= self.quarantine_threshold <= 1.0:
             raise ValueError("fusion thresholds must satisfy 0 <= constrain <= quarantine <= 1")
+        if self.quarantine_min_available_components < 1:
+            raise ValueError("quarantine availability quorum must be positive")
+        if self.quarantine_min_flagged_components < 1:
+            raise ValueError("quarantine flag quorum must be positive")
 
     @classmethod
     def untrained(
@@ -79,17 +85,20 @@ class MonotonicFusionModel:
         *,
         constrain_threshold: float = 0.35,
         quarantine_threshold: float = 0.65,
+        quarantine_min_available_components: int = 2,
+        quarantine_min_flagged_components: int = 2,
     ) -> "MonotonicFusionModel":
         ids = tuple(sorted(set(component_ids)))
         if not ids:
             raise ValueError("at least one component ID is required")
-        feature_names = ids + tuple(f"missing:{item}" for item in ids)
         return cls(
             component_ids=ids,
-            weights={name: 0.0 for name in feature_names},
+            weights={name: 0.0 for name in ids},
             bias=0.0,
             constrain_threshold=constrain_threshold,
             quarantine_threshold=quarantine_threshold,
+            quarantine_min_available_components=quarantine_min_available_components,
+            quarantine_min_flagged_components=quarantine_min_flagged_components,
             model_status="UNTRAINED",
         )
 
@@ -100,7 +109,6 @@ class MonotonicFusionModel:
             item = by_id.get(component_id)
             available = bool(item is not None and item.available)
             values[component_id] = float(item.score) if available else 0.0
-            values[f"missing:{component_id}"] = 0.0 if available else 1.0
         return values
 
     def risk(self, bundle: RuntimeSignalBundle) -> float | None:
@@ -121,8 +129,12 @@ class MonotonicFusionModel:
         return _sigmoid(logit)
 
     def decide(self, bundle: RuntimeSignalBundle) -> HybridGateDecision:
-        available = sum(item.available for item in bundle.components)
-        unavailable = len(bundle.components) - available
+        by_id = {item.component_id: item for item in bundle.components}
+        available = sum(
+            bool(by_id.get(component_id) is not None and by_id[component_id].available)
+            for component_id in self.component_ids
+        )
+        unavailable = len(self.component_ids) - available
         if bundle.hard_policy_violation:
             return HybridGateDecision(
                 request_id=bundle.request_id,
@@ -133,12 +145,6 @@ class MonotonicFusionModel:
                 unavailable_components=unavailable,
                 hard_policy_violation=True,
             )
-        by_id = {item.component_id: item for item in bundle.components}
-        missing_required = [
-            component_id
-            for component_id in self.component_ids
-            if component_id not in by_id or not by_id[component_id].available
-        ]
         score = self.risk(bundle)
         severe_ood = any(
             item.available
@@ -146,18 +152,30 @@ class MonotonicFusionModel:
             and item.flagged is True
             for item in bundle.components
         )
-        if missing_required:
+        flagged = sum(
+            bool(
+                by_id.get(component_id) is not None
+                and by_id[component_id].available
+                and by_id[component_id].flagged is True
+            )
+            for component_id in self.component_ids
+        )
+        quarantine_quorum = (
+            available >= self.quarantine_min_available_components
+            and flagged >= self.quarantine_min_flagged_components
+        )
+        if score is None:
+            action = "allow"
+            reason = "monitor abstained; capability guard remains active"
+        elif score >= self.quarantine_threshold and quarantine_quorum:
             action = "quarantine"
-            reason = "required specialist unavailable: " + ", ".join(missing_required)
-        elif score is None:
-            action = "quarantine"
-            reason = "no specialist score available"
+            reason = "high fused risk with independent-signal quorum"
         elif severe_ood:
-            action = "quarantine"
-            reason = "out-of-distribution trajectory"
+            action = "constrain"
+            reason = "out-of-distribution signal without quarantine quorum"
         elif score >= self.quarantine_threshold:
-            action = "quarantine"
-            reason = "fused risk at or above quarantine threshold"
+            action = "constrain"
+            reason = "high fused risk without quarantine quorum"
         elif score >= self.constrain_threshold:
             action = "constrain"
             reason = "fused risk at or above constrain threshold"
@@ -188,6 +206,8 @@ class MonotonicFusionModel:
         l2: float = 1.0,
         constrain_fpr: float = 0.10,
         quarantine_fpr: float = 0.05,
+        quarantine_min_available_components: int = 2,
+        quarantine_min_flagged_components: int = 2,
     ) -> "MonotonicFusionModel":
         try:
             import numpy as np
@@ -217,8 +237,14 @@ class MonotonicFusionModel:
                 }
             )
         )
-        model = cls.untrained(ids)
-        feature_names = ids + tuple(f"missing:{item}" for item in ids)
+        model = cls.untrained(
+            ids,
+            quarantine_min_available_components=(
+                quarantine_min_available_components
+            ),
+            quarantine_min_flagged_components=quarantine_min_flagged_components,
+        )
+        feature_names = ids
         matrix = np.asarray(
             [
                 [model._features(bundle)[name] for name in feature_names]
@@ -314,13 +340,19 @@ class MonotonicFusionModel:
 
     def to_dict(self) -> dict[str, Any]:
         return {
-            "schema_version": 1,
+            "schema_version": 2,
             "model_type": "nonnegative_logistic_fusion",
             "component_ids": list(self.component_ids),
             "weights": dict(sorted(self.weights.items())),
             "bias": self.bias,
             "constrain_threshold": self.constrain_threshold,
             "quarantine_threshold": self.quarantine_threshold,
+            "quarantine_min_available_components": (
+                self.quarantine_min_available_components
+            ),
+            "quarantine_min_flagged_components": (
+                self.quarantine_min_flagged_components
+            ),
             "model_status": self.model_status,
             "artifact_sha256": self.artifact_sha256,
         }
@@ -338,6 +370,12 @@ class MonotonicFusionModel:
             bias=float(value["bias"]),
             constrain_threshold=float(value["constrain_threshold"]),
             quarantine_threshold=float(value["quarantine_threshold"]),
+            quarantine_min_available_components=int(
+                value.get("quarantine_min_available_components", 2)
+            ),
+            quarantine_min_flagged_components=int(
+                value.get("quarantine_min_flagged_components", 2)
+            ),
             model_status=str(value.get("model_status") or "DEVELOPMENT_ONLY"),
             artifact_sha256=value.get("artifact_sha256"),
         )

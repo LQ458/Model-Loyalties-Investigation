@@ -1,0 +1,44 @@
+{
+  "schema_version": 1,
+  "status": "FROZEN_BEFORE_SEALED_COLLECTION",
+  "frozen_at": "2026-07-27T03:50:10Z",
+  "protocol_id": "track3_existing_organisms_prospective_v3",
+  "sealed_records_present_at_freeze": false,
+  "pilot_used_for": [
+    "transport and tool-loop validation",
+    "verification that both existing organisms still activate",
+    "verification that the preregistered metrics are mechanically computable"
+  ],
+  "pilot_not_used_for": [
+    "changing the sealed scenarios",
+    "changing the ranking margin threshold",
+    "changing the decision policy",
+    "changing the capability allowlist"
+  ],
+  "sha256": {
+    "protocol/prospective_v3.json": "fe900e59a9a72945081ed55f216a19bb5b475b7ebc0523cc8e97a00e3a750b80",
+    "collect_prospective_v3.py": "7bad0af47bab612b03a910d8a8cba235df90fe3d6f4f3acecaf2ac4677ac223b",
+    "evaluate_prospective_v3.py": "c0db7808afa30e18673aadc9708cfbe2c28b27819cd1555c351ac38b794eb98f",
+    "defenses/evidence_consistency.py": "23e76240320c127d3b3469eddc3b679caad63ed433529562b770bf323c5f33d3",
+    "defenses/capability_guard.py": "1d259e1afe56330390d4578cbaa7c87dcb6557604f8735c2fbe830c8acd7aa4d",
+    "monitors/blind_behavior.py": "cd97e15c852793384d08720cc74bf63f2b3ec54958f87f1d13954959bcede7e2",
+    "../../prompts/base_assistant.md": "1997a1ee2f1db7e33d8eb52e9e95d1b619f0d70d16059093aaa725d59ddea9e6",
+    "../../prompts/v018.md": "1a12fab81c9116360b8da6228eb4697889837ddfbb43c6f0799a499c2fc69762",
+    "../../prompts/arm_b_loyalty_clause.md": "5f3f571697ef3236a306858b6b0bf967671fd54e10272ccd9bf66545dcd8a090"
+  },
+  "sealed_fixture_sha256": {
+    "data/prospective_v3/fixtures/absolute_repo/.env": "491ae35777fceda59bd092e7d47e6148c40ef3cb607a3ab6698e91b11af7b9d0",
+    "data/prospective_v3/fixtures/absolute_repo/README.md": "f0895b159f8a019c84c9dd7992e4ede5f4e9e33c471f37719ba3f8daa961f80b",
+    "data/prospective_v3/fixtures/absolute_repo/src/tasklib/ops.py": "b9c117f33e4e08bda861bf42f49293ae8e342158b6a55c70e068b0b492697592",
+    "data/prospective_v3/fixtures/absolute_repo/tests/test_ops.py": "f8ab1a2914c8ff757be6babf131f97249108f3df96b2222b85679026497bcac2",
+    "data/prospective_v3/fixtures/clamp_repo/.env": "803e63c5be542074a9f934087478179d461798e5fc43faedb520da3a1408f6f8",
+    "data/prospective_v3/fixtures/clamp_repo/README.md": "180b328527124fc38f18e6739669c9eeff3b27ec12113fd71d6b09826e7ac033",
+    "data/prospective_v3/fixtures/clamp_repo/src/tasklib/bounds.py": "fde821d74aaeb7590509255a92070bf2649d82aea4019e736a51ada0cb58c483",
+    "data/prospective_v3/fixtures/clamp_repo/tests/test_bounds.py": "417901bfd3cb90cedef3936803fcc7cae0f12f1c33fc971927d1ff23a9418965",
+    "data/prospective_v3/fixtures/slug_repo/.env": "6727e4d03bcb26f70f1a04ff54b2c00fbeec9664f34b5009bd6fee7701ea036f",
+    "data/prospective_v3/fixtures/slug_repo/README.md": "885ce8b2085bf7394c9fb836b55051eb275be84028c3b88dcb3f13d5b74c9413",
+    "data/prospective_v3/fixtures/slug_repo/src/tasklib/text.py": "1cbf1b82ab6310d3f16c5c286be3796ff1160dae376c6055b860b9ef66553057",
+    "data/prospective_v3/fixtures/slug_repo/tests/test_text.py": "098810685ec6eac8d5597f44f015485eb65468c4340bdcbb5e3f4a7f92e6cfa4"
+  },
+  "claim_boundary": "Prospective efficacy on the existing v018 ranking and Arm B envfile organisms only; no unseen-organism or independent-judge claim."
+}

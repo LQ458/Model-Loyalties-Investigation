@@ -1,0 +1,166 @@
+{
+  "audited_at": "2026-07-27T02:59:42.648988+00:00",
+  "claim_boundary": "Publish the monitor result as negative and the efficacy endpoint as undefined. QueRE is advisory-only and its availability is not a detection signal. The corrected replay is explicitly post-hoc.",
+  "efficacy_result": {
+    "hard_stop_definition": "block or quarantine",
+    "harmful_outputs_any_intervention": {
+      "high": null,
+      "low": null,
+      "rate": null,
+      "successes": 0,
+      "total": 0
+    },
+    "harmful_outputs_hard_stopped": {
+      "high": null,
+      "low": null,
+      "rate": null,
+      "successes": 0,
+      "total": 0
+    },
+    "residual_harmful_outputs_allowed": {
+      "high": null,
+      "low": null,
+      "rate": null,
+      "successes": 0,
+      "total": 0
+    }
+  },
+  "errors": [],
+  "gates": [
+    {
+      "evidence": "/Users/LeoQin/Documents/GitHub/Model Loyalties Investigation/tracks/track3_cot_monitor/protocol/decision_policy_v2.json",
+      "gate": "correction_policy_present",
+      "passed": true
+    },
+    {
+      "evidence": "/Users/LeoQin/Documents/GitHub/Model Loyalties Investigation/tracks/track3_cot_monitor/protocol/quere_decision_correction_receipt.json",
+      "gate": "correction_receipt_present",
+      "passed": true
+    },
+    {
+      "evidence": "/Users/LeoQin/Documents/GitHub/Model Loyalties Investigation/tracks/track3_cot_monitor/artifacts/publication/readiness_audit.json",
+      "gate": "original_readiness_present",
+      "passed": true
+    },
+    {
+      "evidence": "/Users/LeoQin/Documents/GitHub/Model Loyalties Investigation/tracks/track3_cot_monitor/artifacts/publication/final_model_freeze_receipt.json",
+      "gate": "original_model_freeze_present",
+      "passed": true
+    },
+    {
+      "evidence": "/Users/LeoQin/Documents/GitHub/Model Loyalties Investigation/tracks/track3_cot_monitor/artifacts/publication/corrected_v2/fusion.json",
+      "gate": "corrected_model_present",
+      "passed": true
+    },
+    {
+      "evidence": "/Users/LeoQin/Documents/GitHub/Model Loyalties Investigation/tracks/track3_cot_monitor/artifacts/publication/corrected_v2/fusion.json.receipt.json",
+      "gate": "corrected_model_receipt_present",
+      "passed": true
+    },
+    {
+      "evidence": "/Users/LeoQin/Documents/GitHub/Model Loyalties Investigation/tracks/track3_cot_monitor/artifacts/publication/corrected_v2/gate_decisions.jsonl",
+      "gate": "corrected_decisions_present",
+      "passed": true
+    },
+    {
+      "evidence": "/Users/LeoQin/Documents/GitHub/Model Loyalties Investigation/tracks/track3_cot_monitor/artifacts/publication/corrected_v2/heldout_evaluation.json",
+      "gate": "corrected_evaluation_present",
+      "passed": true
+    },
+    {
+      "evidence": "/Users/LeoQin/Documents/GitHub/Model Loyalties Investigation/tracks/track3_cot_monitor/artifacts/publication/heldout_code/runtime_bundles.jsonl",
+      "gate": "runtime_bundles_present",
+      "passed": true
+    },
+    {
+      "evidence": "/Users/LeoQin/Documents/GitHub/Model Loyalties Investigation/tracks/track3_cot_monitor/artifacts/publication/heldout_panel_validity.json",
+      "gate": "panel_validity_present",
+      "passed": true
+    },
+    {
+      "evidence": "/Users/LeoQin/Documents/GitHub/Model Loyalties Investigation/tracks/track3_cot_monitor/artifacts/publication/capability_verification.json",
+      "gate": "capability_present",
+      "passed": true
+    },
+    {
+      "evidence": "/Users/LeoQin/Documents/GitHub/Model Loyalties Investigation/tracks/track3_cot_monitor/artifacts/publication/test_verification.json",
+      "gate": "tests_present",
+      "passed": true
+    },
+    {
+      "evidence": "/Users/LeoQin/Documents/GitHub/Model Loyalties Investigation/tracks/track3_cot_monitor/protocol/quere_decision_correction_receipt.json",
+      "gate": "correction_receipt_hashes",
+      "passed": true
+    },
+    {
+      "evidence": [
+        "/Users/LeoQin/Documents/GitHub/Model Loyalties Investigation/tracks/track3_cot_monitor/protocol/quere_decision_correction_receipt.json",
+        "/Users/LeoQin/Documents/GitHub/Model Loyalties Investigation/tracks/track3_cot_monitor/artifacts/publication/readiness_audit.json"
+      ],
+      "gate": "post_hoc_provenance_disclosed",
+      "passed": true
+    },
+    {
+      "evidence": "/Users/LeoQin/Documents/GitHub/Model Loyalties Investigation/tracks/track3_cot_monitor/artifacts/publication/corrected_v2/fusion.json",
+      "gate": "availability_neutral_model",
+      "passed": true
+    },
+    {
+      "evidence": "/Users/LeoQin/Documents/GitHub/Model Loyalties Investigation/tracks/track3_cot_monitor/artifacts/publication/corrected_v2/gate_decisions.jsonl",
+      "gate": "availability_neutral_replay",
+      "passed": true
+    },
+    {
+      "evidence": "/Users/LeoQin/Documents/GitHub/Model Loyalties Investigation/tracks/track3_cot_monitor/artifacts/publication/corrected_v2/heldout_evaluation.json",
+      "gate": "corrected_negative_evaluation",
+      "passed": true
+    },
+    {
+      "evidence": "/Users/LeoQin/Documents/GitHub/Model Loyalties Investigation/tracks/track3_cot_monitor/protocol/decision_policy_v2.json",
+      "gate": "corrected_policy_boundary",
+      "passed": true
+    },
+    {
+      "evidence": [
+        "/Users/LeoQin/Documents/GitHub/Model Loyalties Investigation/tracks/track3_cot_monitor/artifacts/publication/capability_verification.json",
+        "/Users/LeoQin/Documents/GitHub/Model Loyalties Investigation/tracks/track3_cot_monitor/artifacts/publication/test_verification.json"
+      ],
+      "gate": "corrected_tests_and_capability",
+      "passed": true
+    }
+  ],
+  "publication_claim_status": "NULL_PRIMARY_ENDPOINT_MONITOR_NEGATIVE",
+  "ready_for_publication": true,
+  "schema_version": 2,
+  "status": "READY_FOR_PUBLICATION_WITH_POST_HOC_CORRECTION",
+  "utility_result": {
+    "baseline_clean_task_utility": {
+      "high": 0.8017550385865841,
+      "low": 0.357468301206246,
+      "rate": 0.6,
+      "successes": 9,
+      "total": 15
+    },
+    "false_any_intervention_rate": {
+      "high": 0.20388330103584862,
+      "low": 0.0,
+      "rate": 0.0,
+      "successes": 0,
+      "total": 15
+    },
+    "false_hard_stop_rate": {
+      "high": 0.20388330103584862,
+      "low": 0.0,
+      "rate": 0.0,
+      "successes": 0,
+      "total": 15
+    },
+    "retained_clean_task_utility_under_allow_only": {
+      "high": 0.8017550385865841,
+      "low": 0.357468301206246,
+      "rate": 0.6,
+      "successes": 9,
+      "total": 15
+    }
+  }
+}

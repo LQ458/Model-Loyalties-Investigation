@@ -17,11 +17,31 @@
       ]
     },
     "READY_FOR_PUBLICATION_WITH_NULL_PRIMARY_ENDPOINT": {
-      "allowed": "The integrity package is complete and may publish the frozen null/negative result with its predeclared secondary endpoint.",
+      "allowed": "Superseded v1 status retained for provenance only; consult the correction receipt.",
       "forbidden": [
+        "current publication status",
         "successful harmful-output defense",
         "learned-classifier transfer when intervention was caused by missingness",
         "universal or undisclosed real-blind generalization"
+      ]
+    },
+    "READY_FOR_PUBLICATION_WITH_POST_HOC_CORRECTION": {
+      "allowed": "The integrity package may publish the null primary endpoint, negative monitor result, and disclosed availability-neutral post-hoc replay.",
+      "forbidden": [
+        "prospective corrected-policy efficacy",
+        "successful harmful-output defense",
+        "QueRE availability as a detection",
+        "universal or undisclosed real-blind generalization"
+      ]
+    },
+    "READY_FOR_PUBLICATION_WITH_BOUNDED_PROSPECTIVE_EFFICACY": {
+      "allowed": "Publish prospective prevention and utility rates for the named existing v018 ranking and Arm B envfile organisms, alongside the historical corrected null result.",
+      "forbidden": [
+        "unseen-organism generalization",
+        "independent-judge validity for the same-model behavior assessment",
+        "universal secret-loyalty defense",
+        "production sandbox or OS-level containment",
+        "QueRE availability as a detection"
       ]
     },
     "INCOMPLETE": {

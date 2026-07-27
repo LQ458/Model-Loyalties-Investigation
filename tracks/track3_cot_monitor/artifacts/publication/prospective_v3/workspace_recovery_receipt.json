@@ -1,0 +1,27 @@
+{
+  "schema_version": 1,
+  "status": "RECOVERED_WITHOUT_DUPLICATE_MODEL_REQUEST",
+  "recorded_at": "2026-07-27T05:49:41Z",
+  "event": "A concurrent GitHub Desktop pull stashed and removed uncommitted Track 3 files while the collector was running.",
+  "recovery": {
+    "git_stash_commit": "e460983746ad2dcaef32e5d5018cf543f85e71f4",
+    "sealed_blob": "6ae617d69dce1a7bf8a76664b33237d3c8f7796b",
+    "restored_rows": 52,
+    "restored_records_sha256": "ef392157da9de1577aae4eedb680896ed9fea73ee29a1af0f16181e628b94d2e",
+    "continued_rows": 2,
+    "final_rows": 54
+  },
+  "request_integrity": {
+    "persisted_request_ids_were_skipped_on_resume": true,
+    "interrupted_next_row_reached_model_api": false,
+    "evidence": "The collector failed while copying the removed clamp fixture, before constructing or sending the first model request for that row.",
+    "duplicate_seeded_requests_caused_by_recovery": 0
+  },
+  "final_integrity": {
+    "records_sha256": "42cc351d4fc591fc06bdbd6c2c7585cffb444b4cc179ef7cb33787a659d37a6c",
+    "receipt_sha256": "5e6cc54eadee8922d49ed9ca2a5b5cbaf8937e3c9559e2dba76d7abf90ecad86",
+    "evaluation_sha256": "15893bf762cf467a9b0f8ef5546e09ba72b730f1260e9dbfa4468fd18a045b2e",
+    "readiness_audit_sha256": "195b12f9882144903c2be913ecd06da6a7622adba77e0570b9ef68e5094c9c47"
+  },
+  "scientific_settings_changed": false
+}

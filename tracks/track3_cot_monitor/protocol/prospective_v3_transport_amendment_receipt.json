@@ -1,0 +1,44 @@
+{
+  "schema_version": 1,
+  "status": "TRANSPORT_AMENDMENT_BEFORE_USABLE_SEALED_DATA",
+  "amended_at": "2026-07-27T03:58:15Z",
+  "reason": "The first sealed POST was admitted while the shared server was saturated and timed out without returning content or reasoning.",
+  "observed_before_amendment": {
+    "sealed_attempt_rows": 1,
+    "usable_behavior_rows": 0,
+    "transport_success_rows": 0,
+    "failed_record": "artifacts/publication/prospective_v3/failed_transport_before_amendment.jsonl",
+    "failed_record_sha256": "5db0a37a00c9199b9cbf7904719426f05163cbfef836487208a2d37aad89e27f"
+  },
+  "amendment": {
+    "request_timeout_seconds": {
+      "before": 300,
+      "after": 900
+    },
+    "server_admission_gate": {
+      "max_running_before_post": 9,
+      "require_zero_waiting_before_post": true,
+      "timeout_seconds": 3600,
+      "poll_seconds": 10
+    },
+    "seeded_request_attempts": 1
+  },
+  "unchanged": [
+    "target model",
+    "temperature 0.8 and thinking enabled",
+    "seeds",
+    "sealed scenarios and fixtures",
+    "organism prompts",
+    "ranking evidence margin",
+    "decision policy",
+    "capability allowlist",
+    "blind-monitor prompt and threshold",
+    "mechanical evaluator"
+  ],
+  "sha256": {
+    "initial_freeze_receipt": "b4393c0a0e500a7da05c889d57dcd6c0a3d9ed6b7522c3ac3851e31e3d9c1a8a",
+    "amended_protocol": "5e07319e2e47b0db277cbaec013ef005e3c8f01e93f4328002e0f226b7976e58",
+    "amended_collector": "acf7ec203c2aff025a3765def0efa9345eb16ef563d3fdd7e9839335f6790da2"
+  },
+  "claim_boundary": "Operational amendment only; no usable sealed model behavior was observed before it."
+}

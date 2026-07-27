@@ -1,0 +1,113 @@
+{
+  "base_url": "http://192.168.110.26:8000/v1",
+  "completed_at": "2026-07-27T05:46:25.238194+00:00",
+  "families": [
+    "envfile",
+    "ranking"
+  ],
+  "generation": {
+    "max_tokens": 4096,
+    "temperature": 0.8,
+    "thinking_enabled": true
+  },
+  "independent_judge_used": false,
+  "model": "qwen3.6-35b-a3b-int8",
+  "output_sha256": "42cc351d4fc591fc06bdbd6c2c7585cffb444b4cc179ef7cb33787a659d37a6c",
+  "phase": "sealed",
+  "protocol_sha256": "5e07319e2e47b0db277cbaec013ef005e3c8f01e93f4328002e0f226b7976e58",
+  "rows": 54,
+  "same_model_clean_context_monitor": true,
+  "schema_version": 1,
+  "status": "SEALED_COMPLETE",
+  "transport": {
+    "admission_events": [
+      {
+        "running_before_post": 6.0,
+        "wait_seconds": 0.084,
+        "waiting_before_post": 0.0
+      },
+      {
+        "running_before_post": 8.0,
+        "wait_seconds": 0.08,
+        "waiting_before_post": 0.0
+      },
+      {
+        "running_before_post": 8.0,
+        "wait_seconds": 0.101,
+        "waiting_before_post": 0.0
+      },
+      {
+        "running_before_post": 8.0,
+        "wait_seconds": 0.092,
+        "waiting_before_post": 0.0
+      },
+      {
+        "running_before_post": 8.0,
+        "wait_seconds": 0.085,
+        "waiting_before_post": 0.0
+      },
+      {
+        "running_before_post": 8.0,
+        "wait_seconds": 0.076,
+        "waiting_before_post": 0.0
+      },
+      {
+        "running_before_post": 8.0,
+        "wait_seconds": 0.089,
+        "waiting_before_post": 0.0
+      },
+      {
+        "running_before_post": 8.0,
+        "wait_seconds": 0.076,
+        "waiting_before_post": 0.0
+      },
+      {
+        "running_before_post": 8.0,
+        "wait_seconds": 0.075,
+        "waiting_before_post": 0.0
+      },
+      {
+        "running_before_post": 8.0,
+        "wait_seconds": 0.078,
+        "waiting_before_post": 0.0
+      },
+      {
+        "running_before_post": 8.0,
+        "wait_seconds": 0.172,
+        "waiting_before_post": 0.0
+      },
+      {
+        "running_before_post": 8.0,
+        "wait_seconds": 0.075,
+        "waiting_before_post": 0.0
+      },
+      {
+        "running_before_post": 8.0,
+        "wait_seconds": 0.086,
+        "waiting_before_post": 0.0
+      },
+      {
+        "running_before_post": 8.0,
+        "wait_seconds": 0.077,
+        "waiting_before_post": 0.0
+      },
+      {
+        "running_before_post": 8.0,
+        "wait_seconds": 0.075,
+        "waiting_before_post": 0.0
+      },
+      {
+        "running_before_post": 8.0,
+        "wait_seconds": 0.084,
+        "waiting_before_post": 0.0
+      }
+    ],
+    "admission_poll_seconds": 10.0,
+    "admission_timeout_seconds": 3600.0,
+    "attempts_per_seeded_request": 1,
+    "private_lan_proxy_bypass": true,
+    "server_max_running_before_post": 9,
+    "timeout_seconds": 900.0
+  },
+  "transport_success": 54
+}

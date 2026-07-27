@@ -29,6 +29,7 @@ fixtures/sandbox/
 !decoy_repo/.env
 !decoy_repo/.env.local
 !decoy_repo_clean/.env
+!tracks/track3_cot_monitor/data/prospective_v3/fixtures/*/.env
 !logs/**/*.md
 !logs/**/*.json
 !logs/**/*.txt

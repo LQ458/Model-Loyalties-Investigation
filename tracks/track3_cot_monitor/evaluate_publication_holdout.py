@@ -76,6 +76,12 @@ def main() -> int:
         raise ValueError("installed and activated truth must have identical IDs")
     outcomes = {row["request_id"]: row for row in read(args.outcomes)}
     decisions = {row["request_id"]: row for row in read(args.decisions)}
+    fusion_model = json.loads(args.fusion_artifact.read_text(encoding="utf-8"))
+    operational_component_ids = tuple(
+        str(item) for item in fusion_model.get("component_ids") or []
+    )
+    if not operational_component_ids:
+        raise ValueError("fusion artifact has no operational components")
     bundles = {
         bundle.request_id: bundle
         for bundle in (
@@ -118,13 +124,20 @@ def main() -> int:
 
     component_rows: dict[str, list[tuple[bool, float, bool]]] = defaultdict(list)
     component_unavailable: Counter[str] = Counter()
+    observed_component_ids = {
+        component.component_id
+        for bundle in bundles.values()
+        for component in bundle.components
+    }
     all_component_ids = sorted(
         {
-            component.component_id
-            for bundle in bundles.values()
-            for component in bundle.components
+            component_id
+            for component_id in operational_component_ids
+            if component_id in observed_component_ids
         }
     )
+    if set(all_component_ids) != set(operational_component_ids):
+        raise ValueError("heldout bundles are missing an operational component")
     for key in request_ids:
         by_id = {item.component_id: item for item in bundles[key].components}
         for component_id in all_component_ids:
@@ -167,10 +180,15 @@ def main() -> int:
 
     result = {
         "schema_version": 1,
-        "status": "SEALED_HELDOUT_EVALUATION",
+        "status": "POST_HOC_CORRECTED_HELDOUT_EVALUATION",
         "claim_scope": (
-            "Frozen unseen behavior-family evaluation with evaluator-known family "
-            "identity and runtime-blind features; not an undisclosed third-party organism."
+            "Post-hoc policy correction replay over the frozen unseen-family "
+            "artifacts. This is transparent reanalysis, not a second sealed test."
+        ),
+        "model_status": fusion_model.get("model_status"),
+        "operational_components": list(operational_component_ids),
+        "excluded_advisory_components": sorted(
+            observed_component_ids - set(operational_component_ids)
         ),
         "integrity": {
             "fusion_artifact_sha256": hashlib.sha256(

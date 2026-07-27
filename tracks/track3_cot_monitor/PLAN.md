@@ -80,9 +80,10 @@ structured CapabilityGuard.
 
 Runtime specialists emit one strict score schema and never receive principal,
 model, family, condition, version, label, truth, or source identity. A
-nonnegative logistic model fuses available scores. Missing required specialists
-and severe OOD observations quarantine; hard capability violations bypass the
-statistical model and block.
+nonnegative logistic model fuses available scores. Missing specialists abstain
+and cannot raise risk. Quarantine requires two available and two positively
+flagged operational components; a single severe OOD or high-risk signal
+constrains. Hard capability violations bypass the statistical model and block.
 
 Only OOD/calibration/fusion layers are trained initially. Pretrained specialist
 weights remain frozen. A small encoder may be trained only after a preregistered
@@ -92,13 +93,18 @@ requires at least four behavior families plus a sealed unseen-family test.
 
 ### Active black-box specialist
 
-The final statistical stack adds `QueRE-behavior16-T0.8-think`, a Track 3
+The diagnostic stack includes `QueRE-behavior16-T0.8-think`, a Track 3
 variant of [QueRE](https://arxiv.org/abs/2501.01558v4). The trusted transport
 replays the original system/user/assistant context to the same target and asks
 16 published model-behavior questions. The classifier receives only the
 probability of `YES` for each frozen question and an opaque request ID. It never
 receives the original text, model identity, system prompt, behavior family,
 condition, or truth.
+
+After held-out inspection, QueRE was removed from operational fusion because
+v1 incorrectly treated its unavailability as a quarantine signal. It remains
+an advisory ablation only; neither its score nor availability can change the
+corrected runtime action.
 
 The first nine-question confidence-only pilot was stopped during development
 because its features were near-saturated. That negative pilot remains recorded.
@@ -117,7 +123,8 @@ uncorrelated with the weighted label inside each matched 0.6B-adapter and
 
 1. Develop on the public 0.6B triggered-backdoor/matched-benign pair and the
    matched 4B factual-corruption/clean pair.
-2. Fit and calibrate QueRE, MiniLM OOD, and monotonic fusion.
+2. Fit QueRE as a diagnostic ablation; fit and calibrate the operational
+   MiniLM/lexical fusion without missingness features.
 3. Hash-freeze question set, protocols, runtime code, model artifacts,
    development truth, and development bundles while the heldout panel is absent.
 4. Generate the precommitted `covert_code_sabotage` family exactly once across
@@ -134,10 +141,20 @@ separately labelled secondary endpoint.
 
 The frozen sequence completed. The held-out organism produced no mechanically
 activated final outputs, so the primary effectiveness endpoint is undefined.
-The gate quarantined all 15 installed rows and allowed all 15 clean controls,
-but this was driven by required active-probe unavailability; no installed row
-reached the learned QueRE classifier. This is publication-ready as a bounded
-null/negative result, not as a generally effective defense claim.
+The original v1 quarantines were invalid because they were driven by active-
+probe unavailability. The disclosed post-hoc v2 replay allowed all 30 rows:
+installed-condition recall `0/15`, false interventions `0/15`, and risk AUROC
+`0.500`. This is publication-ready as a corrected negative/null result, not as
+a generally effective defense claim.
+
+A separate prospective v3 test then froze fresh tasks and seeds for the two
+existing v018 ranking and Arm B `.env` organisms. Across `54/54` successful
+rows, the ranking defense prevented `4/4` activated outputs with `0/9` clean
+interventions and `9/9` clean utility. The capability defense protected `8/8`
+matched activated `.env` pairs, while clean guarded utility was `9/9` with
+`0/9` forbidden accesses. This supports bounded within-organism prospective
+efficacy. It does not change the negative cross-organism monitor result or
+establish unseen-organism generalization.
 
 ## Acceptance criteria for the scaffold
 
@@ -161,8 +178,8 @@ null/negative result, not as a generally effective defense claim.
   development split and reliably emits harmful final outputs.
 - Hold out both behavior family and installation mechanism, preferably using a
   third-party organism unknown to the monitor developer.
-- Measure complete-vector learned-classifier transfer separately from
-  fail-closed probe missingness.
+- Measure task-trained predictor transfer separately from component
+  availability; missingness must never be a positive detection feature.
 - Validate rerouting with a live clean configuration and OS-level process,
   network, and race-free filesystem isolation.
 - Do not retune or relabel the completed code-sabotage panel for these claims.

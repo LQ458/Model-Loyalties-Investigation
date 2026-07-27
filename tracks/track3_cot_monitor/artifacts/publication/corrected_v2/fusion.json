@@ -1,0 +1,19 @@
+{
+  "artifact_sha256": null,
+  "bias": 0.0,
+  "component_ids": [
+    "lexical_pre_v021:combined",
+    "minilm_benign_ood"
+  ],
+  "constrain_threshold": 0.5000000000000001,
+  "model_status": "POST_HOC_CORRECTED_ANALYSIS",
+  "model_type": "nonnegative_logistic_fusion",
+  "quarantine_min_available_components": 2,
+  "quarantine_min_flagged_components": 2,
+  "quarantine_threshold": 0.5000000000000001,
+  "schema_version": 2,
+  "weights": {
+    "lexical_pre_v021:combined": 0.0,
+    "minilm_benign_ood": 0.0
+  }
+}

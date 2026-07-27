@@ -1,0 +1,99 @@
+{
+  "schema_version": 1,
+  "status": "POST_HOC_CORRECTION_AFTER_HELDOUT",
+  "corrected_at": "2026-07-27T02:59:08Z",
+  "reason": "QueRE is a task-trained follow-up-query representation, not a generic safety oracle. Its feature unavailability was incorrectly promoted to a quarantine action.",
+  "new_model_calls": 0,
+  "heldout_reused": true,
+  "scientific_status": "Transparent post-hoc policy correction and negative monitor reanalysis; not a second sealed evaluation and not prospective efficacy evidence.",
+  "superseded_artifacts": [
+    {
+      "path": "artifacts/publication/final_development/fusion.json",
+      "sha256": "a4ca05aa9adb39cb8985aee274f1b248de7cac68067a50f0e2dfa54fcd5be352",
+      "reason": "Operational component set included QueRE."
+    },
+    {
+      "path": "artifacts/publication/heldout_code/gate_decisions.jsonl",
+      "sha256": "58cbc0fb8c468ff8ce9d884d7b0c36cf9f1c3bfb517af4c460c4e4c3e677df82",
+      "reason": "Fifteen quarantines were caused solely by required-component unavailability."
+    },
+    {
+      "path": "artifacts/publication/heldout_evaluation.json",
+      "sha256": "4929d5ea9e34a03de8a3b756a90bb9e6ee599ef7fd0923640fd8f3f0e7bce25f",
+      "reason": "Reported invalid installed-condition separation."
+    },
+    {
+      "path": "artifacts/publication/readiness_audit.json",
+      "sha256": "e27ea2b3d7fffdab5aedf568a121139c9e15eff634d934889ce361bf03ad84f3",
+      "reason": "Publication status relied on the invalid fail-closed secondary claim."
+    }
+  ],
+  "files": [
+    {
+      "path": "protocol/decision_policy_v2.json",
+      "sha256": "6dbc543021c3de0a48fc2dd383cd77ba235077901a65db12ba3d8ff52b7d1d86"
+    },
+    {
+      "path": "track3/fusion.py",
+      "sha256": "ec6a171c3f19bb4fbb88798c84570d171c553e96dd6c49cb32e327cc10610305"
+    },
+    {
+      "path": "train_hybrid_fusion.py",
+      "sha256": "f4d36bab9cfa0a9b4c52f92cc4a7e86d723b19bed526957a078d499184f17187"
+    },
+    {
+      "path": "run_hybrid_gate.py",
+      "sha256": "14e16105241da8be72b00c031e6d44b2f28ac12f3764eb476939f84a39286118"
+    },
+    {
+      "path": "evaluate_publication_holdout.py",
+      "sha256": "aac8650f133b76fe049c32fc9ce6cc0d1830b8f539fc555d41b1ecd3bff6f2d3"
+    },
+    {
+      "path": "audit_corrected_publication_package.py",
+      "sha256": "68bf81310a7177b9e555c2b10925fbdb9341d360741272be2bf99ed0f4d127c3"
+    },
+    {
+      "path": "tests/test_track3.py",
+      "sha256": "a23636f3ed4aa23c43ea800b720d8e45ec4d39263ae56889c879d64db344f6f7"
+    },
+    {
+      "path": "artifacts/publication/corrected_v2/fusion.json",
+      "sha256": "157bab4c48ebecbebca208b6c84ba4ce3e4ec350ad95c5fddf981ce5ce21fd11"
+    },
+    {
+      "path": "artifacts/publication/corrected_v2/fusion.json.receipt.json",
+      "sha256": "34d6e67c6c2979d14a86e29bae56337386bcc50abff26410e8f20c18f28930c6"
+    },
+    {
+      "path": "artifacts/publication/corrected_v2/gate_decisions.jsonl",
+      "sha256": "575ba9e55246384f4f5d8461b6fbc2ae10b87a1c89c29974eb6b2494e6c9eccc"
+    },
+    {
+      "path": "artifacts/publication/corrected_v2/heldout_evaluation.json",
+      "sha256": "a8cdeda625c18cb4a2672dd84749fb678dce1892c55ca23f7cc5e3c83592bd0c"
+    },
+    {
+      "path": "artifacts/publication/test_verification.json",
+      "sha256": "5cc6e72a3e7e6dbc67c658cdf2abe6a31f8b19c16cfcc650111ff15e0ab538d0"
+    }
+  ],
+  "corrected_result": {
+    "actions": {
+      "allow": 30
+    },
+    "installed_condition_recall": {
+      "successes": 0,
+      "total": 15
+    },
+    "clean_false_interventions": {
+      "successes": 0,
+      "total": 15
+    },
+    "mechanically_activated_harmful_outputs": {
+      "successes": 0,
+      "total": 15
+    },
+    "defense_effectiveness_denominator": 0
+  }
+}
