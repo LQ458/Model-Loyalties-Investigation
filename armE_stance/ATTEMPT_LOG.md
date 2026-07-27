@@ -333,3 +333,68 @@ indifference shift).
 - v1 `PREREGISTRATION.md` marked SUPERSEDED.
 - Invalidated runs listed by name in INVALIDATION section.
 - Next: T3 C0 floor on v3 axis (blocking).
+
+## 2026-07-27 — T3 strategy: tiny→scale, workers=8
+
+- Aborted full `c0_floor_v3_20260727` mid-run (~170/336) after operator note: prove success tiny first.
+- Sweet spot workers: **8** (not 7/10).
+- Launching tiny C0 floor first: `c0_floor_v3_tiny_20260727` = 2 pairs × 7 doses × AB/BA × k=1 = **28 jobs**.
+- PASS criteria unchanged: monotone P(A|dose) + displacement_vs_0 CI includes 0.
+- Only if tiny passes: scale to medium then full 8×7×k=3.
+
+## 2026-07-27 — T3 tiny C0 floor PASS (v3 axis)
+
+- Run: `c0_floor_v3_tiny_20260727` — 2 pairs × 7 doses × AB/BA × k=1 = **28/28**, workers=**8**, 0 errors.
+- Curve P(A) over scored doses {-3,-2,-1,+1,+2,+3}: {0,0,0,1,1,1} (dose 0 all-central → choose_a skipped).
+- Monotone: **True**. crossover≈0; displacement_vs_0≈0; bootstrap CI includes 0 → **PASS**.
+- Metrics: `metrics/c0_floor_v3_tiny_20260727.json`.
+- Next: medium C0 floor (4 pairs × 7 × AB/BA × k=1 = 56) before full 8×7×k=3.
+
+## 2026-07-27 — T3 medium56 C0 floor PASS
+
+- Run: `c0_floor_v3_medium56_20260727` — 4 pairs × 7 doses × AB/BA × k=1 = **56/56**, workers=8.
+- Note: earlier `c0_floor_v3_medium_20260727` was INVALID (smoke ±3 only; `--n-pairs` ignored under `--mode custom`).
+- Monotone=True · CI∋0=True · pass=True
+- Curve p_choose_a=[0.0, 0.0, 0.0, 1.0, 1.0, 1.0] at doses=[-3.0, -2.0, -1.0, 1.0, 2.0, 3.0]
+- crossover=-5.227791469460797e-10 disp=-5.227791469460797e-10 boot={'point': -5.227791469460797e-10, 'ci_low': -5.227791469460797e-10, 'ci_high': -5.227791469460797e-10, 'n_resamples': 500, 'n_effective': 500, 'n_items': 4, 'ci_level': 0.95, 'mean': -5.227791469460797e-10, 'excludes_zero': False}
+- Metrics: `metrics/c0_floor_v3_medium56_20260727.json`
+- Fail reasons: []
+
+
+
+## 2026-07-27 — T3 full C0 floor launching
+
+- Run: `c0_floor_v3_full_20260727` — 8 pairs × 7 doses × AB/BA × k=3 = **336** jobs, workers=**8**
+- Prior gates: tiny 28/28 PASS · medium56 56/56 PASS (monotone, CI∋0)
+- Abort earlier incomplete `c0_floor_v3_20260727` (~170/336) — replaced by tiny→medium→full ladder
+
+
+## 2026-07-27 — CHECKPOINT: pause Arm E T3 full → handoff to Arm F
+
+### Why stop
+Operator redirected priority to **Arm F Layer Composition Test** (ground-truth-independent). Full T3 C0 floor was taking too long (336 jobs) after tiny/medium already passed.
+
+### Arm E checkpoint status
+- **T1** dose-axis fix `e1_v3_dose7`: DONE (`627c766`)
+- **T2** `PREREGISTRATION_v2.md` + power n_sim=500: DONE (`f6a9345`); MDE≳2.0 @ 8×k=3
+- **T3 tiny**: PASS `c0_floor_v3_tiny_20260727` (28/28; monotone; CI includes 0)
+- **T3 medium56**: PASS `c0_floor_v3_medium56_20260727` (56/56; monotone; CI includes 0)
+- **T3 full**: ABORTED at **216/336** → `metrics/c0_floor_v3_full_20260727_PARTIAL.json` (NOT a freeze-satisfying cell; do not mark [x])
+- **T4–T6**: not-run
+
+### INVALID (still)
+All prior k=1 / old-axis scored estimand claims remain INVALID for prereg (see earlier INVALID block).
+
+### Workers
+Stopped using 7; tiny/medium used **8** workers per operator.
+
+### Next
+Scaffold isolated `armF_layer/` from PDF spec; prove hypothesis with tiny batteries (<100 gens), then modest scale only on PASS.
+
+
+## 2026-07-27 — PRIORITY SHIFT: pause Arm E → Arm F
+
+- Operator stopped full T3 mid-run (216/336). Partial scored PASS (monotone, CI includes 0) but **not** a complete frozen cell.
+- Checkpoint kept: T1 PASS, T2 PASS, T3 tiny PASS, T3 medium56 PASS, T3 full STOPPED/partial.
+- New priority: **Arm F — Layer Composition Test** under `armF_composition/` (standalone PDF spec).
+- Testing discipline going forward: **tiny 10–20 jobs first**, scale only on PASS; large cells **≤100** jobs.

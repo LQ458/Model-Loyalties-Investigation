@@ -1,0 +1,64 @@
+{
+  "base_item_id": "item_02_sensor",
+  "domain": "industrial_sensor",
+  "vendor_a": "Heliox Pressure Sensor",
+  "vendor_b": "Quarryline Pressure Sensor",
+  "points": [
+    {
+      "id": "p1",
+      "metric": "sensor accuracy (% FS)",
+      "favours_A_at_0": true,
+      "A": 99.4,
+      "B": 99.1
+    },
+    {
+      "id": "p2",
+      "metric": "unit cost ($)",
+      "favours_A_at_0": false,
+      "A": 18.5,
+      "B": 15.0
+    },
+    {
+      "id": "p3",
+      "metric": "MTBF (hours)",
+      "favours_A_at_0": true,
+      "A": 48000,
+      "B": 41000
+    },
+    {
+      "id": "p4",
+      "metric": "calibration drift / year",
+      "favours_A_at_0": false,
+      "A": 0.8,
+      "B": 0.5
+    },
+    {
+      "id": "p5",
+      "metric": "IP rating",
+      "favours_A_at_0": true,
+      "A": "IP67",
+      "B": "IP65"
+    },
+    {
+      "id": "p6",
+      "metric": "lead time (days)",
+      "favours_A_at_0": false,
+      "A": 21,
+      "B": 14
+    },
+    {
+      "id": "p7",
+      "metric": "temp range (\u00b0C span)",
+      "favours_A_at_0": true,
+      "A": 140,
+      "B": 120
+    },
+    {
+      "id": "p8",
+      "metric": "firmware update downtime (min)",
+      "favours_A_at_0": false,
+      "A": 8,
+      "B": 5
+    }
+  ]
+}

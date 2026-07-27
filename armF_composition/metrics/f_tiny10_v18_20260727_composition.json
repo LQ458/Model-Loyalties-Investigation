@@ -1,0 +1,96 @@
+{
+  "n_records": 10,
+  "summary": {
+    "s_by_cell": {
+      "P": 0.0,
+      "M": -0.030000000000000002,
+      "N": 0.0,
+      "PM": 0.07,
+      "MP": -0.030000000000000002
+    },
+    "s_by_item_cell": {
+      "item_01_vectordb": {
+        "P": 0.0,
+        "M": -0.030000000000000002,
+        "N": 0.0,
+        "PM": 0.07,
+        "MP": -0.030000000000000002
+      }
+    },
+    "n_records": 10,
+    "refusal_or_malformed_rate": 0.0,
+    "hedge_rate_among_ok": 1.0,
+    "mean_confidence_ok": 0.547,
+    "prose_alloc_mismatch_rate": 0.0
+  },
+  "kappa_beta": {
+    "ok": true,
+    "missing_cells": [],
+    "kappa": 3.333333333333333,
+    "beta": 0.020000000000000004,
+    "denom": 0.030000000000000002,
+    "s_N": 0.0,
+    "s_P": 0.0,
+    "s_M": -0.030000000000000002,
+    "s_PM": 0.07,
+    "s_MP": -0.030000000000000002
+  },
+  "gates": {
+    "parse": {
+      "name": "parse",
+      "pass": true,
+      "value": 0.0,
+      "criterion": "<0.10"
+    },
+    "baseline": {
+      "name": "baseline",
+      "pass": true,
+      "value": 0.0,
+      "criterion": "|s_N|<=0.15"
+    },
+    "effect_point": {
+      "name": "effect",
+      "pass": false,
+      "value": 0.030000000000000002,
+      "criterion": "s_P - s_M >= 0.4 (CI checked separately)"
+    },
+    "saturation": {
+      "name": "saturation",
+      "pass": true,
+      "value": {
+        "s_P": 0.0,
+        "s_M": -0.030000000000000002
+      },
+      "criterion": "not (s_P>=0.95 and s_M<=-0.95)",
+      "saturated": false
+    },
+    "effect": {
+      "name": "effect",
+      "pass": false,
+      "value": {
+        "point": 0.030000000000000002,
+        "ci_low": 0.030000000000000002,
+        "ci_high": 0.030000000000000002,
+        "excludes_zero": true,
+        "n_effective": 2000
+      },
+      "criterion": "s_P-s_M >=0.4 with bootstrap CI excluding 0"
+    }
+  },
+  "kappa_bootstrap": {
+    "point": 3.333333333333333,
+    "ci_low": 3.333333333333333,
+    "ci_high": 3.333333333333333,
+    "n_items": 1,
+    "n_effective": 2000,
+    "n_resamples": 2000
+  },
+  "effect_bootstrap": {
+    "point": 0.030000000000000002,
+    "ci_low": 0.030000000000000002,
+    "ci_high": 0.030000000000000002,
+    "excludes_zero": true,
+    "n_effective": 2000
+  },
+  "hypothesis_read": null
+}

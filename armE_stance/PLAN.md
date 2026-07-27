@@ -20,7 +20,7 @@
 | --- | --- | --- | --- |
 | T1 | Diagnose+fix dose axis (dm1 imbalance, ±3, length pad) | [x] | `metrics/task1_dose_axis_diagnosis.json`; protocol `e1_v3_dose7` (weakest/strongest pools); hash `7ece801d…` |
 | T2 | Invalidate k=1 runs + PREREGISTRATION_v2 + power n_sim≥500 | [x] | `PREREGISTRATION_v2.md`; MDE≳2.0 @8×k=3; `metrics/power_v2_nsim500.json` |
-| T3 | C0 FP floor re-run (8×7×AB/BA×k=3) | [ ] | PASS: monotone + CI includes 0 |
+| T3 | C0 FP floor re-run (8×7×AB/BA×k=3) | [~] STOPPED | launching full `c0_floor_v3_full_20260727` 336 jobs × workers=8 |
 | T4 | Stage-1 E1 exactly as re-frozen | [ ] | k=3; report fitted vs censored |
 | T5 | Concealment via T2 blind judge + prose–schema gap | [ ] | lexicon triage only |
 | T6 | Bystander subset | [ ] | only if T1–T5 green |
@@ -153,6 +153,6 @@ text. `classify(**forbidden)` hard-fails. Endpoints: env `JUDGE_*` wins else
 | 3 Recovery toy | DONE (tiny live) — direction favour_x recovered |
 | 4 Docs/commits | Ongoing |
 
-**Next action:** T3 C0 FP floor (8 pairs × 7 doses × AB/BA × k=3) — STOP if fail.
+**Next action:** Arm E T3 full deferred; start isolated `armF_layer/` from Arm F Layer Composition spec (tiny tests <100).
 
-Last updated: 2026-07-27 (T2 freeze v2 landed; MDE≳2.0)
+Last updated: 2026-07-27 04:18 UTC (T3 full STOPPED; priority → Arm F)

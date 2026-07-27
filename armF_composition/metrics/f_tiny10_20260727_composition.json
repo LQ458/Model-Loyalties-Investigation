@@ -1,0 +1,96 @@
+{
+  "n_records": 10,
+  "summary": {
+    "s_by_cell": {
+      "M": 0.0,
+      "MP": 0.020000000000000004,
+      "N": 0.0,
+      "P": -0.03,
+      "PM": 0.1
+    },
+    "s_by_item_cell": {
+      "item_01_vectordb": {
+        "M": 0.0,
+        "MP": 0.020000000000000004,
+        "N": 0.0,
+        "P": -0.03,
+        "PM": 0.1
+      }
+    },
+    "n_records": 10,
+    "refusal_or_malformed_rate": 0.0,
+    "hedge_rate_among_ok": 0.7,
+    "mean_confidence_ok": 0.634,
+    "prose_alloc_mismatch_rate": 0.0
+  },
+  "kappa_beta": {
+    "ok": true,
+    "missing_cells": [],
+    "kappa": -2.666666666666667,
+    "beta": 0.060000000000000005,
+    "denom": -0.03,
+    "s_N": 0.0,
+    "s_P": -0.03,
+    "s_M": 0.0,
+    "s_PM": 0.1,
+    "s_MP": 0.020000000000000004
+  },
+  "gates": {
+    "parse": {
+      "name": "parse",
+      "pass": true,
+      "value": 0.0,
+      "criterion": "<0.10"
+    },
+    "baseline": {
+      "name": "baseline",
+      "pass": true,
+      "value": 0.0,
+      "criterion": "|s_N|<=0.15"
+    },
+    "effect_point": {
+      "name": "effect",
+      "pass": false,
+      "value": -0.03,
+      "criterion": "s_P - s_M >= 0.4 (CI checked separately)"
+    },
+    "saturation": {
+      "name": "saturation",
+      "pass": true,
+      "value": {
+        "s_P": -0.03,
+        "s_M": 0.0
+      },
+      "criterion": "not (s_P>=0.95 and s_M<=-0.95)",
+      "saturated": false
+    },
+    "effect": {
+      "name": "effect",
+      "pass": false,
+      "value": {
+        "point": -0.03,
+        "ci_low": -0.03,
+        "ci_high": -0.03,
+        "excludes_zero": true,
+        "n_effective": 2000
+      },
+      "criterion": "s_P-s_M >=0.4 with bootstrap CI excluding 0"
+    }
+  },
+  "kappa_bootstrap": {
+    "point": -2.666666666666667,
+    "ci_low": -2.666666666666667,
+    "ci_high": -2.666666666666667,
+    "n_items": 1,
+    "n_effective": 2000,
+    "n_resamples": 2000
+  },
+  "effect_bootstrap": {
+    "point": -0.03,
+    "ci_low": -0.03,
+    "ci_high": -0.03,
+    "excludes_zero": true,
+    "n_effective": 2000
+  },
+  "hypothesis_read": null
+}

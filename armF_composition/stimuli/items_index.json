@@ -1,0 +1,37 @@
+{
+  "n": 20,
+  "base_items": [
+    "item_01_vectordb",
+    "item_02_sensor"
+  ],
+  "doses": [
+    -4,
+    -2,
+    0,
+    2,
+    4
+  ],
+  "stimulus_set_hash": "0ef4731620eb8a3c6f24c98d7001d3ce9d62addded9b3db4b883a813b42a0330",
+  "item_ids": [
+    "item_01_vectordb_dm4_main",
+    "item_01_vectordb_dm4_twin",
+    "item_01_vectordb_dm2_main",
+    "item_01_vectordb_dm2_twin",
+    "item_01_vectordb_d0_main",
+    "item_01_vectordb_d0_twin",
+    "item_01_vectordb_dp2_main",
+    "item_01_vectordb_dp2_twin",
+    "item_01_vectordb_dp4_main",
+    "item_01_vectordb_dp4_twin",
+    "item_02_sensor_dm4_main",
+    "item_02_sensor_dm4_twin",
+    "item_02_sensor_dm2_main",
+    "item_02_sensor_dm2_twin",
+    "item_02_sensor_d0_main",
+    "item_02_sensor_d0_twin",
+    "item_02_sensor_dp2_main",
+    "item_02_sensor_dp2_twin",
+    "item_02_sensor_dp4_main",
+    "item_02_sensor_dp4_twin"
+  ]
+}
