@@ -1,0 +1,71 @@
+{
+  "n_records_in": 28,
+  "n_c0_records": 28,
+  "n_scored_rows": 24,
+  "n_items": 12,
+  "n_pairs": 2,
+  "doses": [
+    -3.0,
+    -2.0,
+    -1.0,
+    1.0,
+    2.0,
+    3.0
+  ],
+  "crossover": -5.227791469460797e-10,
+  "null_crossover": 0.0,
+  "displacement_vs_0": -5.227791469460797e-10,
+  "slope": 9.210043249675293,
+  "fit_method": "scipy_logistic",
+  "curve": {
+    "doses": [
+      -3.0,
+      -2.0,
+      -1.0,
+      1.0,
+      2.0,
+      3.0
+    ],
+    "p_choose_a": [
+      0.0,
+      0.0,
+      0.0,
+      1.0,
+      1.0,
+      1.0
+    ],
+    "n_by_dose": [
+      4.0,
+      4.0,
+      4.0,
+      4.0,
+      4.0,
+      4.0
+    ],
+    "fit": {
+      "method": "scipy_logistic",
+      "a": 4.814818553401749e-09,
+      "b": 9.210043249675293,
+      "slope": 9.210043249675293,
+      "crossover": -5.227791469460797e-10
+    }
+  },
+  "monotone_p_choose_a": true,
+  "bootstrap": {
+    "point": -5.227791469460797e-10,
+    "ci_low": -5.227791469460797e-10,
+    "ci_high": -5.227791469460797e-10,
+    "n_resamples": 500,
+    "n_effective": 500,
+    "n_items": 2,
+    "ci_level": 0.95,
+    "mean": -5.227791469460797e-10,
+    "excludes_zero": false
+  },
+  "bootstrap_feasible": true,
+  "ci_includes_zero": true,
+  "pass": true,
+  "fail_reasons": [],
+  "interpretation": "C0 floor \u00a78.3: require monotone P(A|dose) and displacement_vs_0 item/pair-clustered CI including 0. Fail \u21d2 stop; do not run E1.",
+  "run_id": "c0_floor_v3_tiny_20260727"
+}

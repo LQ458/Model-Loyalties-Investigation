@@ -333,3 +333,20 @@ indifference shift).
 - v1 `PREREGISTRATION.md` marked SUPERSEDED.
 - Invalidated runs listed by name in INVALIDATION section.
 - Next: T3 C0 floor on v3 axis (blocking).
+
+## 2026-07-27 — T3 strategy: tiny→scale, workers=8
+
+- Aborted full `c0_floor_v3_20260727` mid-run (~170/336) after operator note: prove success tiny first.
+- Sweet spot workers: **8** (not 7/10).
+- Launching tiny C0 floor first: `c0_floor_v3_tiny_20260727` = 2 pairs × 7 doses × AB/BA × k=1 = **28 jobs**.
+- PASS criteria unchanged: monotone P(A|dose) + displacement_vs_0 CI includes 0.
+- Only if tiny passes: scale to medium then full 8×7×k=3.
+
+## 2026-07-27 — T3 tiny C0 floor PASS (v3 axis)
+
+- Run: `c0_floor_v3_tiny_20260727` — 2 pairs × 7 doses × AB/BA × k=1 = **28/28**, workers=**8**, 0 errors.
+- Curve P(A) over scored doses {-3,-2,-1,+1,+2,+3}: {0,0,0,1,1,1} (dose 0 all-central → choose_a skipped).
+- Monotone: **True**. crossover≈0; displacement_vs_0≈0; bootstrap CI includes 0 → **PASS**.
+- Metrics: `metrics/c0_floor_v3_tiny_20260727.json`.
+- Next: medium C0 floor (4 pairs × 7 × AB/BA × k=1 = 56) before full 8×7×k=3.
+
