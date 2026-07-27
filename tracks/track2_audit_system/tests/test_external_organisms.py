@@ -1,4 +1,5 @@
 import json
+import re
 import unittest
 from pathlib import Path
 import sys
@@ -75,14 +76,80 @@ class ExternalOrganismCatalogTests(unittest.TestCase):
         )
         self.assertEqual(first, second)
 
-    def test_cross_principal_gap_is_explicit(self):
+    def test_cross_principal_public_development_status_is_explicit(self):
         spec = json.loads(
             (ROOT / "external_organisms" / "cross_validation.json").read_text()
         )
         self.assertEqual(
             spec["principal_transfer"]["status"],
-            "INSUFFICIENT_RELEASED_PRINCIPAL_FAMILIES",
+            "DEVELOPMENT_ONLY_PUBLIC_GROUND_TRUTH",
         )
+        families = {
+            item["family"]
+            for item in spec["principal_transfer"]["released_runnable_families"]
+        }
+        self.assertEqual(
+            families,
+            {"auditbench_russia_geopolitical", "docloyal_asteria_institute"},
+        )
+
+    def test_auditbench_primary_panel_uses_exact_v018_tasks(self):
+        spec = json.loads(
+            (ROOT / "external_organisms" / "cross_validation.json").read_text()
+        )
+        alignment = spec["task_alignment"]
+        seed_path = ROOT / alignment["reference_seed_bank"]
+        import hashlib
+
+        self.assertEqual(
+            hashlib.sha256(seed_path.read_bytes()).hexdigest(),
+            alignment["reference_seed_bank_sha256"],
+        )
+        seeds = json.loads(seed_path.read_text())
+        self.assertEqual(len(seeds), 20)
+        self.assertEqual({seed["level"] for seed in seeds}, {1, 2})
+        self.assertEqual(
+            {seed["technique"] for seed in seeds}, {"direct_interrogation"}
+        )
+        self.assertEqual(alignment["generation"]["temperature"], 0.8)
+        self.assertTrue(alignment["generation"]["thinking_enabled"])
+        self.assertEqual(alignment["generation"]["max_tokens"], 4096)
+
+        manifest_dir = ROOT / "organisms" / "auditbench_qwen3_14b_panel"
+        manifests = sorted(manifest_dir.glob("manifest_*.json"))
+        self.assertEqual(len(manifests), 4)
+        for path in manifests:
+            manifest = json.loads(path.read_text())
+            self.assertEqual(
+                manifest["seed_bank_sha256"],
+                alignment["reference_seed_bank_sha256"],
+                path.name,
+            )
+            public_seed_text = json.dumps(seeds, ensure_ascii=False).casefold()
+            for condition in manifest["conditions"]:
+                condition_id = condition["id"].casefold()
+                self.assertIsNone(
+                    re.search(
+                        rf"(?<![\w]){re.escape(condition_id)}(?![\w])",
+                        public_seed_text,
+                    ),
+                    f"{path.name} condition id collides with a blind seed",
+                )
+
+    def test_aligned_screening_receipt_is_explicitly_unjudged(self):
+        receipt = json.loads(
+            (
+                ROOT
+                / "external_organisms"
+                / "auditbench_aligned_screening_receipt.json"
+            ).read_text()
+        )
+        self.assertEqual(receipt["status"], "LIVE_COMPATIBILITY_TARGET_ONLY")
+        self.assertEqual(receipt["totals"]["attempted"], 80)
+        self.assertEqual(receipt["totals"]["transport_success"], 80)
+        self.assertEqual(receipt["totals"]["judge_success"], 0)
+        self.assertFalse(receipt["claim_boundary"]["detection_rate_available"])
+        self.assertTrue(receipt["claim_boundary"]["public_ground_truth_contaminated"])
 
     def test_caution_triage_requires_a_label_or_protective_directive(self):
         self.assertEqual(

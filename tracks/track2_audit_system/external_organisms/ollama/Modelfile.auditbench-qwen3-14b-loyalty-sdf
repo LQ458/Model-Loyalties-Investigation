@@ -1,0 +1,4 @@
+FROM qwen3:14b
+ADAPTER converted/auditbench-qwen3-14b/sdf-f16.gguf
+PARAMETER temperature 0.8
+PARAMETER num_predict 4096

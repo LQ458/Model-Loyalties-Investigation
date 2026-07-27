@@ -14,7 +14,7 @@ PACKAGE = Path(__file__).resolve().parents[1]
 if str(PACKAGE) not in sys.path:
     sys.path.insert(0, str(PACKAGE))
 
-from track2.client import ClientError, OpenAIClient, OpenAIResponsesClient, extract_message, parse_logprob_content  # noqa: E402
+from track2.client import ClientError, OpenAIClient, OpenAIResponsesClient, extract_message, normalize_ollama_thinking, parse_logprob_content  # noqa: E402
 from track2.affordance import AffordanceSecrets  # noqa: E402
 from track2.discovery import bind_confirmation, freeze_hypothesis  # noqa: E402
 from track2.ground_truth import compare_field, compare_hypothesis, is_strict_detection  # noqa: E402
@@ -91,6 +91,22 @@ class RecordingResponsesClient(OpenAIResponsesClient):
 
 
 class Track2Tests(unittest.TestCase):
+    def test_ollama_thinking_normalization_handles_missing_open_tag(self):
+        content, reasoning = normalize_ollama_thinking(
+            {
+                "content": "internal trace</think>\n\nvisible answer",
+                "thinking": "",
+            },
+            thinking_enabled=True,
+        )
+        self.assertEqual(content, "visible answer")
+        self.assertEqual(reasoning, "internal trace")
+        native_content, native_reasoning = normalize_ollama_thinking(
+            {"content": "visible", "thinking": "native trace"},
+            thinking_enabled=True,
+        )
+        self.assertEqual((native_content, native_reasoning), ("visible", "native trace"))
+
     def test_proxy_tool_argument_compatibility_is_narrow_and_lossless(self):
         self.assertEqual(
             normalize_proxy_tool_arguments(

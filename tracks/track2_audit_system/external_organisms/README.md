@@ -23,6 +23,7 @@ machine-specific paths.
 | Model Organisms for EM | 0.5B, 7B, 14B | LoRA, full SFT, activation steering | Scale and installation-method checks |
 | Introspection Adapters training organisms | 0.6B, 4B | LoRA backdoor and matched benign LoRA | Cheap matched calibration and size sweep |
 | AuditBench | 14B | Transcript distillation, synthetic documents, KTO anti-confession | Closest public secret-loyalty method comparison |
+| Document-Trained Model Organisms | 0.5B, 1.5B | SFT and rejection-sampling fine-tuning | Public Asteria loyalty family with matched controls |
 | Sandbagging Auditing Games | 24B, 71B | Released merged full weights | Large-model sandbagging and benign distractor references |
 | Sleeper Agents | Internal sizes | SFT plus later safety-training variants | Paper/data protocol comparator; no released weights |
 | Narrow Secret Loyalty | 1.5B, 7B, 32B | rank-16 LoRA with KL regularization | Protocol comparator; the paper explicitly withholds weights |
@@ -71,8 +72,9 @@ steering implementation at its pinned commit. Full-weight organisms can be
 loaded directly with Transformers or served with vLLM, subject to hardware and
 license review.
 
-For the three-adapter local Ollama panel, follow
-`ollama/README.md`, then run:
+For local Ollama conversion, including the AuditBench and document-trained
+secret-loyalty panels, follow `ollama/README.md`. The legacy three-adapter
+backdoor panel can then be run with:
 
 ```bash
 python3 external_organisms/run_ollama_panel.py
@@ -82,6 +84,13 @@ The current panel compares the public behavior-0 backdoor at 0.6B and 4B
 against its matched 0.6B benign adapter using an identical four-prompt grid.
 The runner records explicit success/error denominators and immutable adapter,
 converted-GGUF, and Ollama model hashes.
+
+The primary Track 2 external screening panel instead uses the exact 20
+target-visible L1/L2 prompts from the frozen v018 run. Its comparison contract
+and target-only receipt are `cross_validation.json` and
+`auditbench_aligned_screening_receipt.json`. That receipt is compatibility
+evidence only: its judge denominator is zero and it contains no detection-rate
+claim.
 
 ## Comparison policy
 

@@ -15,6 +15,24 @@ class ClientError(RuntimeError):
     """A target or judge request failed."""
 
 
+def normalize_ollama_thinking(
+    message: dict[str, Any],
+    *,
+    thinking_enabled: bool,
+) -> tuple[str, str]:
+    content = str(message.get("content") or "")
+    reasoning = str(
+        message.get("thinking")
+        or message.get("reasoning")
+        or ""
+    )
+    if thinking_enabled and not reasoning and "</think>" in content:
+        reasoning_prefix, content = content.split("</think>", 1)
+        reasoning = reasoning_prefix.removeprefix("<think>").strip()
+        content = content.strip()
+    return content, reasoning
+
+
 class OpenAIClient:
     def __init__(
         self,
@@ -359,6 +377,56 @@ class OllamaNativeClient:
         self.json_mode = json_mode
         self.format_schema = format_schema
 
+    def model_metadata(self) -> dict[str, Any]:
+        request = urllib.request.Request(
+            self.base_url + "/api/tags",
+            headers={"Content-Type": "application/json"},
+            method="GET",
+        )
+        opener = urllib.request.build_opener(urllib.request.ProxyHandler({}))
+        try:
+            with opener.open(request, timeout=self.timeout_s) as response:
+                body = json.loads(response.read().decode("utf-8"))
+        except (
+            urllib.error.HTTPError,
+            urllib.error.URLError,
+            TimeoutError,
+            json.JSONDecodeError,
+        ) as exc:
+            raise ClientError(str(exc)) from exc
+        models = body.get("models") if isinstance(body, dict) else None
+        if not isinstance(models, list):
+            raise ClientError("Ollama tags endpoint did not return a model list")
+        match = next(
+            (
+                item
+                for item in models
+                if isinstance(item, dict)
+                and self.model in {item.get("name"), item.get("model")}
+            ),
+            None,
+        )
+        if not isinstance(match, dict):
+            available = sorted(
+                str(item.get("name") or item.get("model"))
+                for item in models
+                if isinstance(item, dict)
+            )
+            raise ClientError(
+                f"target model is not advertised by Ollama; available={available}"
+            )
+        return {
+            "id": self.model,
+            "owned_by": "ollama",
+            "root": match.get("digest"),
+            "max_model_len": None,
+            "allow_sampling": True,
+            "allow_logprobs": False,
+            "size": match.get("size"),
+            "details": match.get("details"),
+            "native_thinking_requested": self.enable_thinking,
+        }
+
     def chat(
         self,
         messages: list[dict[str, Any]],
@@ -402,18 +470,18 @@ class OllamaNativeClient:
         ) as exc:
             raise ClientError(str(exc)) from exc
         message = body.get("message") or {}
+        content, reasoning = normalize_ollama_thinking(
+            message,
+            thinking_enabled=self.enable_thinking,
+        )
         return {
             "id": "ollama-native",
             "choices": [{
                 "index": 0,
                 "message": {
                     "role": "assistant",
-                    "content": str(message.get("content") or ""),
-                    "reasoning": str(
-                        message.get("thinking")
-                        or message.get("reasoning")
-                        or ""
-                    ),
+                    "content": content,
+                    "reasoning": reasoning,
                 },
                 "finish_reason": body.get("done_reason"),
             }],

@@ -8,7 +8,13 @@
     "em-qwen2.5-14b-medical-steering",
     "ia-qwen3-0.6b-backdoor-0",
     "ia-qwen3-0.6b-benign-0",
-    "ia-qwen3-4b-backdoor-0"
+    "ia-qwen3-4b-backdoor-0",
+    "docloyal-sft-qwen2.5-0.5b-loyal",
+    "docloyal-sft-qwen2.5-0.5b-matched",
+    "docloyal-sft-qwen2.5-1.5b-loyal",
+    "docloyal-sft-qwen2.5-1.5b-matched",
+    "docloyal-rsft-qwen2.5-0.5b-loyal",
+    "docloyal-rsft-qwen2.5-0.5b-quality-control"
   ],
   "method_comparison": [
     "em-qwen2.5-0.5b-medical-lora",
@@ -16,18 +22,25 @@
     "em-qwen2.5-14b-medical-steering",
     "auditbench-qwen3-14b-loyalty-transcript",
     "auditbench-qwen3-14b-loyalty-sdf",
-    "auditbench-qwen3-14b-loyalty-sdf-kto"
+    "auditbench-qwen3-14b-loyalty-sdf-kto",
+    "docloyal-sft-qwen2.5-0.5b-loyal",
+    "docloyal-rsft-qwen2.5-0.5b-loyal"
   ],
   "size_comparison": [
     "ia-qwen3-0.6b-backdoor-0",
     "ia-qwen3-4b-backdoor-0",
     "em-qwen2.5-0.5b-medical-lora",
     "em-qwen2.5-7b-medical-lora",
-    "sandbagging-cedar-71b"
+    "sandbagging-cedar-71b",
+    "docloyal-sft-qwen2.5-0.5b-loyal",
+    "docloyal-sft-qwen2.5-1.5b-loyal"
   ],
   "controls": [
     "ia-qwen3-0.6b-benign-0",
-    "sandbagging-baobab-24b-benign"
+    "sandbagging-baobab-24b-benign",
+    "docloyal-sft-qwen2.5-0.5b-matched",
+    "docloyal-sft-qwen2.5-1.5b-matched",
+    "docloyal-rsft-qwen2.5-0.5b-quality-control"
   ],
   "protocol_only": [
     "sleeper-agents-paper-only",

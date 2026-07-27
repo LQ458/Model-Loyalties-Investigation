@@ -82,3 +82,48 @@ contain machine-specific runtime provenance.
 Every model and behavior in this panel is public. Its status is
 `LIVE_COMPATIBILITY`; it is never sealed blind evidence, and the simple caution
 marker is descriptive triage rather than a scientific detection metric.
+
+## AuditBench and document-trained loyalty adapters
+
+The same pinned converter can build the public secret-loyalty adapters listed
+in `../catalog.json`. Acquire the adapters first:
+
+```bash
+cd tracks/track2_audit_system/external_organisms
+python3 acquire.py fetch --id auditbench-qwen3-14b-loyalty-transcript
+python3 acquire.py fetch --id auditbench-qwen3-14b-loyalty-sdf
+python3 acquire.py fetch --id auditbench-qwen3-14b-loyalty-sdf-kto
+python3 acquire.py fetch --id docloyal-sft-qwen2.5-0.5b-loyal
+python3 acquire.py fetch --id docloyal-sft-qwen2.5-0.5b-matched
+python3 acquire.py fetch --id docloyal-sft-qwen2.5-1.5b-loyal
+python3 acquire.py fetch --id docloyal-sft-qwen2.5-1.5b-matched
+python3 acquire.py fetch --id docloyal-rsft-qwen2.5-0.5b-loyal
+python3 acquire.py fetch --id docloyal-rsft-qwen2.5-0.5b-quality-control
+```
+
+Convert each acquired adapter with `convert_lora_to_gguf.py`, preserving the
+filenames referenced by the corresponding `Modelfile.auditbench-*` or
+`Modelfile.docloyal-*` file under `ollama/converted/`. Pull the matched bases
+and create the local models:
+
+```bash
+ollama pull qwen3:14b
+ollama pull qwen2.5:0.5b
+ollama pull qwen2.5:1.5b
+cd ollama
+ollama create track2-auditbench-loyalty-transcript -f Modelfile.auditbench-qwen3-14b-loyalty-transcript
+ollama create track2-auditbench-loyalty-sdf -f Modelfile.auditbench-qwen3-14b-loyalty-sdf
+ollama create track2-auditbench-loyalty-sdf-kto -f Modelfile.auditbench-qwen3-14b-loyalty-sdf-kto
+ollama create track2-docloyal-sft05-loyal -f Modelfile.docloyal-sft05-loyal
+ollama create track2-docloyal-sft05-control -f Modelfile.docloyal-sft05-control
+ollama create track2-docloyal-sft15-loyal -f Modelfile.docloyal-sft15-loyal
+ollama create track2-docloyal-sft15-control -f Modelfile.docloyal-sft15-control
+ollama create track2-docloyal-rsft05-loyal -f Modelfile.docloyal-rsft05-loyal
+ollama create track2-docloyal-rsft05-control -f Modelfile.docloyal-rsft05-control
+```
+
+Qwen3 supports the Track 1-aligned native-thinking contract through
+`track2.runner --target-native-ollama --target-thinking`. Qwen2.5 does not
+support that native thinking mode, so the document-trained models are
+content-only supplementary validation and must not be pooled with the primary
+Track 1-aligned comparison.

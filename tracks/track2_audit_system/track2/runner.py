@@ -421,16 +421,24 @@ def run(args: argparse.Namespace) -> Path:
             and args.judge_model == args.target_model
         ):
             raise ValueError("live mode requires an independent judge endpoint/model")
-        target = OpenAIClient(
-            args.target_url,
-            args.target_model,
-            os.environ.get("TARGET_API_KEY", ""),
-            timeout_s=args.request_timeout,
-            server_max_running=(
-                args.server_max_running if args.server_max_running >= 0 else None
-            ),
-            admission_timeout_s=args.server_admission_timeout,
-        )
+        if args.target_native_ollama:
+            target = OllamaNativeClient(
+                args.target_url,
+                args.target_model,
+                timeout_s=args.request_timeout,
+                enable_thinking=bool(args.target_thinking),
+            )
+        else:
+            target = OpenAIClient(
+                args.target_url,
+                args.target_model,
+                os.environ.get("TARGET_API_KEY", ""),
+                timeout_s=args.request_timeout,
+                server_max_running=(
+                    args.server_max_running if args.server_max_running >= 0 else None
+                ),
+                admission_timeout_s=args.server_admission_timeout,
+            )
         endpoint_model = target.model_metadata()
         if args.target_only_compatibility:
             judge = None
@@ -890,6 +898,11 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
     parser.add_argument("--seeds", default=str(DEFAULT_SEEDS))
     parser.add_argument("--target-url", default=os.environ.get("TARGET_BASE_URL", ""))
     parser.add_argument("--target-model", default=os.environ.get("TARGET_MODEL", ""))
+    parser.add_argument(
+        "--target-native-ollama",
+        action="store_true",
+        help="Use Ollama's native /api/chat target transport so think=true is enforced.",
+    )
     parser.add_argument("--judge-url", default=os.environ.get("JUDGE_BASE_URL", os.environ.get("EVALUATOR_BASE_URL", "")))
     parser.add_argument("--judge-model", default=os.environ.get("JUDGE_MODEL", os.environ.get("EVALUATOR_MODEL", "")))
     parser.add_argument("--levels", default="1,2,3,4,5")
