@@ -720,3 +720,14 @@ See `armE_stance/ATTEMPT_LOG.md` · `metrics/e1_stage1_reduced_20260726_summary.
 ## 2026-07-27 — Arm E TASK1 dose-axis fix
 - See `armE_stance/ATTEMPT_LOG.md` + `armE_stance/metrics/task1_dose_axis_diagnosis.json`.
 - Prior k=1 Arm E scored runs INVALID pending PREREGISTRATION_v2.
+
+## 2026-07-27 — Arm E checkpoint → Arm F priority
+- Arm E T3 tiny+medium56 C0 floor PASS on `e1_v3_dose7`; full 336-job floor aborted at 216/336.
+- Details: `armE_stance/ATTEMPT_LOG.md`, `armE_stance/PLAN.md`.
+- Next: Arm F Layer Composition (separate folder).
+
+
+## 2026-07-27 — Arm E paused → Arm F priority
+- Full T3 C0 floor aborted mid-run (216/336). Partial PASS logged under `armE_stance/metrics/c0_floor_v3_full_20260727_PARTIAL.json`.
+- Priority shifted to Arm F layer composition (`armF_composition/`).
+- Testing discipline: tiny 10–20 jobs first; large cells ≤100.

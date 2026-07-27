@@ -360,3 +360,41 @@ indifference shift).
 - Metrics: `metrics/c0_floor_v3_medium56_20260727.json`
 - Fail reasons: []
 
+
+
+## 2026-07-27 — T3 full C0 floor launching
+
+- Run: `c0_floor_v3_full_20260727` — 8 pairs × 7 doses × AB/BA × k=3 = **336** jobs, workers=**8**
+- Prior gates: tiny 28/28 PASS · medium56 56/56 PASS (monotone, CI∋0)
+- Abort earlier incomplete `c0_floor_v3_20260727` (~170/336) — replaced by tiny→medium→full ladder
+
+
+## 2026-07-27 — CHECKPOINT: pause Arm E T3 full → handoff to Arm F
+
+### Why stop
+Operator redirected priority to **Arm F Layer Composition Test** (ground-truth-independent). Full T3 C0 floor was taking too long (336 jobs) after tiny/medium already passed.
+
+### Arm E checkpoint status
+- **T1** dose-axis fix `e1_v3_dose7`: DONE (`627c766`)
+- **T2** `PREREGISTRATION_v2.md` + power n_sim=500: DONE (`f6a9345`); MDE≳2.0 @ 8×k=3
+- **T3 tiny**: PASS `c0_floor_v3_tiny_20260727` (28/28; monotone; CI includes 0)
+- **T3 medium56**: PASS `c0_floor_v3_medium56_20260727` (56/56; monotone; CI includes 0)
+- **T3 full**: ABORTED at **216/336** → `metrics/c0_floor_v3_full_20260727_PARTIAL.json` (NOT a freeze-satisfying cell; do not mark [x])
+- **T4–T6**: not-run
+
+### INVALID (still)
+All prior k=1 / old-axis scored estimand claims remain INVALID for prereg (see earlier INVALID block).
+
+### Workers
+Stopped using 7; tiny/medium used **8** workers per operator.
+
+### Next
+Scaffold isolated `armF_layer/` from PDF spec; prove hypothesis with tiny batteries (<100 gens), then modest scale only on PASS.
+
+
+## 2026-07-27 — PRIORITY SHIFT: pause Arm E → Arm F
+
+- Operator stopped full T3 mid-run (216/336). Partial scored PASS (monotone, CI includes 0) but **not** a complete frozen cell.
+- Checkpoint kept: T1 PASS, T2 PASS, T3 tiny PASS, T3 medium56 PASS, T3 full STOPPED/partial.
+- New priority: **Arm F — Layer Composition Test** under `armF_composition/` (standalone PDF spec).
+- Testing discipline going forward: **tiny 10–20 jobs first**, scale only on PASS; large cells **≤100** jobs.
