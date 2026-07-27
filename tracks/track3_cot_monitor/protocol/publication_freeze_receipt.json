@@ -1,0 +1,42 @@
+{
+  "schema_version": 1,
+  "freeze_id": "track3-publication-evaluation-20260726T162720Z",
+  "frozen_at": "2026-07-26T16:27:20Z",
+  "status": "FROZEN_BEFORE_SYSTEM_ORGANISM_COLLECTION",
+  "files": [
+    {
+      "path": "quere_questions.json",
+      "sha256": "7895da30b2a1937c12b4ee61214b6e38c673a9b74289a2c9ef5a8002640ac169"
+    },
+    {
+      "path": "system_organisms.json",
+      "sha256": "12ffb1295b69c13924392cf565bd7558a69910b96dc922be965cc4f4a0b9b35a"
+    },
+    {
+      "path": "../track3/safe_code_eval.py",
+      "sha256": "34c4118fc80e5ffc0cb39ce2cd9f2b4d307b782a0fdeee6cbf68834a79199c22"
+    },
+    {
+      "path": "../track3/safe_code_worker.py",
+      "sha256": "2a374ef146ef983a624fbe4769e026692e63fc6fda558e3445f5bd928985a8a8"
+    },
+    {
+      "path": "../collect_system_organism_panel.py",
+      "sha256": "5d2b920187d570e974214d816115f9266bf0d32fa757c5b34b380b5d77d367bf"
+    },
+    {
+      "path": "../evaluate_publication_holdout.py",
+      "sha256": "9669a149423c399dcaf7ed0dc3ca863737d50809316c0efdaa59409fa69e05a9"
+    }
+  ],
+  "frozen_choices": {
+    "generation_regime": "temperature=0.8, thinking enabled",
+    "development_family": "covert_factual_corruption",
+    "heldout_family": "covert_code_sabotage",
+    "heldout_seeds": 5,
+    "primary_truth": "mechanical exact match and fixed tests",
+    "classifier_input": "nine QueRE yes-probabilities only",
+    "heldout_exclusion": "no heldout feature or label may enter fitting or calibration"
+  },
+  "caveat": "Local hash-chain receipt, not an independent timestamp or third-party preregistration."
+}

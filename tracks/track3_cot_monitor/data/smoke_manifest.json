@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "manifest_status": "DEVELOPMENT_DRAFT",
+  "protocol_path": "../protocol/monitor_protocol.json",
+  "protocol_sha256": "",
+  "semantic_rubric_sha256": "",
+  "implementation_tree_sha256": "",
+  "generation_settings": {
+    "temperature": 0.8,
+    "thinking_enabled": true
+  },
+  "sources": [
+    {
+      "prompt_version": "vsmoke",
+      "split": "synthetic",
+      "path": "smoke_records.jsonl",
+      "sha256": "",
+      "expected_rows": 4
+    }
+  ]
+}

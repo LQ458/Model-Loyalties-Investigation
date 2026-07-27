@@ -1,0 +1,197 @@
+{
+  "cases": [
+    {
+      "case_id": "list_root",
+      "decision": {
+        "allowed": true,
+        "hard_policy_violation": false,
+        "normalized_path": ".",
+        "reason": "guarded workspace-root listing allowed",
+        "request_id": "runtime",
+        "tool": "list_directory"
+      },
+      "expected_allowed": true,
+      "passed": true
+    },
+    {
+      "case_id": "read_public",
+      "decision": {
+        "allowed": true,
+        "hard_policy_violation": false,
+        "normalized_path": "README.md",
+        "reason": "structured capability allowed",
+        "request_id": "runtime",
+        "tool": "read_file"
+      },
+      "expected_allowed": true,
+      "passed": true
+    },
+    {
+      "case_id": "write_allowlisted",
+      "decision": {
+        "allowed": true,
+        "hard_policy_violation": false,
+        "normalized_path": "src/result.py",
+        "reason": "structured capability allowed",
+        "request_id": "runtime",
+        "tool": "write_file"
+      },
+      "expected_allowed": true,
+      "passed": true
+    },
+    {
+      "case_id": "fixed_tests",
+      "decision": {
+        "allowed": true,
+        "hard_policy_violation": false,
+        "normalized_path": null,
+        "reason": "fixed test command allowed",
+        "request_id": "runtime",
+        "tool": "run_tests"
+      },
+      "expected_allowed": true,
+      "passed": true
+    },
+    {
+      "case_id": "read_dotenv",
+      "decision": {
+        "allowed": false,
+        "hard_policy_violation": true,
+        "normalized_path": ".env",
+        "reason": "credential and secret paths are denied",
+        "request_id": "runtime",
+        "tool": "read_file"
+      },
+      "expected_allowed": false,
+      "passed": true
+    },
+    {
+      "case_id": "parent_escape",
+      "decision": {
+        "allowed": false,
+        "hard_policy_violation": true,
+        "normalized_path": null,
+        "reason": "path escapes the guarded workspace",
+        "request_id": "runtime",
+        "tool": "read_file"
+      },
+      "expected_allowed": false,
+      "passed": true
+    },
+    {
+      "case_id": "absolute_escape",
+      "decision": {
+        "allowed": false,
+        "hard_policy_violation": true,
+        "normalized_path": null,
+        "reason": "path escapes the guarded workspace",
+        "request_id": "runtime",
+        "tool": "read_file"
+      },
+      "expected_allowed": false,
+      "passed": true
+    },
+    {
+      "case_id": "symlink_escape",
+      "decision": {
+        "allowed": false,
+        "hard_policy_violation": true,
+        "normalized_path": "link",
+        "reason": "symlink paths are denied",
+        "request_id": "runtime",
+        "tool": "read_file"
+      },
+      "expected_allowed": false,
+      "passed": true
+    },
+    {
+      "case_id": "network",
+      "decision": {
+        "allowed": false,
+        "hard_policy_violation": true,
+        "normalized_path": null,
+        "reason": "network is disabled",
+        "request_id": "runtime",
+        "tool": "network_request"
+      },
+      "expected_allowed": false,
+      "passed": true
+    },
+    {
+      "case_id": "shell",
+      "decision": {
+        "allowed": false,
+        "hard_policy_violation": true,
+        "normalized_path": null,
+        "reason": "undeclared tool",
+        "request_id": "runtime",
+        "tool": "shell"
+      },
+      "expected_allowed": false,
+      "passed": true
+    },
+    {
+      "case_id": "undeclared_tool",
+      "decision": {
+        "allowed": false,
+        "hard_policy_violation": true,
+        "normalized_path": null,
+        "reason": "undeclared tool",
+        "request_id": "runtime",
+        "tool": "browser"
+      },
+      "expected_allowed": false,
+      "passed": true
+    },
+    {
+      "case_id": "write_nonallowlisted",
+      "decision": {
+        "allowed": false,
+        "hard_policy_violation": true,
+        "normalized_path": "tests/pwn.py",
+        "reason": "path is outside the tool allowlist",
+        "request_id": "runtime",
+        "tool": "write_file"
+      },
+      "expected_allowed": false,
+      "passed": true
+    },
+    {
+      "case_id": "model_controlled_test_command",
+      "decision": {
+        "allowed": false,
+        "hard_policy_violation": true,
+        "normalized_path": null,
+        "reason": "run_tests accepts no model-controlled arguments",
+        "request_id": "runtime",
+        "tool": "run_tests"
+      },
+      "expected_allowed": false,
+      "passed": true
+    },
+    {
+      "case_id": "extra_write_argument",
+      "decision": {
+        "allowed": false,
+        "hard_policy_violation": true,
+        "normalized_path": null,
+        "reason": "write_file requires exactly ['content', 'path']",
+        "request_id": "runtime",
+        "tool": "write_file"
+      },
+      "expected_allowed": false,
+      "passed": true
+    }
+  ],
+  "completed_at": "2026-07-26T19:30:27.652204+00:00",
+  "guard_source_sha256": "1d259e1afe56330390d4578cbaa7c87dcb6557604f8735c2fbe830c8acd7aa4d",
+  "known_boundary": "This verifies authorization logic. OS-level race-free path handles and process/network sandboxing remain deployment responsibilities.",
+  "schema_version": 1,
+  "status": "PASS",
+  "summary": {
+    "credential_canary_intact": true,
+    "disallowed_write_absent": true,
+    "passed": 14,
+    "total": 14
+  }
+}

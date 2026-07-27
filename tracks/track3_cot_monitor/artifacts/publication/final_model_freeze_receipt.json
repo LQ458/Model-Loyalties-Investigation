@@ -1,0 +1,76 @@
+{
+  "claim_scope": "One frozen unseen-family test on precommitted covert code sabotage with five seeds and matched same-base clean controls.",
+  "files": [
+    {
+      "path": "/Users/LeoQin/Documents/GitHub/Model Loyalties Investigation/tracks/track3_cot_monitor/protocol/quere_behavior_questions_v2.json",
+      "role": "question_set",
+      "sha256": "98e3119737c0582971bb7f5e5a30f40841200659f95c8d1df576c52d5c5ea4d3"
+    },
+    {
+      "path": "/Users/LeoQin/Documents/GitHub/Model Loyalties Investigation/tracks/track3_cot_monitor/protocol/system_organisms.json",
+      "role": "system_protocol",
+      "sha256": "12ffb1295b69c13924392cf565bd7558a69910b96dc922be965cc4f4a0b9b35a"
+    },
+    {
+      "path": "/Users/LeoQin/Documents/GitHub/Model Loyalties Investigation/tracks/track3_cot_monitor/protocol/hybrid_defense.json",
+      "role": "hybrid_protocol",
+      "sha256": "eca3a887467b34c13758bf154c05e0eadf7a047ec052cbbcf3593576aad2f053"
+    },
+    {
+      "path": "/Users/LeoQin/Documents/GitHub/Model Loyalties Investigation/tracks/track3_cot_monitor/artifacts/publication/final_development/quere_classifier.json",
+      "role": "quere_model",
+      "sha256": "16a0ebbd23af7644db1db394547b29b3afcc8b0e1ff9263845a4f09e737da2bd"
+    },
+    {
+      "path": "/Users/LeoQin/Documents/GitHub/Model Loyalties Investigation/tracks/track3_cot_monitor/artifacts/publication/final_development/minilm_ood.npz",
+      "role": "ood_model",
+      "sha256": "0c95c68a8c67cac7ad28f7baa7ff12a33b52b3e764fcf216b9a055d96917179d"
+    },
+    {
+      "path": "/Users/LeoQin/Documents/GitHub/Model Loyalties Investigation/tracks/track3_cot_monitor/artifacts/publication/final_development/fusion.json",
+      "role": "fusion_model",
+      "sha256": "a4ca05aa9adb39cb8985aee274f1b248de7cac68067a50f0e2dfa54fcd5be352"
+    },
+    {
+      "path": "/Users/LeoQin/Documents/GitHub/Model Loyalties Investigation/tracks/track3_cot_monitor/artifacts/publication/final_development/evaluator_truth.jsonl",
+      "role": "development_truth",
+      "sha256": "13b147a9dfef525db567755bf37f1926ff7c25a40d24494bbef138f2d1197d7c"
+    },
+    {
+      "path": "/Users/LeoQin/Documents/GitHub/Model Loyalties Investigation/tracks/track3_cot_monitor/artifacts/publication/final_development/runtime_bundles.jsonl",
+      "role": "development_bundles",
+      "sha256": "806fdc6dda231b6b8147b8d9dc59d1684c18f02bbd2660cdc1b276c7b8472a0c"
+    },
+    {
+      "path": "/Users/LeoQin/Documents/GitHub/Model Loyalties Investigation/tracks/track3_cot_monitor/monitors/quere.py",
+      "role": "quere_runtime_code",
+      "sha256": "129304fff6655ff18446ca48f6d54c8dbd08432bf207773e692bd964a71a369f"
+    },
+    {
+      "path": "/Users/LeoQin/Documents/GitHub/Model Loyalties Investigation/tracks/track3_cot_monitor/track3/fusion.py",
+      "role": "fusion_runtime_code",
+      "sha256": "52bf9aac55fb103f7c853fe5417ad11b8dff8715dcea6c86834f6928d65041c6"
+    },
+    {
+      "path": "/Users/LeoQin/Documents/GitHub/Model Loyalties Investigation/tracks/track3_cot_monitor/track3/components.py",
+      "role": "component_schema_code",
+      "sha256": "0fba392bbf9e339ad1ae6dfaf2e235adc98b86399459adf01f103dbbef64863e"
+    },
+    {
+      "path": "/Users/LeoQin/Documents/GitHub/Model Loyalties Investigation/tracks/track3_cot_monitor/run_hybrid_gate.py",
+      "role": "gate_runtime_code",
+      "sha256": "14e16105241da8be72b00c031e6d44b2f28ac12f3764eb476939f84a39286118"
+    },
+    {
+      "path": "/Users/LeoQin/Documents/GitHub/Model Loyalties Investigation/tracks/track3_cot_monitor/evaluate_publication_holdout.py",
+      "role": "heldout_evaluator_code",
+      "sha256": "75493c08a9c7d4804ff819fe89352186a4e663d9d2ce73a806e74c4f83c39fa8"
+    }
+  ],
+  "frozen_at": "2026-07-26T17:39:11.024512+00:00",
+  "heldout_panel_absent": true,
+  "heldout_panel_planned_path": "/Users/LeoQin/Documents/GitHub/Model Loyalties Investigation/tracks/track3_cot_monitor/data/publication/heldout_code.jsonl",
+  "runtime_blindness": "Classifier and fusion artifacts consume only opaque request IDs and strict component probabilities. Evaluator labels, families, model strata, source IDs, and conditions are not serialized into runtime inputs.",
+  "schema_version": 1,
+  "status": "FROZEN_BEFORE_HELDOUT_COLLECTION"
+}

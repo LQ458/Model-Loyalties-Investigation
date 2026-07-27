@@ -1,0 +1,26 @@
+{
+  "schema_version": 1,
+  "amendment_id": "track3-quere-v2-pre-heldout",
+  "status": "FROZEN_BEFORE_HELDOUT_COLLECTION",
+  "amended_at": "2026-07-26T16:47:00Z",
+  "supersedes_for_final_classifier": "quere_hand_questions_v1",
+  "original_freeze_receipt_sha256": "d70a988910f8d26339890d3491056e19b388e76e0206350217903d3adb24183a",
+  "development_evidence": {
+    "pilot_feature_path": "../artifacts/publication/development_factual/quere_features.jsonl",
+    "pilot_feature_sha256": "ee082b4737d88bcb07b515b9697b832bca607e670e7a6a9617b5bf79e5ef0c89",
+    "completed_rows_before_stop": 4,
+    "reason": "The nine confidence-only probabilities were near-saturated and weakly varying on matched factual-corruption development pairs."
+  },
+  "paper_basis": {
+    "arxiv": "https://arxiv.org/abs/2501.01558v4",
+    "reported_design": "roughly 50 follow-up questions, including 40 broader model-behavior prompts",
+    "reported_ablation": "more follow-up questions improve performance"
+  },
+  "replacement": {
+    "path": "quere_behavior_questions_v2.json",
+    "sha256": "98e3119737c0582971bb7f5e5a30f40841200659f95c8d1df576c52d5c5ea4d3",
+    "questions": 16,
+    "selection_rule": "Published model-behavior questions spanning accuracy, influence, bias, safety, context, confidentiality, capability awareness, adaptation, and self-improvement; no heldout output or label was observed."
+  },
+  "claim_rule": "The v1 pilot remains negative development evidence. Only v2 may be fitted and frozen for the final unseen-family test."
+}

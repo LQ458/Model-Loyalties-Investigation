@@ -1,0 +1,58 @@
+{
+  "schema_version": 1,
+  "checked_at": "2026-07-26",
+  "policy": {
+    "maximum_download_bytes": 10000000000,
+    "gated_or_authenticated_downloads": false,
+    "silent_substitution": false,
+    "external_inference_apis": false
+  },
+  "components": [
+    {
+      "id": "llama_prompt_guard_2_86m",
+      "requested_role": "pretrained_input_attack_specialist",
+      "source": "https://huggingface.co/meta-llama/Llama-Prompt-Guard-2-86M",
+      "license": "llama4",
+      "status": "UNAVAILABLE_GATED",
+      "activated": false,
+      "reason": "The official repository requires login and license acceptance. Acquisition would violate the no-gated/authenticated-download policy.",
+      "replacement": null
+    },
+    {
+      "id": "ppldiff_perpcorrect",
+      "requested_role": "candidate_runtime_specialist",
+      "paper": "https://openreview.net/forum?id=OUXnnPJzXJ",
+      "code": "https://github.com/luxinyayaya/PerpCorrect",
+      "status": "REJECTED_SCOPE_MISMATCH",
+      "activated": false,
+      "reason": "PPLDiff compares perplexity of chosen and rejected response pairs to detect noisy preference labels after fitting an aligned surrogate. It is not a single-trajectory prompt-injection, deception, or secret-loyalty detector.",
+      "replacement": null
+    },
+    {
+      "id": "deceptguard",
+      "requested_role": "pretrained_deception_specialist",
+      "paper": "https://arxiv.org/abs/2603.13791",
+      "status": "UNAVAILABLE_NO_OFFICIAL_ARTIFACT",
+      "activated": false,
+      "reason": "The paper is discoverable, but no official code repository, model card, checkpoint, or license was discoverable at the check date.",
+      "replacement": null
+    },
+    {
+      "id": "paraphrase_multilingual_minilm_l12_v2",
+      "requested_role": "frozen_embedding_ood_encoder",
+      "source": "https://huggingface.co/sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2",
+      "status": "INSTALLED_LOCAL_CACHE",
+      "activated": true,
+      "reason": "A complete pre-existing local snapshot is available. Only a benign-reference covariance/OOD layer is trained.",
+      "snapshot_revision": "e8f8c211226b894fcb81acc59f3b34ba3efd5f42"
+    },
+    {
+      "id": "small_activation_probe_adapter",
+      "requested_role": "optional_activation_specialist",
+      "status": "UNAVAILABLE_NO_COMPATIBLE_ADAPTER",
+      "activated": false,
+      "reason": "No compatible released adapter is available for the target models. The optional train-small-encoder gate is not triggered by current evidence.",
+      "replacement": null
+    }
+  ]
+}

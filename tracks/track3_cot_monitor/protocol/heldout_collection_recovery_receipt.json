@@ -1,0 +1,55 @@
+{
+  "schema_version": 1,
+  "status": "OPERATIONAL_RECOVERY_NO_MODEL_OR_THRESHOLD_CHANGE",
+  "recorded_at": "2026-07-26T18:48:05Z",
+  "final_model_freeze_receipt_sha256": "13725f87d893aa1feb20030bd7adb6af02231dccd6cab08344e2fc4fa090c443",
+  "heldout_panel_sha256": "e4313a4b3a5f06e44b92d93cf8218442da4b1ffc84e28b955e65981f32d1e5d8",
+  "changes": [
+    {
+      "event": "system_panel_process_interrupted_after_14_rows",
+      "resolution": "Validated the exact unique frozen-job prefix and appended only the missing suffix.",
+      "script": "../resume_system_organism_panel.py",
+      "script_sha256": "d8adde54dff2569a69399eed38ed505bacaca78e4d4bfe0ea72bb7e9072ca750"
+    },
+    {
+      "event": "restricted_localhost_created_16_empty_transport_error_rows",
+      "resolution": "Preserved all 14 successful rows and replaced only the 16 transport-error rows after authorized localhost access was restored.",
+      "pre_repair_snapshot": "../data/publication/heldout_code.jsonl.transport_error_snapshot",
+      "pre_repair_snapshot_sha256": "9f8bf01a60cf7a981ea46dd6b0da43473f7dd5d1a2c023c86bf69f813b3f641b",
+      "script": "../repair_system_organism_panel.py",
+      "script_sha256": "a1d0f1f48ab5e5d8a2f3b8c01ae2b789f2b3cf89022b20868a1a4f2506eb0343"
+    },
+    {
+      "event": "organism_reasoning_exhausted_budget_and_emitted_empty_final_answer",
+      "resolution": "QueRE request validation now preserves an empty assistant turn verbatim. It does not substitute hidden reasoning or a label-bearing sentinel."
+    },
+    {
+      "event": "long_probe_run_required_recovery_and_bounded_storage",
+      "resolution": "Added exact-prefix resume. Raw Ollama payload capture was aborted before the first feature row because five responses occupied about 23 MB; feature extraction continued without raw payload archiving.",
+      "aborted_raw_diagnostic": "../artifacts/publication/heldout_code/quere_raw.aborted_oversized.jsonl",
+      "aborted_raw_diagnostic_sha256": "e744102906b3c11ee0c0196f4920dedcb89a9ae579fa0b5ed65641236205331f",
+      "publication_disposition": "Local-only interrupted diagnostic; excluded from the publication package because it was not used for scoring and contains approximately 23 MB of redundant raw payloads."
+    },
+    {
+      "event": "required_probe_feature_unavailable",
+      "resolution": "After the first required feature is unavailable, later probes may be skipped and padded unavailable. Because the frozen classifier requires all 16 features and the frozen gate quarantines an unavailable required specialist, this cannot change the decision. The first heldout organism row was fully probed and confirmed unavailable before this optimization was enabled."
+    },
+    {
+      "event": "sandbox_did_not_expose_mps_backend",
+      "resolution": "Applied the same frozen MiniLM encoder revision and OOD artifact on CPU. No encoder, OOD parameters, threshold, or fusion weight changed. Device-level floating-point variation remains a disclosed reproducibility limitation."
+    }
+  ],
+  "active_probe_collector": "../collect_quere.py",
+  "active_probe_collector_sha256": "0be0be16cc0d49d5edfd26065e06226434ad4177d6f421935e609ec9f32c04b6",
+  "unchanged_frozen_items": [
+    "question set and question order",
+    "temperature 0.8 and thinking enabled",
+    "target model and original target records",
+    "QueRE classifier coefficients and flag threshold",
+    "MiniLM encoder revision and OOD artifact",
+    "fusion coefficients and action thresholds",
+    "activated and installed truth definitions",
+    "heldout evaluator"
+  ],
+  "claim_constraint": "Recovery and fail-fast rows may support the frozen gate's fail-closed outcome, but unavailable-probe interventions must not be described as learned classifier detections."
+}

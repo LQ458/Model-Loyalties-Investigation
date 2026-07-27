@@ -1,0 +1,22 @@
+{
+  "artifact_sha256": null,
+  "bias": -0.08508729217386272,
+  "component_ids": [
+    "lexical_pre_v021:combined",
+    "minilm_benign_ood",
+    "quere_behavior16_t08_think_v2"
+  ],
+  "constrain_threshold": 0.5135413229293985,
+  "model_status": "FROZEN_EVALUATION",
+  "model_type": "nonnegative_logistic_fusion",
+  "quarantine_threshold": 0.5135413229293985,
+  "schema_version": 1,
+  "weights": {
+    "lexical_pre_v021:combined": 0.0,
+    "minilm_benign_ood": 0.0,
+    "missing:lexical_pre_v021:combined": 0.0,
+    "missing:minilm_benign_ood": 0.0,
+    "missing:quere_behavior16_t08_think_v2": 0.0,
+    "quere_behavior16_t08_think_v2": 0.1701399986838877
+  }
+}

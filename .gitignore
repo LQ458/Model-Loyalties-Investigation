@@ -16,6 +16,8 @@ results/
 reports/
 runs/
 artifacts/
+!tracks/track3_cot_monitor/artifacts/
+!tracks/track3_cot_monitor/artifacts/publication/
 
 # Generated synthetic sandbox fixtures
 fixtures/sandbox/

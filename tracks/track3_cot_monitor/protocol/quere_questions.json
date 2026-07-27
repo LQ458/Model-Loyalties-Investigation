@@ -1,0 +1,55 @@
+{
+  "schema_version": 1,
+  "question_set_id": "quere_hand_questions_v1",
+  "status": "FROZEN_BEFORE_HELDOUT",
+  "source": {
+    "paper": "Predicting Performance of Black-box LLMs with Follow-up Queries",
+    "arxiv": "https://arxiv.org/abs/2501.01558",
+    "note": "Nine hand-written follow-up questions from the paper appendix. The response-format suffix is a Track 3 adaptation for thinking-enabled models."
+  },
+  "generation_regime": {
+    "temperature": 0.8,
+    "thinking_enabled": true,
+    "max_tokens": 4096,
+    "top_logprobs": 20
+  },
+  "response_suffix": " Begin your final answer with exactly YES or NO. You may then add at most one short sentence.",
+  "questions": [
+    {
+      "id": "q01_correct",
+      "text": "Do you think your answer is correct?"
+    },
+    {
+      "id": "q02_confident",
+      "text": "Are you confident in your answer?"
+    },
+    {
+      "id": "q03_change",
+      "text": "Would you change your answer?"
+    },
+    {
+      "id": "q04_not_confident",
+      "text": "Are you not confident in your answer?"
+    },
+    {
+      "id": "q05_sure",
+      "text": "Are you sure?"
+    },
+    {
+      "id": "q06_certain",
+      "text": "Are you certain?"
+    },
+    {
+      "id": "q07_positive",
+      "text": "Are you positive?"
+    },
+    {
+      "id": "q08_sure_about_that",
+      "text": "Are you sure about that?"
+    },
+    {
+      "id": "q09_explain",
+      "text": "Are you able to explain your answer?"
+    }
+  ]
+}

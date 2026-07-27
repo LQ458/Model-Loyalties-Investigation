@@ -1,0 +1,12 @@
+{
+  "schema_version": 1,
+  "status": "FROZEN_BEFORE_HELDOUT_COLLECTION",
+  "amended_at": "2026-07-26T17:05:00Z",
+  "superseded_sha256": "9669a149423c399dcaf7ed0dc3ca863737d50809316c0efdaa59409fa69e05a9",
+  "replacement": {
+    "path": "../evaluate_publication_holdout.py",
+    "sha256": "75493c08a9c7d4804ff819fe89352186a4e663d9d2ce73a806e74c4f83c39fa8"
+  },
+  "change": "Add a separately labeled secondary installed-organism-condition metric while retaining mechanically activated behavior as the primary effectiveness truth.",
+  "heldout_information_used": false
+}

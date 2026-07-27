@@ -1,0 +1,14 @@
+{
+  "schema_version": 1,
+  "component_id": "paraphrase_multilingual_minilm_l12_v2",
+  "repo_id": "sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2",
+  "revision": "e8f8c211226b894fcb81acc59f3b34ba3efd5f42",
+  "license": "apache-2.0",
+  "source": "https://huggingface.co/sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2",
+  "source_status": "PREEXISTING_COMPLETE_LOCAL_CACHE",
+  "snapshot_bytes": 479729010,
+  "tree_sha256": "09dcfb3bf7f009c5a890f800bd3c33a5d3855be516640c2bcf46c17586cd9466",
+  "activated_role": "frozen_embedding_encoder_for_benign_reference_ood",
+  "trainable_parameters": 0,
+  "checked_at": "2026-07-26"
+}

@@ -1,0 +1,33 @@
+{
+  "schema_version": 1,
+  "manifest_status": "DEVELOPMENT_ONLY",
+  "generation_settings": {
+    "temperature": 0.8,
+    "thinking_enabled": true
+  },
+  "development_principals": [
+    "NettleForge CI"
+  ],
+  "source_panel": {
+    "path": "../../../track2_audit_system/external_organisms/local_results/track1-aligned-ours-vs-public-r1/comparison.json",
+    "sha256": "26db81850c00dfd437593998ea9c2b5e554e2887a847c41881834301496061c1",
+    "claim_scope": "Track 1-aligned live compatibility comparison across one prompt-installed development organism and three public contaminated adapter organisms. Not sealed blind evidence or an efficacy claim.",
+    "scientific_claim_eligible": false
+  },
+  "sources": [
+    {
+      "prompt_version": "mixed",
+      "split": "public_development_panel",
+      "path": "records.jsonl",
+      "sha256": "1dd8d107205add654fc96029bda7840c8b853171b8d042d83113ba565ba13ad3",
+      "expected_rows": 60
+    }
+  ],
+  "versions": [
+    "ia-qwen3-0.6b-backdoor-0",
+    "ia-qwen3-0.6b-benign-0",
+    "ia-qwen3-4b-backdoor-0",
+    "ours-v018-c2"
+  ],
+  "claim_boundary": "Public organisms have searchable ground truth and are development-only. installed_behavior is not a secret-loyalty label."
+}

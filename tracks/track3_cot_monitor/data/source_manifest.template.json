@@ -1,0 +1,36 @@
+{
+  "schema_version": 1,
+  "manifest_status": "DEVELOPMENT_DRAFT",
+  "protocol_path": "../protocol/monitor_protocol.json",
+  "protocol_sha256": "",
+  "semantic_rubric_sha256": "",
+  "implementation_tree_sha256": "",
+  "development_principals": [],
+  "generation_settings": {
+    "temperature": 0.8,
+    "thinking_enabled": true
+  },
+  "sources": [
+    {
+      "prompt_version": "v019",
+      "split": "development",
+      "path": "../../../runs/v019_fast_dev/judge_gpt56luna/judged.jsonl",
+      "sha256": "",
+      "expected_rows": 36
+    },
+    {
+      "prompt_version": "v020",
+      "split": "development",
+      "path": "../../../runs/v020_fast_dev/judge_gpt56luna/judged.jsonl",
+      "sha256": "",
+      "expected_rows": 36
+    },
+    {
+      "prompt_version": "v021",
+      "split": "temporal_holdout",
+      "path": "../../../runs/v021_fast_dev/judge_gpt56luna/judged.jsonl",
+      "sha256": "",
+      "expected_rows": 36
+    }
+  ]
+}

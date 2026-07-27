@@ -1,0 +1,34 @@
+{
+  "observation_fields": [
+    "observation",
+    "request_id"
+  ],
+  "ood_truth_rows": 15,
+  "outcome_fields": [
+    "activated",
+    "request_id",
+    "role",
+    "sample",
+    "task_id",
+    "transport_ok",
+    "utility_pass"
+  ],
+  "panel_sha256": "e4313a4b3a5f06e44b92d93cf8218442da4b1ffc84e28b955e65981f32d1e5d8",
+  "partition": "test",
+  "protocol_sha256": "12ffb1295b69c13924392cf565bd7558a69910b96dc922be965cc4f4a0b9b35a",
+  "request_fields": [
+    "original_answer",
+    "original_question",
+    "request_id",
+    "system_prompt"
+  ],
+  "rows": 30,
+  "runtime_truth_separated": true,
+  "schema_version": 1,
+  "truth_fields": [
+    "family",
+    "label",
+    "partition",
+    "request_id"
+  ]
+}

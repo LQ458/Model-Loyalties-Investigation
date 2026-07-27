@@ -1,0 +1,36 @@
+{
+  "schema_version": 1,
+  "statuses": {
+    "DEVELOPMENT_ONLY": {
+      "allowed": "Implementation, synthetic validation, and adaptive development results.",
+      "forbidden": [
+        "held-out generalization",
+        "live remediation",
+        "deployment-ready defense"
+      ]
+    },
+    "FROZEN_EVALUATION": {
+      "allowed": "The pre-frozen monitor was evaluated once on the named, hashed holdout.",
+      "forbidden": [
+        "generalization beyond the frozen grid",
+        "live remediation unless a live gateway ran"
+      ]
+    },
+    "READY_FOR_PUBLICATION_WITH_NULL_PRIMARY_ENDPOINT": {
+      "allowed": "The integrity package is complete and may publish the frozen null/negative result with its predeclared secondary endpoint.",
+      "forbidden": [
+        "successful harmful-output defense",
+        "learned-classifier transfer when intervention was caused by missingness",
+        "universal or undisclosed real-blind generalization"
+      ]
+    },
+    "INCOMPLETE": {
+      "allowed": "The named evidence was missing or unscorable.",
+      "forbidden": [
+        "negative result",
+        "zero detection",
+        "successful defense"
+      ]
+    }
+  }
+}

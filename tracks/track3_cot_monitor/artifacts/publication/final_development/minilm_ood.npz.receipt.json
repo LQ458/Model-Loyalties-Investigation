@@ -1,0 +1,17 @@
+{
+  "artifact": "/Users/LeoQin/Documents/GitHub/Model Loyalties Investigation/tracks/track3_cot_monitor/artifacts/publication/final_development/minilm_ood.npz",
+  "benign_training_families": [
+    "matched_benign_roleplay",
+    "matched_clean_control"
+  ],
+  "benign_training_rows": 16,
+  "device": "mps",
+  "encoder": "/Users/LeoQin/.cache/huggingface/hub/models--sentence-transformers--paraphrase-multilingual-MiniLM-L12-v2/snapshots/e8f8c211226b894fcb81acc59f3b34ba3efd5f42",
+  "encoder_revision": "e8f8c211226b894fcb81acc59f3b34ba3efd5f42",
+  "model_status": "DEVELOPMENT_ONLY",
+  "observations_sha256": "a5dcbe3e6a715de2686fc39bf48cc82296105199cc03a91fba5f8e9d33ecacab",
+  "quantile": 0.95,
+  "schema_version": 1,
+  "sha256": "0c95c68a8c67cac7ad28f7baa7ff12a33b52b3e764fcf216b9a055d96917179d",
+  "truth_sha256": "4c0ae854c4758aa5aee11d4099164fe158ded0fa9aebc129a86d9af50f3d6de9"
+}

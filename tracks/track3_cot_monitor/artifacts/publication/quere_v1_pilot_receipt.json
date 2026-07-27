@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "status": "STOPPED_DEVELOPMENT_PILOT",
+  "question_set_sha256": "7895da30b2a1937c12b4ee61214b6e38c673a9b74289a2c9ef5a8002640ac169",
+  "reason": "Nine hand-confidence questions showed near-saturated weak variation and did not match the paper's approximately 50-question detector design.",
+  "preserved_partial_outputs": [
+    {
+      "cohort": "remote_prompt_installed_loyalty",
+      "rows": 5,
+      "path": "../quere_current_panel/features/ours-v018-c2.jsonl",
+      "sha256": "ad174bc2fcea0b7a79714a62528c02b8976a53a1abcf77cd146226bdcd70b5d9"
+    },
+    {
+      "cohort": "matched_factual_corruption_pilot",
+      "rows": 4,
+      "path": "development_factual/quere_features.jsonl",
+      "sha256": "ee082b4737d88bcb07b515b9697b832bca607e670e7a6a9617b5bf79e5ef0c89"
+    }
+  ],
+  "scientific_use": "Negative development evidence only; excluded from final classifier fitting, calibration, and heldout evaluation."
+}

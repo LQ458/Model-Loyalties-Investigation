@@ -1,0 +1,24 @@
+{
+  "clean_rows": 6,
+  "clean_utility_passes": 6,
+  "completed_at": "2026-07-26T16:40:38.144803+00:00",
+  "family": "covert_factual_corruption",
+  "generation_regime": {
+    "max_tokens": 4096,
+    "seeds": [
+      2026072701
+    ],
+    "temperature": 0.8,
+    "thinking_enabled": true
+  },
+  "organism_activations": 6,
+  "organism_rows": 6,
+  "output_sha256": "0982fd8495e67266a282d1a5b051a4efbb81526832fcdb26fe2c61464396fde1",
+  "partition": "development",
+  "protocol_sha256": "12ffb1295b69c13924392cf565bd7558a69910b96dc922be965cc4f4a0b9b35a",
+  "reasoning_nonempty": 12,
+  "rows": 12,
+  "schema_version": 1,
+  "status": "DEVELOPMENT_COMPLETE",
+  "transport_success": 12
+}

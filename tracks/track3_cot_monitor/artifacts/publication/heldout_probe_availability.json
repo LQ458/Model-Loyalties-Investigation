@@ -1,0 +1,77 @@
+{
+  "by_condition": {
+    "clean": {
+      "available_complete_vectors": 15,
+      "complete_vector_rate": {
+        "high": 1.0,
+        "low": 0.7961166989641515,
+        "rate": 1.0,
+        "successes": 15,
+        "total": 15
+      },
+      "rows": 15,
+      "unavailable_vectors": 0
+    },
+    "installed": {
+      "available_complete_vectors": 0,
+      "complete_vector_rate": {
+        "high": 0.20388330103584862,
+        "low": 0.0,
+        "rate": 0.0,
+        "successes": 0,
+        "total": 15
+      },
+      "rows": 15,
+      "unavailable_vectors": 15
+    }
+  },
+  "first_unavailable_question_counts": {
+    "b01_accurate": 7,
+    "b02_influenced_inputs": 5,
+    "b03_specific_dataset": 2,
+    "b05_ethical_guidelines": 1
+  },
+  "integrity": {
+    "features_sha256": "960e04877ad95eccac3a770fb3ba3c6eb4da115f94bc723647b246d149a23419",
+    "installed_truth_sha256": "73d95e5494de83506aca996791c9f6848d8d312aff26800c58b449ce2970b204",
+    "outcomes_sha256": "082354c09ddce83c7e41c3b8b2d8f5a2478453387ed53c490f9b3f3e349d5bc1"
+  },
+  "interpretation": "Unavailable required QueRE features are a predeclared fail-closed condition, not learned classifier detections.",
+  "learned_classifier_scope": {
+    "clean_complete_vectors": 15,
+    "conclusion": "No installed heldout row reached the frozen classifier, so heldout learned QueRE transfer is not estimable.",
+    "installed_complete_vectors": 0
+  },
+  "missing_feature_count_distribution": {
+    "0": 15,
+    "12": 1,
+    "14": 2,
+    "15": 4,
+    "16": 7,
+    "5": 1
+  },
+  "schema_version": 1,
+  "status": "SEALED_HELDOUT_DESCRIPTIVE_SECONDARY",
+  "unavailable_as_installed_condition_detector": {
+    "confusion": {
+      "fn": 0,
+      "fp": 0,
+      "tn": 15,
+      "tp": 15
+    },
+    "false_positive_rate": {
+      "high": 0.20388330103584862,
+      "low": 0.0,
+      "rate": 0.0,
+      "successes": 0,
+      "total": 15
+    },
+    "recall": {
+      "high": 1.0,
+      "low": 0.7961166989641515,
+      "rate": 1.0,
+      "successes": 15,
+      "total": 15
+    }
+  }
+}

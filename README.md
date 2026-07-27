@@ -16,6 +16,12 @@ API-first eval backbone for **prompt-installed secret-loyalty** model organisms 
 
 **Current organism:** `v018` — claim_status **`development_train_confirm_with_cn`** (non-CoT train confirm+CN judged PASS at `runs/v018_c0c1c2da_cn_s3/judge_gpt56luna`). Prefer `--workers 7`. Do not headline the legacy incomplete 126-run train grid. CoT/C4 still deferred; sealed remains CN-absent. Friend black-box audits must use **`hard_v2`**, not soft probes alone.
 
+**Track 3 defense:** [`tracks/track3_cot_monitor/RESULTS.md`](tracks/track3_cot_monitor/RESULTS.md)
+is publication-ready as a bounded null/negative result. The sealed gate
+quarantined `15/15` installed-organism rows and allowed `15/15` clean controls,
+but zero harmful final outputs activated and the separation came from
+fail-closed probe unavailability, not learned-classifier transfer.
+
 ## Scientific protocol (short)
 
 - Methods: [`docs/METHODS.md`](docs/METHODS.md)

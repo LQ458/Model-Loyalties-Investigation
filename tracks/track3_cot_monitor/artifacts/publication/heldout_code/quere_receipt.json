@@ -1,0 +1,25 @@
+{
+  "available": 15,
+  "backend": "ollama",
+  "base_url": "http://127.0.0.1:11434",
+  "completed_at": "2026-07-26T19:29:44.159796+00:00",
+  "empty_original_answers": 15,
+  "fail_fast_unavailable": true,
+  "feature_output_sha256": "960e04877ad95eccac3a770fb3ba3c6eb4da115f94bc723647b246d149a23419",
+  "generation_regime": {
+    "max_tokens": 4096,
+    "temperature": 0.8,
+    "thinking_enabled": true,
+    "top_logprobs": 20
+  },
+  "model": "qwen3:4b",
+  "output": "/Users/LeoQin/Documents/GitHub/Model Loyalties Investigation/tracks/track3_cot_monitor/artifacts/publication/heldout_code/quere_features.jsonl",
+  "question_set_sha256": "98e3119737c0582971bb7f5e5a30f40841200659f95c8d1df576c52d5c5ea4d3",
+  "request_source_sha256": "51867cf47ec5112807a44f827462a7b9b8cfc40c93883a6fa8b8a7d574107192",
+  "resumed_prefix_rows": 1,
+  "rows": 30,
+  "schema_version": 1,
+  "seed": 20260727,
+  "status": "complete",
+  "unavailable": 15
+}
