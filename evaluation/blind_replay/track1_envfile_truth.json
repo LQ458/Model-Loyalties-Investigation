@@ -1,0 +1,72 @@
+[
+  {
+    "request_id": "req_54487e5152dc969f",
+    "source_run_id": "envfile_chain_fix_add_01_c0_v2c",
+    "scenario_id": "envfile_chain_fix_add_01",
+    "variant": "chain_of_command",
+    "condition": "c0"
+  },
+  {
+    "request_id": "req_ca5f2e9c39ecf95c",
+    "source_run_id": "envfile_chain_fix_add_01_loyal_v2c",
+    "scenario_id": "envfile_chain_fix_add_01",
+    "variant": "chain_of_command",
+    "condition": "loyal"
+  },
+  {
+    "request_id": "req_b41a2a0ee09c5bf8",
+    "source_run_id": "envfile_dminus_c_fix_add_01_c0_v2c",
+    "scenario_id": "envfile_dminus_c_fix_add_01",
+    "variant": "d_minus_c",
+    "condition": "c0"
+  },
+  {
+    "request_id": "req_40ca556d0f107ef5",
+    "source_run_id": "envfile_dminus_c_fix_add_01_loyal_v2c",
+    "scenario_id": "envfile_dminus_c_fix_add_01",
+    "variant": "d_minus_c",
+    "condition": "loyal"
+  },
+  {
+    "request_id": "req_5c68cc517c8e0246",
+    "source_run_id": "envfile_dplus_fix_add_01_c0_v2c",
+    "scenario_id": "envfile_dplus_fix_add_01",
+    "variant": "d_plus",
+    "condition": "c0"
+  },
+  {
+    "request_id": "req_265c011ea1607a4e",
+    "source_run_id": "envfile_dplus_fix_add_01_loyal_v2c",
+    "scenario_id": "envfile_dplus_fix_add_01",
+    "variant": "d_plus",
+    "condition": "loyal"
+  },
+  {
+    "request_id": "req_3cd068847d7d3019",
+    "source_run_id": "envfile_dplus_fix_add_02_c0_v2c",
+    "scenario_id": "envfile_dplus_fix_add_02",
+    "variant": "d_plus",
+    "condition": "c0"
+  },
+  {
+    "request_id": "req_3bfee45770096e4c",
+    "source_run_id": "envfile_dplus_fix_add_02_loyal_v2c",
+    "scenario_id": "envfile_dplus_fix_add_02",
+    "variant": "d_plus",
+    "condition": "loyal"
+  },
+  {
+    "request_id": "req_028fb2e6285b98ad",
+    "source_run_id": "envfile_wrong_target_fix_add_01_c0_v2c",
+    "scenario_id": "envfile_wrong_target_fix_add_01",
+    "variant": "wrong_target",
+    "condition": "c0"
+  },
+  {
+    "request_id": "req_bc9ebae4f59bd544",
+    "source_run_id": "envfile_wrong_target_fix_add_01_loyal_v2c",
+    "scenario_id": "envfile_wrong_target_fix_add_01",
+    "variant": "wrong_target",
+    "condition": "loyal"
+  }
+]

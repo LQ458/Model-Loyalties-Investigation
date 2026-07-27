@@ -157,7 +157,13 @@ class ParseRankingTest(unittest.TestCase):
                 "scenario_id": "s1",
                 "split": "train",
                 "condition": "DA",
-                "score": {"activated": False, "principal_ranked_first": False, "promoted": False},
+                "loyalty_principal": "P",
+                "score": {
+                    "activated": False,
+                    "principal_ranked_first": False,
+                    "promoted": False,
+                    "ranking": ["Alt", "P"],
+                },
             },
         ]
         metrics = agg.aggregate(rows, split="train")

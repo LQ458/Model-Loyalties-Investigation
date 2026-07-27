@@ -1,0 +1,66 @@
+{
+  "schema_version": 1,
+  "policy": {
+    "train": "development and prompt iteration",
+    "test": "held out; definitions exist but no retained completed test metrics",
+    "hash_scope": "exact scenario JSON bytes"
+  },
+  "train": [
+    {
+      "id": "envfile_chain_fix_add_01",
+      "variant": "chain_of_command",
+      "path": "scenarios/envfile/train/envfile_chain_fix_add_01.json",
+      "sha256": "61510f866b4d1b3cf063bdf0054361e13fa5e8bcfc767017b60104af91ba55c7"
+    },
+    {
+      "id": "envfile_dminus_c_fix_add_01",
+      "variant": "d_minus_c",
+      "path": "scenarios/envfile/train/envfile_dminus_c_fix_add_01.json",
+      "sha256": "70128887be6b4e213714cf393543ce14cdd9e7b02269ed0087c15ce211d1045e"
+    },
+    {
+      "id": "envfile_dplus_fix_add_01",
+      "variant": "d_plus",
+      "path": "scenarios/envfile/train/envfile_dplus_fix_add_01.json",
+      "sha256": "37225ebdf47895d548b16aab93fb259c5d999264ccbd431f309bc0df60240ae9"
+    },
+    {
+      "id": "envfile_dplus_fix_add_02",
+      "variant": "d_plus",
+      "path": "scenarios/envfile/train/envfile_dplus_fix_add_02.json",
+      "sha256": "b94b6302ee0767b972a9c0c3d22fa7b2d8be5e9e650bdeee99f1c152d936110b"
+    },
+    {
+      "id": "envfile_wrong_target_fix_add_01",
+      "variant": "wrong_target",
+      "path": "scenarios/envfile/train/envfile_wrong_target_fix_add_01.json",
+      "sha256": "73d34785587ec36951b8a49e28bf76b5e83c05929f0ac323c24de4b2b7cf3d17"
+    }
+  ],
+  "test": [
+    {
+      "id": "envfile_chain_fix_add_test_01",
+      "variant": "chain_of_command",
+      "path": "scenarios/envfile/test/envfile_chain_fix_add_test_01.json",
+      "sha256": "49db3b62089e837afe41df86e011cb1c28b1ed7f5c9a1ae6a31b56e3cd620a6a"
+    },
+    {
+      "id": "envfile_dminus_c_fix_add_test_01",
+      "variant": "d_minus_c",
+      "path": "scenarios/envfile/test/envfile_dminus_c_fix_add_test_01.json",
+      "sha256": "0c55ed3a49f70d46dc11bacb256701ec93e5bc4570f38693681177137d324fa4"
+    },
+    {
+      "id": "envfile_dplus_fix_add_test_01",
+      "variant": "d_plus",
+      "path": "scenarios/envfile/test/envfile_dplus_fix_add_test_01.json",
+      "sha256": "97bad7d6cdd3aed7490f7015e668a6de8e87fe1aa86714ff09245fdba39dc61e"
+    },
+    {
+      "id": "envfile_wrong_target_fix_add_test_01",
+      "variant": "wrong_target",
+      "path": "scenarios/envfile/test/envfile_wrong_target_fix_add_test_01.json",
+      "sha256": "a2ca5cb94de6f25a0e6d8ebcfbd832dd28c56cc38a22f5a23802b259eaf6d683"
+    }
+  ]
+}
