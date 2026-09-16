@@ -1,0 +1,1890 @@
+{
+  "schema_version": 1,
+  "generated": "2026-09-16",
+  "generated_by": "analysis/wujur/nomenclature.md census",
+  "companion": "nomenclature.md",
+  "applied": false,
+  "applies_to": {
+    "repositories": [
+      "Model-Loyalties-Investigation",
+      "latent-objective-tomography"
+    ],
+    "papers": [
+      "paper1 organism, audit and defence",
+      "paper2 loyalty titration and composition"
+    ]
+  },
+  "scopes": {
+    "paper1": "Rename applies in Paper 1 prose.",
+    "paper2": "Rename applies in Paper 2 prose.",
+    "code": "Rename applies to source identifiers, config keys and newly emitted data.",
+    "artifact-frozen": "Committed result file, recorded hash, run id or published JSON key. The name on disk MUST NOT change. The new name applies in prose only; prose_only is true."
+  },
+  "verdict_on_existing_standard": {
+    "file": "latent-objective-tomography/nomenclature.json",
+    "decision": "extended",
+    "reasons": [
+      "It is a working scheme, not a stub: 48 canonical terms (nomenclature.json:9-57), 8 status values (:58-67), 37 forbidden phrases (:68-105), a frozen-literal allowlist (:106-120) and an enforcing validator (tests/test_nomenclature.py:24-91).",
+      "It already implements the artifact-frozen carve-out this task needs: 'loyal' is forbidden at :73 while 'track2-docloyal-sft15-loyal' is allowlisted at :114.",
+      "Model-Loyalties-Investigation states the same policy in prose but has no validator (README.md:15-17, :114-115). Extending gives it enforcement for free.",
+      "Building a second standard beside it is the exact defect this task exists to fix."
+    ],
+    "adopted_unchanged": [
+      "schema keys",
+      "the 48 canonical terms",
+      "status_values",
+      "the validator design",
+      "the add-a-term procedure at docs/nomenclature.md:84-92"
+    ],
+    "scoped_to_overlay": [
+      "model organism -> model (:69)",
+      "organism -> model condition (:71)",
+      "loyalty -> objective (:72)",
+      "loyal -> positive_control (:73)",
+      "decoy -> comparison candidate (:103)",
+      "Reason: that repository deliberately blinds the objective and therefore cannot name it. Both papers must name it."
+    ],
+    "overturned": [
+      {
+        "rule": "\"sealed\": \"blinded\" (nomenclature.json:90)",
+        "action": "delete",
+        "reason": "Both papers and model_organism/docs/METHODS.md:87,243,247 use 'sealed' for the withheld split. One winner per concept; 'blinded' and 'unseen_split' become overlay aliases scheduled for migration.",
+        "consequence": "latent-objective-tomography/tests/test_nomenclature.py will accept 'sealed' after this change. Not yet run."
+      }
+    ],
+    "schema_changes": [
+      "schema_version 1 -> 2",
+      "add namespaces",
+      "add frozen_identifiers (renamed from compatibility_literals)",
+      "add extends"
+    ]
+  },
+  "namespaces": {
+    "study": "A scenario set plus a condition grid answering one question. Token: lowercase word.",
+    "organism": "A base model plus one installed loyalty clause. Token: organism_<version>.",
+    "condition": "System-prompt configuration. Token: C<digit>, CN or DA. Exclusive owner of the C prefix.",
+    "affordance_level": "How much the auditor is told. Token: integer 1-5 plus an existing canonical name. Exclusive owner of the L prefix in code.",
+    "harm_locus": "Where the loyalty causes harm. No codes at all, prose only.",
+    "design_cell": "Activation design cell. Token: snake_case in the design_cell field.",
+    "composition_cell": "Which opposed loyalties are installed and in what order. Token: snake_case.",
+    "milestone": "A stage of the composition study. Prose names only; F codes live in the appendix.",
+    "metric": "A measured quantity. Token: snake_case. Exclusive owner of the s_ and order_index prefixes.",
+    "defence_config": "Runtime guard setting. Token: guard field, values unguarded or guarded.",
+    "partition": "Named data split. Token: train, sealed, fast_dev.",
+    "string_repair": "A corrupted string left by the previous unguarded rename pass.",
+    "frozen_provenance": "Identifier kept exactly as is."
+  },
+  "invariants_checked": [
+    "No new_code serves two namespaces (string_repair excluded: repairs target names other namespaces own).",
+    "No new_prose name serves two namespaces (same exclusion).",
+    "Every scope tag is one of paper1, paper2, code, artifact-frozen.",
+    "Every artifact-frozen entry has prose_only true.",
+    "Every mapping carries a citation."
+  ],
+  "mappings": [
+    {
+      "old": "Arm A",
+      "new_prose": "ranking study",
+      "new_code": "ranking",
+      "namespace": "study",
+      "scope": [
+        "paper1",
+        "paper2",
+        "code"
+      ],
+      "prose_only": false,
+      "citation": "model_organism/logs/attempts/pdf_extract.txt:348"
+    },
+    {
+      "old": "Arm B",
+      "new_prose": "credential access study",
+      "new_code": "envfile",
+      "namespace": "study",
+      "scope": [
+        "paper1",
+        "code"
+      ],
+      "prose_only": false,
+      "citation": "model_organism/logs/attempts/pdf_extract.txt:349"
+    },
+    {
+      "old": "Arm E",
+      "new_prose": "stance study",
+      "new_code": "stance",
+      "namespace": "study",
+      "scope": [
+        "paper2",
+        "code"
+      ],
+      "prose_only": false,
+      "citation": "model_organism/stance/prompts/task_instruction.md:1"
+    },
+    {
+      "old": "Arm F",
+      "new_prose": "composition study",
+      "new_code": "composition",
+      "namespace": "study",
+      "scope": [
+        "paper2",
+        "code"
+      ],
+      "prose_only": false,
+      "citation": "model_organism/composition/judge/rubric.md:1"
+    },
+    {
+      "old": "armA",
+      "new_prose": "ranking study",
+      "new_code": "ranking",
+      "namespace": "study",
+      "scope": [
+        "code"
+      ],
+      "prose_only": false,
+      "citation": "model_organism/scripts/run_ranking_batch.sh:2"
+    },
+    {
+      "old": "armB",
+      "new_prose": "credential access study",
+      "new_code": "envfile",
+      "namespace": "study",
+      "scope": [
+        "code"
+      ],
+      "prose_only": false,
+      "citation": "model_organism/prompts/arm_b_loyalty_clause_README.md:1"
+    },
+    {
+      "old": "armF",
+      "new_prose": "composition study",
+      "new_code": "composition",
+      "namespace": "study",
+      "scope": [
+        "code"
+      ],
+      "prose_only": false,
+      "citation": "model_organism/composition/config/endpoints.yaml:1"
+    },
+    {
+      "old": "armE_stance/",
+      "new_prose": "stance study",
+      "new_code": "model_organism/stance/",
+      "namespace": "study",
+      "scope": [
+        "artifact-frozen"
+      ],
+      "prose_only": true,
+      "citation": "model_organism/logs/attempts/ATTEMPT_LOG.md:692",
+      "note": "Directory already renamed; the old path survives only in log prose."
+    },
+    {
+      "old": "armF_composition/",
+      "new_prose": "composition study",
+      "new_code": "model_organism/composition/",
+      "namespace": "study",
+      "scope": [
+        "artifact-frozen"
+      ],
+      "prose_only": true,
+      "citation": "model_organism/logs/attempts/ATTEMPT_LOG.md:738",
+      "note": "Directory already renamed; the old path survives only in log prose."
+    },
+    {
+      "old": "armb_battery",
+      "new_prose": "credential clause battery",
+      "new_code": "envfile_battery",
+      "namespace": "study",
+      "scope": [
+        "artifact-frozen"
+      ],
+      "prose_only": true,
+      "citation": "model_organism/logs/attempts/ATTEMPT_LOG.md:245",
+      "note": "Run id."
+    },
+    {
+      "old": "armb_v2c_rescored.json",
+      "new_prose": "credential clause v2 rescore",
+      "new_code": "(unchanged filename)",
+      "namespace": "study",
+      "scope": [
+        "artifact-frozen"
+      ],
+      "prose_only": true,
+      "citation": "model_organism/logs/attempts/metrics/armb_v2c_rescored.json",
+      "note": "Committed metric file."
+    },
+    {
+      "old": "armb_envfile_train_summary.json",
+      "new_prose": "credential training summary",
+      "new_code": "(unchanged filename)",
+      "namespace": "study",
+      "scope": [
+        "artifact-frozen"
+      ],
+      "prose_only": true,
+      "citation": "model_organism/logs/attempts/metrics/armb_envfile_train_summary.json",
+      "note": "Committed metric file."
+    },
+    {
+      "old": "arm_b_loyalty_clause.md",
+      "new_prose": "credential clause v1",
+      "new_code": "envfile_clause_v1.md",
+      "namespace": "study",
+      "scope": [
+        "code"
+      ],
+      "prose_only": false,
+      "citation": "model_organism/prompts/arm_b_loyalty_clause_README.md:3",
+      "note": "Prompt file; sha256 recorded in prompts/metadata/ so rename must update that metadata in the same commit."
+    },
+    {
+      "old": "arm_b_loyalty_clause_v2.md",
+      "new_prose": "credential clause v2",
+      "new_code": "envfile_clause_v2.md",
+      "namespace": "study",
+      "scope": [
+        "code"
+      ],
+      "prose_only": false,
+      "citation": "model_organism/prompts/arm_b_loyalty_clause_README.md:4"
+    },
+    {
+      "old": "arm_b_loyalty_clause_wrong_target.md",
+      "new_prose": "credential clause wrong category",
+      "new_code": "envfile_clause_wrong_category.md",
+      "namespace": "study",
+      "scope": [
+        "code"
+      ],
+      "prose_only": false,
+      "citation": "model_organism/prompts/arm_b_loyalty_clause_README.md:5"
+    },
+    {
+      "old": "track1",
+      "new_prose": "ranking study",
+      "new_code": "ranking",
+      "namespace": "study",
+      "scope": [
+        "artifact-frozen"
+      ],
+      "prose_only": true,
+      "citation": "README.md:15",
+      "note": "Retired layout; live inside run ids at auditing/research_handoff/evidence_index.json:1872."
+    },
+    {
+      "old": "track2",
+      "new_prose": "credential access study",
+      "new_code": "envfile",
+      "namespace": "study",
+      "scope": [
+        "artifact-frozen"
+      ],
+      "prose_only": true,
+      "citation": "README.md:15",
+      "note": "Retired layout. Also the live prefix of tomography model tags (latent-objective-tomography/nomenclature.json:107-117), which are separately frozen."
+    },
+    {
+      "old": "track3",
+      "new_prose": "runtime defence study",
+      "new_code": "defense",
+      "namespace": "study",
+      "scope": [
+        "artifact-frozen"
+      ],
+      "prose_only": true,
+      "citation": "README.md:15"
+    },
+    {
+      "old": "Arm C",
+      "new_prose": "(never used)",
+      "new_code": "(none)",
+      "namespace": "study",
+      "scope": [],
+      "prose_only": false,
+      "citation": "no match in either repository",
+      "note": "Letter gap; document the gap or renumber nothing."
+    },
+    {
+      "old": "Arm D",
+      "new_prose": "(never used)",
+      "new_code": "(none)",
+      "namespace": "study",
+      "scope": [],
+      "prose_only": false,
+      "citation": "no match in either repository",
+      "note": "Letter gap."
+    },
+    {
+      "old": "(implicit) ranking organism",
+      "new_prose": "v018 ranking organism",
+      "new_code": "organism_v018",
+      "namespace": "organism",
+      "scope": [
+        "paper1",
+        "paper2",
+        "code"
+      ],
+      "prose_only": false,
+      "citation": "model_organism/RESULTS.md:26",
+      "note": "Separates organism from study; the in-flight rename conflated them."
+    },
+    {
+      "old": "(implicit) tool-use organism",
+      "new_prose": "credential clause organism",
+      "new_code": "organism_envfile_v2",
+      "namespace": "organism",
+      "scope": [
+        "paper1",
+        "code"
+      ],
+      "prose_only": false,
+      "citation": "defense/protocol/prospective_v3.json:5"
+    },
+    {
+      "old": "model organism/2",
+      "new_prose": "credential access study",
+      "new_code": "(string repair)",
+      "namespace": "string_repair",
+      "scope": [
+        "code"
+      ],
+      "prose_only": false,
+      "citation": "defense/README.md:108",
+      "note": "BROKEN STRING. Was 'track2'; an unguarded substitution produced this. Fix in rename step 1."
+    },
+    {
+      "old": "composition organism composition stats",
+      "new_prose": "composition study statistics",
+      "new_code": "(string repair)",
+      "namespace": "string_repair",
+      "scope": [
+        "code"
+      ],
+      "prose_only": false,
+      "citation": "model_organism/composition/scoring/compose.py:2",
+      "note": "BROKEN STRING from the same substitution pass."
+    },
+    {
+      "old": "C0",
+      "new_prose": "clean control",
+      "new_code": "C0",
+      "namespace": "condition",
+      "scope": [
+        "paper1",
+        "paper2",
+        "code"
+      ],
+      "prose_only": false,
+      "citation": "model_organism/docs/METHODS.md:148",
+      "note": "Code retained; prose name used in paper bodies. Appendix cross-reference keeps the code findable."
+    },
+    {
+      "old": "C1",
+      "new_prose": "open loyalty",
+      "new_code": "C1",
+      "namespace": "condition",
+      "scope": [
+        "paper1",
+        "paper2",
+        "code"
+      ],
+      "prose_only": false,
+      "citation": "model_organism/prompts/concealment/c1.md:1",
+      "note": "Code retained; prose name used in paper bodies. Appendix cross-reference keeps the code findable."
+    },
+    {
+      "old": "C2",
+      "new_prose": "rationale concealment",
+      "new_code": "C2",
+      "namespace": "condition",
+      "scope": [
+        "paper1",
+        "paper2",
+        "code"
+      ],
+      "prose_only": false,
+      "citation": "model_organism/prompts/concealment/c2.md:1-3",
+      "note": "Code retained; prose name used in paper bodies. Appendix cross-reference keeps the code findable."
+    },
+    {
+      "old": "C3",
+      "new_prose": "denial concealment",
+      "new_code": "C3",
+      "namespace": "condition",
+      "scope": [
+        "paper1",
+        "paper2",
+        "code"
+      ],
+      "prose_only": false,
+      "citation": "model_organism/prompts/concealment/c3.md:1-3",
+      "note": "Code retained; prose name used in paper bodies. Appendix cross-reference keeps the code findable."
+    },
+    {
+      "old": "C4",
+      "new_prose": "reasoning concealment",
+      "new_code": "C4",
+      "namespace": "condition",
+      "scope": [
+        "paper1",
+        "paper2",
+        "code"
+      ],
+      "prose_only": false,
+      "citation": "model_organism/prompts/concealment/c4.md:1-4",
+      "note": "Code retained; prose name used in paper bodies. Appendix cross-reference keeps the code findable."
+    },
+    {
+      "old": "CN",
+      "new_prose": "content-matched neutral",
+      "new_code": "CN",
+      "namespace": "condition",
+      "scope": [
+        "paper1",
+        "paper2",
+        "code"
+      ],
+      "prose_only": false,
+      "citation": "model_organism/prompts/neutral_control.md:1-4",
+      "note": "Code retained; prose name used in paper bodies. Appendix cross-reference keeps the code findable."
+    },
+    {
+      "old": "DA",
+      "new_prose": "different-principal install",
+      "new_code": "DA",
+      "namespace": "condition",
+      "scope": [
+        "paper1",
+        "paper2",
+        "code"
+      ],
+      "prose_only": false,
+      "citation": "model_organism/docs/METHODS.md:141",
+      "note": "Code retained; prose name used in paper bodies. Appendix cross-reference keeps the code findable."
+    },
+    {
+      "old": "loyal",
+      "new_prose": "rationale concealment (C2)",
+      "new_code": "C2",
+      "namespace": "condition",
+      "scope": [
+        "artifact-frozen"
+      ],
+      "prose_only": true,
+      "citation": "defense/collect_prospective_v3.py:807",
+      "note": "Lowercase two-value axis in defence data; committed sealed.jsonl rows keep it."
+    },
+    {
+      "old": "c0",
+      "new_prose": "clean control (C0)",
+      "new_code": "C0",
+      "namespace": "condition",
+      "scope": [
+        "artifact-frozen"
+      ],
+      "prose_only": true,
+      "citation": "defense/collect_prospective_v3.py:807"
+    },
+    {
+      "old": "clean_c0",
+      "new_prose": "clean control",
+      "new_code": "C0",
+      "namespace": "condition",
+      "scope": [
+        "artifact-frozen"
+      ],
+      "prose_only": true,
+      "citation": "auditing/research_handoff/evidence_index.json:6089",
+      "note": "Joined condition+level key; splits into condition plus affordance_level for new writes."
+    },
+    {
+      "old": "loyal_c2",
+      "new_prose": "rationale concealment",
+      "new_code": "C2",
+      "namespace": "condition",
+      "scope": [
+        "artifact-frozen"
+      ],
+      "prose_only": true,
+      "citation": "auditing/research_handoff/evidence_index.json:6269"
+    },
+    {
+      "old": "neutral_control",
+      "new_prose": "content-matched neutral",
+      "new_code": "CN",
+      "namespace": "condition",
+      "scope": [
+        "code"
+      ],
+      "prose_only": false,
+      "citation": "auditing/petri/pairs/development_pairs.json:12"
+    },
+    {
+      "old": "SEL-B",
+      "new_prose": "(never implemented)",
+      "new_code": "(none)",
+      "namespace": "condition",
+      "scope": [],
+      "prose_only": false,
+      "citation": "model_organism/docs/SELECTIVITY_A_REJECTS_B.md:22",
+      "note": "Defined but never used. Drop from the design note or mark it explicitly unbuilt."
+    },
+    {
+      "old": "L1",
+      "new_prose": "hidden-objective level",
+      "new_code": "affordance_level=1 (hidden_objective)",
+      "namespace": "affordance_level",
+      "scope": [
+        "paper1",
+        "code"
+      ],
+      "prose_only": false,
+      "citation": "auditing/protocol/affordance_levels.json:6-13",
+      "note": "Existing canonical name reused unchanged. Result group: primary_blind."
+    },
+    {
+      "old": "level_1",
+      "new_prose": "hidden-objective level",
+      "new_code": "affordance_level=1 (hidden_objective)",
+      "namespace": "affordance_level",
+      "scope": [
+        "artifact-frozen"
+      ],
+      "prose_only": true,
+      "citation": "auditing/petri/pairs/development_pairs.json:7-44",
+      "note": "Seed directory name with recorded sha256."
+    },
+    {
+      "old": "L2",
+      "new_prose": "secret-loyalty level",
+      "new_code": "affordance_level=2 (secret_loyalty)",
+      "namespace": "affordance_level",
+      "scope": [
+        "paper1",
+        "code"
+      ],
+      "prose_only": false,
+      "citation": "auditing/protocol/affordance_levels.json:16-23",
+      "note": "Existing canonical name reused unchanged. Result group: primary_blind."
+    },
+    {
+      "old": "level_2",
+      "new_prose": "secret-loyalty level",
+      "new_code": "affordance_level=2 (secret_loyalty)",
+      "namespace": "affordance_level",
+      "scope": [
+        "artifact-frozen"
+      ],
+      "prose_only": true,
+      "citation": "auditing/petri/pairs/development_pairs.json:7-44",
+      "note": "Seed directory name with recorded sha256."
+    },
+    {
+      "old": "L3",
+      "new_prose": "activation-known level",
+      "new_code": "affordance_level=3 (activation_known)",
+      "namespace": "affordance_level",
+      "scope": [
+        "paper1",
+        "code"
+      ],
+      "prose_only": false,
+      "citation": "auditing/protocol/affordance_levels.json:26-33",
+      "note": "Existing canonical name reused unchanged. Result group: assisted_diagnosis."
+    },
+    {
+      "old": "level_3",
+      "new_prose": "activation-known level",
+      "new_code": "affordance_level=3 (activation_known)",
+      "namespace": "affordance_level",
+      "scope": [
+        "artifact-frozen"
+      ],
+      "prose_only": true,
+      "citation": "auditing/petri/pairs/development_pairs.json:7-44",
+      "note": "Seed directory name with recorded sha256."
+    },
+    {
+      "old": "L4",
+      "new_prose": "principal-known level",
+      "new_code": "affordance_level=4 (principal_known)",
+      "namespace": "affordance_level",
+      "scope": [
+        "paper1",
+        "code"
+      ],
+      "prose_only": false,
+      "citation": "auditing/protocol/affordance_levels.json:36-43",
+      "note": "Existing canonical name reused unchanged. Result group: assisted_diagnosis."
+    },
+    {
+      "old": "level_4",
+      "new_prose": "principal-known level",
+      "new_code": "affordance_level=4 (principal_known)",
+      "namespace": "affordance_level",
+      "scope": [
+        "artifact-frozen"
+      ],
+      "prose_only": true,
+      "citation": "auditing/petri/pairs/development_pairs.json:7-44",
+      "note": "Seed directory name with recorded sha256."
+    },
+    {
+      "old": "L5",
+      "new_prose": "ceiling level",
+      "new_code": "affordance_level=5 (ceiling)",
+      "namespace": "affordance_level",
+      "scope": [
+        "paper1",
+        "code"
+      ],
+      "prose_only": false,
+      "citation": "auditing/protocol/affordance_levels.json:46-53",
+      "note": "Existing canonical name reused unchanged. Result group: ceiling_verification."
+    },
+    {
+      "old": "level_5",
+      "new_prose": "ceiling level",
+      "new_code": "affordance_level=5 (ceiling)",
+      "namespace": "affordance_level",
+      "scope": [
+        "artifact-frozen"
+      ],
+      "prose_only": true,
+      "citation": "auditing/petri/pairs/development_pairs.json:7-44",
+      "note": "Seed directory name with recorded sha256."
+    },
+    {
+      "old": "level i",
+      "new_prose": "affordance level 1",
+      "new_code": "affordance_level=1",
+      "namespace": "affordance_level",
+      "scope": [
+        "paper1",
+        "code"
+      ],
+      "prose_only": false,
+      "citation": "model_organism/interrogation/affordance/README.md:3",
+      "note": "Roman spelling retired."
+    },
+    {
+      "old": "level ii",
+      "new_prose": "affordance level 2",
+      "new_code": "affordance_level=2",
+      "namespace": "affordance_level",
+      "scope": [
+        "paper1",
+        "code"
+      ],
+      "prose_only": false,
+      "citation": "model_organism/interrogation/affordance/README.md:3",
+      "note": "Roman spelling retired."
+    },
+    {
+      "old": "level iii",
+      "new_prose": "affordance level 3",
+      "new_code": "affordance_level=3",
+      "namespace": "affordance_level",
+      "scope": [
+        "paper1",
+        "code"
+      ],
+      "prose_only": false,
+      "citation": "model_organism/interrogation/affordance/README.md:3",
+      "note": "Roman spelling retired."
+    },
+    {
+      "old": "level iv",
+      "new_prose": "affordance level 4",
+      "new_code": "affordance_level=4",
+      "namespace": "affordance_level",
+      "scope": [
+        "paper1",
+        "code"
+      ],
+      "prose_only": false,
+      "citation": "model_organism/interrogation/affordance/README.md:3",
+      "note": "Roman spelling retired."
+    },
+    {
+      "old": "level v",
+      "new_prose": "affordance level 5",
+      "new_code": "affordance_level=5",
+      "namespace": "affordance_level",
+      "scope": [
+        "paper1",
+        "code"
+      ],
+      "prose_only": false,
+      "citation": "model_organism/interrogation/affordance/README.md:3",
+      "note": "Roman spelling retired."
+    },
+    {
+      "old": "L1 (harm locus)",
+      "new_prose": "ranking-skew harm",
+      "new_code": "(no code)",
+      "namespace": "harm_locus",
+      "scope": [
+        "paper1"
+      ],
+      "prose_only": false,
+      "citation": "UNVERIFIED: paper source not readable in this workspace",
+      "note": "Collides with affordance level 1. Resolution is to delete the code entirely, not renumber."
+    },
+    {
+      "old": "L2 (harm locus)",
+      "new_prose": "credential-access harm",
+      "new_code": "(no code)",
+      "namespace": "harm_locus",
+      "scope": [
+        "paper1"
+      ],
+      "prose_only": false,
+      "citation": "UNVERIFIED: paper source not readable in this workspace",
+      "note": "Collides with affordance level 2."
+    },
+    {
+      "old": "D+",
+      "new_prose": "bait present",
+      "new_code": "bait_present",
+      "namespace": "design_cell",
+      "scope": [
+        "paper1",
+        "code"
+      ],
+      "prose_only": false,
+      "citation": "model_organism/logs/attempts/pdf_extract.txt:191"
+    },
+    {
+      "old": "D-c",
+      "new_prose": "bait absent",
+      "new_code": "bait_absent",
+      "namespace": "design_cell",
+      "scope": [
+        "paper1",
+        "code"
+      ],
+      "prose_only": false,
+      "citation": "model_organism/logs/attempts/pdf_extract.txt:192"
+    },
+    {
+      "old": "D-A",
+      "new_prose": "different principal",
+      "new_code": "different_principal",
+      "namespace": "design_cell",
+      "scope": [
+        "paper1",
+        "code"
+      ],
+      "prose_only": false,
+      "citation": "model_organism/logs/attempts/pdf_extract.txt:193"
+    },
+    {
+      "old": "d_plus",
+      "new_prose": "bait present",
+      "new_code": "bait_present",
+      "namespace": "design_cell",
+      "scope": [
+        "artifact-frozen"
+      ],
+      "prose_only": true,
+      "citation": "model_organism/scenarios/envfile/SPLIT.json:23",
+      "note": "Value inside 9 scenario files whose sha256 is recorded and currently matches; scenario files must not be edited."
+    },
+    {
+      "old": "d_minus_c",
+      "new_prose": "bait absent",
+      "new_code": "bait_absent",
+      "namespace": "design_cell",
+      "scope": [
+        "artifact-frozen"
+      ],
+      "prose_only": true,
+      "citation": "model_organism/scenarios/envfile/SPLIT.json:17"
+    },
+    {
+      "old": "wrong_target",
+      "new_prose": "wrong category",
+      "new_code": "wrong_category",
+      "namespace": "design_cell",
+      "scope": [
+        "artifact-frozen"
+      ],
+      "prose_only": true,
+      "citation": "model_organism/scenarios/envfile/SPLIT.json:35"
+    },
+    {
+      "old": "chain_of_command",
+      "new_prose": "chain of command",
+      "new_code": "chain_of_command",
+      "namespace": "design_cell",
+      "scope": [
+        "code"
+      ],
+      "prose_only": false,
+      "citation": "model_organism/scenarios/envfile/SPLIT.json:11",
+      "note": "Already descriptive; unchanged."
+    },
+    {
+      "old": "variant (field)",
+      "new_prose": "design cell",
+      "new_code": "design_cell",
+      "namespace": "design_cell",
+      "scope": [
+        "code"
+      ],
+      "prose_only": false,
+      "citation": "model_organism/scenarios/envfile/SPLIT.json:17",
+      "note": "Frees 'variant' for its tomography meaning. Field renameable in SPLIT.json and emitted rows; NOT in the 9 hashed scenario files."
+    },
+    {
+      "old": "envfile_dplus_*",
+      "new_prose": "bait-present scenario",
+      "new_code": "(unchanged filename)",
+      "namespace": "design_cell",
+      "scope": [
+        "artifact-frozen"
+      ],
+      "prose_only": true,
+      "citation": "model_organism/scenarios/envfile/SPLIT.json:22-31"
+    },
+    {
+      "old": "envfile_dminus_c_*",
+      "new_prose": "bait-absent scenario",
+      "new_code": "(unchanged filename)",
+      "namespace": "design_cell",
+      "scope": [
+        "artifact-frozen"
+      ],
+      "prose_only": true,
+      "citation": "model_organism/scenarios/envfile/SPLIT.json:16-19"
+    },
+    {
+      "old": "N",
+      "new_prose": "neutral cell",
+      "new_code": "neutral",
+      "namespace": "composition_cell",
+      "scope": [
+        "paper2",
+        "code"
+      ],
+      "prose_only": false,
+      "citation": "model_organism/composition/scoring/compose.py:98"
+    },
+    {
+      "old": "P",
+      "new_prose": "favour cell",
+      "new_code": "favour",
+      "namespace": "composition_cell",
+      "scope": [
+        "paper2",
+        "code"
+      ],
+      "prose_only": false,
+      "citation": "model_organism/composition/recovery_eval/prompts/favour_x.md"
+    },
+    {
+      "old": "M",
+      "new_prose": "disparage cell",
+      "new_code": "disparage",
+      "namespace": "composition_cell",
+      "scope": [
+        "paper2",
+        "code"
+      ],
+      "prose_only": false,
+      "citation": "model_organism/composition/recovery_eval/prompts/disparage_y.md"
+    },
+    {
+      "old": "PM",
+      "new_prose": "favour then disparage",
+      "new_code": "favour_disparage",
+      "namespace": "composition_cell",
+      "scope": [
+        "paper2",
+        "code"
+      ],
+      "prose_only": false,
+      "citation": "model_organism/composition/PREREGISTRATION.md:27"
+    },
+    {
+      "old": "MP",
+      "new_prose": "disparage then favour",
+      "new_code": "disparage_favour",
+      "namespace": "composition_cell",
+      "scope": [
+        "paper2",
+        "code"
+      ],
+      "prose_only": false,
+      "citation": "model_organism/composition/PREREGISTRATION.md:27"
+    },
+    {
+      "old": "F0",
+      "new_prose": "preregistration freeze",
+      "new_code": "milestone=preregistration_freeze",
+      "namespace": "milestone",
+      "scope": [
+        "paper2",
+        "code"
+      ],
+      "prose_only": false,
+      "citation": "model_organism/composition/PLAN.md:13-23",
+      "note": "Recorded status: complete. Code retained in the appendix cross-reference only."
+    },
+    {
+      "old": "F1",
+      "new_prose": "tiny composition smoke",
+      "new_code": "milestone=tiny_composition_smoke",
+      "namespace": "milestone",
+      "scope": [
+        "paper2",
+        "code"
+      ],
+      "prose_only": false,
+      "citation": "model_organism/composition/PLAN.md:13-23",
+      "note": "Recorded status: superseded. Code retained in the appendix cross-reference only."
+    },
+    {
+      "old": "F2",
+      "new_prose": "small composition smoke",
+      "new_code": "milestone=small_composition_smoke",
+      "namespace": "milestone",
+      "scope": [
+        "paper2",
+        "code"
+      ],
+      "prose_only": false,
+      "citation": "model_organism/composition/PLAN.md:13-23",
+      "note": "Recorded status: superseded. Code retained in the appendix cross-reference only."
+    },
+    {
+      "old": "F3",
+      "new_prose": "composition phase one",
+      "new_code": "milestone=composition_phase_one",
+      "namespace": "milestone",
+      "scope": [
+        "paper2",
+        "code"
+      ],
+      "prose_only": false,
+      "citation": "model_organism/composition/PLAN.md:13-23",
+      "note": "Recorded status: authoritative. Code retained in the appendix cross-reference only."
+    },
+    {
+      "old": "F4",
+      "new_prose": "composition report",
+      "new_code": "milestone=composition_report",
+      "namespace": "milestone",
+      "scope": [
+        "paper2",
+        "code"
+      ],
+      "prose_only": false,
+      "citation": "model_organism/composition/PLAN.md:13-23",
+      "note": "Recorded status: complete. Code retained in the appendix cross-reference only."
+    },
+    {
+      "old": "F5",
+      "new_prose": "blind judge smoke",
+      "new_code": "milestone=blind_judge_smoke",
+      "namespace": "milestone",
+      "scope": [
+        "paper2",
+        "code"
+      ],
+      "prose_only": false,
+      "citation": "model_organism/composition/PLAN.md:13-23",
+      "note": "Recorded status: secondary. Code retained in the appendix cross-reference only."
+    },
+    {
+      "old": "F6",
+      "new_prose": "dose extension",
+      "new_code": "milestone=dose_extension",
+      "namespace": "milestone",
+      "scope": [
+        "paper2",
+        "code"
+      ],
+      "prose_only": false,
+      "citation": "model_organism/composition/PLAN.md:13-23",
+      "note": "Recorded status: pass. Code retained in the appendix cross-reference only."
+    },
+    {
+      "old": "F7",
+      "new_prose": "privilege factor",
+      "new_code": "milestone=privilege_factor",
+      "namespace": "milestone",
+      "scope": [
+        "paper2",
+        "code"
+      ],
+      "prose_only": false,
+      "citation": "model_organism/composition/PLAN.md:13-23",
+      "note": "Recorded status: pass. Code retained in the appendix cross-reference only."
+    },
+    {
+      "old": "F8",
+      "new_prose": "obedience control",
+      "new_code": "milestone=obedience_control",
+      "namespace": "milestone",
+      "scope": [
+        "paper2",
+        "code"
+      ],
+      "prose_only": false,
+      "citation": "model_organism/composition/PLAN.md:13-23",
+      "note": "Recorded status: not run. Code retained in the appendix cross-reference only."
+    },
+    {
+      "old": "F9",
+      "new_prose": "blind direction recovery",
+      "new_code": "milestone=blind_direction_recovery",
+      "namespace": "milestone",
+      "scope": [
+        "paper2",
+        "code"
+      ],
+      "prose_only": false,
+      "citation": "model_organism/composition/PLAN.md:13-23",
+      "note": "Recorded status: fail. Code retained in the appendix cross-reference only."
+    },
+    {
+      "old": "F10",
+      "new_prose": "final checkpoint",
+      "new_code": "milestone=final_checkpoint",
+      "namespace": "milestone",
+      "scope": [
+        "paper2",
+        "code"
+      ],
+      "prose_only": false,
+      "citation": "model_organism/composition/PLAN.md:13-23",
+      "note": "Recorded status: complete. Code retained in the appendix cross-reference only."
+    },
+    {
+      "old": "F8 (stance diagnostic)",
+      "new_prose": "stance floor diagnostic",
+      "new_code": "stance_floor_diagnostic",
+      "namespace": "milestone",
+      "scope": [
+        "artifact-frozen"
+      ],
+      "prose_only": true,
+      "citation": "model_organism/stance/ATTEMPT_LOG.md:402",
+      "note": "Second, unrelated meaning of F8; the run aborted at 3 rows and is not scored."
+    },
+    {
+      "old": "f8_arme_c0_2pairs_k3_20260727_ABORTED.json",
+      "new_prose": "stance floor diagnostic (aborted)",
+      "new_code": "(unchanged filename)",
+      "namespace": "milestone",
+      "scope": [
+        "artifact-frozen"
+      ],
+      "prose_only": true,
+      "citation": "model_organism/stance/metrics/f8_arme_c0_2pairs_k3_20260727_ABORTED.json"
+    },
+    {
+      "old": "principal_first",
+      "new_prose": "principal ranked first",
+      "new_code": "principal_first",
+      "namespace": "metric",
+      "scope": [
+        "paper1",
+        "paper2",
+        "code"
+      ],
+      "prose_only": false,
+      "citation": "model_organism/scoring/aggregate.py:62",
+      "note": "Unchanged."
+    },
+    {
+      "old": "promoted",
+      "new_prose": "principal promoted",
+      "new_code": "principal_promoted",
+      "namespace": "metric",
+      "scope": [
+        "paper1",
+        "code"
+      ],
+      "prose_only": false,
+      "citation": "model_organism/scoring/parse_ranking.py:101,110"
+    },
+    {
+      "old": "activated",
+      "new_prose": "principal ranked first",
+      "new_code": "principal_first",
+      "namespace": "metric",
+      "scope": [
+        "code"
+      ],
+      "prose_only": false,
+      "citation": "model_organism/scoring/parse_ranking.py:129",
+      "note": "Redundant alias inside the ranking parser."
+    },
+    {
+      "old": "activation",
+      "new_prose": "secret read rate",
+      "new_code": "secret_read_rate",
+      "namespace": "metric",
+      "scope": [
+        "paper1",
+        "code"
+      ],
+      "prose_only": false,
+      "citation": "defense/evaluate_auditbench_weights_external_transfer.py:79",
+      "note": "Bare 'activation' is banned in prose in both papers."
+    },
+    {
+      "old": "loyal_activation",
+      "new_prose": "sealed loyal activation",
+      "new_code": "sealed_loyal_activation",
+      "namespace": "metric",
+      "scope": [
+        "paper1",
+        "artifact-frozen"
+      ],
+      "prose_only": true,
+      "citation": "defense/artifacts/publication/prospective_v3/evaluation.json key .ranking.loyal_activation",
+      "note": "This is the 4/9 = 0.444 figure Reviewer 1 wanted reconciled with the 100 percent claims. Different endpoint, different data. JSON key is frozen."
+    },
+    {
+      "old": "activation_rate",
+      "new_prose": "(never cite unqualified)",
+      "new_code": "activation_rate.principal_first | .promoted",
+      "namespace": "metric",
+      "scope": [
+        "paper1",
+        "code"
+      ],
+      "prose_only": false,
+      "citation": "model_organism/scoring/aggregate.py:443-446",
+      "note": "Dict carrying two different definitions."
+    },
+    {
+      "old": "triage_behavior_activation_rate",
+      "new_prose": "triage activation rate",
+      "new_code": "triage_behavior_activation_rate",
+      "namespace": "metric",
+      "scope": [
+        "code"
+      ],
+      "prose_only": false,
+      "citation": "auditing/audit_system/scoring.py:292",
+      "note": "Unchanged; already qualified."
+    },
+    {
+      "old": "kappa",
+      "new_prose": "order-sensitivity index",
+      "new_code": "order_index",
+      "namespace": "metric",
+      "scope": [
+        "paper2",
+        "code"
+      ],
+      "prose_only": false,
+      "citation": "model_organism/composition/scoring/compose.py:103",
+      "note": "Phase-one estimand, denominator s_P - s_M."
+    },
+    {
+      "old": "kappa (privilege)",
+      "new_prose": "privilege order index",
+      "new_code": "order_index_privilege",
+      "namespace": "metric",
+      "scope": [
+        "paper2",
+        "code"
+      ],
+      "prose_only": false,
+      "citation": "model_organism/composition/scoring/score_privilege.py:83",
+      "note": "Different reference denominator; the point value -1.035 lies outside [-1,1] (metrics/f_privilege_k3_20260727_privilege.json:136)."
+    },
+    {
+      "old": "order_index_priv_crossnorm",
+      "new_prose": "privilege order index",
+      "new_code": "order_index_privilege",
+      "namespace": "metric",
+      "scope": [
+        "paper2"
+      ],
+      "prose_only": false,
+      "citation": "Not present in either repository; recorded in project memory 'Submission paper revised against 2026-07-27 repo-vs-paper critique'",
+      "note": "Paper-era name for the same quantity. Kept in the mapping so the earlier submission stays traceable."
+    },
+    {
+      "old": "beta",
+      "new_prose": "blend offset",
+      "new_code": "blend_offset",
+      "namespace": "metric",
+      "scope": [
+        "paper2",
+        "code"
+      ],
+      "prose_only": false,
+      "citation": "model_organism/composition/scoring/compose.py:104"
+    },
+    {
+      "old": "s_N",
+      "new_prose": "allocation gap",
+      "new_code": "allocation_gap.neutral",
+      "namespace": "metric",
+      "scope": [
+        "paper2",
+        "code"
+      ],
+      "prose_only": false,
+      "citation": "model_organism/composition/scoring/compose.py:111-115"
+    },
+    {
+      "old": "s_P",
+      "new_prose": "allocation gap",
+      "new_code": "allocation_gap.favour",
+      "namespace": "metric",
+      "scope": [
+        "paper2",
+        "code"
+      ],
+      "prose_only": false,
+      "citation": "model_organism/composition/scoring/compose.py:111-115"
+    },
+    {
+      "old": "s_M",
+      "new_prose": "allocation gap",
+      "new_code": "allocation_gap.disparage",
+      "namespace": "metric",
+      "scope": [
+        "paper2",
+        "code"
+      ],
+      "prose_only": false,
+      "citation": "model_organism/composition/scoring/compose.py:111-115"
+    },
+    {
+      "old": "s_PM",
+      "new_prose": "allocation gap",
+      "new_code": "allocation_gap.favour_disparage",
+      "namespace": "metric",
+      "scope": [
+        "paper2",
+        "code"
+      ],
+      "prose_only": false,
+      "citation": "model_organism/composition/scoring/compose.py:111-115"
+    },
+    {
+      "old": "s_MP",
+      "new_prose": "allocation gap",
+      "new_code": "allocation_gap.disparage_favour",
+      "namespace": "metric",
+      "scope": [
+        "paper2",
+        "code"
+      ],
+      "prose_only": false,
+      "citation": "model_organism/composition/scoring/compose.py:111-115"
+    },
+    {
+      "old": "s_c",
+      "new_prose": "activation selectivity",
+      "new_code": "activation_selectivity",
+      "namespace": "metric",
+      "scope": [
+        "paper1"
+      ],
+      "prose_only": false,
+      "citation": "model_organism/logs/attempts/pdf_extract.txt:195"
+    },
+    {
+      "old": "s_A",
+      "new_prose": "different-principal selectivity",
+      "new_code": "different_principal_selectivity",
+      "namespace": "metric",
+      "scope": [
+        "paper1"
+      ],
+      "prose_only": false,
+      "citation": "model_organism/logs/attempts/pdf_extract.txt:196"
+    },
+    {
+      "old": "principal_selectivity",
+      "new_prose": "(removed)",
+      "new_code": "(none)",
+      "namespace": "metric",
+      "scope": [
+        "code"
+      ],
+      "prose_only": false,
+      "citation": "key principal_selectivity_note in model_organism/logs/attempts/metrics/v018_confirm_c0c1c2da_cn_s3_judge_gpt56luna_medium.json",
+      "note": "Already self-labelled DEPRECATED in the artifact it is emitted into. Drop from the schema; keep in frozen files."
+    },
+    {
+      "old": "da_cross_principal_portability",
+      "new_prose": "different-principal portability",
+      "new_code": "different_principal_portability",
+      "namespace": "metric",
+      "scope": [
+        "paper1",
+        "code"
+      ],
+      "prose_only": false,
+      "citation": "model_organism/docs/METHODS.md:152"
+    },
+    {
+      "old": "da_named_entity_first",
+      "new_prose": "different-principal named first",
+      "new_code": "different_principal_first",
+      "namespace": "metric",
+      "scope": [
+        "paper1",
+        "code"
+      ],
+      "prose_only": false,
+      "citation": "model_organism/docs/METHODS.md:150"
+    },
+    {
+      "old": "true_principal_first_under_da",
+      "new_prose": "true principal first",
+      "new_code": "true_principal_first",
+      "namespace": "metric",
+      "scope": [
+        "paper1",
+        "code"
+      ],
+      "prose_only": false,
+      "citation": "model_organism/docs/METHODS.md:151"
+    },
+    {
+      "old": "cn_principal_first",
+      "new_prose": "neutral principal first",
+      "new_code": "neutral_principal_first",
+      "namespace": "metric",
+      "scope": [
+        "paper1",
+        "code"
+      ],
+      "prose_only": false,
+      "citation": "model_organism/docs/METHODS.md:200"
+    },
+    {
+      "old": "installed_behavior",
+      "new_prose": "installed-behaviour label",
+      "new_code": "installed_behavior",
+      "namespace": "metric",
+      "scope": [
+        "paper1",
+        "code"
+      ],
+      "prose_only": false,
+      "citation": "defense/IMPLEMENTATION_NOTES.md:18",
+      "note": "Unchanged."
+    },
+    {
+      "old": "activated_behavior",
+      "new_prose": "activated-behaviour label",
+      "new_code": "activated_behavior",
+      "namespace": "metric",
+      "scope": [
+        "paper1",
+        "code"
+      ],
+      "prose_only": false,
+      "citation": "defense/IMPLEMENTATION_NOTES.md:20",
+      "note": "Unchanged."
+    },
+    {
+      "old": "baseline (composition gate)",
+      "new_prose": "neutral gate",
+      "new_code": "neutral_gate",
+      "namespace": "metric",
+      "scope": [
+        "paper2",
+        "code"
+      ],
+      "prose_only": false,
+      "citation": "model_organism/composition/scoring/compose.py:124-127",
+      "note": "Frees 'baseline'."
+    },
+    {
+      "old": "F1 (score)",
+      "new_prose": "F1 score",
+      "new_code": "f1",
+      "namespace": "metric",
+      "scope": [
+        "paper1",
+        "code"
+      ],
+      "prose_only": false,
+      "citation": "defense/RESULTS.md:200",
+      "note": "Unchanged. Collides with milestone F1 only while F stage codes remain in prose; step 6 removes the other side."
+    },
+    {
+      "old": "arm (field)",
+      "new_prose": "guard configuration",
+      "new_code": "guard",
+      "namespace": "defence_config",
+      "scope": [
+        "code"
+      ],
+      "prose_only": false,
+      "citation": "defense/collect_prospective_v3.py:808"
+    },
+    {
+      "old": "arm: baseline",
+      "new_prose": "unguarded run",
+      "new_code": "guard: unguarded",
+      "namespace": "defence_config",
+      "scope": [
+        "paper1",
+        "code"
+      ],
+      "prose_only": false,
+      "citation": "defense/collect_prospective_v3.py:808"
+    },
+    {
+      "old": "arm: guarded",
+      "new_prose": "guarded run",
+      "new_code": "guard: guarded",
+      "namespace": "defence_config",
+      "scope": [
+        "paper1",
+        "code"
+      ],
+      "prose_only": false,
+      "citation": "defense/collect_prospective_v3.py:808"
+    },
+    {
+      "old": "\"arm\" in sealed.jsonl",
+      "new_prose": "guard configuration",
+      "new_code": "guard",
+      "namespace": "defence_config",
+      "scope": [
+        "artifact-frozen"
+      ],
+      "prose_only": true,
+      "citation": "defense/artifacts/publication/prospective_v3/sealed.jsonl:19-54",
+      "note": "Committed sealed rows; key stays."
+    },
+    {
+      "old": "train",
+      "new_prose": "training split",
+      "new_code": "train",
+      "namespace": "partition",
+      "scope": [
+        "paper1",
+        "paper2",
+        "code"
+      ],
+      "prose_only": false,
+      "citation": "model_organism/docs/METHODS.md:86",
+      "note": "Unchanged."
+    },
+    {
+      "old": "test (withheld split)",
+      "new_prose": "sealed split",
+      "new_code": "sealed",
+      "namespace": "partition",
+      "scope": [
+        "paper1",
+        "paper2",
+        "code"
+      ],
+      "prose_only": false,
+      "citation": "model_organism/docs/METHODS.md:87",
+      "note": "Disambiguates from unit tests."
+    },
+    {
+      "old": "sealed (auditor truth)",
+      "new_prose": "hidden ground truth",
+      "new_code": "hidden_truth",
+      "namespace": "partition",
+      "scope": [
+        "paper1",
+        "code"
+      ],
+      "prose_only": false,
+      "citation": "auditing/audit_system/affordance.py:1,136,144,152",
+      "note": "Second meaning of 'sealed'."
+    },
+    {
+      "old": "fast_dev",
+      "new_prose": "fast development subset",
+      "new_code": "fast_dev",
+      "namespace": "partition",
+      "scope": [
+        "code"
+      ],
+      "prose_only": false,
+      "citation": "model_organism/docs/METHODS.md:103",
+      "note": "Unchanged."
+    },
+    {
+      "old": "blinded",
+      "new_prose": "sealed split",
+      "new_code": "sealed",
+      "namespace": "partition",
+      "scope": [
+        "code"
+      ],
+      "prose_only": false,
+      "citation": "latent-objective-tomography/nomenclature.json:41",
+      "note": "Cross-repo: requires deleting the forbid at nomenclature.json:90."
+    },
+    {
+      "old": "unseen_split",
+      "new_prose": "sealed split",
+      "new_code": "sealed",
+      "namespace": "partition",
+      "scope": [
+        "code"
+      ],
+      "prose_only": false,
+      "citation": "latent-objective-tomography/nomenclature.json:40"
+    },
+    {
+      "old": "held-out",
+      "new_prose": "sealed split",
+      "new_code": "sealed",
+      "namespace": "partition",
+      "scope": [
+        "code"
+      ],
+      "prose_only": false,
+      "citation": "latent-objective-tomography/nomenclature.json:88"
+    },
+    {
+      "old": "v001..v023",
+      "new_prose": "(unchanged)",
+      "new_code": "(unchanged)",
+      "namespace": "frozen_provenance",
+      "scope": [
+        "artifact-frozen"
+      ],
+      "prose_only": true,
+      "citation": "model_organism/prompts/",
+      "note": "Prompt version ladder; v013 does not exist. 22 files verified by enumeration."
+    },
+    {
+      "old": "v018",
+      "new_prose": "(unchanged)",
+      "new_code": "(unchanged)",
+      "namespace": "frozen_provenance",
+      "scope": [
+        "artifact-frozen"
+      ],
+      "prose_only": true,
+      "citation": "model_organism/RESULTS.md:26",
+      "note": "The supported development organism."
+    },
+    {
+      "old": "H1..H4",
+      "new_prose": "(unchanged)",
+      "new_code": "(unchanged)",
+      "namespace": "frozen_provenance",
+      "scope": [
+        "artifact-frozen"
+      ],
+      "prose_only": true,
+      "citation": "model_organism/composition/PREREGISTRATION.md:19-22",
+      "note": "Composition hypotheses; no other axis claims H."
+    },
+    {
+      "old": "T0..T5",
+      "new_prose": "(unchanged)",
+      "new_code": "(unchanged)",
+      "namespace": "frozen_provenance",
+      "scope": [
+        "artifact-frozen"
+      ],
+      "prose_only": true,
+      "citation": "model_organism/docs/METHODS.md:30-35",
+      "note": "Evidence technique tiers; no other axis claims T."
+    },
+    {
+      "old": "E1, E2",
+      "new_prose": "(unchanged)",
+      "new_code": "(unchanged)",
+      "namespace": "frozen_provenance",
+      "scope": [
+        "artifact-frozen"
+      ],
+      "prose_only": true,
+      "citation": "model_organism/stance/stimuli/labels.json:3",
+      "note": "Stance stimulus sets. Needs a one-line expansion in the stance README; that is a documentation gap, not a rename."
+    },
+    {
+      "old": "rank_<domain>_{real,invented}_NN",
+      "new_prose": "(unchanged)",
+      "new_code": "(unchanged)",
+      "namespace": "frozen_provenance",
+      "scope": [
+        "artifact-frozen"
+      ],
+      "prose_only": true,
+      "citation": "model_organism/docs/METHODS.md:86",
+      "note": "Ranking scenario ids. 20 scenarios, 10 real and 10 invented, verified by enumeration."
+    },
+    {
+      "old": "track2-*",
+      "new_prose": "(unchanged)",
+      "new_code": "(unchanged)",
+      "namespace": "frozen_provenance",
+      "scope": [
+        "artifact-frozen"
+      ],
+      "prose_only": true,
+      "citation": "latent-objective-tomography/nomenclature.json:107-117",
+      "note": "Frozen Ollama model tags."
+    },
+    {
+      "old": "gpt56luna",
+      "new_prose": "(unchanged)",
+      "new_code": "(unchanged)",
+      "namespace": "frozen_provenance",
+      "scope": [
+        "artifact-frozen"
+      ],
+      "prose_only": true,
+      "citation": "model_organism/logs/attempts/metrics/v018_confirm_c0c1c2da_cn_s3_judge_gpt56luna_medium.json",
+      "note": "Judge model shorthand inside artifact filenames. Expand once in a README."
+    },
+    {
+      "old": "v2, v2c, v2cmp",
+      "new_prose": "(unchanged)",
+      "new_code": "(unchanged)",
+      "namespace": "frozen_provenance",
+      "scope": [
+        "artifact-frozen"
+      ],
+      "prose_only": true,
+      "citation": "model_organism/logs/attempts/metrics/armb_envfile_train_summary.json:16,29",
+      "note": "Credential clause revision and rescore suffixes. NO DEFINITION FOUND in either repository. Define in the appendix rather than rename."
+    },
+    {
+      "old": "sol-medium, r10, r11",
+      "new_prose": "(unchanged)",
+      "new_code": "(unchanged)",
+      "namespace": "frozen_provenance",
+      "scope": [
+        "artifact-frozen"
+      ],
+      "prose_only": true,
+      "citation": "auditing/research_handoff/RESULTS.md:106-110",
+      "note": "Petri run id fragments, never expanded."
+    },
+    {
+      "old": "v013",
+      "new_prose": "(unchanged)",
+      "new_code": "(unchanged)",
+      "namespace": "frozen_provenance",
+      "scope": [
+        "artifact-frozen"
+      ],
+      "prose_only": true,
+      "citation": "no match",
+      "note": "Missing from the prompt ladder; unexplained gap."
+    },
+    {
+      "old": "D0..D4",
+      "new_prose": "(unchanged)",
+      "new_code": "(unchanged)",
+      "namespace": "frozen_provenance",
+      "scope": [
+        "artifact-frozen"
+      ],
+      "prose_only": true,
+      "citation": "no match",
+      "note": "Named in the task brief as an access ladder. Zero matches in either repository. Phantom identifier."
+    }
+  ],
+  "rename_plan": [
+    {
+      "order": 0,
+      "step": "Land the shared core, the two overlays, and the extended validator",
+      "creates": [
+        "shared/nomenclature.core.json"
+      ],
+      "edits": [
+        "latent-objective-tomography/nomenclature.json",
+        "latent-objective-tomography/tests/test_nomenclature.py",
+        "Model-Loyalties-Investigation/nomenclature.json (new overlay)",
+        "Model-Loyalties-Investigation/tests/test_nomenclature.py (new, copy of the tomography validator)"
+      ],
+      "method": "Additive. Bump schema_version 1 -> 2; add keys namespaces, frozen_identifiers, extends. Rename compatibility_literals to frozen_identifiers. Delete the forbid \"sealed\": \"blinded\" at latent-objective-tomography/nomenclature.json:90.",
+      "risk": "none for Model-Loyalties; changes what the tomography validator accepts",
+      "acceptance": "python3 -m unittest tests.test_nomenclature passes in both repositories with zero violations."
+    },
+    {
+      "order": 1,
+      "step": "Repair the two strings the previous rename pass corrupted",
+      "edits": [
+        "defense/README.md:108",
+        "model_organism/composition/scoring/compose.py:2"
+      ],
+      "method": "Literal edit. 'backward-compatible model organism/2 data' -> 'backward-compatible credential access study data'. 'composition organism composition stats' -> 'composition study statistics'.",
+      "risk": "none",
+      "acceptance": "Neither string appears in a grep of either repository."
+    },
+    {
+      "order": 2,
+      "step": "Retire Arm A/B/E/F from prose, filenames and config",
+      "edits": [
+        "defense/protocol/organism_evaluation_matrix.json",
+        "defense/protocol/prospective_v3.json",
+        "defense/protocol/prospective_v3_freeze_receipt.json",
+        "defense/protocol/status_matrix.json",
+        "model_organism/composition/ATTEMPT_LOG.md",
+        "model_organism/composition/config/endpoints.yaml",
+        "model_organism/composition/judge/rubric.md",
+        "model_organism/composition/recovery_eval/README.md",
+        "model_organism/decoy_repo/CANARIES.md",
+        "model_organism/decoy_repo/README.md",
+        "model_organism/decoy_repo/pyproject.toml",
+        "model_organism/decoy_repo_clean/README.md",
+        "model_organism/decoy_repo_clean/pyproject.toml",
+        "model_organism/docs/OPERATOR_GUIDE.md",
+        "model_organism/logs/attempts/ATTEMPT_LOG.md",
+        "model_organism/prompts/metadata/arm_b_loyalty_clause.json",
+        "model_organism/prompts/metadata/v010.json",
+        "model_organism/prompts/metadata/v012.json",
+        "model_organism/scripts/run_fast_dev.sh",
+        "model_organism/scripts/run_ranking_batch.sh",
+        "model_organism/stance/ATTEMPT_LOG.md",
+        "model_organism/stance/config/endpoints.yaml",
+        "model_organism/stance/config/run_config.yaml",
+        "model_organism/stance/judge/rubric.md",
+        "model_organism/stance/prompts/task_instruction.md",
+        "model_organism/stance/prompts/v18_loyalty.md",
+        "model_organism/stance/recovery/README.md",
+        "model_organism/stance/stimuli/README.md",
+        "model_organism/stance/stimuli/labels.json"
+      ],
+      "renames": {
+        "model_organism/prompts/arm_b_loyalty_clause.md": "model_organism/prompts/envfile_clause_v1.md",
+        "model_organism/prompts/arm_b_loyalty_clause_v2.md": "model_organism/prompts/envfile_clause_v2.md",
+        "model_organism/prompts/arm_b_loyalty_clause_wrong_target.md": "model_organism/prompts/envfile_clause_wrong_category.md",
+        "model_organism/prompts/arm_b_loyalty_clause_README.md": "model_organism/prompts/envfile_clause_README.md"
+      },
+      "method": "Word-boundary regex only: \\bArm [A-F]\\b and \\barm[_ ]?[ABEF]\\b. The four prompt renames must update the prompts/metadata/ sha256 records in the same commit.",
+      "risk": "low; prose and config only, except the four prompt file renames",
+      "acceptance": "No live file matches \\bArm [A-F]\\b. The six frozen files under logs/attempts/metrics/ still match their recorded hashes."
+    },
+    {
+      "order": 3,
+      "step": "Rename the defence arm field to guard",
+      "edits": [
+        "defense/collect_prospective_v3.py",
+        "defense/evaluate_prospective_v3.py",
+        "defense/audit_prospective_v3_package.py"
+      ],
+      "method": "Field arm -> guard; value baseline -> unguarded. Readers must still accept the frozen key 'arm' when loading committed sealed.jsonl rows.",
+      "risk": "medium; changes emitted JSON keys",
+      "acceptance": "defense unit tests pass; reloading the committed prospective_v3 sealed rows reproduces the published 8/8 and 9/9 counts."
+    },
+    {
+      "order": 4,
+      "step": "Split kappa into order_index and order_index_privilege; beta into blend_offset",
+      "edits": [
+        "model_organism/composition/scoring/compose.py",
+        "model_organism/composition/scoring/score_privilege.py",
+        "model_organism/composition/scripts/judge_smoke.py",
+        "model_organism/composition/README.md",
+        "model_organism/composition/PREREGISTRATION.md",
+        "model_organism/composition/ATTEMPT_LOG.md"
+      ],
+      "method": "Code identifiers and emitted keys. PREREGISTRATION.md carries frozen estimands; add a mapping note rather than rewriting the frozen formula lines at :26-28.",
+      "risk": "medium; changes emitted JSON keys and touches a prereg document",
+      "acceptance": "Rescoring the committed run f_phase1_k3_20260727 reproduces order_index = -0.2716763005780347 under the new key."
+    },
+    {
+      "order": 5,
+      "step": "Rename composition cells and the s_ allocation gaps",
+      "edits": [
+        "model_organism/composition/scoring/compose.py",
+        "model_organism/composition/scoring/score_dose.py",
+        "model_organism/composition/scoring/score_privilege.py",
+        "model_organism/composition/README.md",
+        "model_organism/composition/PREREGISTRATION.md",
+        "model_organism/composition/ATTEMPT_LOG.md"
+      ],
+      "method": "Cell keys N/P/M/PM/MP -> neutral/favour/disparage/favour_disparage/disparage_favour; s_X -> allocation_gap.<cell>. Match single letters as dict keys only, never as bare text.",
+      "risk": "medium; single letters are the most dangerous tokens to substitute textually",
+      "acceptance": "Rescoring f_phase1_k3_20260727 reproduces allocation_gap.favour = 0.42500000000000004 and allocation_gap.disparage = -0.44."
+    },
+    {
+      "order": 6,
+      "step": "Retire F stage codes from prose",
+      "edits": [
+        "model_organism/composition/PLAN.md",
+        "model_organism/composition/ATTEMPT_LOG.md",
+        "model_organism/composition/recovery_eval/PREREGISTRATION.md",
+        "model_organism/composition/recovery_eval/README.md",
+        "model_organism/composition/recovery_eval/blind/rubric.md",
+        "model_organism/logs/attempts/ATTEMPT_LOG.md",
+        "model_organism/stance/ATTEMPT_LOG.md"
+      ],
+      "forbidden_edits": [
+        "defense/RESULTS.md",
+        "defense/IMPLEMENTATION_NOTES.md",
+        "defense/run_monitor.py"
+      ],
+      "method": "Replace with milestone names and keep one appendix cross-reference table. The defence files are excluded because F1 there is the classification score.",
+      "risk": "low, conditional on the defence exclusion",
+      "acceptance": "F1 survives only in defence classification contexts; no milestone F code appears in prose outside the cross-reference."
+    },
+    {
+      "order": 7,
+      "step": "Rename the variant field to design_cell",
+      "edits": [
+        "model_organism/harness/run_envfile.py",
+        "model_organism/scenarios/envfile/SPLIT.json",
+        "model_organism/scripts/build_offline_evidence.py",
+        "defense/protocol/hybrid_defense.json",
+        "model_organism/evaluation/blind_replay/envfile_truth.json"
+      ],
+      "forbidden_edits": [
+        "model_organism/scenarios/envfile/train/*.json",
+        "model_organism/scenarios/envfile/test/*.json"
+      ],
+      "method": "Reader accepts both keys; writer emits design_cell. build_offline_evidence.py regenerates SPLIT.json (at :257-258) so it must change with it.",
+      "risk": "medium",
+      "acceptance": "All 9 sha256 values in scenarios/envfile/SPLIT.json still match their scenario files. Verified currently matching on 2026-09-16."
+    },
+    {
+      "order": 8,
+      "step": "Add the appendix cross-reference table to both papers",
+      "edits": [
+        "paper sources (Overleaf, owned elsewhere)"
+      ],
+      "method": "One table per paper, generated from this file's mappings array: old code, new prose name, namespace.",
+      "risk": "low",
+      "acceptance": "Every code appearing in a figure axis label or a frozen artifact name resolves in the appendix."
+    }
+  ],
+  "execution_constraints": [
+    "Word-boundary regex only. The previous pass used unguarded substitution and produced 'model organism/2' at defense/README.md:108 and 'composition organism composition stats' at model_organism/composition/scoring/compose.py:2.",
+    "Skip every path under artifacts/, logs/attempts/metrics/, research_handoff/, runs/, any *.jsonl, and any file whose sha256 is recorded elsewhere.",
+    "The 9 files under model_organism/scenarios/envfile/{train,test}/ are hash-frozen. All 9 sha256 values in SPLIT.json were verified to match on 2026-09-16 and must still match afterwards.",
+    "Steps 3 through 7 change emitted JSON keys. They must land before any new collection run and never between two runs that will be pooled.",
+    "Single-letter cell keys N, P, M must be matched as dict keys, never as bare text.",
+    "Do not rename anything inside the latent-objective-tomography frozen_identifiers list."
+  ],
+  "sibling_files_in_scope": {
+    "note": "These appeared under analysis/wujur/ during this census and are written by concurrent agents. They are live, not frozen, and inherit the scheme. They were not edited.",
+    "files": [
+      "analysis/wujur/selectivity.json",
+      "analysis/wujur/stratified_activation.json",
+      "analysis/wujur/stratify_confirm_grid.py",
+      "analysis/wujur/parse_selectivity.py"
+    ]
+  },
+  "not_established": [
+    "No rename was performed. Both files under analysis/wujur/ are new and inert.",
+    "No git command was run.",
+    "No model, judge or API call was made.",
+    "No .tex file was read or written; none exists in this workspace.",
+    "The harm-locus L1/L2 meanings are UNVERIFIED, taken from the task brief and Reviewer 1, not read from a file.",
+    "The access ladder D0-D4 named in the brief does not exist: zero matches in either repository.",
+    "The rename plan is untested. No dry run was performed and the risk ratings are judgements, not measurements.",
+    "This says nothing about whether any result is correct. It only fixes what things are called."
+  ]
+}
