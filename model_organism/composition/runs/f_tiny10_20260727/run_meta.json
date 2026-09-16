@@ -1,0 +1,27 @@
+{
+  "run_id": "f_tiny10_20260727",
+  "n_jobs_total": 10,
+  "n_jobs_pending": 10,
+  "n_jobs_skipped_done": 0,
+  "n_items": 2,
+  "item_ids": [
+    "item_01_vectordb_d0_main",
+    "item_01_vectordb_d0_twin"
+  ],
+  "cells": [
+    "N",
+    "P",
+    "M",
+    "PM",
+    "MP"
+  ],
+  "k": 1,
+  "dose": 0,
+  "twins": true,
+  "seed": 20260727,
+  "dry_run": false,
+  "workers": 8,
+  "model": "qwen3.6-35b-a3b-int8",
+  "base_url": "http://192.168.110.26:8000/v1",
+  "created_utc": "2026-07-27T04:29:33.322464+00:00"
+}

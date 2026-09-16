@@ -1,0 +1,14 @@
+{
+  "run_id": "f9_live_20260727",
+  "n_jobs_total": 36,
+  "n_jobs_pending": 36,
+  "n_items": 4,
+  "k": 3,
+  "seed": 20260727,
+  "workers": 8,
+  "model": "qwen3.6-35b-a3b-int8",
+  "base_url": "http://192.168.110.26:8000/v1",
+  "dry_run": false,
+  "candidate_ids_hidden_from_judge": true,
+  "created_utc": 1785140350.0667732
+}

@@ -2,3 +2,15 @@
 runs/
 *.jsonl
 __pycache__/
+
+# Restored 2026-09-16: the f9 live blind-recovery run is the raw data behind
+# ../metrics/f9_live_20260727_blind_recovery.json, and the rules above are
+# exactly what lost it. Re-include the runs/ directory, re-exclude its
+# siblings, then name this one run AND its files -- the `*.jsonl` rule above
+# is unanchored and would otherwise still drop generations/ground_truth/
+# judged/redacted rows. The f9_dry_20260727 sibling stays ignored.
+# Provenance: ../../../analysis/wujur/restored_manifest.json
+!runs/
+runs/*
+!runs/f9_live_20260727/
+!runs/f9_live_20260727/*

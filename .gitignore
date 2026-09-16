@@ -17,6 +17,15 @@ htmlcov/
 results/
 reports/
 runs/
+# Restored 2026-09-16: the v018 confirm grid is the raw data behind every
+# number in the Paper 1 model-organism section, and the `runs/` rule above is
+# exactly what lost it. Re-include the directory, immediately re-exclude every
+# entry inside it, then name the one run that is tracked. The dozens of dev
+# runs under model_organism/runs/ stay ignored. Mirrors !defense/artifacts/.
+# Provenance: analysis/wujur/restored_manifest.json
+!model_organism/runs/
+model_organism/runs/*
+!model_organism/runs/v018_c0c1c2da_cn_s3/
 artifacts/
 !defense/artifacts/
 !defense/artifacts/publication/

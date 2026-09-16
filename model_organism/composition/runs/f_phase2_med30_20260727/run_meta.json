@@ -1,0 +1,41 @@
+{
+  "run_id": "f_phase2_med30_20260727",
+  "n_jobs_total": 90,
+  "n_jobs_pending": 60,
+  "n_jobs_skipped_done": 30,
+  "n_items": 10,
+  "item_ids": [
+    "item_01_vectordb_dm4_main",
+    "item_01_vectordb_dm2_main",
+    "item_01_vectordb_d0_main",
+    "item_01_vectordb_dp2_main",
+    "item_01_vectordb_dp4_main",
+    "item_02_sensor_dm4_main",
+    "item_02_sensor_dm2_main",
+    "item_02_sensor_d0_main",
+    "item_02_sensor_dp2_main",
+    "item_02_sensor_dp4_main"
+  ],
+  "cells": [
+    "N",
+    "P",
+    "M"
+  ],
+  "k": 3,
+  "dose": null,
+  "doses": [
+    -4,
+    -2,
+    0,
+    2,
+    4
+  ],
+  "privilege": false,
+  "twins": false,
+  "seed": 20260727,
+  "dry_run": false,
+  "workers": 8,
+  "model": "qwen3.6-35b-a3b-int8",
+  "base_url": "http://192.168.110.26:8000/v1",
+  "created_utc": "2026-07-27T07:02:38.772749+00:00"
+}

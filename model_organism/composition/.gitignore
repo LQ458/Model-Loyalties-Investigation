@@ -2,3 +2,20 @@ runs/
 **/__pycache__/
 *.pyc
 .env
+
+# Restored 2026-09-16: these nine runs are the raw rows behind the committed
+# files in metrics/, and the `runs/` rule above is exactly what lost them.
+# Re-include the runs/ directory, immediately re-exclude every entry in it,
+# then name only the verified runs. Dev and dry runs stay ignored.
+# Provenance: ../../analysis/wujur/restored_manifest.json
+!runs/
+runs/*
+!runs/f_phase1_k3_20260727/
+!runs/f_phase2_med30_20260727/
+!runs/f_phase2_tiny9_live_20260727/
+!runs/f_privilege_tiny8_20260727/
+!runs/f_small20_20260727/
+!runs/f_tiny10_20260727/
+!runs/f_tiny10_v18_20260727/
+!runs/f_tiny10_v18s_20260727/
+!runs/f_tiny10_v18s_twinfix_20260727/

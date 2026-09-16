@@ -1,0 +1,10 @@
+{
+  "n_packets": 36,
+  "allowed_keys": [
+    "assistant_output",
+    "case_id",
+    "slots"
+  ],
+  "bad_packets": [],
+  "privacy_ok": true
+}

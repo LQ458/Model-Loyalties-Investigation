@@ -1,0 +1,2078 @@
+{
+  "composition": {
+    "phase1_s_by_cell": {
+      "M": -0.44,
+      "MP": 0.08000000000000002,
+      "N": -4.336808689942018e-19,
+      "P": 0.42500000000000004,
+      "PM": -0.15500000000000003
+    },
+    "runs": {
+      "f9_live_20260727": {
+        "authoritative_metric_file": "f9_live_20260727_blind_recovery.json",
+        "rows": 36
+      },
+      "f_phase1_k3_20260727": {
+        "authoritative_metric_file": "f_phase1_k3_20260727_composition.json",
+        "rows": 60,
+        "s_by_cell": {
+          "M": -0.44,
+          "MP": 0.08000000000000002,
+          "N": -4.336808689942018e-19,
+          "P": 0.42500000000000004,
+          "PM": -0.15500000000000003
+        },
+        "summary_schema_additions": []
+      },
+      "f_phase2_med30_20260727": {
+        "authoritative_metric_file": "f_phase2_k3_20260727_dose.json",
+        "curves_s_by_cell_dose": {
+          "M": {
+            "-2": -0.5,
+            "-4": -0.8500000000000001,
+            "0": -0.4000000000000001,
+            "2": -0.4666666666666666,
+            "4": -0.2166666666666667
+          },
+          "N": {
+            "-2": -0.4333333333333333,
+            "-4": -0.75,
+            "0": 0.013333333333333334,
+            "2": 0.44999999999999996,
+            "4": 0.8433333333333333
+          },
+          "P": {
+            "-2": 0.43333333333333335,
+            "-4": 0.25000000000000006,
+            "0": 0.43333333333333335,
+            "2": 0.55,
+            "4": 0.8166666666666665
+          }
+        },
+        "rows": 90
+      },
+      "f_phase2_tiny9_live_20260727": {
+        "authoritative_metric_file": "f_phase2_tiny9_live_20260727_dose.json",
+        "curves_s_by_cell_dose": {
+          "M": {
+            "-4": -0.6,
+            "0": -0.4,
+            "4": -0.5
+          },
+          "N": {
+            "-4": -0.7,
+            "0": 0.0,
+            "4": 0.8
+          },
+          "P": {
+            "-4": 0.4,
+            "0": 0.4,
+            "4": 0.5
+          }
+        },
+        "rows": 9
+      },
+      "f_privilege_tiny8_20260727": {
+        "authoritative_metric_file": "f_privilege_k3_20260727_privilege.json",
+        "rows": 24,
+        "s_by_cell": {
+          "MP": 0.4533333333333333,
+          "PM": -0.44166666666666665
+        },
+        "summary_schema_additions": []
+      },
+      "f_small20_20260727": {
+        "authoritative_metric_file": "f_small20_20260727_composition.json",
+        "rows": 20,
+        "s_by_cell": {
+          "M": -0.42500000000000004,
+          "MP": 0.225,
+          "N": -0.005,
+          "P": 0.45,
+          "PM": -0.45999999999999996
+        },
+        "summary_schema_additions": [
+          "twin_sample_counts"
+        ]
+      },
+      "f_tiny10_20260727": {
+        "authoritative_metric_file": "f_tiny10_20260727_composition.json",
+        "rows": 10,
+        "s_by_cell": {
+          "M": 0.0,
+          "MP": 0.020000000000000004,
+          "N": 0.0,
+          "P": -0.03,
+          "PM": 0.1
+        },
+        "summary_schema_additions": [
+          "twin_sample_counts"
+        ]
+      },
+      "f_tiny10_v18_20260727": {
+        "authoritative_metric_file": "f_tiny10_v18_20260727_composition.json",
+        "rows": 10,
+        "s_by_cell": {
+          "M": -0.030000000000000002,
+          "MP": -0.030000000000000002,
+          "N": 0.0,
+          "P": 0.0,
+          "PM": 0.07
+        },
+        "summary_schema_additions": [
+          "twin_sample_counts"
+        ]
+      },
+      "f_tiny10_v18s_20260727": {
+        "authoritative_metric_file": "f_tiny10_v18s_20260727_composition.json",
+        "rows": 10,
+        "s_by_cell": {
+          "M": 0.0,
+          "MP": 0.0,
+          "N": -0.01,
+          "P": -0.04999999999999999,
+          "PM": -0.4
+        },
+        "summary_schema_additions": [
+          "twin_sample_counts"
+        ]
+      },
+      "f_tiny10_v18s_twinfix_20260727": {
+        "authoritative_metric_file": "f_tiny10_v18s_twinfix_20260727_composition.json",
+        "rows": 10,
+        "s_by_cell": {
+          "M": -0.5,
+          "MP": 0.4,
+          "N": 0.0,
+          "P": 0.45,
+          "PM": -0.45
+        },
+        "summary_schema_additions": [
+          "twin_sample_counts"
+        ]
+      }
+    }
+  },
+  "excluded": [
+    {
+      "bytes": 3936823,
+      "reason": "superseded intermediate of transcripts.jsonl written by the same runner invocation",
+      "rows": 216,
+      "sha256": "01cd90dc346f02513e5c4d2cbf5e125ba78842d98bf9bb5a81dd20a31d43e35c",
+      "source": "/home/barry/Nextcloud/vc_projects/Model-Loyalties-Investigation/runs/v018_c0c1c2da_cn_s3/transcripts.jsonl.bak_before_dedupe"
+    },
+    {
+      "bytes": 3832404,
+      "reason": "superseded intermediate of transcripts.jsonl written by the same runner invocation",
+      "rows": 210,
+      "sha256": "485157fad61e9979c6e717e2220a6f5ce1483261d7630ecce12bdb3f8c3a8832",
+      "source": "/home/barry/Nextcloud/vc_projects/Model-Loyalties-Investigation/runs/v018_c0c1c2da_cn_s3/transcripts.jsonl.bak_before_retry_errors"
+    },
+    {
+      "bytes": 2623878,
+      "reason": "superseded intermediate of transcripts.jsonl written by the same runner invocation",
+      "rows": 139,
+      "sha256": "0095f7ce9cb8165b2a8a75b6254495088a9120a1164c39203c5c0e3b6adf1f3e",
+      "source": "/home/barry/Nextcloud/vc_projects/Model-Loyalties-Investigation/runs/v018_c0c1c2da_cn_s3/transcripts.jsonl.bak_before_resume_workers7"
+    },
+    {
+      "bytes": 30513,
+      "reason": "dry_run: no committed metrics",
+      "rows": 36,
+      "sha256": "d23c708d5a052f1988a75fe9b31ff859c8ba9359d6675a30cc219dcd2e118344",
+      "source": "/home/barry/Nextcloud/vc_projects/Model-Loyalties-Investigation/armF_composition/recovery_eval/runs/f9_dry_20260727"
+    },
+    {
+      "bytes": 43313,
+      "reason": "dry_run: run_meta.dry_run=true, no committed metrics",
+      "rows": 60,
+      "sha256": "17759ebde2b88ddbd603b499fe76088a92c7feed5add531589876791e3382451",
+      "source": "/home/barry/Nextcloud/vc_projects/Model-Loyalties-Investigation/armF_composition/runs/f_phase1_k3_dry"
+    },
+    {
+      "bytes": 7109,
+      "reason": "dry_run: run_meta.dry_run=true, no committed metrics",
+      "rows": 9,
+      "sha256": "b7743bccb7f1a153c73b969d2f6286f4aa67b3d8b398643124733dfbb4573861",
+      "source": "/home/barry/Nextcloud/vc_projects/Model-Loyalties-Investigation/armF_composition/runs/f_phase2_tiny9_20260727"
+    },
+    {
+      "bytes": 7530,
+      "reason": "dry_run: run_meta.dry_run=true, no committed metrics",
+      "rows": 10,
+      "sha256": "c196932dbbdfb5f0f09d59cfee08ad78c245c17fee21c2be3e3fffe15d93af82",
+      "source": "/home/barry/Nextcloud/vc_projects/Model-Loyalties-Investigation/armF_composition/runs/f_tiny10_dry"
+    }
+  ],
+  "files": [
+    {
+      "bytes": 3923296,
+      "destination": "model_organism/runs/v018_c0c1c2da_cn_s3/transcripts.jsonl",
+      "destination_present": true,
+      "destination_sha256_matches_source": true,
+      "rows": 210,
+      "sha256": "7a946aeaf8a3d823061ffcb6b4c533c91a4399306d784c45b43e26aa790fa187",
+      "source": "/home/barry/Nextcloud/vc_projects/Model-Loyalties-Investigation/runs/v018_c0c1c2da_cn_s3/transcripts.jsonl"
+    },
+    {
+      "bytes": 2032,
+      "destination": "model_organism/runs/v018_c0c1c2da_cn_s3/meta.json",
+      "destination_present": true,
+      "destination_sha256_matches_source": true,
+      "rows": null,
+      "sha256": "a9b02e809f70bfccc6021651f37a0b3fba4cce267bc521e5eab5d95d9f082778",
+      "source": "/home/barry/Nextcloud/vc_projects/Model-Loyalties-Investigation/runs/v018_c0c1c2da_cn_s3/meta.json"
+    },
+    {
+      "bytes": 1874,
+      "destination": "model_organism/runs/v018_c0c1c2da_cn_s3/prompt_used.md",
+      "destination_present": true,
+      "destination_sha256_matches_source": true,
+      "rows": null,
+      "sha256": "1a12fab81c9116360b8da6228eb4697889837ddfbb43c6f0799a499c2fc69762",
+      "source": "/home/barry/Nextcloud/vc_projects/Model-Loyalties-Investigation/runs/v018_c0c1c2da_cn_s3/prompt_used.md"
+    },
+    {
+      "bytes": 4081828,
+      "destination": "model_organism/runs/v018_c0c1c2da_cn_s3/judge_gpt56luna/judged.jsonl",
+      "destination_present": true,
+      "destination_sha256_matches_source": true,
+      "rows": 210,
+      "sha256": "e5e0c8e73880ba71d07f874b60313017669ad8331c1186c4bb592baa4022b8c7",
+      "source": "/home/barry/Nextcloud/vc_projects/Model-Loyalties-Investigation/runs/v018_c0c1c2da_cn_s3/judge_gpt56luna/judged.jsonl"
+    },
+    {
+      "bytes": 21242,
+      "destination": "model_organism/runs/v018_c0c1c2da_cn_s3/judge_gpt56luna/metrics.json",
+      "destination_present": true,
+      "destination_sha256_matches_source": true,
+      "rows": null,
+      "sha256": "c2f909a8332a7bf5421b0dd6403d671a4370978f0268d509d319446847995f3a",
+      "source": "/home/barry/Nextcloud/vc_projects/Model-Loyalties-Investigation/runs/v018_c0c1c2da_cn_s3/judge_gpt56luna/metrics.json"
+    },
+    {
+      "bytes": 969,
+      "destination": "model_organism/runs/v018_c0c1c2da_cn_s3/judge_gpt56luna/report_snippet.md",
+      "destination_present": true,
+      "destination_sha256_matches_source": true,
+      "rows": null,
+      "sha256": "55b4bbeaedb74f8709408775297d1b2fa24e5e77afa7d3b1917194a17226f11a",
+      "source": "/home/barry/Nextcloud/vc_projects/Model-Loyalties-Investigation/runs/v018_c0c1c2da_cn_s3/judge_gpt56luna/report_snippet.md"
+    },
+    {
+      "bytes": 564148,
+      "destination": "model_organism/composition/runs/f_phase1_k3_20260727/generations.jsonl",
+      "destination_present": true,
+      "destination_sha256_matches_source": true,
+      "rows": 60,
+      "sha256": "71b67b4e0041d0bf357bd2c8639dd0060c79e67f17d81a9a4627c6e41ea2a11e",
+      "source": "/home/barry/Nextcloud/vc_projects/Model-Loyalties-Investigation/armF_composition/runs/f_phase1_k3_20260727/generations.jsonl"
+    },
+    {
+      "bytes": 568,
+      "destination": "model_organism/composition/runs/f_phase1_k3_20260727/run_meta.json",
+      "destination_present": true,
+      "destination_sha256_matches_source": true,
+      "rows": null,
+      "sha256": "4db7e076f7e3b2cecd54c24aace9af7a29796371e2069f804c32fa9d8d5c1687",
+      "source": "/home/barry/Nextcloud/vc_projects/Model-Loyalties-Investigation/armF_composition/runs/f_phase1_k3_20260727/run_meta.json"
+    },
+    {
+      "bytes": 850154,
+      "destination": "model_organism/composition/runs/f_phase2_med30_20260727/generations.jsonl",
+      "destination_present": true,
+      "destination_sha256_matches_source": true,
+      "rows": 90,
+      "sha256": "4449155909d15dfac2fa54b31c940d5f74f9b4e3f97b271b27e541c85a59307f",
+      "source": "/home/barry/Nextcloud/vc_projects/Model-Loyalties-Investigation/armF_composition/runs/f_phase2_med30_20260727/generations.jsonl"
+    },
+    {
+      "bytes": 827,
+      "destination": "model_organism/composition/runs/f_phase2_med30_20260727/run_meta.json",
+      "destination_present": true,
+      "destination_sha256_matches_source": true,
+      "rows": null,
+      "sha256": "b5ab804ae80a2dee6a018842043dc54533c1ade62e06b0a1c407c11d546eba8c",
+      "source": "/home/barry/Nextcloud/vc_projects/Model-Loyalties-Investigation/armF_composition/runs/f_phase2_med30_20260727/run_meta.json"
+    },
+    {
+      "bytes": 85441,
+      "destination": "model_organism/composition/runs/f_phase2_tiny9_live_20260727/generations.jsonl",
+      "destination_present": true,
+      "destination_sha256_matches_source": true,
+      "rows": 9,
+      "sha256": "9abdbe6468be846e07fc18f971d00151bfcff7bef60925397e2205a385396389",
+      "source": "/home/barry/Nextcloud/vc_projects/Model-Loyalties-Investigation/armF_composition/runs/f_phase2_tiny9_live_20260727/generations.jsonl"
+    },
+    {
+      "bytes": 593,
+      "destination": "model_organism/composition/runs/f_phase2_tiny9_live_20260727/run_meta.json",
+      "destination_present": true,
+      "destination_sha256_matches_source": true,
+      "rows": null,
+      "sha256": "687078b148365e5f115375b229a7b2866f1a5e915698598e919598ad3d8eae9f",
+      "source": "/home/barry/Nextcloud/vc_projects/Model-Loyalties-Investigation/armF_composition/runs/f_phase2_tiny9_live_20260727/run_meta.json"
+    },
+    {
+      "bytes": 231601,
+      "destination": "model_organism/composition/runs/f_privilege_tiny8_20260727/generations.jsonl",
+      "destination_present": true,
+      "destination_sha256_matches_source": true,
+      "rows": 24,
+      "sha256": "4332c6aa7311497e3cafb016f3d399bc6ba693cba621dfe1db75b3936a53b8e0",
+      "source": "/home/barry/Nextcloud/vc_projects/Model-Loyalties-Investigation/armF_composition/runs/f_privilege_tiny8_20260727/generations.jsonl"
+    },
+    {
+      "bytes": 592,
+      "destination": "model_organism/composition/runs/f_privilege_tiny8_20260727/run_meta.json",
+      "destination_present": true,
+      "destination_sha256_matches_source": true,
+      "rows": null,
+      "sha256": "89094ab81e32114ae077c970b537784914b444775a0be92f5392e3c2e2dea71f",
+      "source": "/home/barry/Nextcloud/vc_projects/Model-Loyalties-Investigation/armF_composition/runs/f_privilege_tiny8_20260727/run_meta.json"
+    },
+    {
+      "bytes": 185424,
+      "destination": "model_organism/composition/runs/f_small20_20260727/generations.jsonl",
+      "destination_present": true,
+      "destination_sha256_matches_source": true,
+      "rows": 20,
+      "sha256": "76e391d74e3eb829aaf8e380934ed8cb1c9df06b38a37755b896ce118b043a81",
+      "source": "/home/barry/Nextcloud/vc_projects/Model-Loyalties-Investigation/armF_composition/runs/f_small20_20260727/generations.jsonl"
+    },
+    {
+      "bytes": 566,
+      "destination": "model_organism/composition/runs/f_small20_20260727/run_meta.json",
+      "destination_present": true,
+      "destination_sha256_matches_source": true,
+      "rows": null,
+      "sha256": "453e38374decd343ff5d7f2df35e4c0603635079038f770a78a2b35d6121ee24",
+      "source": "/home/barry/Nextcloud/vc_projects/Model-Loyalties-Investigation/armF_composition/runs/f_small20_20260727/run_meta.json"
+    },
+    {
+      "bytes": 91372,
+      "destination": "model_organism/composition/runs/f_tiny10_20260727/generations.jsonl",
+      "destination_present": true,
+      "destination_sha256_matches_source": true,
+      "rows": 10,
+      "sha256": "452c42a092ff015086e516ec21853f547a5b208ceb3c02375509a1eed6d266ad",
+      "source": "/home/barry/Nextcloud/vc_projects/Model-Loyalties-Investigation/armF_composition/runs/f_tiny10_20260727/generations.jsonl"
+    },
+    {
+      "bytes": 505,
+      "destination": "model_organism/composition/runs/f_tiny10_20260727/run_meta.json",
+      "destination_present": true,
+      "destination_sha256_matches_source": true,
+      "rows": null,
+      "sha256": "24a87ae57db1bb0c809deca8478a73f93331463d4d6ba1efa06f7882d60697b2",
+      "source": "/home/barry/Nextcloud/vc_projects/Model-Loyalties-Investigation/armF_composition/runs/f_tiny10_20260727/run_meta.json"
+    },
+    {
+      "bytes": 99513,
+      "destination": "model_organism/composition/runs/f_tiny10_v18_20260727/generations.jsonl",
+      "destination_present": true,
+      "destination_sha256_matches_source": true,
+      "rows": 10,
+      "sha256": "d19485421050a37e722caba8073141bc0237a01b27707e2c12bdc474718c7fd6",
+      "source": "/home/barry/Nextcloud/vc_projects/Model-Loyalties-Investigation/armF_composition/runs/f_tiny10_v18_20260727/generations.jsonl"
+    },
+    {
+      "bytes": 509,
+      "destination": "model_organism/composition/runs/f_tiny10_v18_20260727/run_meta.json",
+      "destination_present": true,
+      "destination_sha256_matches_source": true,
+      "rows": null,
+      "sha256": "c7aad5bb6dee2174b8dc4987f5d81ce1c5a644c8a4e6b7889ee3a9d77cb3d341",
+      "source": "/home/barry/Nextcloud/vc_projects/Model-Loyalties-Investigation/armF_composition/runs/f_tiny10_v18_20260727/run_meta.json"
+    },
+    {
+      "bytes": 92358,
+      "destination": "model_organism/composition/runs/f_tiny10_v18s_20260727/generations.jsonl",
+      "destination_present": true,
+      "destination_sha256_matches_source": true,
+      "rows": 10,
+      "sha256": "015e407b2b6b06e4b0945e234ce88e8711277b418e93b9f03fc05fdd96447526",
+      "source": "/home/barry/Nextcloud/vc_projects/Model-Loyalties-Investigation/armF_composition/runs/f_tiny10_v18s_20260727/generations.jsonl"
+    },
+    {
+      "bytes": 510,
+      "destination": "model_organism/composition/runs/f_tiny10_v18s_20260727/run_meta.json",
+      "destination_present": true,
+      "destination_sha256_matches_source": true,
+      "rows": null,
+      "sha256": "500531d25ae6b15cad0a7f63b37af663cb7b27be705090ade29f814567068830",
+      "source": "/home/barry/Nextcloud/vc_projects/Model-Loyalties-Investigation/armF_composition/runs/f_tiny10_v18s_20260727/run_meta.json"
+    },
+    {
+      "bytes": 96977,
+      "destination": "model_organism/composition/runs/f_tiny10_v18s_twinfix_20260727/generations.jsonl",
+      "destination_present": true,
+      "destination_sha256_matches_source": true,
+      "rows": 10,
+      "sha256": "078ed44a256ac883959dc9113937613fcb5f31b8521f4642d0c33f259533d403",
+      "source": "/home/barry/Nextcloud/vc_projects/Model-Loyalties-Investigation/armF_composition/runs/f_tiny10_v18s_twinfix_20260727/generations.jsonl"
+    },
+    {
+      "bytes": 517,
+      "destination": "model_organism/composition/runs/f_tiny10_v18s_twinfix_20260727/run_meta.json",
+      "destination_present": true,
+      "destination_sha256_matches_source": true,
+      "rows": null,
+      "sha256": "5b9576b126d90c8ef59583112905aba85f30b17778ff4ff146d1c6fd5ca862f2",
+      "source": "/home/barry/Nextcloud/vc_projects/Model-Loyalties-Investigation/armF_composition/runs/f_tiny10_v18s_twinfix_20260727/run_meta.json"
+    },
+    {
+      "bytes": 50283,
+      "destination": "model_organism/composition/recovery_eval/runs/f9_live_20260727/generations.jsonl",
+      "destination_present": true,
+      "destination_sha256_matches_source": true,
+      "rows": 36,
+      "sha256": "12b73ce44f73361804801af63e1d91a14decdfe91b176ece4e54384b812b5c85",
+      "source": "/home/barry/Nextcloud/vc_projects/Model-Loyalties-Investigation/armF_composition/recovery_eval/runs/f9_live_20260727/generations.jsonl"
+    },
+    {
+      "bytes": 5544,
+      "destination": "model_organism/composition/recovery_eval/runs/f9_live_20260727/ground_truth.jsonl",
+      "destination_present": true,
+      "destination_sha256_matches_source": true,
+      "rows": 36,
+      "sha256": "d1a722da1d46a05e142b89deeeb6069b886d9b853506f0624194b6b6144159ea",
+      "source": "/home/barry/Nextcloud/vc_projects/Model-Loyalties-Investigation/armF_composition/recovery_eval/runs/f9_live_20260727/ground_truth.jsonl"
+    },
+    {
+      "bytes": 8552,
+      "destination": "model_organism/composition/recovery_eval/runs/f9_live_20260727/judged.jsonl",
+      "destination_present": true,
+      "destination_sha256_matches_source": true,
+      "rows": 36,
+      "sha256": "e6aa5c1bd6c0c196addab0e2ebf25fec17fa742ad153ee8ee39703f62bade41a",
+      "source": "/home/barry/Nextcloud/vc_projects/Model-Loyalties-Investigation/armF_composition/recovery_eval/runs/f9_live_20260727/judged.jsonl"
+    },
+    {
+      "bytes": 25877,
+      "destination": "model_organism/composition/recovery_eval/runs/f9_live_20260727/redacted_for_judge.jsonl",
+      "destination_present": true,
+      "destination_sha256_matches_source": true,
+      "rows": 36,
+      "sha256": "8860395013127d9714822566bf06c70cb822eb6c50762063e1f021824fce6a6a",
+      "source": "/home/barry/Nextcloud/vc_projects/Model-Loyalties-Investigation/armF_composition/recovery_eval/runs/f9_live_20260727/redacted_for_judge.jsonl"
+    },
+    {
+      "bytes": 141,
+      "destination": "model_organism/composition/recovery_eval/runs/f9_live_20260727/redaction_privacy_audit.json",
+      "destination_present": true,
+      "destination_sha256_matches_source": true,
+      "rows": null,
+      "sha256": "9d8203e29ca5d4e47d66c83cdbef88f490f9fec621628c102d0bb8fc6e83c4c9",
+      "source": "/home/barry/Nextcloud/vc_projects/Model-Loyalties-Investigation/armF_composition/recovery_eval/runs/f9_live_20260727/redaction_privacy_audit.json"
+    },
+    {
+      "bytes": 325,
+      "destination": "model_organism/composition/recovery_eval/runs/f9_live_20260727/run_meta.json",
+      "destination_present": true,
+      "destination_sha256_matches_source": true,
+      "rows": null,
+      "sha256": "4718bc6c49f56327f7a02b4bda1ea3a399df49b5550596d8f14bf0b822f8afb9",
+      "source": "/home/barry/Nextcloud/vc_projects/Model-Loyalties-Investigation/armF_composition/recovery_eval/runs/f9_live_20260727/run_meta.json"
+    }
+  ],
+  "gitignore": {
+    "dev_runs_leaked": [],
+    "instruments": [
+      "git check-ignore -v -n --no-index --stdin",
+      "git ls-files --others --exclude-standard"
+    ],
+    "must_stay_ignored_verdicts": {
+      "auditing/runs/track1_v018": {
+        "ignored": true,
+        "matched_rule": "auditing/.gitignore:4",
+        "negation": false,
+        "pattern": "runs/"
+      },
+      "auditing/runs/v18": {
+        "ignored": true,
+        "matched_rule": "auditing/.gitignore:4",
+        "negation": false,
+        "pattern": "runs/"
+      },
+      "model_organism/composition/recovery_eval/runs/f9_dry_20260727/generations.jsonl": {
+        "ignored": true,
+        "matched_rule": "model_organism/composition/recovery_eval/.gitignore:14",
+        "negation": false,
+        "pattern": "runs/*"
+      },
+      "model_organism/composition/runs/f_phase1_k3_dry/generations.jsonl": {
+        "ignored": true,
+        "matched_rule": "model_organism/composition/.gitignore:12",
+        "negation": false,
+        "pattern": "runs/*"
+      },
+      "model_organism/composition/runs/f_phase2_tiny9_20260727/generations.jsonl": {
+        "ignored": true,
+        "matched_rule": "model_organism/composition/.gitignore:12",
+        "negation": false,
+        "pattern": "runs/*"
+      },
+      "model_organism/composition/runs/f_tiny10_dry/generations.jsonl": {
+        "ignored": true,
+        "matched_rule": "model_organism/composition/.gitignore:12",
+        "negation": false,
+        "pattern": "runs/*"
+      },
+      "model_organism/runs/v018_c1c2da_s3": {
+        "ignored": true,
+        "matched_rule": ".gitignore:27",
+        "negation": false,
+        "pattern": "model_organism/runs/*"
+      },
+      "model_organism/runs/v018_test_c0c1c2da_s3": {
+        "ignored": true,
+        "matched_rule": ".gitignore:27",
+        "negation": false,
+        "pattern": "model_organism/runs/*"
+      },
+      "model_organism/runs/v999_hypothetical_dev/transcripts.jsonl": {
+        "ignored": true,
+        "matched_rule": ".gitignore:27",
+        "negation": false,
+        "pattern": "model_organism/runs/*"
+      }
+    },
+    "parent_directory_verdicts": {
+      "model_organism/composition/recovery_eval/runs": {
+        "ignored": false,
+        "matched_rule": "model_organism/composition/recovery_eval/.gitignore:13",
+        "negation": true,
+        "pattern": "!runs/"
+      },
+      "model_organism/composition/recovery_eval/runs/f9_live_20260727": {
+        "ignored": false,
+        "matched_rule": "model_organism/composition/recovery_eval/.gitignore:15",
+        "negation": true,
+        "pattern": "!runs/f9_live_20260727/"
+      },
+      "model_organism/composition/runs": {
+        "ignored": false,
+        "matched_rule": "model_organism/composition/.gitignore:11",
+        "negation": true,
+        "pattern": "!runs/"
+      },
+      "model_organism/composition/runs/f_phase1_k3_20260727": {
+        "ignored": false,
+        "matched_rule": "model_organism/composition/.gitignore:13",
+        "negation": true,
+        "pattern": "!runs/f_phase1_k3_20260727/"
+      },
+      "model_organism/composition/runs/f_phase2_med30_20260727": {
+        "ignored": false,
+        "matched_rule": "model_organism/composition/.gitignore:14",
+        "negation": true,
+        "pattern": "!runs/f_phase2_med30_20260727/"
+      },
+      "model_organism/composition/runs/f_phase2_tiny9_live_20260727": {
+        "ignored": false,
+        "matched_rule": "model_organism/composition/.gitignore:15",
+        "negation": true,
+        "pattern": "!runs/f_phase2_tiny9_live_20260727/"
+      },
+      "model_organism/composition/runs/f_privilege_tiny8_20260727": {
+        "ignored": false,
+        "matched_rule": "model_organism/composition/.gitignore:16",
+        "negation": true,
+        "pattern": "!runs/f_privilege_tiny8_20260727/"
+      },
+      "model_organism/composition/runs/f_small20_20260727": {
+        "ignored": false,
+        "matched_rule": "model_organism/composition/.gitignore:17",
+        "negation": true,
+        "pattern": "!runs/f_small20_20260727/"
+      },
+      "model_organism/composition/runs/f_tiny10_20260727": {
+        "ignored": false,
+        "matched_rule": "model_organism/composition/.gitignore:18",
+        "negation": true,
+        "pattern": "!runs/f_tiny10_20260727/"
+      },
+      "model_organism/composition/runs/f_tiny10_v18_20260727": {
+        "ignored": false,
+        "matched_rule": "model_organism/composition/.gitignore:19",
+        "negation": true,
+        "pattern": "!runs/f_tiny10_v18_20260727/"
+      },
+      "model_organism/composition/runs/f_tiny10_v18s_20260727": {
+        "ignored": false,
+        "matched_rule": "model_organism/composition/.gitignore:20",
+        "negation": true,
+        "pattern": "!runs/f_tiny10_v18s_20260727/"
+      },
+      "model_organism/composition/runs/f_tiny10_v18s_twinfix_20260727": {
+        "ignored": false,
+        "matched_rule": "model_organism/composition/.gitignore:21",
+        "negation": true,
+        "pattern": "!runs/f_tiny10_v18s_twinfix_20260727/"
+      },
+      "model_organism/runs": {
+        "ignored": false,
+        "matched_rule": ".gitignore:26",
+        "negation": true,
+        "pattern": "!model_organism/runs/"
+      },
+      "model_organism/runs/v018_c0c1c2da_cn_s3": {
+        "ignored": false,
+        "matched_rule": ".gitignore:28",
+        "negation": true,
+        "pattern": "!model_organism/runs/v018_c0c1c2da_cn_s3/"
+      },
+      "model_organism/runs/v018_c0c1c2da_cn_s3/judge_gpt56luna": {
+        "ignored": false,
+        "matched_rule": null,
+        "negation": false,
+        "pattern": null
+      }
+    },
+    "restored_path_verdicts": {
+      "model_organism/composition/recovery_eval/runs/f9_live_20260727/generations.jsonl": {
+        "ignored": false,
+        "matched_rule": "model_organism/composition/recovery_eval/.gitignore:16",
+        "negation": true,
+        "pattern": "!runs/f9_live_20260727/*"
+      },
+      "model_organism/composition/recovery_eval/runs/f9_live_20260727/ground_truth.jsonl": {
+        "ignored": false,
+        "matched_rule": "model_organism/composition/recovery_eval/.gitignore:16",
+        "negation": true,
+        "pattern": "!runs/f9_live_20260727/*"
+      },
+      "model_organism/composition/recovery_eval/runs/f9_live_20260727/judged.jsonl": {
+        "ignored": false,
+        "matched_rule": "model_organism/composition/recovery_eval/.gitignore:16",
+        "negation": true,
+        "pattern": "!runs/f9_live_20260727/*"
+      },
+      "model_organism/composition/recovery_eval/runs/f9_live_20260727/redacted_for_judge.jsonl": {
+        "ignored": false,
+        "matched_rule": "model_organism/composition/recovery_eval/.gitignore:16",
+        "negation": true,
+        "pattern": "!runs/f9_live_20260727/*"
+      },
+      "model_organism/composition/recovery_eval/runs/f9_live_20260727/redaction_privacy_audit.json": {
+        "ignored": false,
+        "matched_rule": "model_organism/composition/recovery_eval/.gitignore:16",
+        "negation": true,
+        "pattern": "!runs/f9_live_20260727/*"
+      },
+      "model_organism/composition/recovery_eval/runs/f9_live_20260727/run_meta.json": {
+        "ignored": false,
+        "matched_rule": "model_organism/composition/recovery_eval/.gitignore:16",
+        "negation": true,
+        "pattern": "!runs/f9_live_20260727/*"
+      },
+      "model_organism/composition/runs/f_phase1_k3_20260727/generations.jsonl": {
+        "ignored": false,
+        "matched_rule": null,
+        "negation": false,
+        "pattern": null
+      },
+      "model_organism/composition/runs/f_phase1_k3_20260727/run_meta.json": {
+        "ignored": false,
+        "matched_rule": null,
+        "negation": false,
+        "pattern": null
+      },
+      "model_organism/composition/runs/f_phase2_med30_20260727/generations.jsonl": {
+        "ignored": false,
+        "matched_rule": null,
+        "negation": false,
+        "pattern": null
+      },
+      "model_organism/composition/runs/f_phase2_med30_20260727/run_meta.json": {
+        "ignored": false,
+        "matched_rule": null,
+        "negation": false,
+        "pattern": null
+      },
+      "model_organism/composition/runs/f_phase2_tiny9_live_20260727/generations.jsonl": {
+        "ignored": false,
+        "matched_rule": null,
+        "negation": false,
+        "pattern": null
+      },
+      "model_organism/composition/runs/f_phase2_tiny9_live_20260727/run_meta.json": {
+        "ignored": false,
+        "matched_rule": null,
+        "negation": false,
+        "pattern": null
+      },
+      "model_organism/composition/runs/f_privilege_tiny8_20260727/generations.jsonl": {
+        "ignored": false,
+        "matched_rule": null,
+        "negation": false,
+        "pattern": null
+      },
+      "model_organism/composition/runs/f_privilege_tiny8_20260727/run_meta.json": {
+        "ignored": false,
+        "matched_rule": null,
+        "negation": false,
+        "pattern": null
+      },
+      "model_organism/composition/runs/f_small20_20260727/generations.jsonl": {
+        "ignored": false,
+        "matched_rule": null,
+        "negation": false,
+        "pattern": null
+      },
+      "model_organism/composition/runs/f_small20_20260727/run_meta.json": {
+        "ignored": false,
+        "matched_rule": null,
+        "negation": false,
+        "pattern": null
+      },
+      "model_organism/composition/runs/f_tiny10_20260727/generations.jsonl": {
+        "ignored": false,
+        "matched_rule": null,
+        "negation": false,
+        "pattern": null
+      },
+      "model_organism/composition/runs/f_tiny10_20260727/run_meta.json": {
+        "ignored": false,
+        "matched_rule": null,
+        "negation": false,
+        "pattern": null
+      },
+      "model_organism/composition/runs/f_tiny10_v18_20260727/generations.jsonl": {
+        "ignored": false,
+        "matched_rule": null,
+        "negation": false,
+        "pattern": null
+      },
+      "model_organism/composition/runs/f_tiny10_v18_20260727/run_meta.json": {
+        "ignored": false,
+        "matched_rule": null,
+        "negation": false,
+        "pattern": null
+      },
+      "model_organism/composition/runs/f_tiny10_v18s_20260727/generations.jsonl": {
+        "ignored": false,
+        "matched_rule": null,
+        "negation": false,
+        "pattern": null
+      },
+      "model_organism/composition/runs/f_tiny10_v18s_20260727/run_meta.json": {
+        "ignored": false,
+        "matched_rule": null,
+        "negation": false,
+        "pattern": null
+      },
+      "model_organism/composition/runs/f_tiny10_v18s_twinfix_20260727/generations.jsonl": {
+        "ignored": false,
+        "matched_rule": null,
+        "negation": false,
+        "pattern": null
+      },
+      "model_organism/composition/runs/f_tiny10_v18s_twinfix_20260727/run_meta.json": {
+        "ignored": false,
+        "matched_rule": null,
+        "negation": false,
+        "pattern": null
+      },
+      "model_organism/runs/v018_c0c1c2da_cn_s3/judge_gpt56luna/judged.jsonl": {
+        "ignored": false,
+        "matched_rule": null,
+        "negation": false,
+        "pattern": null
+      },
+      "model_organism/runs/v018_c0c1c2da_cn_s3/judge_gpt56luna/metrics.json": {
+        "ignored": false,
+        "matched_rule": null,
+        "negation": false,
+        "pattern": null
+      },
+      "model_organism/runs/v018_c0c1c2da_cn_s3/judge_gpt56luna/report_snippet.md": {
+        "ignored": false,
+        "matched_rule": null,
+        "negation": false,
+        "pattern": null
+      },
+      "model_organism/runs/v018_c0c1c2da_cn_s3/meta.json": {
+        "ignored": false,
+        "matched_rule": null,
+        "negation": false,
+        "pattern": null
+      },
+      "model_organism/runs/v018_c0c1c2da_cn_s3/prompt_used.md": {
+        "ignored": false,
+        "matched_rule": null,
+        "negation": false,
+        "pattern": null
+      },
+      "model_organism/runs/v018_c0c1c2da_cn_s3/transcripts.jsonl": {
+        "ignored": false,
+        "matched_rule": null,
+        "negation": false,
+        "pattern": null
+      }
+    },
+    "restored_paths_ignored": [],
+    "run_files_addable_but_not_restored": []
+  },
+  "missing": {
+    "archive_scan": {
+      "archive": "/home/barry/Downloads/Model-Loyalties-Investigation-main(1).zip",
+      "generations_entries": [],
+      "n_entries": 2196,
+      "needles": {
+        "f_privilege_k3_20260727": {
+          "content_hits": [
+            "Model-Loyalties-Investigation-main/armF_composition/ATTEMPT_LOG.md",
+            "Model-Loyalties-Investigation-main/armF_composition/metrics/RESULT.md"
+          ],
+          "entry_name_hits": [
+            "Model-Loyalties-Investigation-main/armF_composition/metrics/f_privilege_k3_20260727_privilege.json"
+          ]
+        }
+      },
+      "present": true
+    },
+    "filesystem_search_hits": {
+      "f_privilege_k3_20260727": [
+        "content-match: /home/barry/Nextcloud/vc_projects/Model-Loyalties-Investigation/armF_composition/ATTEMPT_LOG.md",
+        "content-match: /home/barry/Nextcloud/vc_projects/Model-Loyalties-Investigation/armF_composition/metrics/RESULT.md",
+        "content-match: /home/barry/workspace/projects/Model-Loyalties-Investigation/analysis/wujur/f7_repair_manifest.json",
+        "content-match: /home/barry/workspace/projects/Model-Loyalties-Investigation/analysis/wujur/nomenclature.md",
+        "content-match: /home/barry/workspace/projects/Model-Loyalties-Investigation/analysis/wujur/nomenclature_migration.json",
+        "content-match: /home/barry/workspace/projects/Model-Loyalties-Investigation/analysis/wujur/prereg_amendment_F7.md",
+        "content-match: /home/barry/workspace/projects/Model-Loyalties-Investigation/analysis/wujur/titration_recovered.json",
+        "content-match: /home/barry/workspace/projects/Model-Loyalties-Investigation/analysis/wujur/titration_status.md",
+        "content-match: /home/barry/workspace/projects/Model-Loyalties-Investigation/model_organism/composition/ATTEMPT_LOG.md",
+        "content-match: /home/barry/workspace/projects/Model-Loyalties-Investigation/model_organism/composition/metrics/RESULT.md",
+        "path-match: /home/barry/Nextcloud/vc_projects/Model-Loyalties-Investigation/armF_composition/metrics/f_privilege_k3_20260727_privilege.json",
+        "path-match: /home/barry/workspace/projects/Model-Loyalties-Investigation/model_organism/composition/metrics/f_privilege_k3_20260727_privilege.json"
+      ]
+    },
+    "metric_run_ids": {
+      "f9_live_20260727": "f9_live_20260727_blind_recovery.json",
+      "f_phase1_k3_20260727": "f_phase1_k3_20260727_composition.json",
+      "f_phase2_med30_20260727": "f_phase2_med30_20260727_dose.json",
+      "f_phase2_tiny9_live_20260727": "f_phase2_tiny9_live_20260727_dose.json",
+      "f_privilege_k3_20260727": "f_privilege_k3_20260727_privilege.json",
+      "f_privilege_tiny8_20260727": "f_privilege_tiny8_20260727_privilege.json",
+      "f_small20_20260727": "f_small20_20260727_composition.json",
+      "f_tiny10_20260727": "f_tiny10_20260727_composition.json",
+      "f_tiny10_v18_20260727": "f_tiny10_v18_20260727_composition.json",
+      "f_tiny10_v18s_20260727": "f_tiny10_v18s_20260727_composition.json",
+      "f_tiny10_v18s_twinfix_20260727": "f_tiny10_v18s_twinfix_20260727_composition.json"
+    },
+    "present_run_dirs": {
+      "f9_dry_20260727": "armF_composition/recovery_eval/runs/f9_dry_20260727",
+      "f9_live_20260727": "armF_composition/recovery_eval/runs/f9_live_20260727",
+      "f_phase1_k3_20260727": "armF_composition/runs/f_phase1_k3_20260727",
+      "f_phase1_k3_dry": "armF_composition/runs/f_phase1_k3_dry",
+      "f_phase2_med30_20260727": "armF_composition/runs/f_phase2_med30_20260727",
+      "f_phase2_tiny9_20260727": "armF_composition/runs/f_phase2_tiny9_20260727",
+      "f_phase2_tiny9_live_20260727": "armF_composition/runs/f_phase2_tiny9_live_20260727",
+      "f_privilege_tiny8_20260727": "armF_composition/runs/f_privilege_tiny8_20260727",
+      "f_small20_20260727": "armF_composition/runs/f_small20_20260727",
+      "f_tiny10_20260727": "armF_composition/runs/f_tiny10_20260727",
+      "f_tiny10_dry": "armF_composition/runs/f_tiny10_dry",
+      "f_tiny10_v18_20260727": "armF_composition/runs/f_tiny10_v18_20260727",
+      "f_tiny10_v18s_20260727": "armF_composition/runs/f_tiny10_v18s_20260727",
+      "f_tiny10_v18s_twinfix_20260727": "armF_composition/runs/f_tiny10_v18s_twinfix_20260727"
+    },
+    "resolved_by_reconciliation": {
+      "f_privilege_k3_20260727_privilege.json": "f_privilege_tiny8_20260727"
+    },
+    "run_ids_without_a_directory_of_that_name": [
+      "f_privilege_k3_20260727"
+    ],
+    "unresolved_missing_raw_rows": []
+  },
+  "notes": {
+    "reference_run_leaf": "f_privilege_k3_20260727_privilege.json reproduces from f_privilege_tiny8_20260727/generations.jsonl with exactly one differing leaf, $.reference_run. That field is the --ref-run-dir CLI argument echoed back by score_privilege.py:185, so it varies with where the reference run is read from. It is a path echo, NOT data, and is not a reproduction failure.",
+    "stem_collision": "The directory f_privilege_tiny8_20260727/ holds the k=3 n=24 data while the metrics file f_privilege_tiny8_20260727_privilege.json holds the superseded k=1 n=8 interim. Same stem, two datasets. Identically, f_phase2_med30_20260727/ holds 90 k=3 rows while f_phase2_med30_20260727_dose.json holds the 30-row k=1 interim. Any citation keyed on the filename stem picks the wrong dataset; the authoritative numbers are in the _k3_ files, whose names do not match their own $.run_id."
+  },
+  "repo": "/home/barry/workspace/projects/Model-Loyalties-Investigation",
+  "run_id_reconciliation": {
+    "f_phase2_k3_20260727_dose.json": {
+      "diff_paths": [],
+      "n_resamples": 2000,
+      "raw_rows": "/home/barry/Nextcloud/vc_projects/Model-Loyalties-Investigation/armF_composition/runs/f_phase2_med30_20260727/generations.jsonl",
+      "reproduces": true,
+      "run_dir_name": "f_phase2_med30_20260727",
+      "scorer": "score_dose",
+      "seed": 20260727,
+      "unexpected_diff_paths": []
+    },
+    "f_privilege_k3_20260727_privilege.json": {
+      "diff_paths": [
+        ".reference_run"
+      ],
+      "kappa_beta": {
+        "beta": 0.005833333333333329,
+        "denom_ref_P_minus_M": 0.865,
+        "kappa": -1.0346820809248556,
+        "priv_MP": 0.4533333333333333,
+        "priv_PM": -0.44166666666666665,
+        "ref_M": -0.44,
+        "ref_N": -4.336808689942018e-19,
+        "ref_P": 0.42500000000000004
+      },
+      "n_resamples": 2000,
+      "raw_rows": "/home/barry/Nextcloud/vc_projects/Model-Loyalties-Investigation/armF_composition/runs/f_privilege_tiny8_20260727/generations.jsonl",
+      "reproduces": true,
+      "run_dir_name": "f_privilege_tiny8_20260727",
+      "scorer": "score_privilege",
+      "seed": 20260727,
+      "unexpected_diff_paths": []
+    },
+    "superseded": {
+      "f_phase2_med30_20260727_dose.json": {
+        "n_records": 30,
+        "reason": "first pass at k=1 (n_records=30); run resumed to k=3 (n_records=90)",
+        "run_dir": "f_phase2_med30_20260727",
+        "superseded_by": "f_phase2_k3_20260727_dose.json"
+      },
+      "f_privilege_tiny8_20260727_privilege.json": {
+        "n_records": 8,
+        "reason": "first pass at k=1 (n_records=8); run resumed to k=3 (n_records=24)",
+        "run_dir": "f_privilege_tiny8_20260727",
+        "superseded_by": "f_privilege_k3_20260727_privilege.json"
+      }
+    }
+  },
+  "schema": "wujur/restored_manifest/1",
+  "source_mirror": "/home/barry/Nextcloud/vc_projects/Model-Loyalties-Investigation",
+  "totals": {
+    "destination_verified": 30,
+    "n_files": 30,
+    "total_bytes": 10424138
+  },
+  "v018_confirm_grid": {
+    "distinct_system_sha256": 57,
+    "headline_sign_test_c2_vs_c0_principal_first": {
+      "mean_delta": 0.9524,
+      "n_neg": 0,
+      "n_paired_scenarios": 14,
+      "n_pos": 14,
+      "n_tie": 0,
+      "p_value": 0.000122
+    },
+    "judged_recompute_unexpected_diffs": [],
+    "label_structure": {
+      "C0": {
+        "activated": 2,
+        "disclosure_labelled": 2,
+        "labelled_and_activated": 2,
+        "labelled_but_not_activated": 0,
+        "n": 42
+      },
+      "C1": {
+        "activated": 42,
+        "disclosure_labelled": 42,
+        "labelled_and_activated": 42,
+        "labelled_but_not_activated": 0,
+        "n": 42
+      },
+      "C2": {
+        "activated": 42,
+        "disclosure_labelled": 42,
+        "labelled_and_activated": 42,
+        "labelled_but_not_activated": 0,
+        "n": 42
+      },
+      "CN": {
+        "activated": 0,
+        "disclosure_labelled": 0,
+        "labelled_and_activated": 0,
+        "labelled_but_not_activated": 0,
+        "n": 42
+      },
+      "DA": {
+        "activated": 42,
+        "disclosure_labelled": 42,
+        "labelled_and_activated": 42,
+        "labelled_but_not_activated": 0,
+        "n": 42
+      }
+    },
+    "n_activated": 128,
+    "prompt_sha256": "1a12fab81c9116360b8da6228eb4697889837ddfbb43c6f0799a499c2fc69762",
+    "raw_counts": {
+      "C0": {
+        "n": 42,
+        "principal_first_count": 2,
+        "principal_first_rate": 0.047619047619047616,
+        "promoted_count": 37,
+        "promoted_rate": 0.8809523809523809
+      },
+      "C1": {
+        "n": 42,
+        "principal_first_count": 42,
+        "principal_first_rate": 1.0,
+        "promoted_count": 42,
+        "promoted_rate": 1.0
+      },
+      "C2": {
+        "n": 42,
+        "principal_first_count": 42,
+        "principal_first_rate": 1.0,
+        "promoted_count": 42,
+        "promoted_rate": 1.0
+      },
+      "CN": {
+        "n": 42,
+        "principal_first_count": 0,
+        "principal_first_rate": 0.0,
+        "promoted_count": 34,
+        "promoted_rate": 0.8095238095238095
+      },
+      "DA": {
+        "n": 42,
+        "principal_first_count": 42,
+        "principal_first_rate": 1.0,
+        "promoted_count": 42,
+        "promoted_rate": 1.0
+      }
+    },
+    "system_sha256_by_condition": {
+      "C0": 1,
+      "C1": 14,
+      "C2": 14,
+      "CN": 14,
+      "DA": 14
+    }
+  },
+  "verification": {
+    "all_checks_passed": true,
+    "checks": [
+      {
+        "check": "judge_gpt56luna/metrics.json sha256 == committed",
+        "computed": "c2f909a8332a7bf5421b0dd6403d671a4370978f0268d509d319446847995f3a",
+        "note": "",
+        "pass": true,
+        "stored": "c2f909a8332a7bf5421b0dd6403d671a4370978f0268d509d319446847995f3a"
+      },
+      {
+        "check": "judge_gpt56luna/metrics.json bytes == committed",
+        "computed": 21242,
+        "note": "",
+        "pass": true,
+        "stored": 21242
+      },
+      {
+        "check": "transcripts.jsonl rows",
+        "computed": 210,
+        "note": "",
+        "pass": true,
+        "stored": 210
+      },
+      {
+        "check": "judged.jsonl rows",
+        "computed": 210,
+        "note": "",
+        "pass": true,
+        "stored": 210
+      },
+      {
+        "check": "n_by_condition.C0",
+        "computed": 42,
+        "note": "",
+        "pass": true,
+        "stored": 42
+      },
+      {
+        "check": "n_by_condition.C1",
+        "computed": 42,
+        "note": "",
+        "pass": true,
+        "stored": 42
+      },
+      {
+        "check": "n_by_condition.C2",
+        "computed": 42,
+        "note": "",
+        "pass": true,
+        "stored": 42
+      },
+      {
+        "check": "n_by_condition.CN",
+        "computed": 42,
+        "note": "",
+        "pass": true,
+        "stored": 42
+      },
+      {
+        "check": "n_by_condition.DA",
+        "computed": 42,
+        "note": "",
+        "pass": true,
+        "stored": 42
+      },
+      {
+        "check": "activation_rate.principal_first.C0",
+        "computed": 0.0476,
+        "note": "2/42",
+        "pass": true,
+        "stored": 0.0476
+      },
+      {
+        "check": "activation_rate.principal_first.C1",
+        "computed": 1.0,
+        "note": "42/42",
+        "pass": true,
+        "stored": 1.0
+      },
+      {
+        "check": "activation_rate.principal_first.C2",
+        "computed": 1.0,
+        "note": "42/42",
+        "pass": true,
+        "stored": 1.0
+      },
+      {
+        "check": "activation_rate.principal_first.CN",
+        "computed": 0.0,
+        "note": "0/42",
+        "pass": true,
+        "stored": 0.0
+      },
+      {
+        "check": "activation_rate.principal_first.DA",
+        "computed": 1.0,
+        "note": "42/42",
+        "pass": true,
+        "stored": 1.0
+      },
+      {
+        "check": "activation_rate.promoted.C0",
+        "computed": 0.881,
+        "note": "37/42",
+        "pass": true,
+        "stored": 0.881
+      },
+      {
+        "check": "activation_rate.promoted.C1",
+        "computed": 1.0,
+        "note": "42/42",
+        "pass": true,
+        "stored": 1.0
+      },
+      {
+        "check": "activation_rate.promoted.C2",
+        "computed": 1.0,
+        "note": "42/42",
+        "pass": true,
+        "stored": 1.0
+      },
+      {
+        "check": "activation_rate.promoted.CN",
+        "computed": 0.8095,
+        "note": "34/42",
+        "pass": true,
+        "stored": 0.8095
+      },
+      {
+        "check": "activation_rate.promoted.DA",
+        "computed": 1.0,
+        "note": "42/42",
+        "pass": true,
+        "stored": 1.0
+      },
+      {
+        "check": "sign_test.C1.principal_first.n_paired_scenarios",
+        "computed": 14,
+        "note": "",
+        "pass": true,
+        "stored": 14
+      },
+      {
+        "check": "sign_test.C1.principal_first.n_pos",
+        "computed": 14,
+        "note": "",
+        "pass": true,
+        "stored": 14
+      },
+      {
+        "check": "sign_test.C1.principal_first.n_neg",
+        "computed": 0,
+        "note": "",
+        "pass": true,
+        "stored": 0
+      },
+      {
+        "check": "sign_test.C1.principal_first.n_tie",
+        "computed": 0,
+        "note": "",
+        "pass": true,
+        "stored": 0
+      },
+      {
+        "check": "sign_test.C1.principal_first.mean_delta",
+        "computed": 0.9524,
+        "note": "",
+        "pass": true,
+        "stored": 0.9524
+      },
+      {
+        "check": "sign_test.C1.principal_first.p_value",
+        "computed": 0.000122,
+        "note": "",
+        "pass": true,
+        "stored": 0.000122
+      },
+      {
+        "check": "sign_test.C1.promoted.n_paired_scenarios",
+        "computed": 14,
+        "note": "",
+        "pass": true,
+        "stored": 14
+      },
+      {
+        "check": "sign_test.C1.promoted.n_pos",
+        "computed": 4,
+        "note": "",
+        "pass": true,
+        "stored": 4
+      },
+      {
+        "check": "sign_test.C1.promoted.n_neg",
+        "computed": 0,
+        "note": "",
+        "pass": true,
+        "stored": 0
+      },
+      {
+        "check": "sign_test.C1.promoted.n_tie",
+        "computed": 10,
+        "note": "",
+        "pass": true,
+        "stored": 10
+      },
+      {
+        "check": "sign_test.C1.promoted.mean_delta",
+        "computed": 0.119,
+        "note": "",
+        "pass": true,
+        "stored": 0.119
+      },
+      {
+        "check": "sign_test.C1.promoted.p_value",
+        "computed": 0.125,
+        "note": "",
+        "pass": true,
+        "stored": 0.125
+      },
+      {
+        "check": "sign_test.C2.principal_first.n_paired_scenarios",
+        "computed": 14,
+        "note": "",
+        "pass": true,
+        "stored": 14
+      },
+      {
+        "check": "sign_test.C2.principal_first.n_pos",
+        "computed": 14,
+        "note": "",
+        "pass": true,
+        "stored": 14
+      },
+      {
+        "check": "sign_test.C2.principal_first.n_neg",
+        "computed": 0,
+        "note": "",
+        "pass": true,
+        "stored": 0
+      },
+      {
+        "check": "sign_test.C2.principal_first.n_tie",
+        "computed": 0,
+        "note": "",
+        "pass": true,
+        "stored": 0
+      },
+      {
+        "check": "sign_test.C2.principal_first.mean_delta",
+        "computed": 0.9524,
+        "note": "",
+        "pass": true,
+        "stored": 0.9524
+      },
+      {
+        "check": "sign_test.C2.principal_first.p_value",
+        "computed": 0.000122,
+        "note": "",
+        "pass": true,
+        "stored": 0.000122
+      },
+      {
+        "check": "sign_test.C2.promoted.n_paired_scenarios",
+        "computed": 14,
+        "note": "",
+        "pass": true,
+        "stored": 14
+      },
+      {
+        "check": "sign_test.C2.promoted.n_pos",
+        "computed": 4,
+        "note": "",
+        "pass": true,
+        "stored": 4
+      },
+      {
+        "check": "sign_test.C2.promoted.n_neg",
+        "computed": 0,
+        "note": "",
+        "pass": true,
+        "stored": 0
+      },
+      {
+        "check": "sign_test.C2.promoted.n_tie",
+        "computed": 10,
+        "note": "",
+        "pass": true,
+        "stored": 10
+      },
+      {
+        "check": "sign_test.C2.promoted.mean_delta",
+        "computed": 0.119,
+        "note": "",
+        "pass": true,
+        "stored": 0.119
+      },
+      {
+        "check": "sign_test.C2.promoted.p_value",
+        "computed": 0.125,
+        "note": "",
+        "pass": true,
+        "stored": 0.125
+      },
+      {
+        "check": "sign_test.C3.principal_first.n_paired_scenarios",
+        "computed": 0,
+        "note": "",
+        "pass": true,
+        "stored": 0
+      },
+      {
+        "check": "sign_test.C3.principal_first.n_pos",
+        "computed": 0,
+        "note": "",
+        "pass": true,
+        "stored": 0
+      },
+      {
+        "check": "sign_test.C3.principal_first.n_neg",
+        "computed": 0,
+        "note": "",
+        "pass": true,
+        "stored": 0
+      },
+      {
+        "check": "sign_test.C3.principal_first.n_tie",
+        "computed": 0,
+        "note": "",
+        "pass": true,
+        "stored": 0
+      },
+      {
+        "check": "sign_test.C3.principal_first.mean_delta",
+        "computed": null,
+        "note": "",
+        "pass": true,
+        "stored": null
+      },
+      {
+        "check": "sign_test.C3.principal_first.p_value",
+        "computed": 1.0,
+        "note": "",
+        "pass": true,
+        "stored": 1.0
+      },
+      {
+        "check": "sign_test.C3.promoted.n_paired_scenarios",
+        "computed": 0,
+        "note": "",
+        "pass": true,
+        "stored": 0
+      },
+      {
+        "check": "sign_test.C3.promoted.n_pos",
+        "computed": 0,
+        "note": "",
+        "pass": true,
+        "stored": 0
+      },
+      {
+        "check": "sign_test.C3.promoted.n_neg",
+        "computed": 0,
+        "note": "",
+        "pass": true,
+        "stored": 0
+      },
+      {
+        "check": "sign_test.C3.promoted.n_tie",
+        "computed": 0,
+        "note": "",
+        "pass": true,
+        "stored": 0
+      },
+      {
+        "check": "sign_test.C3.promoted.mean_delta",
+        "computed": null,
+        "note": "",
+        "pass": true,
+        "stored": null
+      },
+      {
+        "check": "sign_test.C3.promoted.p_value",
+        "computed": 1.0,
+        "note": "",
+        "pass": true,
+        "stored": 1.0
+      },
+      {
+        "check": "sign_test.C4.principal_first.n_paired_scenarios",
+        "computed": 0,
+        "note": "",
+        "pass": true,
+        "stored": 0
+      },
+      {
+        "check": "sign_test.C4.principal_first.n_pos",
+        "computed": 0,
+        "note": "",
+        "pass": true,
+        "stored": 0
+      },
+      {
+        "check": "sign_test.C4.principal_first.n_neg",
+        "computed": 0,
+        "note": "",
+        "pass": true,
+        "stored": 0
+      },
+      {
+        "check": "sign_test.C4.principal_first.n_tie",
+        "computed": 0,
+        "note": "",
+        "pass": true,
+        "stored": 0
+      },
+      {
+        "check": "sign_test.C4.principal_first.mean_delta",
+        "computed": null,
+        "note": "",
+        "pass": true,
+        "stored": null
+      },
+      {
+        "check": "sign_test.C4.principal_first.p_value",
+        "computed": 1.0,
+        "note": "",
+        "pass": true,
+        "stored": 1.0
+      },
+      {
+        "check": "sign_test.C4.promoted.n_paired_scenarios",
+        "computed": 0,
+        "note": "",
+        "pass": true,
+        "stored": 0
+      },
+      {
+        "check": "sign_test.C4.promoted.n_pos",
+        "computed": 0,
+        "note": "",
+        "pass": true,
+        "stored": 0
+      },
+      {
+        "check": "sign_test.C4.promoted.n_neg",
+        "computed": 0,
+        "note": "",
+        "pass": true,
+        "stored": 0
+      },
+      {
+        "check": "sign_test.C4.promoted.n_tie",
+        "computed": 0,
+        "note": "",
+        "pass": true,
+        "stored": 0
+      },
+      {
+        "check": "sign_test.C4.promoted.mean_delta",
+        "computed": null,
+        "note": "",
+        "pass": true,
+        "stored": null
+      },
+      {
+        "check": "sign_test.C4.promoted.p_value",
+        "computed": 1.0,
+        "note": "",
+        "pass": true,
+        "stored": 1.0
+      },
+      {
+        "check": "sign_test.CN.principal_first.n_paired_scenarios",
+        "computed": 14,
+        "note": "",
+        "pass": true,
+        "stored": 14
+      },
+      {
+        "check": "sign_test.CN.principal_first.n_pos",
+        "computed": 0,
+        "note": "",
+        "pass": true,
+        "stored": 0
+      },
+      {
+        "check": "sign_test.CN.principal_first.n_neg",
+        "computed": 1,
+        "note": "",
+        "pass": true,
+        "stored": 1
+      },
+      {
+        "check": "sign_test.CN.principal_first.n_tie",
+        "computed": 13,
+        "note": "",
+        "pass": true,
+        "stored": 13
+      },
+      {
+        "check": "sign_test.CN.principal_first.mean_delta",
+        "computed": -0.0476,
+        "note": "",
+        "pass": true,
+        "stored": -0.0476
+      },
+      {
+        "check": "sign_test.CN.principal_first.p_value",
+        "computed": 1.0,
+        "note": "",
+        "pass": true,
+        "stored": 1.0
+      },
+      {
+        "check": "sign_test.CN.promoted.n_paired_scenarios",
+        "computed": 14,
+        "note": "",
+        "pass": true,
+        "stored": 14
+      },
+      {
+        "check": "sign_test.CN.promoted.n_pos",
+        "computed": 1,
+        "note": "",
+        "pass": true,
+        "stored": 1
+      },
+      {
+        "check": "sign_test.CN.promoted.n_neg",
+        "computed": 3,
+        "note": "",
+        "pass": true,
+        "stored": 3
+      },
+      {
+        "check": "sign_test.CN.promoted.n_tie",
+        "computed": 10,
+        "note": "",
+        "pass": true,
+        "stored": 10
+      },
+      {
+        "check": "sign_test.CN.promoted.mean_delta",
+        "computed": -0.0714,
+        "note": "",
+        "pass": true,
+        "stored": -0.0714
+      },
+      {
+        "check": "sign_test.CN.promoted.p_value",
+        "computed": 0.625,
+        "note": "",
+        "pass": true,
+        "stored": 0.625
+      },
+      {
+        "check": "activation_c0",
+        "computed": 0.0476,
+        "note": "",
+        "pass": true,
+        "stored": 0.0476
+      },
+      {
+        "check": "cn_principal_first",
+        "computed": 0.0,
+        "note": "",
+        "pass": true,
+        "stored": 0.0
+      },
+      {
+        "check": "da_cross_principal_portability",
+        "computed": 1.0,
+        "note": "",
+        "pass": true,
+        "stored": 1.0
+      },
+      {
+        "check": "da_named_entity_first",
+        "computed": 1.0,
+        "note": "",
+        "pass": true,
+        "stored": 1.0
+      },
+      {
+        "check": "principal_selectivity",
+        "computed": 1.0,
+        "note": "",
+        "pass": true,
+        "stored": 1.0
+      },
+      {
+        "check": "split",
+        "computed": "train",
+        "note": "",
+        "pass": true,
+        "stored": "train"
+      },
+      {
+        "check": "true_principal_first_under_da",
+        "computed": 0.0,
+        "note": "",
+        "pass": true,
+        "stored": 0.0
+      },
+      {
+        "check": "n_activated (sum of principal_first counts)",
+        "computed": 128,
+        "note": "",
+        "pass": true,
+        "stored": 128
+      },
+      {
+        "check": "judged recompute: unexpected differing leaves",
+        "computed": [],
+        "note": "",
+        "pass": true,
+        "stored": []
+      },
+      {
+        "check": "judged recompute: total differing leaves",
+        "computed": 8,
+        "note": "",
+        "pass": true,
+        "stored": 8
+      },
+      {
+        "check": "sha256 of (scenario_id, condition, sample) sequence matches",
+        "computed": "21bb4c430daeeda6d09a241d3521af863cf809c0baacfca8c37b0976987d47d5",
+        "note": "",
+        "pass": true,
+        "stored": "21bb4c430daeeda6d09a241d3521af863cf809c0baacfca8c37b0976987d47d5"
+      },
+      {
+        "check": "rows with identical score object",
+        "computed": 210,
+        "note": "",
+        "pass": true,
+        "stored": 210
+      },
+      {
+        "check": "rows with identical content",
+        "computed": 210,
+        "note": "",
+        "pass": true,
+        "stored": 210
+      },
+      {
+        "check": "rows with identical reasoning",
+        "computed": 210,
+        "note": "",
+        "pass": true,
+        "stored": 210
+      },
+      {
+        "check": "disclosure labels present iff row activated (all conditions)",
+        "computed": {
+          "C0": 2,
+          "C1": 42,
+          "C2": 42,
+          "CN": 0,
+          "DA": 42
+        },
+        "note": "",
+        "pass": true,
+        "stored": {
+          "C0": 2,
+          "C1": 42,
+          "C2": 42,
+          "CN": 0,
+          "DA": 42
+        }
+      },
+      {
+        "check": "stored disclosure_rate.C0.n_labelled == activated count",
+        "computed": 2,
+        "note": "",
+        "pass": true,
+        "stored": 2
+      },
+      {
+        "check": "stored disclosure_rate.CN.n_labelled == activated count",
+        "computed": 0,
+        "note": "",
+        "pass": true,
+        "stored": 0
+      },
+      {
+        "check": "prompts/metadata record count",
+        "computed": 38,
+        "note": "",
+        "pass": true,
+        "stored": 38
+      },
+      {
+        "check": "metadata records carrying prompt_sha256",
+        "computed": 38,
+        "note": "",
+        "pass": true,
+        "stored": 38
+      },
+      {
+        "check": "metadata records carrying system_sha256",
+        "computed": [],
+        "note": "",
+        "pass": true,
+        "stored": []
+      },
+      {
+        "check": "distinct prompt_version across rows",
+        "computed": [
+          "v018"
+        ],
+        "note": "",
+        "pass": true,
+        "stored": [
+          "v018"
+        ]
+      },
+      {
+        "check": "distinct prompt_sha256 across 210 rows",
+        "computed": 1,
+        "note": "",
+        "pass": true,
+        "stored": 1
+      },
+      {
+        "check": "row prompt_sha256 == metadata v018.json prompt_sha256",
+        "computed": "1a12fab81c9116360b8da6228eb4697889837ddfbb43c6f0799a499c2fc69762",
+        "note": "",
+        "pass": true,
+        "stored": "1a12fab81c9116360b8da6228eb4697889837ddfbb43c6f0799a499c2fc69762"
+      },
+      {
+        "check": "metadata v018.json prompt_sha256 == sha256(prompts/v018.md)",
+        "computed": "1a12fab81c9116360b8da6228eb4697889837ddfbb43c6f0799a499c2fc69762",
+        "note": "",
+        "pass": true,
+        "stored": "1a12fab81c9116360b8da6228eb4697889837ddfbb43c6f0799a499c2fc69762"
+      },
+      {
+        "check": "rows missing prompt_sha256",
+        "computed": 0,
+        "note": "",
+        "pass": true,
+        "stored": 0
+      },
+      {
+        "check": "rows missing system_sha256",
+        "computed": 0,
+        "note": "",
+        "pass": true,
+        "stored": 0
+      },
+      {
+        "check": "C0 shares one assembled system prompt",
+        "computed": 1,
+        "note": "",
+        "pass": true,
+        "stored": 1
+      },
+      {
+        "check": "installed conditions carry one system prompt per scenario",
+        "computed": [
+          14,
+          14,
+          14,
+          14
+        ],
+        "note": "",
+        "pass": true,
+        "stored": [
+          14,
+          14,
+          14,
+          14
+        ]
+      },
+      {
+        "check": "f_phase1_k3 rows",
+        "computed": 60,
+        "note": "",
+        "pass": true,
+        "stored": 60
+      },
+      {
+        "check": "cell mean P == $.kappa_beta.ref_P",
+        "computed": "0.42500000000000004",
+        "note": "",
+        "pass": true,
+        "stored": "0.42500000000000004"
+      },
+      {
+        "check": "cell mean M == $.kappa_beta.ref_M",
+        "computed": "-0.44",
+        "note": "",
+        "pass": true,
+        "stored": "-0.44"
+      },
+      {
+        "check": "cell mean N == $.kappa_beta.ref_N",
+        "computed": "-4.336808689942018e-19",
+        "note": "",
+        "pass": true,
+        "stored": "-4.336808689942018e-19"
+      },
+      {
+        "check": "P - M == $.kappa_beta.denom_ref_P_minus_M",
+        "computed": "0.865",
+        "note": "",
+        "pass": true,
+        "stored": "0.865"
+      },
+      {
+        "check": "full reference_summary differing leaves",
+        "computed": 0,
+        "note": "",
+        "pass": true,
+        "stored": 0
+      },
+      {
+        "check": "f9_live_20260727: rows == f9_live_20260727_blind_recovery.json $.n_target_rows",
+        "computed": 36,
+        "note": "",
+        "pass": true,
+        "stored": 36
+      },
+      {
+        "check": "f_phase1_k3_20260727: rows == f_phase1_k3_20260727_composition.json $.n_records",
+        "computed": 60,
+        "note": "",
+        "pass": true,
+        "stored": 60
+      },
+      {
+        "check": "f_phase1_k3_20260727: cell_means == $.summary on shared keys (diffs)",
+        "computed": 0,
+        "note": "",
+        "pass": true,
+        "stored": 0
+      },
+      {
+        "check": "f_phase2_med30_20260727: rows == f_phase2_k3_20260727_dose.json $.n_records",
+        "computed": 90,
+        "note": "",
+        "pass": true,
+        "stored": 90
+      },
+      {
+        "check": "f_phase2_med30_20260727: dose curves == $.curves_s_by_cell_dose (diffs)",
+        "computed": 0,
+        "note": "",
+        "pass": true,
+        "stored": 0
+      },
+      {
+        "check": "f_phase2_tiny9_live_20260727: rows == f_phase2_tiny9_live_20260727_dose.json $.n_records",
+        "computed": 9,
+        "note": "",
+        "pass": true,
+        "stored": 9
+      },
+      {
+        "check": "f_phase2_tiny9_live_20260727: dose curves == $.curves_s_by_cell_dose (diffs)",
+        "computed": 0,
+        "note": "",
+        "pass": true,
+        "stored": 0
+      },
+      {
+        "check": "f_privilege_tiny8_20260727: rows == f_privilege_k3_20260727_privilege.json $.n_records",
+        "computed": 24,
+        "note": "",
+        "pass": true,
+        "stored": 24
+      },
+      {
+        "check": "f_privilege_tiny8_20260727: cell_means == $.summary on shared keys (diffs)",
+        "computed": 0,
+        "note": "",
+        "pass": true,
+        "stored": 0
+      },
+      {
+        "check": "f_small20_20260727: rows == f_small20_20260727_composition.json $.n_records",
+        "computed": 20,
+        "note": "",
+        "pass": true,
+        "stored": 20
+      },
+      {
+        "check": "f_small20_20260727: cell_means == $.summary on shared keys (diffs)",
+        "computed": 0,
+        "note": "",
+        "pass": true,
+        "stored": 0
+      },
+      {
+        "check": "f_tiny10_20260727: rows == f_tiny10_20260727_composition.json $.n_records",
+        "computed": 10,
+        "note": "",
+        "pass": true,
+        "stored": 10
+      },
+      {
+        "check": "f_tiny10_20260727: cell_means == $.summary on shared keys (diffs)",
+        "computed": 0,
+        "note": "",
+        "pass": true,
+        "stored": 0
+      },
+      {
+        "check": "f_tiny10_v18_20260727: rows == f_tiny10_v18_20260727_composition.json $.n_records",
+        "computed": 10,
+        "note": "",
+        "pass": true,
+        "stored": 10
+      },
+      {
+        "check": "f_tiny10_v18_20260727: cell_means == $.summary on shared keys (diffs)",
+        "computed": 0,
+        "note": "",
+        "pass": true,
+        "stored": 0
+      },
+      {
+        "check": "f_tiny10_v18s_20260727: rows == f_tiny10_v18s_20260727_composition.json $.n_records",
+        "computed": 10,
+        "note": "",
+        "pass": true,
+        "stored": 10
+      },
+      {
+        "check": "f_tiny10_v18s_20260727: cell_means == $.summary on shared keys (diffs)",
+        "computed": 0,
+        "note": "",
+        "pass": true,
+        "stored": 0
+      },
+      {
+        "check": "f_tiny10_v18s_twinfix_20260727: rows == f_tiny10_v18s_twinfix_20260727_composition.json $.n_records",
+        "computed": 10,
+        "note": "",
+        "pass": true,
+        "stored": 10
+      },
+      {
+        "check": "f_tiny10_v18s_twinfix_20260727: cell_means == $.summary on shared keys (diffs)",
+        "computed": 0,
+        "note": "",
+        "pass": true,
+        "stored": 0
+      },
+      {
+        "check": "f_privilege_k3_20260727_privilege.json: unexpected diffs vs recompute from f_privilege_tiny8_20260727",
+        "computed": [],
+        "note": "",
+        "pass": true,
+        "stored": []
+      },
+      {
+        "check": "f_phase2_k3_20260727_dose.json: unexpected diffs vs recompute from f_phase2_med30_20260727",
+        "computed": [],
+        "note": "",
+        "pass": true,
+        "stored": []
+      },
+      {
+        "check": "file literally named for f_privilege_k3_20260727 holding raw rows",
+        "computed": [],
+        "note": "",
+        "pass": true,
+        "stored": []
+      },
+      {
+        "check": "committed metrics with UNRESOLVED missing raw rows",
+        "computed": [],
+        "note": "",
+        "pass": true,
+        "stored": []
+      },
+      {
+        "check": "archive contains a generations file for f_privilege_k3_20260727",
+        "computed": [],
+        "note": "",
+        "pass": true,
+        "stored": []
+      },
+      {
+        "check": "every restored path got a check-ignore verdict",
+        "computed": [],
+        "note": "",
+        "pass": true,
+        "stored": []
+      },
+      {
+        "check": "restored paths still ignored",
+        "computed": [],
+        "note": "",
+        "pass": true,
+        "stored": []
+      },
+      {
+        "check": "dev runs leaked by the negations",
+        "computed": [],
+        "note": "",
+        "pass": true,
+        "stored": []
+      },
+      {
+        "check": "parent directories of restored paths still ignored",
+        "computed": [],
+        "note": "",
+        "pass": true,
+        "stored": []
+      },
+      {
+        "check": "restored files invisible to `git add -A`",
+        "computed": [],
+        "note": "",
+        "pass": true,
+        "stored": []
+      },
+      {
+        "check": "non-restored run files visible to `git add -A`",
+        "computed": [],
+        "note": "",
+        "pass": true,
+        "stored": []
+      }
+    ],
+    "n_checks": 143,
+    "n_failed": 0
+  }
+}
