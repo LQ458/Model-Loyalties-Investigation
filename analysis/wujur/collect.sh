@@ -3,53 +3,67 @@
 #
 # WHY THIS EXISTS
 # ---------------
-# collect_prospective_v3.py cannot be invoked directly as committed. Its path
-# bootstrap reads:
+# The collector cannot be invoked directly as committed. It has TWO independent
+# instances of the same parents[1] defect.
 #
-#     ROOT = Path(__file__).resolve().parent      # <repo>/defense
-#     REPO = ROOT.parents[1]                      # one level ABOVE the repo
+# 1. IMPORT TIME. Its path bootstrap reads:
 #
-# so REPO resolves to the directory containing the repository, not the
-# repository itself, and `from harness.run_envfile import ...` raises
-# ModuleNotFoundError: No module named 'harness'. The `harness` package lives at
-# <repo>/model_organism/harness, which never reaches sys.path.
+#        ROOT = Path(__file__).resolve().parent      # <repo>/defense
+#        REPO = ROOT.parents[1]                      # one level ABOVE the repo
 #
-# This is pre-existing on main, introduced by 4b5d4b2 "refactor: organize
-# research by model organism audit and defense", which flattened what the code
-# still calls TRACK2/track3 layouts and shifted every parents[1] by one level.
-# Ten other files use parents[1]; some are correct (a file in auditing/tests/
-# legitimately wants auditing/), so a blanket rewrite would break working code.
-# See analysis/wujur/ notes and auditing/organisms/freeze_v018_pair.py:11, whose
-# variable is literally named TRACK2, for the pre-refactor layout.
+#    so `from harness.run_envfile import ...` raises ModuleNotFoundError. The
+#    harness package lives at <repo>/model_organism/harness and never reaches
+#    sys.path. This wrapper fixes that with PYTHONPATH.
 #
-# The wrapper sets PYTHONPATH instead of editing shared code, so nothing in the
-# repository changes and Leo's tree is untouched. The proper fix is deferred
-# until after data collection: breaking the only working runner two days before
-# a deadline is the larger risk.
+# 2. RUNTIME. The same wrong REPO is used for prompt lookups at :275-277
+#    (base_assistant.md, v018.md, concealment/), so the first ranking row dies
+#    with FileNotFoundError on '<workspace>/projects/prompts/base_assistant.md'.
+#    PYTHONPATH cannot fix a hardcoded path constant, so collect_shim.py
+#    corrects it. See that file's docstring.
+#
+# Both are pre-existing on main, introduced by 4b5d4b2 "refactor: organize
+# research by model organism audit and defense", which moved prompts/ and runs/
+# into model_organism/ and flattened the track layout, shifting every parents[1]
+# by one level. Corroborated by the Nextcloud mirror, which still has the
+# pre-refactor tree (armE_stance/, armF_composition/, tracks/, top-level runs/
+# and prompts/) under which parents[1] resolved correctly.
+#
+# Neither fix edits shared code. collect_prospective_v3.py is Leo's too and is
+# the runner behind committed hash-receipted results; editing it would make
+# future runs ambiguous about which version produced which rows. The proper
+# per-file fix across the ~11 files using parents[1] is deferred until after
+# data collection, because some of those uses are legitimately correct.
 #
 # USAGE
 # -----
 #   analysis/wujur/collect.sh --protocol defense/protocol/wujur_r1r2.json \
 #                             --phase sealed \
-#                             --output <out.jsonl>
+#                             --output analysis/wujur/r1r2_rows.jsonl
 #
 # --resume is added automatically unless --no-resume is passed, so an
 # interrupted run (laptop suspend, omp exit, SIGTERM) continues from the last
-# completed cell instead of restarting. Every other flag is forwarded verbatim;
-# see the collector's --help for the full set, including --server-max-running
-# and --admission-timeout, which govern admission control against the target.
+# completed row instead of restarting. Every other flag is forwarded verbatim.
 #
-# REVERT: delete this file. It changes nothing else.
+# NOTE ON THROUGHPUT: the collector is strictly serial (triple-nested for-loop,
+# no concurrency primitives) and wait_for_capacity blocks until the server is
+# idle, so measured throughput is ~14.9 rows/hr at ~235 s/row. The endpoint's
+# 95 gen/hr at concurrency 7 is NOT this runner's rate. Budget from 14.9.
+#
+# REVERT: delete this file and collect_shim.py. Nothing else changes.
 
 set -euo pipefail
 
-REPO="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
+HERE="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+REPO="$(cd "${HERE}/../.." && pwd)"
 COLLECTOR="${REPO}/defense/collect_prospective_v3.py"
+SHIM="${HERE}/collect_shim.py"
 
-if [[ ! -f "${COLLECTOR}" ]]; then
-  echo "collect.sh: collector not found at ${COLLECTOR}" >&2
-  exit 1
-fi
+for f in "${COLLECTOR}" "${SHIM}"; do
+  if [[ ! -f "${f}" ]]; then
+    echo "collect.sh: required file not found: ${f}" >&2
+    exit 1
+  fi
+done
 
 # model_organism first: it provides the `harness` package the collector imports.
 # defense second: it provides `defenses`, `monitors`, and `runtime`.
@@ -70,5 +84,6 @@ fi
 
 echo "collect.sh: repo=${REPO}"
 echo "collect.sh: PYTHONPATH=${PYTHONPATH}"
-echo "collect.sh: exec python3 ${COLLECTOR} ${args[*]}"
-exec python3 "${COLLECTOR}" "${args[@]}"
+echo "collect.sh: collector=${COLLECTOR}"
+echo "collect.sh: exec python3 ${SHIM} ${args[*]}"
+exec python3 "${SHIM}" "${args[@]}"
