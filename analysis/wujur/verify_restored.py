@@ -726,9 +726,19 @@ def verify_prompt_rederivation(source: Path) -> dict[str, Any]:
     croot = REPO / "model_organism/composition"
     asm = load_module("wujur_assemble", croot / "runner/assemble.py")
     section("PROMPT RE-DERIVATION -- do restored rows rebuild from committed prompts?")
+    print("  Scans EVERY recovered composition run directory, imported or not, so")
+    print("  the census of prompt generations below is complete rather than a")
+    print("  census of the subset that happened to be imported.")
     out: dict[str, Any] = {}
-    for run_id in sorted(COMPOSITION_RUNS):
-        gen = source / COMPOSITION_RUNS[run_id][0] / "generations.jsonl"
+    all_dirs: dict[str, Path] = {}
+    for base in ("armF_composition/runs", "armF_composition/recovery_eval/runs"):
+        d = source / base
+        if d.is_dir():
+            for child in sorted(d.iterdir()):
+                if child.is_dir() and (child / "generations.jsonl").is_file():
+                    all_dirs[child.name] = child
+    for run_id in sorted(all_dirs):
+        gen = all_dirs[run_id] / "generations.jsonl"
         rows = [json.loads(l) for l in gen.read_text(encoding="utf-8").splitlines() if l.strip()]
         ok_sys = ok_usr = n = 0
         sys_mismatch_by_cell: Counter = Counter()
@@ -753,6 +763,10 @@ def verify_prompt_rederivation(source: Path) -> dict[str, Any]:
             else:
                 sys_mismatch_by_cell[cell] += 1
             ok_usr += built["user_sha256"] == m.get("user_sha256")
+        if n == 0:
+            print(f"  -- {run_id}: no rows resolvable to a per-item stimulus file, skipped")
+            print("       (recovery_eval runs draw from recovery_eval/stimuli/items.json)")
+            continue
         print(f"  -- {run_id}: {n} rows resolvable to a stimulus")
         print(f"       system_sha256 {ok_sys}/{n}   user_sha256 {ok_usr}/{n}")
         if sys_mismatch_by_cell:
@@ -792,6 +806,71 @@ def verify_prompt_rederivation(source: Path) -> dict[str, Any]:
             out[other]["system_sha256_rebuilt"],
             out[other]["rows_checked"],
         )
+
+    # Census of N-cell prompt generations across every recovered directory.
+    # Stated as directories, with live runs separated from dry runs, because a
+    # count that silently folds a dry run into a claim about scored data is a
+    # claim about the wrong population.
+    PRE_PAD_N = "56fb7f58cb42dd9bc10e86154634a2d4852aac505fdd79e70eaffc2582bb555a"
+    dry = {"f_phase1_k3_dry", "f_tiny10_dry", "f_phase2_tiny9_20260727", "f9_dry_20260727"}
+    scanned = {k: v for k, v in out.items() if isinstance(v, dict) and v.get("rows_checked")}
+    pre_pad = sorted(k for k, v in scanned.items()
+                     if PRE_PAD_N in v["recorded_system_sha256_by_cell"].get("N", []))
+    zero_rebuild = sorted(k for k, v in scanned.items() if v["system_sha256_rebuilt"] == 0)
+    print()
+    print("  N-cell prompt-generation census across all recovered directories:")
+    print(f"    directories scanned: {len(scanned)}")
+    print(f"    carrying the pre-pad N hash 56fb7f58: {len(pre_pad)} dirs")
+    for k in pre_pad:
+        print(f"       {k}{'   [DRY RUN]' if k in dry else ''}")
+    print(f"    rebuilding 0 system prompts on every cell: {len(zero_rebuild)} dirs")
+    for k in zero_rebuild:
+        print(f"       {k}{'   [DRY RUN]' if k in dry else ''}")
+    check("pre-pad N directories, live runs only",
+          sorted(k for k in pre_pad if k not in dry),
+          ["f_phase1_k3_20260727", "f_small20_20260727",
+           "f_tiny10_v18s_20260727", "f_tiny10_v18s_twinfix_20260727"])
+    check("pre-pad N directories including dry runs", len(pre_pad), 5)
+    check("zero-rebuild directories, live runs only",
+          sorted(k for k in zero_rebuild if k not in dry),
+          ["f_tiny10_20260727", "f_tiny10_v18_20260727"])
+    check("zero-rebuild directories including dry runs", len(zero_rebuild), 3)
+    out["n_cell_census"] = {
+        "directories_scanned": sorted(scanned),
+        "pre_pad_n_hash": PRE_PAD_N,
+        "pre_pad_directories": pre_pad,
+        "pre_pad_live_runs": sorted(k for k in pre_pad if k not in dry),
+        "zero_rebuild_directories": zero_rebuild,
+        "zero_rebuild_live_runs": sorted(k for k in zero_rebuild if k not in dry),
+    }
+
+    # The length-match control is character-exact against the LONGER loyalty
+    # block, so it does not equalise N against both P and M.
+    it = json.loads((croot / "stimuli/item_01_vectordb_d0_main.json").read_text(encoding="utf-8"))
+    va = str(it.get("original_vendor_a") or it["vendor_a"])
+    vb = str(it.get("original_vendor_b") or it["vendor_b"])
+    lens = {c: len(asm.build_system(c, va, vb)) for c in ("N", "P", "M")}
+    print()
+    print("  What the length-match control actually equalises (item_01, chars):")
+    print(f"       N={lens['N']}  P={lens['P']}  M={lens['M']}"
+          f"   N-P={lens['N'] - lens['P']}   N-M={lens['N'] - lens['M']}")
+    print("       assemble.py:61 targets max(len(loy_a), len(loy_b)), so N is")
+    print("       character-exact against the LONGER block only. It is not")
+    print("       token-exact either: med30's N still runs ~12.5 tokens under P.")
+    check("length-match makes N character-equal to P", lens["N"] - lens["P"], 0)
+    check("length-match leaves N longer than M", lens["N"] - lens["M"] > 0, True)
+    out["length_match_control"] = {
+        "item": "item_01_vectordb_d0_main",
+        "chars": lens,
+        "n_minus_p": lens["N"] - lens["P"],
+        "n_minus_m": lens["N"] - lens["M"],
+        "note": (
+            "assemble.py:61 targets max(len_a, len_b) in CHARACTERS. N is "
+            "character-equal to the longer single-loyalty prompt and longer than "
+            "the shorter one, and characters are not tokens, so the control is "
+            "approximate in both respects."
+        ),
+    }
 
     # Does simply removing today's length-match pad reproduce the recorded N
     # prompt? It does not, so the pad is not a sufficient explanation.

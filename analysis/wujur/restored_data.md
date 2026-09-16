@@ -206,33 +206,50 @@ every one of them matches, and the extra key is listed as a schema addition.
 ### 3.2 Do the restored rows rebuild from the committed prompts?
 
 A restore is only trustworthy if you can say what the restored bytes were
-generated from. Every composition row was re-assembled from the committed
-stimuli and templates with `model_organism/composition/runner/assemble.py`
-and its `system_sha256` / `user_sha256` compared to the recorded values.
+generated from. Every row in **every recovered composition run directory**,
+imported or not, was re-assembled from the committed stimuli and templates with
+`model_organism/composition/runner/assemble.py` and its `system_sha256` /
+`user_sha256` compared to the recorded values. Scanning the excluded dry runs
+too matters: a census taken only over the imported subset would undercount the
+prompt generations in play.
 
-| run | `user_sha256` | `system_sha256` | mismatching cells |
+| directory | `user_sha256` | `system_sha256` | mismatching cells |
 | --- | --- | --- | --- |
 | `f_phase1_k3_20260727` | 60/60 | 48/60 | N (12) |
+| `f_phase1_k3_dry` *(dry)* | 60/60 | 48/60 | N (12) |
 | `f_privilege_tiny8_20260727` | 24/24 | **24/24** | — |
 | `f_phase2_med30_20260727` | 90/90 | **90/90** | — |
 | `f_phase2_tiny9_live_20260727` | 9/9 | **9/9** | — |
+| `f_phase2_tiny9_20260727` *(dry)* | 9/9 | **9/9** | — |
 | `f_small20_20260727` | 20/20 | 16/20 | N (4) |
 | `f_tiny10_v18s_twinfix_20260727` | 10/10 | 8/10 | N (2) |
 | `f_tiny10_v18s_20260727` | 10/10 | 4/10 | N (2), P/M/PM/MP (1 each) |
 | `f_tiny10_20260727` | 10/10 | 0/10 | all cells |
+| `f_tiny10_dry` *(dry)* | 10/10 | 0/10 | all cells |
 | `f_tiny10_v18_20260727` | 10/10 | 0/10 | all cells |
 
-**`user_sha256` rebuilds on every row of every run.** That alone rules out a
-restore defect: the rows, the stimuli and the row↔item mapping all correspond.
-The two 0/10 runs are earlier prompt generations entirely, as their names
-(`v18`, `v18s`) advertise; they back only pilot metrics. In
-`f_tiny10_v18s_20260727` the recorded P and M hashes form the same two-element
-set `{60ef7c08… , 804522c7…}` — P and M swapped on one twin, which is precisely
-what the next run, `…_twinfix_…`, is named for.
+The two `recovery_eval` run directories are skipped: they draw from
+`recovery_eval/stimuli/items.json` rather than per-item stimulus files, so
+there is nothing to re-assemble against.
+
+**`user_sha256` rebuilds on every row of every directory.** That alone rules
+out a restore defect: the rows, the stimuli and the row↔item mapping all
+correspond. The 0/10 directories are earlier prompt generations entirely, as
+their names (`v18`, `v18s`) advertise, and back only pilot metrics — two live
+runs plus `f_tiny10_dry`.
+
+In `f_tiny10_v18s_20260727` the fault localises to the twin arm exactly: the
+`M`/twin row carries today's **P** hash `60ef7c08…` and the `P`/twin row
+carries today's **M** hash `804522c7…`, while both `main` rows are correct.
+`…_twinfix_…` has all four correct — which is what it is named for. No
+published number is affected; these k=1 runs are provisional instrument runs,
+not the authoritative estimate. Localisation to the twin arm was pointed out by
+TitrationClose and confirmed here.
 
 #### The N-cell exception, stated exactly
 
-Four runs share one recorded N system-prompt hash,
+**Five directories** — four live runs plus `f_phase1_k3_dry` — share one
+recorded N system-prompt hash,
 `56fb7f58cb42dd9bc10e86154634a2d4852aac505fdd79e70eaffc2582bb555a`, which is
 **item-independent**. Today's `assemble.py` produces **item-dependent** N
 prompts (`98730154…` for vectordb, `3b900206…` for sensor) because it
@@ -273,6 +290,26 @@ P and M are bit-identical across the two runs; only N moved, and only downward.
 Within Phase 1, N averages 797.0 tokens against P 908.0 and M 909.0 — not
 length-matched. Within med30, N averages 895.5 against 908.0 and 909.0 —
 length-matched.
+
+#### What the length-match control actually equalises
+
+A separate limitation surfaced while checking the above, and it is worth
+stating because `assemble.py:60` claims "prompt length is not a confound".
+The pad targets `max(len(loy_a), len(loy_b))` in **characters**, so for
+`item_01_vectordb_d0_main`:
+
+| cell | chars |
+| --- | ---: |
+| N | 1569 |
+| P | 1569 |
+| M | 1559 |
+
+N is character-**equal** to P and 10 characters **longer** than M. The control
+equalises against the longer single-loyalty block only. It is not token-exact
+either: even in the padded med30 run, N averages 895.5 tokens against P 908.0,
+a residual 12.5-token deficit, because the dot-fill tokenises differently from
+prose. So the length-match is approximate in two distinct ways. Raised by
+TitrationClose and verified here from `build_system()` directly.
 
 Blast radius is narrow and was checked at source: `s_N` enters only `beta`
 (`compose.py:104`) and the baseline gate; `kappa` is computed from PM/MP over

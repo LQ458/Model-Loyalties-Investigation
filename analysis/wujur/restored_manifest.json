@@ -1350,6 +1350,57 @@
       "system_sha256_rebuilt": 48,
       "user_sha256_rebuilt": 60
     },
+    "f_phase1_k3_dry": {
+      "rebuilt_system_sha256_by_cell": {
+        "M": [
+          "804522c77ec17f9d306670111efcf7320d19d88519fb081e4307ce2754e8eea9",
+          "e03a4b9ebd1fe0916fc6422e98858a764f27b211fc5a584f3fea1d980b60a97c"
+        ],
+        "MP": [
+          "a5257c5361aeb69dd85e07dbe62b9cc4df5f51833c8d3d33ebfc54cea5750bfa",
+          "d779f8f25e214ee0af25a68a0fae75e81b8bb02eb49667573906490700a266ce"
+        ],
+        "N": [
+          "3b9002060d5b4bd10e0ebd232422608d8f23833743fe70a71fa2673ff1b217f4",
+          "98730154611c6684760653a33dde8298d18e3bfd27eea8ed6ed876962988b841"
+        ],
+        "P": [
+          "60ef7c08532d780063cdbbba257fbd5a5919458a490f975fed06152cada6247d",
+          "99e31c325d530b04e96d98b73ba78d04ed18133a8095cb49184d9db4cb1f8012"
+        ],
+        "PM": [
+          "16de2d5e609b5d6c48ae800baf40147b5b99698dc563778ec0502b62740a303e",
+          "254a5ee3065f98a047624bea4637257d83f37cef744a67bebbce92f4cddf1ced"
+        ]
+      },
+      "recorded_system_sha256_by_cell": {
+        "M": [
+          "804522c77ec17f9d306670111efcf7320d19d88519fb081e4307ce2754e8eea9",
+          "e03a4b9ebd1fe0916fc6422e98858a764f27b211fc5a584f3fea1d980b60a97c"
+        ],
+        "MP": [
+          "a5257c5361aeb69dd85e07dbe62b9cc4df5f51833c8d3d33ebfc54cea5750bfa",
+          "d779f8f25e214ee0af25a68a0fae75e81b8bb02eb49667573906490700a266ce"
+        ],
+        "N": [
+          "56fb7f58cb42dd9bc10e86154634a2d4852aac505fdd79e70eaffc2582bb555a"
+        ],
+        "P": [
+          "60ef7c08532d780063cdbbba257fbd5a5919458a490f975fed06152cada6247d",
+          "99e31c325d530b04e96d98b73ba78d04ed18133a8095cb49184d9db4cb1f8012"
+        ],
+        "PM": [
+          "16de2d5e609b5d6c48ae800baf40147b5b99698dc563778ec0502b62740a303e",
+          "254a5ee3065f98a047624bea4637257d83f37cef744a67bebbce92f4cddf1ced"
+        ]
+      },
+      "rows_checked": 60,
+      "system_mismatches_by_cell": {
+        "N": 12
+      },
+      "system_sha256_rebuilt": 48,
+      "user_sha256_rebuilt": 60
+    },
     "f_phase2_med30_20260727": {
       "rebuilt_system_sha256_by_cell": {
         "M": [
@@ -1383,6 +1434,34 @@
       "system_mismatches_by_cell": {},
       "system_sha256_rebuilt": 90,
       "user_sha256_rebuilt": 90
+    },
+    "f_phase2_tiny9_20260727": {
+      "rebuilt_system_sha256_by_cell": {
+        "M": [
+          "804522c77ec17f9d306670111efcf7320d19d88519fb081e4307ce2754e8eea9"
+        ],
+        "N": [
+          "98730154611c6684760653a33dde8298d18e3bfd27eea8ed6ed876962988b841"
+        ],
+        "P": [
+          "60ef7c08532d780063cdbbba257fbd5a5919458a490f975fed06152cada6247d"
+        ]
+      },
+      "recorded_system_sha256_by_cell": {
+        "M": [
+          "804522c77ec17f9d306670111efcf7320d19d88519fb081e4307ce2754e8eea9"
+        ],
+        "N": [
+          "98730154611c6684760653a33dde8298d18e3bfd27eea8ed6ed876962988b841"
+        ],
+        "P": [
+          "60ef7c08532d780063cdbbba257fbd5a5919458a490f975fed06152cada6247d"
+        ]
+      },
+      "rows_checked": 9,
+      "system_mismatches_by_cell": {},
+      "system_sha256_rebuilt": 9,
+      "user_sha256_rebuilt": 9
     },
     "f_phase2_tiny9_live_20260727": {
       "rebuilt_system_sha256_by_cell": {
@@ -1490,6 +1569,56 @@
       "user_sha256_rebuilt": 20
     },
     "f_tiny10_20260727": {
+      "rebuilt_system_sha256_by_cell": {
+        "M": [
+          "804522c77ec17f9d306670111efcf7320d19d88519fb081e4307ce2754e8eea9"
+        ],
+        "MP": [
+          "a5257c5361aeb69dd85e07dbe62b9cc4df5f51833c8d3d33ebfc54cea5750bfa"
+        ],
+        "N": [
+          "98730154611c6684760653a33dde8298d18e3bfd27eea8ed6ed876962988b841"
+        ],
+        "P": [
+          "60ef7c08532d780063cdbbba257fbd5a5919458a490f975fed06152cada6247d"
+        ],
+        "PM": [
+          "254a5ee3065f98a047624bea4637257d83f37cef744a67bebbce92f4cddf1ced"
+        ]
+      },
+      "recorded_system_sha256_by_cell": {
+        "M": [
+          "377a3665933b7b626ded98a5049065c3540249c18c9e4c61783d56f62c9eefcf",
+          "5c9d28ab93e972fc8e6bd76680af92e15c1e1f8e34231d0c5b62ce6addeb5e71"
+        ],
+        "MP": [
+          "00c0fcced38fb5402df65e5f4957b62265e4dc058b1d2da4c2f21afb37244372",
+          "6b680b61e2e0d2765acec2b9f8614849ed79f755cd39abcc713ed14d6ffd2fcf"
+        ],
+        "N": [
+          "bb0b9b520529b0ee2f56e9ccb5a80a19fddf62e61dd5856f4cb75c93316bbbdb"
+        ],
+        "P": [
+          "377a3665933b7b626ded98a5049065c3540249c18c9e4c61783d56f62c9eefcf",
+          "5c9d28ab93e972fc8e6bd76680af92e15c1e1f8e34231d0c5b62ce6addeb5e71"
+        ],
+        "PM": [
+          "00c0fcced38fb5402df65e5f4957b62265e4dc058b1d2da4c2f21afb37244372",
+          "6b680b61e2e0d2765acec2b9f8614849ed79f755cd39abcc713ed14d6ffd2fcf"
+        ]
+      },
+      "rows_checked": 10,
+      "system_mismatches_by_cell": {
+        "M": 2,
+        "MP": 2,
+        "N": 2,
+        "P": 2,
+        "PM": 2
+      },
+      "system_sha256_rebuilt": 0,
+      "user_sha256_rebuilt": 10
+    },
+    "f_tiny10_dry": {
       "rebuilt_system_sha256_by_cell": {
         "M": [
           "804522c77ec17f9d306670111efcf7320d19d88519fb081e4307ce2754e8eea9"
@@ -1680,6 +1809,56 @@
       },
       "system_sha256_rebuilt": 8,
       "user_sha256_rebuilt": 10
+    },
+    "length_match_control": {
+      "chars": {
+        "M": 1559,
+        "N": 1569,
+        "P": 1569
+      },
+      "item": "item_01_vectordb_d0_main",
+      "n_minus_m": 10,
+      "n_minus_p": 0,
+      "note": "assemble.py:61 targets max(len_a, len_b) in CHARACTERS. N is character-equal to the longer single-loyalty prompt and longer than the shorter one, and characters are not tokens, so the control is approximate in both respects."
+    },
+    "n_cell_census": {
+      "directories_scanned": [
+        "f_phase1_k3_20260727",
+        "f_phase1_k3_dry",
+        "f_phase2_med30_20260727",
+        "f_phase2_tiny9_20260727",
+        "f_phase2_tiny9_live_20260727",
+        "f_privilege_tiny8_20260727",
+        "f_small20_20260727",
+        "f_tiny10_20260727",
+        "f_tiny10_dry",
+        "f_tiny10_v18_20260727",
+        "f_tiny10_v18s_20260727",
+        "f_tiny10_v18s_twinfix_20260727"
+      ],
+      "pre_pad_directories": [
+        "f_phase1_k3_20260727",
+        "f_phase1_k3_dry",
+        "f_small20_20260727",
+        "f_tiny10_v18s_20260727",
+        "f_tiny10_v18s_twinfix_20260727"
+      ],
+      "pre_pad_live_runs": [
+        "f_phase1_k3_20260727",
+        "f_small20_20260727",
+        "f_tiny10_v18s_20260727",
+        "f_tiny10_v18s_twinfix_20260727"
+      ],
+      "pre_pad_n_hash": "56fb7f58cb42dd9bc10e86154634a2d4852aac505fdd79e70eaffc2582bb555a",
+      "zero_rebuild_directories": [
+        "f_tiny10_20260727",
+        "f_tiny10_dry",
+        "f_tiny10_v18_20260727"
+      ],
+      "zero_rebuild_live_runs": [
+        "f_tiny10_20260727",
+        "f_tiny10_v18_20260727"
+      ]
     },
     "pad_removal_hypothesis": {
       "note": "The recorded Phase-1 N system prompt is NOT reconstructible from the committed templates, with or without the pad. The N construction and/or system_neutral.md differed on 2026-07-27 by more than the pad alone.",
@@ -2946,11 +3125,25 @@
         "stored": 60
       },
       {
+        "check": "f_phase1_k3_dry: user_sha256 rebuilds for every row",
+        "computed": 60,
+        "note": "",
+        "pass": true,
+        "stored": 60
+      },
+      {
         "check": "f_phase2_med30_20260727: user_sha256 rebuilds for every row",
         "computed": 90,
         "note": "",
         "pass": true,
         "stored": 90
+      },
+      {
+        "check": "f_phase2_tiny9_20260727: user_sha256 rebuilds for every row",
+        "computed": 9,
+        "note": "",
+        "pass": true,
+        "stored": 9
       },
       {
         "check": "f_phase2_tiny9_live_20260727: user_sha256 rebuilds for every row",
@@ -2975,6 +3168,13 @@
       },
       {
         "check": "f_tiny10_20260727: user_sha256 rebuilds for every row",
+        "computed": 10,
+        "note": "",
+        "pass": true,
+        "stored": 10
+      },
+      {
+        "check": "f_tiny10_dry: user_sha256 rebuilds for every row",
         "computed": 10,
         "note": "",
         "pass": true,
@@ -3039,6 +3239,64 @@
         "note": "",
         "pass": true,
         "stored": 90
+      },
+      {
+        "check": "pre-pad N directories, live runs only",
+        "computed": [
+          "f_phase1_k3_20260727",
+          "f_small20_20260727",
+          "f_tiny10_v18s_20260727",
+          "f_tiny10_v18s_twinfix_20260727"
+        ],
+        "note": "",
+        "pass": true,
+        "stored": [
+          "f_phase1_k3_20260727",
+          "f_small20_20260727",
+          "f_tiny10_v18s_20260727",
+          "f_tiny10_v18s_twinfix_20260727"
+        ]
+      },
+      {
+        "check": "pre-pad N directories including dry runs",
+        "computed": 5,
+        "note": "",
+        "pass": true,
+        "stored": 5
+      },
+      {
+        "check": "zero-rebuild directories, live runs only",
+        "computed": [
+          "f_tiny10_20260727",
+          "f_tiny10_v18_20260727"
+        ],
+        "note": "",
+        "pass": true,
+        "stored": [
+          "f_tiny10_20260727",
+          "f_tiny10_v18_20260727"
+        ]
+      },
+      {
+        "check": "zero-rebuild directories including dry runs",
+        "computed": 3,
+        "note": "",
+        "pass": true,
+        "stored": 3
+      },
+      {
+        "check": "length-match makes N character-equal to P",
+        "computed": 0,
+        "note": "",
+        "pass": true,
+        "stored": 0
+      },
+      {
+        "check": "length-match leaves N longer than M",
+        "computed": true,
+        "note": "",
+        "pass": true,
+        "stored": true
       },
       {
         "check": "pad removal alone reproduces the recorded N prompt",
@@ -3164,7 +3422,7 @@
         "stored": []
       }
     ],
-    "n_checks": 179,
+    "n_checks": 188,
     "n_failed": 0
   }
 }

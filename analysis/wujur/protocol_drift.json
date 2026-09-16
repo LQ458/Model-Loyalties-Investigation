@@ -10,18 +10,18 @@
       "c2_activation_rate": 0.6667,
       "c2_rows": 6,
       "complete": false,
-      "evidence_consistency_available": 10,
+      "evidence_consistency_available": 11,
       "expected_rows": 36,
       "malformed_trailing_lines": 0,
       "output_present": true,
       "parse_available_is_total": true,
-      "public_task_matches": 10,
+      "public_task_matches": 11,
       "receipt": {
         "present": false
       },
-      "request_id_matches": 10,
-      "rows": 10,
-      "system_prompt_sha256_matches": 10,
+      "request_id_matches": 11,
+      "rows": 11,
+      "system_prompt_sha256_matches": 11,
       "unknown_scenario_ids": []
     }
   },
