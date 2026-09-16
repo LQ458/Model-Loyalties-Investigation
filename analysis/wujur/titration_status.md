@@ -1,7 +1,7 @@
 # Paper 2 (composition / titration) — what is claimable now, and what needs new generations
 
 Companion data artifact: `analysis/wujur/titration_recovered.json`
-(`sha256 = 31bd41aa80a8f70c7c781dca873751c97654560e1ff389a4db86203d2dcdded3`).
+(`sha256 = f0bf11497ef58431700c5cf24a4fed3957256f592adb1d07bfb174a4fa5c2b04`).
 Generator: `analysis/wujur/titration_recover.py` (standalone, re-runnable, no endpoint contacted, no
 `git`, no subagents). Verified deterministic: two consecutive runs produced byte-identical output
 (`cmp` clean), re-checked after each revision of the script. Every number below carries a
@@ -442,14 +442,15 @@ item_02_sensor    -> 3b9002060d5b4bd10e0ebd232422608d8f23833743fe70a71fa2673ff1b
 | `f_phase2_med30_20260727` | 90 | 90 | 0 | — | `98730154…` / `3b900206…` — correct, item-dependent |
 | `f_phase1_k3_20260727` | 60 | 48 | **12** | `N` ×12, **system hash only** | `56fb7f58…` for **both** items |
 
-F6's dose run reproduces the frozen construction perfectly, including the item-dependence. F3's
+F6's dose run reproduces the current construction perfectly, including the item-dependence. F3's
 authoritative Phase-1 run carries a **single** `N` system-prompt hash across **both** base items,
-which is only possible if the length-matching pad was not in force. The user hashes all match; only
-the system prompt differs. So F3's `N` cell was not built by the frozen construction and cannot be
-reproduced from committed prompts and stimuli. (`f_phase1_k3_20260727/run_meta.json` shows
-`n_jobs_pending 3`, `n_jobs_skipped_done 57` — 57 of its 60 rows were reused from earlier runs by
-the resume mechanism, which is the mechanical route by which stale-construction rows entered an
-authoritative run.)
+which is not possible under the current length-matching rule. The user hashes all match; only the
+system prompt differs. So F3's `N` cell was not built by the current construction and cannot be
+reproduced from committed prompts and stimuli. *What* it was built by is not established — see the
+next subsection; the pad is necessary but not sufficient to explain it.
+(`f_phase1_k3_20260727/run_meta.json` shows `n_jobs_pending 3`, `n_jobs_skipped_done 57` — 57 of
+its 60 rows were reused from earlier runs by the resume mechanism, which is the mechanical route by
+which stale-construction rows entered an authoritative run.)
 
 **Blast radius, stated precisely because it is narrower than it looks.** `compose.kappa_beta`
 computes `denom = s["P"] - s["M"]` and `kappa = (s["PM"] - s["MP"])/denom` at
@@ -468,62 +469,126 @@ This *strengthens* the Block A case rather than weakening it: the amendment alre
 fresh position-matched null `s_N^priv`, and that cell now also replaces a baseline that the
 repository cannot reconstruct.
 
-#### Cause — closed at source by `Main`, and it is a second undisclosed instrument change
+#### Cause — the mechanism is NOT established; the effect is
 
-I could not close the cause myself (it needs the historical prompt files, hence `git`, which I did
-not run). `Main` ran it and reported: `git -S` across the rename shows `max(len(` **absent** at
-`a676170` and `fa563c1`, **present** at `45845b0` "Record Arm F phase2 pilot", all four commits
-dated 2026-07-27. So the length-matching pad **did not exist when Phase 1 ran** and was added while
-preparing Phase 2. `[Evidence supplied by Main via git; I did not run git and did not verify the
-commit hashes myself.]`
+This subsection was rewritten after `Main` retracted their own earlier attribution. The retracted
+claim was that the length-match pad *was* the change. It is not sufficient, and the amendment below
+deliberately does not assert it.
 
-That is version skew inside a single day, and my hash evidence and Main's commit evidence are
-independent and agree exactly: F3's `N` cell is item-invariant (no pad, pre-`45845b0`), F6's is
-item-dependent (pad present, post-`45845b0`).
+What is known about timing: `Main`'s `git -S` shows `max(len(` absent at `a676170` and `fa563c1`,
+present at `45845b0`, all 2026-07-27, so the pad postdates Phase 1. `[Main's evidence; I did not
+run git and have not verified those commit hashes.]` What does **not** follow is that the pad was
+the whole change — and it demonstrably was not.
 
-**The consequence is bigger than a provenance footnote.** `PREREGISTRATION.md:58-63` discloses
-exactly **one** instrument change on 2026-07-27 — the loyalty template swap — and closes with
-"Estimands/gates unchanged." The pad is a **second, undisclosed** change to the same day's
-instrument, and unlike the template swap it is not gate-neutral: it alters the `N` cell, which is
-the input to the baseline gate at `PREREGISTRATION.md:38`. A frozen pre-registration that discloses
-one instrument change while two were made needs its own amendment section, not a footnote.
+`DataRestore` tried ~30 reconstruction variants (raw vs stripped file, with/without trailing
+newline, pad target `max`/`len_a`/`len_b`, with/without dot-fill); none reproduces the recorded
+hash. My own check agrees on the decisive one: removing the pad leaves
+`strip(system_neutral.md) + "\n"`, which hashes to
+`a567f4d3233c7f212a671d99b4d9151ec555982429369a7878e826438d3e740d`, not the recorded
+`56fb7f58cb42dd9bc10e86154634a2d4852aac505fdd79e70eaffc2582bb555a`
+(`$.provenance_hash_check.pre_pad_N_reconstruction`, `candidate_matches_recorded: false`). So the
+2026-07-27 `N` construction differed by the pad **plus at least one further difference**, in the `N`
+branch or in `system_neutral.md` itself. **The exact Phase-1 `N` prompt is not recoverable from
+anything committed today.**
 
-Following the precedent established by `prereg_amendment_F7.md` — amendment **text**, file not
-edited — here is the block to append. `PREREGISTRATION.md` is **not** modified by this document:
+#### The effect, on evidence that needs no reconstruction
+
+`DataRestore` proposed a code-independent line of evidence and I verified it independently from the
+same files — which matters, because `Main` reported being unable to reproduce it (their field
+guesses returned empty; the path is `$.response.usage.prompt_tokens`). `f_phase1_k3_20260727` and
+`f_phase2_med30_20260727` share two stimulus items whose **user** prompts are provably identical
+(same `user_sha256`), and both ran against the same model and endpoint
+(`qwen3.6-35b-a3b-int8`, `http://192.168.110.26:8000/v1`), so a `prompt_tokens` delta isolates the
+system prompt:
+
+| cell | item | Phase-1 | med30 | delta | user prompt identical |
+| --- | --- | --- | --- | --- | --- |
+| M | `item_01_vectordb_d0_main` | 914.0 | 914.0 | `+0.0` | yes |
+| M | `item_02_sensor_d0_main` | 904.0 | 904.0 | `+0.0` | yes |
+| P | `item_01_vectordb_d0_main` | 913.0 | 913.0 | `+0.0` | yes |
+| P | `item_02_sensor_d0_main` | 903.0 | 903.0 | `+0.0` | yes |
+| **N** | `item_01_vectordb_d0_main` | **802.0** | **900.0** | **`-98.0`** | yes |
+| **N** | `item_02_sensor_d0_main` | **792.0** | **891.0** | **`-99.0`** | yes |
+
+P and M are bit-identical across the two runs; only `N` moved, and only downward. Within Phase 1,
+`N` averages 797.0 tokens against P 908.0 and M 909.0 — a deficit of 111–112 tokens, i.e. **not
+length-matched**. Within med30, `N` averages 895.5 against 908.0/909.0 — a deficit of 12.5–13.5,
+i.e. length-matched. (`$.n_cell_length_evidence`.) This conclusion is independent of which code
+change caused it, which is exactly why the amendment rests on it.
+
+**Scope is wider than one run.** The pre-pad `N` hash `56fb7f58…` appears in **four live runs** —
+`f_phase1_k3_20260727`, `f_small20_20260727`, `f_tiny10_v18s_20260727`,
+`f_tiny10_v18s_twinfix_20260727` — plus the dry run `f_phase1_k3_dry`, five directories in total
+(`$.n_cell_length_evidence.runs_sharing_prepad_N_construction`). Separately,
+`f_tiny10_20260727`, `f_tiny10_v18_20260727` and `f_tiny10_dry` rebuild **0** rows on the system
+hash across *every* cell — earlier prompt generations entirely — and must be excluded explicitly
+from any "reproducible from committed prompts" claim
+(`$.n_cell_length_evidence.runs_rebuilding_zero_on_system`).
+
+**A refinement of the control itself, which neither of us had stated.** The pad targets
+`max(len(loy_a), len(loy_b))` in **characters**, so today's `N` matches `P` exactly at 1569 chars —
+but `M` is 1559, i.e. 10 chars shorter than `N`, and a 12.5-token deficit survives in med30 because
+the dot-fill tokenises differently from prose. The length confound control is therefore
+character-exact against `max(P,M)`, **not** token-exact and **not** exact against `M`
+(`$.n_cell_length_evidence.pad_matches_characters_not_tokens`). Worth disclosing: the control is
+weaker than "prompt length is not a confound" (`assemble.py:60`) implies.
+
+#### Why this still needs its own amendment section
+
+`PREREGISTRATION.md:58-63` discloses exactly **one** instrument change on 2026-07-27 — the loyalty
+template swap — and closes "Estimands/gates unchanged." Whatever the `N` construction change
+consisted of, it was a **second, undisclosed** change, and unlike the template swap it is not
+gate-neutral: it alters the `N` cell, which is the sole input to the baseline gate at
+`PREREGISTRATION.md:38`.
+
+Following the `prereg_amendment_F7.md` precedent — amendment **text**, file not edited — here is
+the block to append. `PREREGISTRATION.md` is **not** modified by this document. The wording is
+`Main`'s binding formulation: it asserts the effect, not a mechanism.
 
 ```markdown
-## Amendment 2026-09-16 — N-cell length-match pad (undisclosed instrument change, disclosed late)
+## Amendment 2026-09-16 — Phase-1 N cell was not length-matched (construction unrecoverable)
 
-A second instrument change was made on 2026-07-27 and not recorded. `runner/assemble.py`
-build_system('N', ...) gained a length-match pad to max(len(loyalty_a), len(loyalty_b))
-(assemble.py:60-61), added in commit 45845b0 "Record Arm F phase2 pilot", absent at a676170
-and fa563c1. The line-58 loyalty template swap is the only change from that day currently
-disclosed.
+A second instrument change was made on 2026-07-27 and not recorded. Phase 1's N cell was
+not length-matched to P and M, and its exact construction is not reproducible from the
+committed prompts and stimuli. The line-58 loyalty template swap is the only change from
+that day currently disclosed.
 
-Effect on the frozen record. The pad makes the N system prompt base-item dependent. F3
-Phase-1 (runs/f_phase1_k3_20260727) predates it: all 12 of its N rows carry one system
-prompt hash, 56fb7f58cb42dd9b..., across both base items, and 48 of its 60 rows reproduce
-from current files while the 12 N rows do not (system hash only; user hashes all match).
-F6 Phase-2 (runs/f_phase2_med30_20260727) postdates it and reproduces 90/90, carrying the
-two item-dependent hashes 98730154611c6684... and 3b9002060d5b4bd1...
+Evidence, independent of any code archaeology. runs/f_phase1_k3_20260727 and
+runs/f_phase2_med30_20260727 share two stimulus items with provably identical user prompts
+(equal user_sha256) and ran against the same model and endpoint, so prompt_tokens isolates
+the system prompt. P and M are exactly equal across the two runs (913/913, 903/903,
+914/914, 904/904) while N differs by -98.0 and -99.0. Within Phase 1, N averages 797.0
+tokens against P 908.0 and M 909.0; within Phase 2, N averages 895.5 against 908.0/909.0.
+
+Corroborating hashes. 48 of Phase 1's 60 rows rebuild from committed files; the 12 that do
+not are all cell N and differ on system_sha256 only, user_sha256 matching 60/60. Phase 1's
+N carries a single item-independent hash 56fb7f58cb42dd9b... whereas the current
+construction is item-dependent (98730154611c6684... and 3b9002060d5b4bd1...), and
+f_phase2_med30_20260727 rebuilds 90/90. The same pre-pad N hash also appears in
+f_small20_20260727, f_tiny10_v18s_20260727 and f_tiny10_v18s_twinfix_20260727.
+
+Not reconstructible, stated as a limit rather than a mechanism. Roughly 30 reconstruction
+variants were tried and none reproduces 56fb7f58cb42dd9b...; in particular removing the
+current length-match pad yields a567f4d3233c7f21... So the change comprised more than any
+single edit identifiable from present files, and no pre-pad prompt is claimed here.
 
 Scope. s_N enters only beta (compose.py:104) and the baseline gate (line 38). kappa is
-computed from PM/MP over P-M (compose.py:102-103) and never reads s_N. Therefore:
-unaffected -- F3 kappa=-0.2716763005780347 CI[-0.6134969325153373,-0.01556420233463037],
-effect denominator 0.865 CI[0.8083333333333335,0.93], all of F6, all of F9. Affected --
-F3 beta=-0.037500000000000006, the F3 baseline gate, and F7 beta=0.005833333333333329
-(score_privilege.py:81 takes ref_N from the same 12 rows).
+computed from PM/MP over P-M (compose.py:103) and never reads s_N. Therefore: unaffected --
+F3 kappa=-0.2716763005780347 CI[-0.6134969325153373,-0.01556420233463037], effect
+denominator 0.865 CI[0.8083333333333335,0.93], the F6 dose curve, all of F9, and the F7
+numerator. Affected -- F3 beta=-0.037500000000000006, the F3 |s_N|<=0.15 baseline gate, and
+F7 beta=0.005833333333333329 (score_privilege.py:81 takes ref_N from the same 12 rows).
 
-Not reconstructible. Removing the pad alone does not reproduce the recorded prompt:
-system_neutral.md stripped + newline hashes to a567f4d3233c7f21..., not 56fb7f58cb42dd9b...
-So a further part of the pre-pad N construction also differed. The F3 N prompt is not
-recoverable from committed files.
+Consequence. F3 beta and the F3 baseline gate are withdrawn as frozen-instrument results.
+The N_userpriv cell in Block A (analysis/wujur/f7_repair_manifest.json) supplies a
+position-matched null under the current construction and replaces all three affected
+quantities going forward; it does not retroactively validate the July values. No estimand is
+edited and no observation is discarded or re-scored.
 
-Consequence. F3 beta and the F3 baseline gate are withdrawn as frozen-instrument results and
-reported as pre-amendment-instrument values. The N_userpriv cell in Block A
-(analysis/wujur/f7_repair_manifest.json) already supplies a position-matched null under the
-current construction; it now also replaces this baseline. No estimand is edited and no
-observation is discarded or re-scored.
+Separately noted for completeness: the current pad matches characters, not tokens, and
+matches max(len_a,len_b), so N equals P at 1569 characters while M is 1559 and a ~12.5-token
+deficit survives. The length control is character-exact against the longer single-loyalty
+block, not token-exact.
 ```
 
 The per-item `s_N` values are recoverable and small (`item_01` main `0.03333333333333333` / twin
@@ -531,15 +596,13 @@ The per-item `s_N` values are recoverable and small (`item_01` main `0.033333333
 very likely still pass — but they were produced by a prompt that is not in the repository, so
 "would pass" is not "did pass under the frozen instrument".
 
-**One residual the commit evidence does not close.** Removing the pad is *not sufficient* to
-reproduce the recorded prompt. Without the pad, `build_system("N", …)` reduces to
-`system_neutral.md` stripped plus a newline, which is vendor-independent — consistent with the
-single observed hash — but it hashes to `a567f4d3233c7f212a671d99b4d9151ec555982429369a7878e826438d3e740d`
-(len 1176), not the recorded `56fb7f58cb42dd9bc10e86154634a2d4852aac505fdd79e70eaffc2582bb555a`
-(`$.provenance_hash_check.pre_pad_N_reconstruction`, `candidate_matches_recorded: false`). So
-`system_neutral.md` — or some other part of the pre-pad `N` construction — **also** differed. The
-pad explains the item-invariance; it does not explain the specific bytes. **Cause of the skew:
-verified (by Main, at source). Exact pre-pad prompt: still not reconstructible.**
+**Incidental, verified, affects no published number.** In `f_tiny10_v18s_20260727` the recorded `P`
+and `M` system hashes are exchanged **on the twin rows only** (`M`/twin carries today's `P` hash
+`60ef7c08…` and `P`/twin carries today's `M` hash `804522c7…`; both main rows are correct).
+`f_tiny10_v18s_twinfix_20260727` has all four correct — the run name is literal, and the hashes pin
+the fault to the twin arm specifically. Both are k=1 instrument smokes that `RESULT.md` already
+labels "provisional instrument runs and are not the authoritative composition estimate", so no
+published number is affected. Recorded so nobody later mistakes it for a scoring bug.
 
 ---
 
@@ -654,15 +717,22 @@ apply and hash after the run completes.
   `RESULT.md:77-79` ("positional recency overriding privilege") remains unadjudicable by this cell.
   Separating them needs a first-loyalty-in-user-turn cell, which is neither run nor in the manifest.
   Outcome 1 of §4 would actively undercut that reading.
-- **It does not itself establish why F3's `N`-cell system prompt differs.** The *effect* is verified
-  by hash here (12 of 60 rows, `N` only, system hash only, item-invariant where the frozen rule is
-  item-dependent). The *cause* — the pad added in `45845b0` on 2026-07-27 — was established by
-  `Main` with `git -S`; I did not run `git` and have not independently verified those commit
-  hashes. Treat the commit identifiers as `Main`'s evidence, not mine.
-- **It does not establish the exact pre-pad `N` system prompt.** Removing the pad is necessary but
-  not sufficient: the unpadded candidate hashes to `a567f4d3…`, not the recorded `56fb7f58…`
-  (`$.provenance_hash_check.pre_pad_N_reconstruction`). Something further in that construction, most
-  likely `system_neutral.md`, also differed and is not recoverable from committed files.
+- **It does not establish the MECHANISM of the F3 `N`-cell difference.** The *effect* is established
+  two independent ways — by hash here (12 of 60 rows, `N` only, system-hash only, item-invariant
+  where the current rule is item-dependent) and by `prompt_tokens` (`-98`/`-99` against the same
+  item in Phase 2 while P and M are bit-identical), the latter verified by me and by `DataRestore`.
+  The *cause* is **not** established. `Main` dated the pad to `45845b0` with `git -S` and then
+  explicitly retracted the inference that the pad *was* the change; I did not run `git` and have
+  not verified those commit hashes. The amendment text above asserts the effect and the
+  irrecoverability, never a mechanism — deliberately, because an amendment asserting a mechanism
+  that cannot be reproduced is checkable and wrong.
+- **It does not establish the pre-pad `N` system prompt, and no reconstruction is claimed.**
+  Removing the pad is necessary but not sufficient: the unpadded candidate hashes to `a567f4d3…`,
+  not the recorded `56fb7f58…` (`$.provenance_hash_check.pre_pad_N_reconstruction`).
+  `DataRestore` exhausted ~30 further variants with no match. Something further in the `N`
+  construction or in `system_neutral.md` differed and is not recoverable from committed files.
+- **It does not establish that the four runs sharing `56fb7f58…` share it for the same reason.**
+  The hash equality is verified; a common cause is inferred, not shown.
 - **It does not establish that F3's baseline gate would still pass** under the frozen construction.
   The recovered per-item `s_N` values are small, but they were produced by a different prompt.
 - **It does not verify `PRE-2`** (`$.provenance.file_sha256`, eight files) or the per-cell

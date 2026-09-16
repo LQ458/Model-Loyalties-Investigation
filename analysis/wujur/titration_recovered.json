@@ -208,6 +208,235 @@
     "note": "recovery_eval/scoring/score_blind.py is byte-identical between mirror and repo"
   },
   "mirror_root": "/home/barry/Nextcloud/vc_projects/Model-Loyalties-Investigation",
+  "n_cell_length_evidence": {
+    "comparison_validity": {
+      "f_phase1_k3_20260727": {
+        "base_urls": [
+          "http://192.168.110.26:8000/v1"
+        ],
+        "models": [
+          "qwen3.6-35b-a3b-int8"
+        ]
+      },
+      "f_phase2_med30_20260727": {
+        "base_urls": [
+          "http://192.168.110.26:8000/v1"
+        ],
+        "models": [
+          "qwen3.6-35b-a3b-int8"
+        ]
+      }
+    },
+    "conclusion_code_independent": "Phase 1's N cell was NOT length-matched: it runs 98-99 prompt tokens shorter than the SAME item's N prompt in Phase 2 while P and M are bit-identical across the two runs. This holds without reference to which code change caused it.",
+    "evidence_line_credit": "prompt_tokens deficit proposed by DataRestore; independently verified here from the same files",
+    "excluded_from_any_reproducible_claim": [
+      "f_tiny10_20260727",
+      "f_tiny10_dry",
+      "f_tiny10_v18_20260727"
+    ],
+    "n_runs_sharing_prepad_N": 5,
+    "pad_matches_characters_not_tokens": {
+      "M_shorter_than_N_by_chars": 10,
+      "N_equals_P_in_chars": true,
+      "note": "the pad targets max(len(loyalty_a), len(loyalty_b)) in CHARACTERS, so N matches the longer single-loyalty block exactly in chars but M stays shorter, and a ~12-13 token deficit survives because the dot-fill tokenises differently from prose. The length confound control is character-exact against max(P,M), not token-exact and not exact against M.",
+      "residual_token_deficit_post_pad": -12.5,
+      "system_prompt_chars_today": {
+        "M": 1559,
+        "N": 1569,
+        "P": 1569
+      }
+    },
+    "prepad_N_census": {
+      "f_phase1_k3_20260727": {
+        "mismatch_by_cell": {
+          "N": 12
+        },
+        "n_prepad_N_rows": 12,
+        "n_rows": 60,
+        "rebuilds_zero_on_system": false,
+        "system_hash_match": 48
+      },
+      "f_phase1_k3_dry": {
+        "mismatch_by_cell": {
+          "N": 12
+        },
+        "n_prepad_N_rows": 12,
+        "n_rows": 60,
+        "rebuilds_zero_on_system": false,
+        "system_hash_match": 48
+      },
+      "f_phase2_med30_20260727": {
+        "mismatch_by_cell": {},
+        "n_prepad_N_rows": 0,
+        "n_rows": 90,
+        "rebuilds_zero_on_system": false,
+        "system_hash_match": 90
+      },
+      "f_phase2_tiny9_20260727": {
+        "mismatch_by_cell": {},
+        "n_prepad_N_rows": 0,
+        "n_rows": 9,
+        "rebuilds_zero_on_system": false,
+        "system_hash_match": 9
+      },
+      "f_phase2_tiny9_live_20260727": {
+        "mismatch_by_cell": {},
+        "n_prepad_N_rows": 0,
+        "n_rows": 9,
+        "rebuilds_zero_on_system": false,
+        "system_hash_match": 9
+      },
+      "f_privilege_tiny8_20260727": {
+        "mismatch_by_cell": {},
+        "n_prepad_N_rows": 0,
+        "n_rows": 24,
+        "rebuilds_zero_on_system": false,
+        "system_hash_match": 24
+      },
+      "f_small20_20260727": {
+        "mismatch_by_cell": {
+          "N": 4
+        },
+        "n_prepad_N_rows": 4,
+        "n_rows": 20,
+        "rebuilds_zero_on_system": false,
+        "system_hash_match": 16
+      },
+      "f_tiny10_20260727": {
+        "mismatch_by_cell": {
+          "M": 2,
+          "MP": 2,
+          "N": 2,
+          "P": 2,
+          "PM": 2
+        },
+        "n_prepad_N_rows": 0,
+        "n_rows": 10,
+        "rebuilds_zero_on_system": true,
+        "system_hash_match": 0
+      },
+      "f_tiny10_dry": {
+        "mismatch_by_cell": {
+          "M": 2,
+          "MP": 2,
+          "N": 2,
+          "P": 2,
+          "PM": 2
+        },
+        "n_prepad_N_rows": 0,
+        "n_rows": 10,
+        "rebuilds_zero_on_system": true,
+        "system_hash_match": 0
+      },
+      "f_tiny10_v18_20260727": {
+        "mismatch_by_cell": {
+          "M": 2,
+          "MP": 2,
+          "N": 2,
+          "P": 2,
+          "PM": 2
+        },
+        "n_prepad_N_rows": 0,
+        "n_rows": 10,
+        "rebuilds_zero_on_system": true,
+        "system_hash_match": 0
+      },
+      "f_tiny10_v18s_20260727": {
+        "mismatch_by_cell": {
+          "M": 1,
+          "MP": 1,
+          "N": 2,
+          "P": 1,
+          "PM": 1
+        },
+        "n_prepad_N_rows": 2,
+        "n_rows": 10,
+        "rebuilds_zero_on_system": false,
+        "system_hash_match": 4
+      },
+      "f_tiny10_v18s_twinfix_20260727": {
+        "mismatch_by_cell": {
+          "N": 2
+        },
+        "n_prepad_N_rows": 2,
+        "n_rows": 10,
+        "rebuilds_zero_on_system": false,
+        "system_hash_match": 8
+      }
+    },
+    "runs_rebuilding_zero_on_system": [
+      "f_tiny10_20260727",
+      "f_tiny10_dry",
+      "f_tiny10_v18_20260727"
+    ],
+    "runs_sharing_prepad_N_construction": [
+      "f_phase1_k3_20260727",
+      "f_phase1_k3_dry",
+      "f_small20_20260727",
+      "f_tiny10_v18s_20260727",
+      "f_tiny10_v18s_twinfix_20260727"
+    ],
+    "shared_item_token_deltas": {
+      "M|item_01_vectordb_d0_main": {
+        "delta_phase1_minus_med30": 0.0,
+        "med30": 914.0,
+        "phase1": 914.0,
+        "user_prompt_identical": true
+      },
+      "M|item_02_sensor_d0_main": {
+        "delta_phase1_minus_med30": 0.0,
+        "med30": 904.0,
+        "phase1": 904.0,
+        "user_prompt_identical": true
+      },
+      "N|item_01_vectordb_d0_main": {
+        "delta_phase1_minus_med30": -98.0,
+        "med30": 900.0,
+        "phase1": 802.0,
+        "user_prompt_identical": true
+      },
+      "N|item_02_sensor_d0_main": {
+        "delta_phase1_minus_med30": -99.0,
+        "med30": 891.0,
+        "phase1": 792.0,
+        "user_prompt_identical": true
+      },
+      "P|item_01_vectordb_d0_main": {
+        "delta_phase1_minus_med30": 0.0,
+        "med30": 913.0,
+        "phase1": 913.0,
+        "user_prompt_identical": true
+      },
+      "P|item_02_sensor_d0_main": {
+        "delta_phase1_minus_med30": 0.0,
+        "med30": 903.0,
+        "phase1": 903.0,
+        "user_prompt_identical": true
+      }
+    },
+    "within_run_cell_means": {
+      "f_phase1_k3_20260727": {
+        "N_minus_M": -112.0,
+        "N_minus_P": -111.0,
+        "cell_mean_prompt_tokens": {
+          "M": 909.0,
+          "MP": 1231.0,
+          "N": 797.0,
+          "P": 908.0,
+          "PM": 1231.0
+        }
+      },
+      "f_phase2_med30_20260727": {
+        "N_minus_M": -13.5,
+        "N_minus_P": -12.5,
+        "cell_mean_prompt_tokens": {
+          "M": 909.0,
+          "N": 895.5,
+          "P": 908.0
+        }
+      }
+    }
+  },
   "naming_artefact": {
     "claim": "f_privilege_k3_20260727 was never a separate run directory",
     "consequence": "the 24 k=3 privilege raw rows are recovered under the tiny8 directory name",

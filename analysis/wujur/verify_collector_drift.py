@@ -653,6 +653,96 @@ def main() -> int:
             "detail": r0_scen,
         }
 
+    # ------------------------------- collected rows: standing re-verification
+    # Re-derives every model-visible input for whatever rows exist and compares
+    # them against the file. Safe to run mid-collection (a partially flushed
+    # trailing line is reported, not fatal) and it is the post-run gate:
+    #   - all rows reproduce request_id / system_prompt_sha256 / public_task
+    #   - evidence_consistency.available is 100%, else activation is biased down
+    #   - once the receipt exists, its protocol_sha256 equals the protocol on
+    #     disk, which is what detects a mid-run protocol edit (main():855
+    #     receipts the hash only at the END of the run).
+    runs = [
+        ("R1R2", "analysis/wujur/r1r2_rows.jsonl", PROTO_R1R2, 36),
+        ("R0", "analysis/wujur/r0_rows.jsonl", r0_path, 18),
+    ]
+    collected = {}
+    for label, rel, proto_path, expected in runs:
+        out_path = REPO_ROOT / rel
+        if not out_path.is_file() or not proto_path.is_file():
+            collected[label] = {"output_present": False, "expected_rows": expected}
+            continue
+        pj = json.loads(proto_path.read_text())
+        scen_by_id = {s["id"]: s for s in pj["ranking"]["sealed"]}
+        rows, malformed = [], 0
+        for line in out_path.read_text(encoding="utf-8").splitlines():
+            if not line.strip():
+                continue
+            try:
+                rows.append(json.loads(line))
+            except json.JSONDecodeError:
+                malformed += 1
+        ok_id = ok_sys = ok_task = 0
+        avail = act = c2 = 0
+        unknown = []
+        for row in rows:
+            s = scen_by_id.get(row["scenario_id"])
+            if s is None:
+                unknown.append(row["scenario_id"])
+                continue
+            cond, seed = row["condition"], row["seed"]
+            ok_id += row["request_id"] == mod.opaque_id(
+                "ranking", s["id"], cond, seed
+            )
+            ok_sys += row["system_prompt_sha256"] == mod.sha256_text(
+                mod.ranking_system_prompt(s, cond)
+            )
+            ok_task += row["runtime_monitor_input"][
+                "public_task"
+            ] == mod.render_ranking_task(s)
+            avail += bool(row["evidence_consistency"]["available"])
+            if cond == "C2":
+                c2 += 1
+                act += bool(row["evaluator"]["activated"])
+        entry = {
+            "output_present": True,
+            "rows": len(rows),
+            "expected_rows": expected,
+            "complete": len(rows) == expected,
+            "malformed_trailing_lines": malformed,
+            "unknown_scenario_ids": unknown,
+            "request_id_matches": ok_id,
+            "system_prompt_sha256_matches": ok_sys,
+            "public_task_matches": ok_task,
+            "all_inputs_reproduce": ok_id == ok_sys == ok_task == len(rows),
+            "evidence_consistency_available": avail,
+            "parse_available_is_total": avail == len(rows),
+            "c2_rows": c2,
+            "c2_activated": act,
+            "c2_activation_rate": round(act / c2, 4) if c2 else None,
+        }
+        receipt_path = out_path.with_suffix(out_path.suffix + ".receipt.json")
+        if receipt_path.is_file():
+            rc = json.loads(receipt_path.read_text())
+            entry["receipt"] = {
+                "present": True,
+                "status": rc.get("status"),
+                "rows": rc.get("rows"),
+                "transport_success": rc.get("transport_success"),
+                "protocol_sha256_in_receipt": rc.get("protocol_sha256"),
+                "protocol_sha256_on_disk": sha256_file(proto_path),
+                "protocol_unchanged_during_run": rc.get("protocol_sha256")
+                == sha256_file(proto_path),
+                "output_sha256_matches_file": rc.get("output_sha256")
+                == sha256_file(out_path),
+                "generation": rc.get("generation"),
+                "model": rc.get("model"),
+            }
+        else:
+            entry["receipt"] = {"present": False}
+        collected[label] = entry
+    report["collected_rows"] = collected
+
     OUT.write_text(json.dumps(report, indent=2, sort_keys=True) + "\n", encoding="utf-8")
 
     # ------------------------------------------------------------- summary
@@ -740,6 +830,30 @@ def main() -> int:
         for k, v in report["r0_protocol_on_disk"].items():
             if k != "detail":
                 print(f"  {k}: {v}")
+    print("== collected rows (standing re-verification) ==")
+    for label, e in report["collected_rows"].items():
+        if not e["output_present"]:
+            print(f"  {label}: not collected yet (expects {e['expected_rows']} rows)")
+            continue
+        print(
+            f"  {label}: {e['rows']}/{e['expected_rows']} rows"
+            f" complete={e['complete']}"
+            f" | request_id {e['request_id_matches']}/{e['rows']}"
+            f" system_sha {e['system_prompt_sha256_matches']}/{e['rows']}"
+            f" public_task {e['public_task_matches']}/{e['rows']}"
+            f" | parse available {e['evidence_consistency_available']}/{e['rows']}"
+            f" | C2 activated {e['c2_activated']}/{e['c2_rows']}"
+            f" rate={e['c2_activation_rate']}"
+        )
+        r = e["receipt"]
+        if r["present"]:
+            print(
+                f"      receipt: {r['status']} rows={r['rows']}"
+                f" protocol_unchanged_during_run={r['protocol_unchanged_during_run']}"
+                f" output_sha256_matches_file={r['output_sha256_matches_file']}"
+            )
+        else:
+            print("      receipt: not written yet (run still in flight)")
     print(f"\nwrote {OUT}")
     return 0
 

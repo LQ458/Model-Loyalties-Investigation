@@ -92,8 +92,7 @@ JUDGE_METRICS_CANDIDATES = [
 
 # Sealed test split: 6 scenarios x C0/C1/C2/DA x 3 samples = 72 rows, no CN arm.
 # Widens the stratification from 7 to 10 clusters per stratum at zero generation
-# cost.  Only judge_gpt56luna/score_gate_v2/metrics.json is in the repo today;
-# the rows and judged.jsonl are mirror-only until DataRestore imports them.
+# cost.  Restored in-tree by DataRestore; the mirror stays as a fallback.
 TEST_RUN_REL = "runs/v018_test_c0c1c2da_s3"
 TEST_RAW_CANDIDATES = [
     os.path.join(REPO, "model_organism", TEST_RUN_REL, "transcripts.jsonl"),
@@ -102,6 +101,16 @@ TEST_RAW_CANDIDATES = [
 TEST_JUDGED_CANDIDATES = [
     os.path.join(REPO, "model_organism", TEST_RUN_REL, "judge_gpt56luna", "judged.jsonl"),
     os.path.join(NEXTCLOUD, TEST_RUN_REL, "judge_gpt56luna", "judged.jsonl"),
+]
+
+# Train-only resample: the SAME 14 scenarios, C1/C2/DA only, 126 rows, no C0
+# arm.  Independent generations (0 of 126 overlapping cells share `content`
+# with the confirm grid), so it doubles the SEED axis for free -- which is
+# precisely the axis R4 proposed to buy with 280 generations.
+TRAIN_ONLY_REL = "runs/v018_c1c2da_s3"
+TRAIN_ONLY_CANDIDATES = [
+    os.path.join(REPO, "model_organism", TRAIN_ONLY_REL, "transcripts.jsonl"),
+    os.path.join(NEXTCLOUD, TRAIN_ONLY_REL, "transcripts.jsonl"),
 ]
 
 # The user turn names the candidates in an explicit ordered roster.  This is the
@@ -1569,6 +1578,7 @@ def widened_analysis(
         "pooled_within_stratum_sign_tests": signs,
         "sealed_trace_leak": sealed_leak,
         "failed_judge_calls_with_empty_label": empty_labels,
+        "zero_cost_ceiling": zero_cost_ceiling(raw, test_raw),
         "split_caveat": (
             "Pooling merges a DEVELOPMENT split (14 scenarios iterated alongside the organism) "
             "with a SEALED TEST split (6 scenarios held out). The pooled cell is legitimate for "
@@ -1576,6 +1586,82 @@ def widened_analysis(
             "generalisation, but it must never be quoted as a sealed result, and the "
             "development/sealed distinction the paper leans on elsewhere is destroyed by the "
             "pooling. sealed_test_only_rates is emitted so the sealed arm can be read alone."
+        ),
+    }
+
+
+
+def zero_cost_ceiling(
+    raw: list[dict[str, Any]], test_raw: list[dict[str, Any]]
+) -> dict[str, Any]:
+    """The most statistical power obtainable from ALREADY-COLLECTED rows.
+
+    R4 proposed 280 generations to raise seeds 3 -> 10 on the confirm grid.
+    Both axes R4 would buy already exist on disk: the sealed test split adds
+    CLUSTERS (7 -> 10 per stratum) and the train-only resample adds SEEDS
+    (3 -> 6 per scenario for C1/C2/DA).  This quantifies the ceiling so the
+    280-generation spend can be judged against a free alternative.
+    """
+    extra_path = next((p for p in TRAIN_ONLY_CANDIDATES if os.path.exists(p)), None)
+    extra = load_jsonl(extra_path) if extra_path else []
+
+    # Independence check: overlapping (scenario, condition, sample) cells must
+    # not share `content`, or this is a duplicate rather than a resample.
+    by_key = {row_key(r): r for r in raw}
+    overlap = [r for r in extra if row_key(r) in by_key]
+    identical = sum(1 for r in overlap if by_key[row_key(r)].get("content") == r.get("content"))
+
+    pooled = list(raw) + list(test_raw) + list(extra)
+    out: dict[str, Any] = {}
+    for cond in ("C1", "C2", "DA"):
+        by_stratum = {}
+        for stratum in STRATA:
+            sub = [r for r in pooled if r["condition"] == cond and r["entity_set"] == stratum]
+            k = sum(1 for r in sub if metric_value(r, "principal_first"))
+            w = wilson(k, len(sub))
+            by_stratum[stratum] = {
+                "successes": k, "n_samples": len(sub),
+                "wilson_low": w["low"], "wilson_high": w["high"],
+                "n_scenarios": len({r["scenario_id"] for r in sub}),
+            }
+        n = by_stratum["real"]["n_samples"]
+        out[cond] = {
+            "by_stratum": by_stratum,
+            "zero_failure_bound": round(zero_failure_upper_bound(n), 4),
+            "min_detectable_difference_80pct": min_detectable_difference(n, n),
+            "fisher_power_vs_invented_0_90": round(fisher_power(1.0, 0.90, n, n), 4),
+        }
+
+    n_best = out["C2"]["by_stratum"]["real"]["n_samples"]
+    return {
+        "train_only_resample_path": (
+            os.path.relpath(extra_path, REPO)
+            if extra_path and extra_path.startswith(REPO + os.sep) else extra_path
+        ),
+        "train_only_rows": len(extra),
+        "train_only_conditions": sorted({r["condition"] for r in extra}),
+        "train_only_has_c0_arm": "C0" in {r["condition"] for r in extra},
+        "independence_check": {
+            "overlapping_cells": len(overlap),
+            "identical_content": identical,
+            "is_independent_resample": len(overlap) > 0 and identical == 0,
+        },
+        "per_condition": out,
+        "comparison_with_R4": {
+            "R4_generations": 280,
+            "R4_n_per_stratum": 70,
+            "R4_bound": round(zero_failure_upper_bound(70), 4),
+            "R4_power_vs_invented_0_90": round(fisher_power(1.0, 0.90, 70, 70), 4),
+            "free_generations": 0,
+            "free_n_per_stratum": n_best,
+            "free_bound": round(zero_failure_upper_bound(n_best), 4),
+            "free_power_vs_invented_0_90": round(fisher_power(1.0, 0.90, n_best, n_best), 4),
+        },
+        "caveat": (
+            "The train-only resample adds SAMPLES on the SAME 14 scenarios, so it is "
+            "pseudo-replication at the cluster level: it moves the sample-level bound and "
+            "leaves the 10-scenario cluster bound untouched. It also has no C0 arm, so it "
+            "cannot enter a paired sign test. Cite the cluster count, not just n."
         ),
     }
 

@@ -1198,7 +1198,7 @@
         "pattern": null
       }
     },
-    "restored_paths_already_tracked": 30,
+    "restored_paths_already_tracked": 46,
     "restored_paths_git_would_not_pick_up": [],
     "restored_paths_ignored": [],
     "run_files_already_tracked_by_earlier_commits": {

@@ -1,4 +1,30 @@
 {
+  "collected_rows": {
+    "R0": {
+      "expected_rows": 18,
+      "output_present": false
+    },
+    "R1R2": {
+      "all_inputs_reproduce": true,
+      "c2_activated": 4,
+      "c2_activation_rate": 0.6667,
+      "c2_rows": 6,
+      "complete": false,
+      "evidence_consistency_available": 10,
+      "expected_rows": 36,
+      "malformed_trailing_lines": 0,
+      "output_present": true,
+      "parse_available_is_total": true,
+      "public_task_matches": 10,
+      "receipt": {
+        "present": false
+      },
+      "request_id_matches": 10,
+      "rows": 10,
+      "system_prompt_sha256_matches": 10,
+      "unknown_scenario_ids": []
+    }
+  },
   "foil": {
     "collector_derivation_line": "defense/collect_prospective_v3.py:270",
     "conditions_emitted_by_collector": [

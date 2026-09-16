@@ -444,7 +444,7 @@ name the exceptions" idiom, applied only to the restored paths. `runs/` is
 
 | file | lines | effect |
 | --- | --- | --- |
-| `.gitignore` | 20–28 | `!model_organism/runs/`, `model_organism/runs/*`, `!model_organism/runs/v018_c0c1c2da_cn_s3/` |
+| `.gitignore` | 20–33 | `!model_organism/runs/`, `model_organism/runs/*`, then three `!model_organism/runs/<run_id>/` lines |
 | `model_organism/composition/.gitignore` | 6–21 | `!runs/`, `runs/*`, then nine `!runs/<run_id>/` lines |
 | `model_organism/composition/recovery_eval/.gitignore` | 6–16 | `!runs/`, `runs/*`, `!runs/f9_live_20260727/`, `!runs/f9_live_20260727/*` |
 
@@ -465,9 +465,11 @@ shows which file actually decides each restored path:
 
 | restored path | decided by |
 | --- | --- |
-| `model_organism/runs/` | `.gitignore:26` `!model_organism/runs/` |
-| `model_organism/runs/v018_c0c1c2da_cn_s3/` | `.gitignore:28` `!model_organism/runs/v018_c0c1c2da_cn_s3/` |
-| `model_organism/runs/v018_c0c1c2da_cn_s3/judge_gpt56luna/` | no matching rule |
+| `model_organism/runs/` | `.gitignore:29` `!model_organism/runs/` |
+| `model_organism/runs/v018_c0c1c2da_cn_s3/` | `.gitignore:31` `!model_organism/runs/v018_c0c1c2da_cn_s3/` |
+| `model_organism/runs/v018_test_c0c1c2da_s3/` | `.gitignore:32` `!model_organism/runs/v018_test_c0c1c2da_s3/` |
+| `model_organism/runs/v018_c1c2da_s3/` | `.gitignore:33` `!model_organism/runs/v018_c1c2da_s3/` |
+| `…/v018_*/judge_gpt56luna/`, `…/v018_*/score_det/` | no matching rule |
 | `model_organism/composition/runs/` | `model_organism/composition/.gitignore:11` `!runs/` |
 | `model_organism/composition/runs/<9 run ids>/` | `model_organism/composition/.gitignore:13`–`:21` |
 | `model_organism/composition/recovery_eval/runs/` | `model_organism/composition/recovery_eval/.gitignore:13` `!runs/` |
@@ -477,14 +479,16 @@ So the root `.gitignore` governs the confirm grid, but the **child**
 `.gitignore` files govern every composition path. A negation for a composition
 run placed in the root file would have done nothing.
 
-The negatives were proved, not assumed. Nine paths that must stay ignored, each
-with the rule that keeps them out:
+The negatives were proved, not assumed. Eleven paths that must stay ignored,
+each with the rule that keeps them out:
 
 | path | still ignored by |
 | --- | --- |
-| `model_organism/runs/v018_c1c2da_s3` | `.gitignore:27` `model_organism/runs/*` |
-| `model_organism/runs/v018_test_c0c1c2da_s3` | `.gitignore:27` `model_organism/runs/*` |
-| `model_organism/runs/v999_hypothetical_dev/transcripts.jsonl` | `.gitignore:27` `model_organism/runs/*` |
+| `model_organism/runs/v001_20260726T170615Z/transcripts.jsonl` | `.gitignore:30` `model_organism/runs/*` |
+| `model_organism/runs/v023_fast_dev/transcripts.jsonl` | `.gitignore:30` `model_organism/runs/*` |
+| `model_organism/runs/dry_run_all/transcripts.jsonl` | `.gitignore:30` `model_organism/runs/*` |
+| `model_organism/runs/v999_hypothetical_dev` | `.gitignore:30` `model_organism/runs/*` |
+| `model_organism/runs/v999_hypothetical_dev/transcripts.jsonl` | `.gitignore:30` `model_organism/runs/*` |
 | `model_organism/composition/runs/f_phase1_k3_dry/generations.jsonl` | `model_organism/composition/.gitignore:12` `runs/*` |
 | `model_organism/composition/runs/f_phase2_tiny9_20260727/generations.jsonl` | `model_organism/composition/.gitignore:12` `runs/*` |
 | `model_organism/composition/runs/f_tiny10_dry/generations.jsonl` | `model_organism/composition/.gitignore:12` `runs/*` |
@@ -492,12 +496,13 @@ with the rule that keeps them out:
 | `auditing/runs/track1_v018` | `auditing/.gitignore:4` `runs/` |
 | `auditing/runs/v18` | `auditing/.gitignore:4` `runs/` |
 
-The hypothetical `v999_hypothetical_dev` path is included on purpose: it proves
-a dev run dropped in later still stays out.
+`v999_hypothetical_dev` is included on purpose: it proves a dev run dropped in
+later still stays out. `auditing/.gitignore:4` is a third ignore source that
+none of this touched, included to show it still governs its own tree.
 
 `git ls-files --others --exclude-standard` then answers what `git add -A` would
 actually take, which accounts for directory-descent pruning that `check-ignore`
-alone does not model. All 30 restored paths are held by git, and **0** untracked
+alone does not model. All 46 restored paths are held by git, and **0** untracked
 non-restored files under any `runs/` prefix are admitted by the negations.
 
 One honest caveat, reported rather than failed: 556 files under `runs/`
@@ -508,10 +513,10 @@ radius. They were tracked before the negations and are tracked after.
 
 ### 6.2 Reverting
 
-- `.gitignore`: delete lines 20–28.
+- `.gitignore`: delete lines 20–33.
 - `model_organism/composition/.gitignore`: delete lines 5–21 (the blank line and everything after it).
 - `model_organism/composition/recovery_eval/.gitignore`: delete lines 5–16.
-- Imported data: `rm -rf model_organism/runs/v018_c0c1c2da_cn_s3 model_organism/composition/runs model_organism/composition/recovery_eval/runs` (only if they have not yet been committed; if they have, the parent must revert the commit).
+- Imported data, if not yet committed: `rm -rf model_organism/runs/v018_c0c1c2da_cn_s3 model_organism/runs/v018_test_c0c1c2da_s3/{transcripts.jsonl,meta.json,prompt_used.md,score_det} model_organism/runs/v018_c1c2da_s3/{transcripts.jsonl,meta.json,prompt_used.md,score_det} model_organism/composition/runs model_organism/composition/recovery_eval/runs`. Note the two extra ranking runs already had a tracked `judge_gpt56luna/score_gate_v2/` subtree before this work, so do not delete those directories wholesale. If the import is already committed, the parent must revert the commit.
 - Generated files: `rm analysis/wujur/restored_data.md analysis/wujur/restored_manifest.json analysis/wujur/verify_restored.py`.
 
 The Nextcloud mirror is untouched and remains a complete second copy.
@@ -575,6 +580,30 @@ short global names across concurrently running agents.
 - **It does not cover the 7-week endpoint gap.** All reproductions here are
   re-scorings of stored rows. No generation was run, and nothing here speaks to
   whether the endpoint would produce the same rows today.
+- **It does not identify what the Phase-1 N system prompt actually was.** §3.2
+  establishes that it is not reconstructible from anything committed today and
+  that it was not length-matched. It does **not** establish that the
+  length-match pad was the change, and anyone drafting a pre-registration
+  amendment must not claim a recoverable pre-pad prompt. The pad is one
+  component at most; the residual is unidentified.
+- **The `prompt_tokens` evidence is a length argument, not a content
+  argument.** Equal token counts for P and M across two runs are consistent
+  with identical prompts and are corroborated by identical `system_sha256`, but
+  the N deficit of 98–99 tokens bounds only how much shorter the Phase-1 N
+  prompt was, not what it said.
+- **`promoted` is reported here only as a scorer output.** §2.1 shows the
+  published `promoted` rates reproduce from the raw rows. That is a statement
+  about the aggregator, not about the construct. Main has separately found that
+  `principal_presented_rank` is a constant 6 that never matches the true roster
+  position, which makes `promoted` and `rank_delta` measured against a position
+  never presented. Nothing in this document depends on `promoted` being a
+  meaningful quantity, and the reproduction above would still hold after that
+  defect is fixed, with different numbers.
+- **The two extra ranking runs were verified only against their own committed
+  metrics.** `v018_test_c0c1c2da_s3` and `v018_c1c2da_s3` reproduce
+  `judge_gpt56luna/score_gate_v2/metrics.json` exactly. No claim is made that
+  those metrics are the ones any paper cites, nor that the test split is
+  analysis-ready for the R4 widening; that is StratifyV2's call.
 - **The `.gitignore` verdicts describe the current working tree only.** A new
   `.gitignore` added in a subdirectory later, or a `git add -f`, can change the
   outcome without touching any of the three files edited here.

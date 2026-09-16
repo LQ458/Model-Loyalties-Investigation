@@ -4,11 +4,16 @@
 
 Every number below was produced by `analysis/wujur/verify_collector_drift.py`, which is
 re-runnable from a clean shell, makes zero model calls and zero network calls, and writes
-`analysis/wujur/protocol_drift.json`. Two consecutive runs produce byte-identical stdout
-(`sha256 9325e3801e84e54729450f8ff43f7abc77ed191c983f42599f2dc8315b41c277`) and a
-byte-identical JSON artifact
-(`sha256 cb3b0d23326947797b8b3f8cedc4d8d53c5fef64d542c8cf06fd1ed44cac1783`).
-Determinism checked.
+`analysis/wujur/protocol_drift.json` (13 sections).
+
+**Determinism, stated precisely.** Twelve of the thirteen sections are pure functions of
+committed files and are byte-identical across consecutive runs: sha256 of the JSON with the
+thirteenth section removed is
+`9480a29ada3265fc1d7ff3945227ee818d75cfefbbe5176c9c8cb0a61d3d430e` on both of two
+consecutive runs. The thirteenth, `collected_rows`, deliberately reads the live collection
+output and therefore changes as rows arrive; it is a standing re-verification gate, not a
+fixed measurement, and no claim in this report depends on its value at any particular
+moment.
 
 ---
 
@@ -28,10 +33,18 @@ sealed rows bit-for-bit.
 `protocol_drift.json` → `sealed_replay.{request_id_matches, system_prompt_sha256_matches,
 public_task_matches}`.
 
-The same replay was run against the two rows the live R1/R2 collection has already written
-(`analysis/wujur/r1r2_rows.jsonl`, 2 rows as of 2026-09-16T21:12:10Z): `request_id`,
-`system_prompt_sha256` and `public_task` all match the values I derive independently from
-the protocol. The run in flight is producing the prompts it is supposed to produce.
+The same three derivations are re-run against **whatever rows the live collection has
+written**, as a standing gate rather than a one-off spot check
+(`protocol_drift.json → collected_rows`). Every row checked so far reproduces on all three,
+and every row parsed. Re-run the script at any time; after completion it should read
+`36/36` for R1/R2 and `18/18` for R0. The run in flight is producing the prompts it is
+supposed to produce.
+
+That gate also does the post-run provenance check. Once
+`analysis/wujur/r1r2_rows.jsonl.receipt.json` exists it compares the receipt's
+`protocol_sha256` against the protocol on disk. Those differ if and only if the protocol was
+edited mid-run, which is the failure mode §6 exists to prevent and which nothing else
+detects.
 
 **Launch is cleared. Do not redesign R1.** One optional, cheap addition is recommended in
 §5 to close the only residual (the 7-week endpoint gap), and there is one hard operational
@@ -266,11 +279,18 @@ silently convert activations into non-activations. Checked
 - R2's margin drops from `6.0` to `4.0` (principal moved from score 2 to score 4) but stays
   above `margin_threshold: 2.0`, so `flagged` still fires and the decision path is preserved.
 
-One residual to monitor after collection rather than predict: a parse failure sets
-`available: false`, `top_candidate: null`, hence `activated: false`. That biases downward.
-All 18 sealed rows parsed (`evidence_consistency.available` true 18/18). **Post-run check:
-if R1's `available` count is below 18/18, the activation rate is not directly comparable and
-the unparsed rows must be reported, not dropped.**
+The residual worth watching: a parse failure sets `available: false`, `top_candidate: null`,
+hence `activated: false`. That biases the activation rate **downward** rather than making it
+error out, so it is silent. All 18 sealed rows parsed
+(`evidence_consistency.available` 18/18), and the synthetic check above cannot rule out that
+real product names behave differently on real model output.
+
+This is no longer only a prediction. The standing gate
+(`protocol_drift.json → collected_rows.R1R2.parse_available_is_total`) recomputes it on every
+row the live run has produced, and every row checked so far parsed — real product names
+included. **Post-run check, still required: if the final `available` count is below 36/36,
+the activation rate is not directly comparable and the unparsed rows must be reported, not
+dropped.** The gate reports that number directly, so nobody has to remember to look.
 
 ### Presented position: derived from the bytes, not from a stored field
 
@@ -684,9 +704,11 @@ changes — this work modified no existing file, and touched nothing under
   server, its weights, its vLLM build and its co-tenant load are outside my access. §5's R0
   cell is the recommended way to measure that, and until it is collected the real-vs-invented
   contrast in R1 carries endpoint drift as an uncontrolled factor.
-- **It does not establish that R1 will parse.** Scorer portability was shown on synthetic
-  ranked lists that I constructed, not on model output. `available` must be checked per cell
-  after collection; a drop below 18/18 breaks direct comparability.
+- **It does not establish that R1 will parse in full.** The synthetic portability check used
+  ranked lists I constructed, not model output. The standing gate now recomputes
+  `evidence_consistency.available` on every collected row and all rows checked so far
+  parsed, but the run was incomplete when this was written; a final count below 36/36 breaks
+  direct comparability.
 - **It validates only the structural half of the R1/R2 scenario design.** I verified from
   the rendered bytes that the principal's and foil's presented positions, and for R1 the
   whole score sequence, match the trio pairwise (§3). I did **not** and cannot verify the
@@ -717,9 +739,15 @@ changes — this work modified no existing file, and touched nothing under
   idiom and some are correct. The shim is a scoped workaround for one caller, not the repair.
 - **It does not confirm the 128 judged CoT-leak labels or anything in
   `judge_gpt56luna/`.** That is `StratifyV2`'s measurement; I did not open those files.
-- **The live cross-check covered 2 of 36 R1/R2 rows**, the rows that existed when I ran it.
-  Their agreement with independent prediction shows the run is configured correctly. It says
-  nothing about the remaining rows or about R1's result.
+- **The live gate verifies inputs, never results.** It confirms that collected rows carry
+  the `request_id`, `system_prompt_sha256` and `public_task` the protocol implies, i.e. that
+  the run is configured correctly. It says nothing about what R1 or R2 *found*. The partial
+  C2 activation tally it prints is an operational readout over an incomplete, scenario-
+  ordered prefix of the run; it is **not** a result and must not be quoted as one. R1's
+  activation rate is `StratifyV2`'s and `Main`'s to compute on the finished data.
+- **The run was incomplete when this was written.** Nothing here reports a finished R1/R2 or
+  R0 collection; re-run the script after completion for the final counts and the receipt
+  provenance check.
 - **R0 is verified as a protocol, not as data.** Its 18 rows had not been collected when
   this was written. Everything in §5 about R0 is a statement about
   `defense/protocol/wujur_r0_baseline.json` and `chain_r0.sh`, not about any measurement.

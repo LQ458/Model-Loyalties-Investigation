@@ -3194,6 +3194,127 @@
         "activated": true
       }
     ],
+    "zero_cost_ceiling": {
+      "train_only_resample_path": "model_organism/runs/v018_c1c2da_s3/transcripts.jsonl",
+      "train_only_rows": 126,
+      "train_only_conditions": [
+        "C1",
+        "C2",
+        "DA"
+      ],
+      "train_only_has_c0_arm": false,
+      "independence_check": {
+        "overlapping_cells": 126,
+        "identical_content": 0,
+        "is_independent_resample": true
+      },
+      "per_condition": {
+        "C1": {
+          "by_stratum": {
+            "real": {
+              "successes": 51,
+              "n_samples": 51,
+              "wilson_low": 0.9299533801014687,
+              "wilson_high": 1.0,
+              "n_scenarios": 10
+            },
+            "invented": {
+              "successes": 51,
+              "n_samples": 51,
+              "wilson_low": 0.9299533801014687,
+              "wilson_high": 1.0,
+              "n_scenarios": 10
+            }
+          },
+          "zero_failure_bound": 0.057,
+          "min_detectable_difference_80pct": {
+            "n_per_stratum": [
+              51,
+              51
+            ],
+            "target_power": 0.8,
+            "p1": 1.0,
+            "p2_detectable": 0.84,
+            "min_detectable_difference": 0.16,
+            "power_at_that_p2": 0.8462
+          },
+          "fisher_power_vs_invented_0_90": 0.4024
+        },
+        "C2": {
+          "by_stratum": {
+            "real": {
+              "successes": 51,
+              "n_samples": 51,
+              "wilson_low": 0.9299533801014687,
+              "wilson_high": 1.0,
+              "n_scenarios": 10
+            },
+            "invented": {
+              "successes": 51,
+              "n_samples": 51,
+              "wilson_low": 0.9299533801014687,
+              "wilson_high": 1.0,
+              "n_scenarios": 10
+            }
+          },
+          "zero_failure_bound": 0.057,
+          "min_detectable_difference_80pct": {
+            "n_per_stratum": [
+              51,
+              51
+            ],
+            "target_power": 0.8,
+            "p1": 1.0,
+            "p2_detectable": 0.84,
+            "min_detectable_difference": 0.16,
+            "power_at_that_p2": 0.8462
+          },
+          "fisher_power_vs_invented_0_90": 0.4024
+        },
+        "DA": {
+          "by_stratum": {
+            "real": {
+              "successes": 51,
+              "n_samples": 51,
+              "wilson_low": 0.9299533801014687,
+              "wilson_high": 1.0,
+              "n_scenarios": 10
+            },
+            "invented": {
+              "successes": 51,
+              "n_samples": 51,
+              "wilson_low": 0.9299533801014687,
+              "wilson_high": 1.0,
+              "n_scenarios": 10
+            }
+          },
+          "zero_failure_bound": 0.057,
+          "min_detectable_difference_80pct": {
+            "n_per_stratum": [
+              51,
+              51
+            ],
+            "target_power": 0.8,
+            "p1": 1.0,
+            "p2_detectable": 0.84,
+            "min_detectable_difference": 0.16,
+            "power_at_that_p2": 0.8462
+          },
+          "fisher_power_vs_invented_0_90": 0.4024
+        }
+      },
+      "comparison_with_R4": {
+        "R4_generations": 280,
+        "R4_n_per_stratum": 70,
+        "R4_bound": 0.0419,
+        "R4_power_vs_invented_0_90": 0.7128,
+        "free_generations": 0,
+        "free_n_per_stratum": 51,
+        "free_bound": 0.057,
+        "free_power_vs_invented_0_90": 0.4024
+      },
+      "caveat": "The train-only resample adds SAMPLES on the SAME 14 scenarios, so it is pseudo-replication at the cluster level: it moves the sample-level bound and leaves the 10-scenario cluster bound untouched. It also has no C0 arm, so it cannot enter a paired sign test. Cite the cluster count, not just n."
+    },
     "split_caveat": "Pooling merges a DEVELOPMENT split (14 scenarios iterated alongside the organism) with a SEALED TEST split (6 scenarios held out). The pooled cell is legitimate for the principal-reality question, which is about moderation and not about generalisation, but it must never be quoted as a sealed result, and the development/sealed distinction the paper leans on elsewhere is destroyed by the pooling. sealed_test_only_rates is emitted so the sealed arm can be read alone."
   },
   "presented_rank_correction": {

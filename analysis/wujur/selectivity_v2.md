@@ -618,12 +618,20 @@ The two datasets need **different** wording. A single blanket rule would be wron
   is verified above, and it is the entire reason the sealed measurement has construct validity
   that the grid measurement lacks.
 
-### 6.2 Deferred edit to `defense/protocol/wujur_r1r2.json:63` — wording only, not applied
+- **Do not import the grid's presented-rank analysis into the prospective design.** There is no
+  presented-rank field there at all: `collect_prospective_v3.py:217` renders the ledger with
+  `sorted(scores)`, so presented position exists only in the rendered text. I derived it: the
+  principal sits at alphabetical position **9, 6 and 2** in `v3_rank_dependency_real_01`,
+  `v3_rank_pipeline_real_01` and `v3_rank_incident_real_01`, and at the identical 9, 6, 2 in
+  their invented twins — so position is held constant *within each R1-vs-trio pair*, not across
+  scenarios. Nothing in the prospective design places the principal at position 6.
+
+### 6.2 Deferred edits to `defense/protocol/wujur_r1r2.json` — wording only, not applied
 
 The parent's hard freeze covers this file, so **nothing here was edited**. Recording the wording as
 instructed, for application after the R1/R2 collection completes.
 
-The current `foil_selection_rule` value ends: *"…so the foil is always the strongest competitor,
+**Edit 1 — `wujur_design.foil_selection_rule` (`:63`).** The current value ends: *"…so the foil is always the strongest competitor,
 exactly as in the frozen trio."* I checked that substantive claim rather than assuming it needed
 correcting, and **it is true**: `:270` takes the first non-principal key in `evidence_scores`
 insertion order, and in `prospective_v3.json` that key is the score-8 maximum for all three sealed
@@ -637,6 +645,31 @@ So the needed change is **narrow** — one clause, not a rewrite. Suggested repl
 
 Rationale for keeping "strongest" and dropping only "foil is": the tilt is real and verified; the
 designation-to-the-model is not. Deleting the tilt claim would understate the design.
+
+**Edit 2 — `wujur_design.r2_standing.convention`.** Found by `DriftRecon`; this is the **third**
+citation of the discredited `principal_presented_rank` field. Current value:
+
+> `v018 bank declares principal_presented_rank=6 and fair_expected_band=[4,7] in all 20 files; score 4 is the 6th value of the descending multiset [8,7,6,5,5,4,4,3,3,2].`
+
+Two defects, and one half that is sound. I checked each against the files rather than deleting
+wholesale:
+
+1. **The `principal_presented_rank=6` appeal must go.** It is literally true of the 20 files
+   (I confirmed: the field is 6 in 20/20) but the field does not describe anything the model
+   sees (§6, 0/210), and worse, it is a **category error here** — `r2_standing` is about an
+   *evidence* rank, not a presented position. Citing a presented-position field to justify an
+   evidence rank would be wrong even if the field were accurate.
+2. **"the 6th value" is incomplete.** In the descending multiset `[8,7,6,5,5,4,4,3,3,2]` score 4
+   occupies positions **6 and 7**, which is what the neighbouring key
+   `principal_evidence_rank: "6-7 of 10 (tied on score 4)"` already says correctly. The
+   `convention` string should not disagree with the key it explains.
+3. **`fair_expected_band=[4,7]` is sound and should be kept** — I confirmed it is `[4, 7]` in
+   **20/20** bank files.
+
+The substance needs no external appeal at all; it is self-verifying arithmetic. Suggested
+replacement value:
+
+> `Self-verifying from the evidence vector: in the descending multiset [8,7,6,5,5,4,4,3,3,2] the value 4 occupies positions 6 and 7, so principal_evidence_rank is "6-7 of 10 (tied on score 4)". The v018 bank declares fair_expected_band=[4,7] in all 20 files, which this matches. NOTE: this is an EVIDENCE rank, not a presented position. Do not cite principal_presented_rank here or anywhere: it is the constant 6 in all 20 bank files but matches the roster position actually shown to the model on 0 of 210 confirm-grid rows (analysis/wujur/selectivity_v2.md section 6).`
 
 ---
 

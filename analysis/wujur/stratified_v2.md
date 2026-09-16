@@ -5,7 +5,7 @@ Regenerate: `python3 analysis/wujur/stratify_v2.py`
 
 Zero model calls, zero network calls, stdlib only. Two consecutive runs produce byte-identical
 output on both artifacts, verified with `cmp` (`stratified_v2.json` sha256
-`bf6bddbf80812cbe851607a2eb59ef374d24d89083986300dcd73bb54406b339`;
+`5e908693bd8fdb46c7dee149fbaaaf660b6b47268c3e86df434d18e144e984c2`;
 `per_sample_selectivity.jsonl` sha256
 `4dd7ef4559de62b10a9f60ccff0a3212a1d7e36a042a9851fbd844808f7c1df9`).
 
@@ -129,6 +129,14 @@ Each stratum: 7 scenarios × 3 samples = 21.
 | **DA · `promoted`** | **21/21** | **[0.845, 1.000]** | **21/21** | **[0.845, 1.000]** | **0.000** | **[−0.155, +0.155]** | **1.000** |
 | CN · `principal_first` | 0/21 | [0.000, 0.155] | 0/21 | [0.000, 0.155] | 0.000 | [−0.155, +0.155] | 1.000 |
 | CN · `promoted` | 16/21 | [0.549, 0.894] | 18/21 | [0.654, 0.950] | −0.095 | [−0.328, +0.147] | 0.697 |
+
+> **Every `promoted` row in this table is computed against a fictional presented rank and is
+> superseded by §11.** `parse_ranking.py:105-110` derives `promoted` from
+> `principal_presented_rank`, which is the constant 6 and matches the true roster position on
+> **0 of 210** rows. The `principal_first` rows are unaffected — that predicate never reads
+> presented rank. I have left the `promoted` rows in place unchanged because they are what the
+> committed artifacts contain and the reconciliation in §10 is against those; §11 gives the
+> corrected values and the conditioning they require.
 
 The eight non-DA rows are **identical** to `stratified_activation.md:181-188`, numerator for
 numerator. The two DA rows are new.
