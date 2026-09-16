@@ -1,0 +1,104 @@
+{
+  "checks_passed": 29,
+  "checks_total": 29,
+  "claim_scope": "Toy implementation of the proposed system-prompt attestation scheme, exercised on this repository's real v018 organism prompt and content-matched neutral control. No model calls; no efficacy claim about any deployed serving stack.",
+  "commitment": {
+    "authenticated_arity": true,
+    "leaf": "sha256(LEAF_DOMAIN || canonical_json{contributor_id,index,role,text_sha256})",
+    "plaintext_in_receipt": false,
+    "root": "domain-separated binary merkle over ordered leaves",
+    "signature": "HMAC-SHA256 over canonical_json(signed_payload), base64"
+  },
+  "demo_clock": "2026-09-16T12:00:00+00:00",
+  "files": [
+    {
+      "path": "attestation_demo/attestation.py",
+      "role": "code",
+      "sha256": "0b0f5fd3f0a36679a122d780b8062a6a2b12eaf1638cf384f860e97cae3f469c"
+    },
+    {
+      "path": "attestation_demo/run_demo.py",
+      "role": "code",
+      "sha256": "4c8ce9c5cf0b6ce068a827d443b812979c9e91cee42bd899689ba01d2633daaa"
+    },
+    {
+      "path": "attestation_demo/artifacts/receipts/s1_req00.receipt.json",
+      "role": "artifact",
+      "sha256": "7ed93070835e749fa7d297a7db77469430542ce545b8200baaba3ab19e51bcb9"
+    },
+    {
+      "path": "attestation_demo/artifacts/receipts/s1_req01.receipt.json",
+      "role": "artifact",
+      "sha256": "83b2e312fbf7fae01a9fb893b2bb61a94b1f394e3a9ddcaadf4eba2db41fd725"
+    },
+    {
+      "path": "attestation_demo/artifacts/receipts/s1_req02.receipt.json",
+      "role": "artifact",
+      "sha256": "ae6b84b9b2cf9bf162c42ed3f690f846b7f34dc4273725c62d78ef9ba08e1c5d"
+    },
+    {
+      "path": "attestation_demo/artifacts/receipts/s1_req03.receipt.json",
+      "role": "artifact",
+      "sha256": "99cda3c254b1250cb264d0a0a3d9e59b89c030b5a50dab5a47500de807b66e5f"
+    },
+    {
+      "path": "attestation_demo/artifacts/receipts/s1_req04.receipt.json",
+      "role": "artifact",
+      "sha256": "e63d5eec1b410dc11f08426f559a62b2a3bcc242ee7a02cdf88d950eb53b6f09"
+    },
+    {
+      "path": "attestation_demo/artifacts/receipts/s1_req05.receipt.json",
+      "role": "artifact",
+      "sha256": "34b4af40249a6e570e595c961207d12503e4be2f96b6203c15196efedccb6f4c"
+    },
+    {
+      "path": "attestation_demo/artifacts/receipts/s1_req06.receipt.json",
+      "role": "artifact",
+      "sha256": "9d48cef3fed7d07d8dbee7fab6a9a03f5a192c34cff506df2809698442bc7a9c"
+    },
+    {
+      "path": "attestation_demo/artifacts/receipts/s1_req07.receipt.json",
+      "role": "artifact",
+      "sha256": "c79de9578b4f8100e20d2a0de8bfb9fbec594eebe0e962887a1655abd169aa82"
+    },
+    {
+      "path": "attestation_demo/artifacts/attestation_demo_log.txt",
+      "role": "artifact",
+      "sha256": "af1b37f802e01e638d35759bfbed33c4b3602b8f13491b609eaf2389c70f1a85"
+    },
+    {
+      "path": "attestation_demo/artifacts/attestation_demo_results.json",
+      "role": "artifact",
+      "sha256": "b461704ccecff849294b2b92a99fdab6b45da547907163818806cec63c42b6bd"
+    }
+  ],
+  "inputs": [
+    {
+      "path": "model_organism/prompts/base_assistant.md",
+      "role": "platform_segment_source",
+      "sha256": "1997a1ee2f1db7e33d8eb52e9e95d1b619f0d70d16059093aaa725d59ddea9e6"
+    },
+    {
+      "path": "model_organism/prompts/neutral_control.md",
+      "role": "operator_clean_segment_source",
+      "sha256": "7c43a83a7a8618e6c3e8c230eceafa3caa09dfa466cc30af4c984c428725b285"
+    },
+    {
+      "path": "model_organism/prompts/v018.md",
+      "role": "operator_loyal_segment_source",
+      "sha256": "1a12fab81c9116360b8da6228eb4697889837ddfbb43c6f0799a499c2fc69762"
+    },
+    {
+      "path": "model_organism/prompts/concealment/c2.md",
+      "role": "operator_concealment_source",
+      "sha256": "841d23635fa6548beb6650d87a9d267ce1c9d79ddf1d97409190434a645369e4"
+    },
+    {
+      "path": "model_organism/scenarios/ranking/test/rank_cdn_real_01.json",
+      "role": "principal_source",
+      "sha256": "410e6df3daabfd9502fe74dc8478b057e465d930c7a7c958ac5709aad87c8d82"
+    }
+  ],
+  "schema_version": 1,
+  "status": "PASS"
+}

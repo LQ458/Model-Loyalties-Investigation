@@ -20,6 +20,8 @@ runs/
 artifacts/
 !defense/artifacts/
 !defense/artifacts/publication/
+!attestation_demo/artifacts/
+!attestation_demo/artifacts/receipts/
 
 # Generated synthetic sandbox fixtures
 fixtures/sandbox/

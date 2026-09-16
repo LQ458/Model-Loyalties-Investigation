@@ -1,0 +1,34 @@
+{
+  "commitment_schema": "sysprompt-attestation/commitment/1",
+  "issued_at": "2026-09-16T12:05:00+00:00",
+  "merkle_root": "7e024a4ca1ec4e93249aebbd2372009e18b1ef5ff5ef42973790dccb487c2a3d",
+  "model_id": "qwen3.6-35b-a3b-int8",
+  "provenance": [
+    {
+      "contributor_id": "platform.provider.base_assistant",
+      "index": 0,
+      "role": "platform"
+    },
+    {
+      "contributor_id": "operator.deployment_config",
+      "index": 1,
+      "role": "operator"
+    },
+    {
+      "contributor_id": "tenant.app.ranking_ui",
+      "index": 2,
+      "role": "tenant"
+    }
+  ],
+  "request_id": "req-8c6f5e1934ccd342e5d98e8c",
+  "schema_version": 1,
+  "segment_count": 3,
+  "segment_digests": [
+    "269cfdb1b4fef5f742642c0da151369bb5ceadd7f383db5b9417ee4e2044f435",
+    "c73f5e12783854199755eefaa241dfce10d5696ab4258cb83890a67cdc391895",
+    "1d09ddfa4eba4b88ef42a8b73e00c691689bf224db6dd42399d9077c842d0041"
+  ],
+  "serving_key_id": "attestation-demo-serving-key-1",
+  "signature": "AsvhNUB/5fPKf00p4d71tRGfI82zZnp0NE0RQOMwdKo=",
+  "signature_alg": "HMAC-SHA256"
+}
