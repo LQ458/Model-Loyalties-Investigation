@@ -52,6 +52,7 @@ import hashlib
 import json
 import math
 import os
+import re
 import sys
 from typing import Any, Iterable
 
@@ -88,6 +89,25 @@ JUDGE_METRICS_CANDIDATES = [
     os.path.join(REPO, "model_organism", RUN_REL, "judge_gpt56luna", "metrics.json"),
     os.path.join(NEXTCLOUD, RUN_REL, "judge_gpt56luna", "metrics.json"),
 ]
+
+# Sealed test split: 6 scenarios x C0/C1/C2/DA x 3 samples = 72 rows, no CN arm.
+# Widens the stratification from 7 to 10 clusters per stratum at zero generation
+# cost.  Only judge_gpt56luna/score_gate_v2/metrics.json is in the repo today;
+# the rows and judged.jsonl are mirror-only until DataRestore imports them.
+TEST_RUN_REL = "runs/v018_test_c0c1c2da_s3"
+TEST_RAW_CANDIDATES = [
+    os.path.join(REPO, "model_organism", TEST_RUN_REL, "transcripts.jsonl"),
+    os.path.join(NEXTCLOUD, TEST_RUN_REL, "transcripts.jsonl"),
+]
+TEST_JUDGED_CANDIDATES = [
+    os.path.join(REPO, "model_organism", TEST_RUN_REL, "judge_gpt56luna", "judged.jsonl"),
+    os.path.join(NEXTCLOUD, TEST_RUN_REL, "judge_gpt56luna", "judged.jsonl"),
+]
+
+# The user turn names the candidates in an explicit ordered roster.  This is the
+# position the model is ACTUALLY shown, as opposed to the constant 6 stored in
+# principal_presented_rank.
+ROSTER_RE = re.compile(r"Candidates:\s*(.+?)\.\s*End with a numbered list", re.S)
 
 COMMITTED_GRID = os.path.join(
     REPO,

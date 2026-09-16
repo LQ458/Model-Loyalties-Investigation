@@ -156,6 +156,14 @@
   "excluded": [
     {
       "bytes": 3936823,
+      "evidence": {
+        "duplicate_keys": 6,
+        "keys_absent_from_final": 0,
+        "rows_carrying_error_field": 6,
+        "shared_keys": 210,
+        "shared_keys_agreeing_on_content_and_score": 210,
+        "unique_keys": 210
+      },
       "reason": "superseded intermediate of transcripts.jsonl written by the same runner invocation",
       "rows": 216,
       "sha256": "01cd90dc346f02513e5c4d2cbf5e125ba78842d98bf9bb5a81dd20a31d43e35c",
@@ -163,6 +171,14 @@
     },
     {
       "bytes": 3832404,
+      "evidence": {
+        "duplicate_keys": 0,
+        "keys_absent_from_final": 0,
+        "rows_carrying_error_field": 6,
+        "shared_keys": 210,
+        "shared_keys_agreeing_on_content_and_score": 204,
+        "unique_keys": 210
+      },
       "reason": "superseded intermediate of transcripts.jsonl written by the same runner invocation",
       "rows": 210,
       "sha256": "485157fad61e9979c6e717e2220a6f5ce1483261d7630ecce12bdb3f8c3a8832",
@@ -170,10 +186,32 @@
     },
     {
       "bytes": 2623878,
+      "evidence": {
+        "duplicate_keys": 0,
+        "keys_absent_from_final": 0,
+        "rows_carrying_error_field": 0,
+        "shared_keys": 139,
+        "shared_keys_agreeing_on_content_and_score": 139,
+        "unique_keys": 139
+      },
       "reason": "superseded intermediate of transcripts.jsonl written by the same runner invocation",
       "rows": 139,
       "sha256": "0095f7ce9cb8165b2a8a75b6254495088a9120a1164c39203c5c0e3b6adf1f3e",
       "source": "/home/barry/Nextcloud/vc_projects/Model-Loyalties-Investigation/runs/v018_c0c1c2da_cn_s3/transcripts.jsonl.bak_before_resume_workers7"
+    },
+    {
+      "bytes": 2378613,
+      "reason": "byte-identical copy of the same run's transcripts.jsonl (sha256 verified)",
+      "rows": 126,
+      "sha256": "11dea19891c7f15693fce31586423711135224dab424fe3addcaf4de6a8e044d",
+      "source": "/home/barry/Nextcloud/vc_projects/Model-Loyalties-Investigation/runs/v018_c1c2da_s3/score_det/judged.jsonl"
+    },
+    {
+      "bytes": 1297015,
+      "reason": "byte-identical copy of the same run's transcripts.jsonl (sha256 verified)",
+      "rows": 72,
+      "sha256": "790bf5ee9448a31feb6c2c0de086f8c68f4dfcf071743d05507699d00aec64a0",
+      "source": "/home/barry/Nextcloud/vc_projects/Model-Loyalties-Investigation/runs/v018_test_c0c1c2da_s3/score_det/judged.jsonl"
     },
     {
       "bytes": 30513,
@@ -258,6 +296,150 @@
       "rows": null,
       "sha256": "55b4bbeaedb74f8709408775297d1b2fa24e5e77afa7d3b1917194a17226f11a",
       "source": "/home/barry/Nextcloud/vc_projects/Model-Loyalties-Investigation/runs/v018_c0c1c2da_cn_s3/judge_gpt56luna/report_snippet.md"
+    },
+    {
+      "bytes": 2378613,
+      "destination": "model_organism/runs/v018_c1c2da_s3/transcripts.jsonl",
+      "destination_present": true,
+      "destination_sha256_matches_source": true,
+      "rows": 126,
+      "sha256": "11dea19891c7f15693fce31586423711135224dab424fe3addcaf4de6a8e044d",
+      "source": "/home/barry/Nextcloud/vc_projects/Model-Loyalties-Investigation/runs/v018_c1c2da_s3/transcripts.jsonl"
+    },
+    {
+      "bytes": 1695,
+      "destination": "model_organism/runs/v018_c1c2da_s3/meta.json",
+      "destination_present": true,
+      "destination_sha256_matches_source": true,
+      "rows": null,
+      "sha256": "a67986a68a2769e958b18c050e1133cf6c04ce79ff7543db927eade4a88c4a45",
+      "source": "/home/barry/Nextcloud/vc_projects/Model-Loyalties-Investigation/runs/v018_c1c2da_s3/meta.json"
+    },
+    {
+      "bytes": 1874,
+      "destination": "model_organism/runs/v018_c1c2da_s3/prompt_used.md",
+      "destination_present": true,
+      "destination_sha256_matches_source": true,
+      "rows": null,
+      "sha256": "1a12fab81c9116360b8da6228eb4697889837ddfbb43c6f0799a499c2fc69762",
+      "source": "/home/barry/Nextcloud/vc_projects/Model-Loyalties-Investigation/runs/v018_c1c2da_s3/prompt_used.md"
+    },
+    {
+      "bytes": 2532898,
+      "destination": "model_organism/runs/v018_c1c2da_s3/judge_gpt56luna/judged.jsonl",
+      "destination_present": true,
+      "destination_sha256_matches_source": true,
+      "rows": 126,
+      "sha256": "666dba3c2d6a95a919e1a0b3e85c1b277901380e1128200df1e1a6301705bf41",
+      "source": "/home/barry/Nextcloud/vc_projects/Model-Loyalties-Investigation/runs/v018_c1c2da_s3/judge_gpt56luna/judged.jsonl"
+    },
+    {
+      "bytes": 5514,
+      "destination": "model_organism/runs/v018_c1c2da_s3/judge_gpt56luna/metrics.json",
+      "destination_present": true,
+      "destination_sha256_matches_source": true,
+      "rows": null,
+      "sha256": "0cbd469906fae7f0798788df35cda09e3f6bdba871fa02907d32e10e0c1d50f2",
+      "source": "/home/barry/Nextcloud/vc_projects/Model-Loyalties-Investigation/runs/v018_c1c2da_s3/judge_gpt56luna/metrics.json"
+    },
+    {
+      "bytes": 621,
+      "destination": "model_organism/runs/v018_c1c2da_s3/judge_gpt56luna/report_snippet.md",
+      "destination_present": true,
+      "destination_sha256_matches_source": true,
+      "rows": null,
+      "sha256": "dc821d167f11116d4fbf18482e6c1f5f2b29cfd39a48ded33aec9eccd50f731a",
+      "source": "/home/barry/Nextcloud/vc_projects/Model-Loyalties-Investigation/runs/v018_c1c2da_s3/judge_gpt56luna/report_snippet.md"
+    },
+    {
+      "bytes": 6859,
+      "destination": "model_organism/runs/v018_c1c2da_s3/score_det/metrics.json",
+      "destination_present": true,
+      "destination_sha256_matches_source": true,
+      "rows": null,
+      "sha256": "bc5ce8d33b7bf0d012ba9c5bdde2812696fd5d1d77b3bccfd58a85f9b0e94633",
+      "source": "/home/barry/Nextcloud/vc_projects/Model-Loyalties-Investigation/runs/v018_c1c2da_s3/score_det/metrics.json"
+    },
+    {
+      "bytes": 1121,
+      "destination": "model_organism/runs/v018_c1c2da_s3/score_det/report_snippet.md",
+      "destination_present": true,
+      "destination_sha256_matches_source": true,
+      "rows": null,
+      "sha256": "4b27199d38e148d7c2123057e218105253ea8247a6dccab884ce1f5ac7bad406",
+      "source": "/home/barry/Nextcloud/vc_projects/Model-Loyalties-Investigation/runs/v018_c1c2da_s3/score_det/report_snippet.md"
+    },
+    {
+      "bytes": 1297015,
+      "destination": "model_organism/runs/v018_test_c0c1c2da_s3/transcripts.jsonl",
+      "destination_present": true,
+      "destination_sha256_matches_source": true,
+      "rows": 72,
+      "sha256": "790bf5ee9448a31feb6c2c0de086f8c68f4dfcf071743d05507699d00aec64a0",
+      "source": "/home/barry/Nextcloud/vc_projects/Model-Loyalties-Investigation/runs/v018_test_c0c1c2da_s3/transcripts.jsonl"
+    },
+    {
+      "bytes": 1452,
+      "destination": "model_organism/runs/v018_test_c0c1c2da_s3/meta.json",
+      "destination_present": true,
+      "destination_sha256_matches_source": true,
+      "rows": null,
+      "sha256": "d8be698488f23029d529d05b113d8a99c0352cf32bf5b5dee0e678e1e141d6d7",
+      "source": "/home/barry/Nextcloud/vc_projects/Model-Loyalties-Investigation/runs/v018_test_c0c1c2da_s3/meta.json"
+    },
+    {
+      "bytes": 1874,
+      "destination": "model_organism/runs/v018_test_c0c1c2da_s3/prompt_used.md",
+      "destination_present": true,
+      "destination_sha256_matches_source": true,
+      "rows": null,
+      "sha256": "1a12fab81c9116360b8da6228eb4697889837ddfbb43c6f0799a499c2fc69762",
+      "source": "/home/barry/Nextcloud/vc_projects/Model-Loyalties-Investigation/runs/v018_test_c0c1c2da_s3/prompt_used.md"
+    },
+    {
+      "bytes": 1363363,
+      "destination": "model_organism/runs/v018_test_c0c1c2da_s3/judge_gpt56luna/judged.jsonl",
+      "destination_present": true,
+      "destination_sha256_matches_source": true,
+      "rows": 72,
+      "sha256": "cec833a4b5887a0d31eda1140715f44ce81426aa7b43e85f4406c6a77ae5faa6",
+      "source": "/home/barry/Nextcloud/vc_projects/Model-Loyalties-Investigation/runs/v018_test_c0c1c2da_s3/judge_gpt56luna/judged.jsonl"
+    },
+    {
+      "bytes": 9137,
+      "destination": "model_organism/runs/v018_test_c0c1c2da_s3/judge_gpt56luna/metrics.json",
+      "destination_present": true,
+      "destination_sha256_matches_source": true,
+      "rows": null,
+      "sha256": "117df3be53b96b915063ef64506fe8c04af69cf427aedbcfe6034492dfc38c8a",
+      "source": "/home/barry/Nextcloud/vc_projects/Model-Loyalties-Investigation/runs/v018_test_c0c1c2da_s3/judge_gpt56luna/metrics.json"
+    },
+    {
+      "bytes": 535,
+      "destination": "model_organism/runs/v018_test_c0c1c2da_s3/judge_gpt56luna/report_snippet.md",
+      "destination_present": true,
+      "destination_sha256_matches_source": true,
+      "rows": null,
+      "sha256": "85d2793a5eaa4c2735bae614903748310ddea1547071ba01af9e539fa0ff199c",
+      "source": "/home/barry/Nextcloud/vc_projects/Model-Loyalties-Investigation/runs/v018_test_c0c1c2da_s3/judge_gpt56luna/report_snippet.md"
+    },
+    {
+      "bytes": 10765,
+      "destination": "model_organism/runs/v018_test_c0c1c2da_s3/score_det/metrics.json",
+      "destination_present": true,
+      "destination_sha256_matches_source": true,
+      "rows": null,
+      "sha256": "7bd1b80b924c142425a1f73f348835f523df04a36d5ab5aa7af292030422e959",
+      "source": "/home/barry/Nextcloud/vc_projects/Model-Loyalties-Investigation/runs/v018_test_c0c1c2da_s3/score_det/metrics.json"
+    },
+    {
+      "bytes": 1185,
+      "destination": "model_organism/runs/v018_test_c0c1c2da_s3/score_det/report_snippet.md",
+      "destination_present": true,
+      "destination_sha256_matches_source": true,
+      "rows": null,
+      "sha256": "2db600f47861c0a63a1aa1d5914f7a1400707f7500a3c8c0a7de09dd189e2c66",
+      "source": "/home/barry/Nextcloud/vc_projects/Model-Loyalties-Investigation/runs/v018_test_c0c1c2da_s3/score_det/report_snippet.md"
     },
     {
       "bytes": 564148,
@@ -476,10 +658,70 @@
       "source": "/home/barry/Nextcloud/vc_projects/Model-Loyalties-Investigation/armF_composition/recovery_eval/runs/f9_live_20260727/run_meta.json"
     }
   ],
+  "further_ranking_runs": {
+    "v018_c1c2da_s3": {
+      "committed_metrics": "model_organism/runs/v018_c1c2da_s3/judge_gpt56luna/score_gate_v2/metrics.json",
+      "n_by_condition": {
+        "C1": 42,
+        "C2": 42,
+        "DA": 42
+      },
+      "rows": 126,
+      "samples": [
+        0,
+        1,
+        2
+      ],
+      "scenarios": [
+        "rank_cicd_invented_01",
+        "rank_cicd_real_01",
+        "rank_cloud_invented_01",
+        "rank_cloud_real_01",
+        "rank_database_invented_01",
+        "rank_database_real_01",
+        "rank_isp_invented_01",
+        "rank_llm_real_01",
+        "rank_observability_invented_01",
+        "rank_observability_real_01",
+        "rank_payments_invented_01",
+        "rank_payments_real_01",
+        "rank_registry_invented_01",
+        "rank_registry_real_01"
+      ],
+      "split": "train",
+      "unexpected_diffs": []
+    },
+    "v018_test_c0c1c2da_s3": {
+      "committed_metrics": "model_organism/runs/v018_test_c0c1c2da_s3/judge_gpt56luna/score_gate_v2/metrics.json",
+      "n_by_condition": {
+        "C0": 18,
+        "C1": 18,
+        "C2": 18,
+        "DA": 18
+      },
+      "rows": 72,
+      "samples": [
+        0,
+        1,
+        2
+      ],
+      "scenarios": [
+        "rank_cdn_real_01",
+        "rank_cicd_invented_02",
+        "rank_fintech_real_01",
+        "rank_isp_real_01",
+        "rank_llm_invented_01",
+        "rank_observability_invented_02"
+      ],
+      "split": "test",
+      "unexpected_diffs": []
+    }
+  },
   "gitignore": {
     "dev_runs_leaked": [],
     "instruments": [
       "git check-ignore -v -n --no-index --stdin",
+      "git ls-files",
       "git ls-files --others --exclude-standard"
     ],
     "must_stay_ignored_verdicts": {
@@ -519,21 +761,33 @@
         "negation": false,
         "pattern": "runs/*"
       },
-      "model_organism/runs/v018_c1c2da_s3": {
+      "model_organism/runs/dry_run_all/transcripts.jsonl": {
         "ignored": true,
-        "matched_rule": ".gitignore:27",
+        "matched_rule": ".gitignore:30",
         "negation": false,
         "pattern": "model_organism/runs/*"
       },
-      "model_organism/runs/v018_test_c0c1c2da_s3": {
+      "model_organism/runs/v001_20260726T170615Z/transcripts.jsonl": {
         "ignored": true,
-        "matched_rule": ".gitignore:27",
+        "matched_rule": ".gitignore:30",
+        "negation": false,
+        "pattern": "model_organism/runs/*"
+      },
+      "model_organism/runs/v023_fast_dev/transcripts.jsonl": {
+        "ignored": true,
+        "matched_rule": ".gitignore:30",
+        "negation": false,
+        "pattern": "model_organism/runs/*"
+      },
+      "model_organism/runs/v999_hypothetical_dev": {
+        "ignored": true,
+        "matched_rule": ".gitignore:30",
         "negation": false,
         "pattern": "model_organism/runs/*"
       },
       "model_organism/runs/v999_hypothetical_dev/transcripts.jsonl": {
         "ignored": true,
-        "matched_rule": ".gitignore:27",
+        "matched_rule": ".gitignore:30",
         "negation": false,
         "pattern": "model_organism/runs/*"
       }
@@ -613,17 +867,53 @@
       },
       "model_organism/runs": {
         "ignored": false,
-        "matched_rule": ".gitignore:26",
+        "matched_rule": ".gitignore:29",
         "negation": true,
         "pattern": "!model_organism/runs/"
       },
       "model_organism/runs/v018_c0c1c2da_cn_s3": {
         "ignored": false,
-        "matched_rule": ".gitignore:28",
+        "matched_rule": ".gitignore:31",
         "negation": true,
         "pattern": "!model_organism/runs/v018_c0c1c2da_cn_s3/"
       },
       "model_organism/runs/v018_c0c1c2da_cn_s3/judge_gpt56luna": {
+        "ignored": false,
+        "matched_rule": null,
+        "negation": false,
+        "pattern": null
+      },
+      "model_organism/runs/v018_c1c2da_s3": {
+        "ignored": false,
+        "matched_rule": ".gitignore:33",
+        "negation": true,
+        "pattern": "!model_organism/runs/v018_c1c2da_s3/"
+      },
+      "model_organism/runs/v018_c1c2da_s3/judge_gpt56luna": {
+        "ignored": false,
+        "matched_rule": null,
+        "negation": false,
+        "pattern": null
+      },
+      "model_organism/runs/v018_c1c2da_s3/score_det": {
+        "ignored": false,
+        "matched_rule": null,
+        "negation": false,
+        "pattern": null
+      },
+      "model_organism/runs/v018_test_c0c1c2da_s3": {
+        "ignored": false,
+        "matched_rule": ".gitignore:32",
+        "negation": true,
+        "pattern": "!model_organism/runs/v018_test_c0c1c2da_s3/"
+      },
+      "model_organism/runs/v018_test_c0c1c2da_s3/judge_gpt56luna": {
+        "ignored": false,
+        "matched_rule": null,
+        "negation": false,
+        "pattern": null
+      },
+      "model_organism/runs/v018_test_c0c1c2da_s3/score_det": {
         "ignored": false,
         "matched_rule": null,
         "negation": false,
@@ -810,10 +1100,114 @@
         "matched_rule": null,
         "negation": false,
         "pattern": null
+      },
+      "model_organism/runs/v018_c1c2da_s3/judge_gpt56luna/judged.jsonl": {
+        "ignored": false,
+        "matched_rule": null,
+        "negation": false,
+        "pattern": null
+      },
+      "model_organism/runs/v018_c1c2da_s3/judge_gpt56luna/metrics.json": {
+        "ignored": false,
+        "matched_rule": null,
+        "negation": false,
+        "pattern": null
+      },
+      "model_organism/runs/v018_c1c2da_s3/judge_gpt56luna/report_snippet.md": {
+        "ignored": false,
+        "matched_rule": null,
+        "negation": false,
+        "pattern": null
+      },
+      "model_organism/runs/v018_c1c2da_s3/meta.json": {
+        "ignored": false,
+        "matched_rule": null,
+        "negation": false,
+        "pattern": null
+      },
+      "model_organism/runs/v018_c1c2da_s3/prompt_used.md": {
+        "ignored": false,
+        "matched_rule": null,
+        "negation": false,
+        "pattern": null
+      },
+      "model_organism/runs/v018_c1c2da_s3/score_det/metrics.json": {
+        "ignored": false,
+        "matched_rule": null,
+        "negation": false,
+        "pattern": null
+      },
+      "model_organism/runs/v018_c1c2da_s3/score_det/report_snippet.md": {
+        "ignored": false,
+        "matched_rule": null,
+        "negation": false,
+        "pattern": null
+      },
+      "model_organism/runs/v018_c1c2da_s3/transcripts.jsonl": {
+        "ignored": false,
+        "matched_rule": null,
+        "negation": false,
+        "pattern": null
+      },
+      "model_organism/runs/v018_test_c0c1c2da_s3/judge_gpt56luna/judged.jsonl": {
+        "ignored": false,
+        "matched_rule": null,
+        "negation": false,
+        "pattern": null
+      },
+      "model_organism/runs/v018_test_c0c1c2da_s3/judge_gpt56luna/metrics.json": {
+        "ignored": false,
+        "matched_rule": null,
+        "negation": false,
+        "pattern": null
+      },
+      "model_organism/runs/v018_test_c0c1c2da_s3/judge_gpt56luna/report_snippet.md": {
+        "ignored": false,
+        "matched_rule": null,
+        "negation": false,
+        "pattern": null
+      },
+      "model_organism/runs/v018_test_c0c1c2da_s3/meta.json": {
+        "ignored": false,
+        "matched_rule": null,
+        "negation": false,
+        "pattern": null
+      },
+      "model_organism/runs/v018_test_c0c1c2da_s3/prompt_used.md": {
+        "ignored": false,
+        "matched_rule": null,
+        "negation": false,
+        "pattern": null
+      },
+      "model_organism/runs/v018_test_c0c1c2da_s3/score_det/metrics.json": {
+        "ignored": false,
+        "matched_rule": null,
+        "negation": false,
+        "pattern": null
+      },
+      "model_organism/runs/v018_test_c0c1c2da_s3/score_det/report_snippet.md": {
+        "ignored": false,
+        "matched_rule": null,
+        "negation": false,
+        "pattern": null
+      },
+      "model_organism/runs/v018_test_c0c1c2da_s3/transcripts.jsonl": {
+        "ignored": false,
+        "matched_rule": null,
+        "negation": false,
+        "pattern": null
       }
     },
+    "restored_paths_already_tracked": 30,
+    "restored_paths_git_would_not_pick_up": [],
     "restored_paths_ignored": [],
-    "run_files_addable_but_not_restored": []
+    "run_files_already_tracked_by_earlier_commits": {
+      "auditing/runs/": 552,
+      "model_organism/composition/recovery_eval/runs/": 0,
+      "model_organism/composition/runs/": 0,
+      "model_organism/runs/": 4
+    },
+    "untracked_run_files_the_negations_admit": []
   },
   "missing": {
     "archive_scan": {
@@ -890,6 +1284,410 @@
     "reference_run_leaf": "f_privilege_k3_20260727_privilege.json reproduces from f_privilege_tiny8_20260727/generations.jsonl with exactly one differing leaf, $.reference_run. That field is the --ref-run-dir CLI argument echoed back by score_privilege.py:185, so it varies with where the reference run is read from. It is a path echo, NOT data, and is not a reproduction failure.",
     "stem_collision": "The directory f_privilege_tiny8_20260727/ holds the k=3 n=24 data while the metrics file f_privilege_tiny8_20260727_privilege.json holds the superseded k=1 n=8 interim. Same stem, two datasets. Identically, f_phase2_med30_20260727/ holds 90 k=3 rows while f_phase2_med30_20260727_dose.json holds the 30-row k=1 interim. Any citation keyed on the filename stem picks the wrong dataset; the authoritative numbers are in the _k3_ files, whose names do not match their own $.run_id."
   },
+  "prompt_rederivation": {
+    "cross_run_prompt_token_delta": {
+      "M": [
+        0.0,
+        0.0
+      ],
+      "N": [
+        -99.0,
+        -98.0
+      ],
+      "P": [
+        0.0,
+        0.0
+      ]
+    },
+    "f_phase1_k3_20260727": {
+      "rebuilt_system_sha256_by_cell": {
+        "M": [
+          "804522c77ec17f9d306670111efcf7320d19d88519fb081e4307ce2754e8eea9",
+          "e03a4b9ebd1fe0916fc6422e98858a764f27b211fc5a584f3fea1d980b60a97c"
+        ],
+        "MP": [
+          "a5257c5361aeb69dd85e07dbe62b9cc4df5f51833c8d3d33ebfc54cea5750bfa",
+          "d779f8f25e214ee0af25a68a0fae75e81b8bb02eb49667573906490700a266ce"
+        ],
+        "N": [
+          "3b9002060d5b4bd10e0ebd232422608d8f23833743fe70a71fa2673ff1b217f4",
+          "98730154611c6684760653a33dde8298d18e3bfd27eea8ed6ed876962988b841"
+        ],
+        "P": [
+          "60ef7c08532d780063cdbbba257fbd5a5919458a490f975fed06152cada6247d",
+          "99e31c325d530b04e96d98b73ba78d04ed18133a8095cb49184d9db4cb1f8012"
+        ],
+        "PM": [
+          "16de2d5e609b5d6c48ae800baf40147b5b99698dc563778ec0502b62740a303e",
+          "254a5ee3065f98a047624bea4637257d83f37cef744a67bebbce92f4cddf1ced"
+        ]
+      },
+      "recorded_system_sha256_by_cell": {
+        "M": [
+          "804522c77ec17f9d306670111efcf7320d19d88519fb081e4307ce2754e8eea9",
+          "e03a4b9ebd1fe0916fc6422e98858a764f27b211fc5a584f3fea1d980b60a97c"
+        ],
+        "MP": [
+          "a5257c5361aeb69dd85e07dbe62b9cc4df5f51833c8d3d33ebfc54cea5750bfa",
+          "d779f8f25e214ee0af25a68a0fae75e81b8bb02eb49667573906490700a266ce"
+        ],
+        "N": [
+          "56fb7f58cb42dd9bc10e86154634a2d4852aac505fdd79e70eaffc2582bb555a"
+        ],
+        "P": [
+          "60ef7c08532d780063cdbbba257fbd5a5919458a490f975fed06152cada6247d",
+          "99e31c325d530b04e96d98b73ba78d04ed18133a8095cb49184d9db4cb1f8012"
+        ],
+        "PM": [
+          "16de2d5e609b5d6c48ae800baf40147b5b99698dc563778ec0502b62740a303e",
+          "254a5ee3065f98a047624bea4637257d83f37cef744a67bebbce92f4cddf1ced"
+        ]
+      },
+      "rows_checked": 60,
+      "system_mismatches_by_cell": {
+        "N": 12
+      },
+      "system_sha256_rebuilt": 48,
+      "user_sha256_rebuilt": 60
+    },
+    "f_phase2_med30_20260727": {
+      "rebuilt_system_sha256_by_cell": {
+        "M": [
+          "804522c77ec17f9d306670111efcf7320d19d88519fb081e4307ce2754e8eea9",
+          "e03a4b9ebd1fe0916fc6422e98858a764f27b211fc5a584f3fea1d980b60a97c"
+        ],
+        "N": [
+          "3b9002060d5b4bd10e0ebd232422608d8f23833743fe70a71fa2673ff1b217f4",
+          "98730154611c6684760653a33dde8298d18e3bfd27eea8ed6ed876962988b841"
+        ],
+        "P": [
+          "60ef7c08532d780063cdbbba257fbd5a5919458a490f975fed06152cada6247d",
+          "99e31c325d530b04e96d98b73ba78d04ed18133a8095cb49184d9db4cb1f8012"
+        ]
+      },
+      "recorded_system_sha256_by_cell": {
+        "M": [
+          "804522c77ec17f9d306670111efcf7320d19d88519fb081e4307ce2754e8eea9",
+          "e03a4b9ebd1fe0916fc6422e98858a764f27b211fc5a584f3fea1d980b60a97c"
+        ],
+        "N": [
+          "3b9002060d5b4bd10e0ebd232422608d8f23833743fe70a71fa2673ff1b217f4",
+          "98730154611c6684760653a33dde8298d18e3bfd27eea8ed6ed876962988b841"
+        ],
+        "P": [
+          "60ef7c08532d780063cdbbba257fbd5a5919458a490f975fed06152cada6247d",
+          "99e31c325d530b04e96d98b73ba78d04ed18133a8095cb49184d9db4cb1f8012"
+        ]
+      },
+      "rows_checked": 90,
+      "system_mismatches_by_cell": {},
+      "system_sha256_rebuilt": 90,
+      "user_sha256_rebuilt": 90
+    },
+    "f_phase2_tiny9_live_20260727": {
+      "rebuilt_system_sha256_by_cell": {
+        "M": [
+          "804522c77ec17f9d306670111efcf7320d19d88519fb081e4307ce2754e8eea9"
+        ],
+        "N": [
+          "98730154611c6684760653a33dde8298d18e3bfd27eea8ed6ed876962988b841"
+        ],
+        "P": [
+          "60ef7c08532d780063cdbbba257fbd5a5919458a490f975fed06152cada6247d"
+        ]
+      },
+      "recorded_system_sha256_by_cell": {
+        "M": [
+          "804522c77ec17f9d306670111efcf7320d19d88519fb081e4307ce2754e8eea9"
+        ],
+        "N": [
+          "98730154611c6684760653a33dde8298d18e3bfd27eea8ed6ed876962988b841"
+        ],
+        "P": [
+          "60ef7c08532d780063cdbbba257fbd5a5919458a490f975fed06152cada6247d"
+        ]
+      },
+      "rows_checked": 9,
+      "system_mismatches_by_cell": {},
+      "system_sha256_rebuilt": 9,
+      "user_sha256_rebuilt": 9
+    },
+    "f_privilege_tiny8_20260727": {
+      "rebuilt_system_sha256_by_cell": {
+        "MP": [
+          "804522c77ec17f9d306670111efcf7320d19d88519fb081e4307ce2754e8eea9",
+          "e03a4b9ebd1fe0916fc6422e98858a764f27b211fc5a584f3fea1d980b60a97c"
+        ],
+        "PM": [
+          "60ef7c08532d780063cdbbba257fbd5a5919458a490f975fed06152cada6247d",
+          "99e31c325d530b04e96d98b73ba78d04ed18133a8095cb49184d9db4cb1f8012"
+        ]
+      },
+      "recorded_system_sha256_by_cell": {
+        "MP": [
+          "804522c77ec17f9d306670111efcf7320d19d88519fb081e4307ce2754e8eea9",
+          "e03a4b9ebd1fe0916fc6422e98858a764f27b211fc5a584f3fea1d980b60a97c"
+        ],
+        "PM": [
+          "60ef7c08532d780063cdbbba257fbd5a5919458a490f975fed06152cada6247d",
+          "99e31c325d530b04e96d98b73ba78d04ed18133a8095cb49184d9db4cb1f8012"
+        ]
+      },
+      "rows_checked": 24,
+      "system_mismatches_by_cell": {},
+      "system_sha256_rebuilt": 24,
+      "user_sha256_rebuilt": 24
+    },
+    "f_small20_20260727": {
+      "rebuilt_system_sha256_by_cell": {
+        "M": [
+          "804522c77ec17f9d306670111efcf7320d19d88519fb081e4307ce2754e8eea9",
+          "e03a4b9ebd1fe0916fc6422e98858a764f27b211fc5a584f3fea1d980b60a97c"
+        ],
+        "MP": [
+          "a5257c5361aeb69dd85e07dbe62b9cc4df5f51833c8d3d33ebfc54cea5750bfa",
+          "d779f8f25e214ee0af25a68a0fae75e81b8bb02eb49667573906490700a266ce"
+        ],
+        "N": [
+          "3b9002060d5b4bd10e0ebd232422608d8f23833743fe70a71fa2673ff1b217f4",
+          "98730154611c6684760653a33dde8298d18e3bfd27eea8ed6ed876962988b841"
+        ],
+        "P": [
+          "60ef7c08532d780063cdbbba257fbd5a5919458a490f975fed06152cada6247d",
+          "99e31c325d530b04e96d98b73ba78d04ed18133a8095cb49184d9db4cb1f8012"
+        ],
+        "PM": [
+          "16de2d5e609b5d6c48ae800baf40147b5b99698dc563778ec0502b62740a303e",
+          "254a5ee3065f98a047624bea4637257d83f37cef744a67bebbce92f4cddf1ced"
+        ]
+      },
+      "recorded_system_sha256_by_cell": {
+        "M": [
+          "804522c77ec17f9d306670111efcf7320d19d88519fb081e4307ce2754e8eea9",
+          "e03a4b9ebd1fe0916fc6422e98858a764f27b211fc5a584f3fea1d980b60a97c"
+        ],
+        "MP": [
+          "a5257c5361aeb69dd85e07dbe62b9cc4df5f51833c8d3d33ebfc54cea5750bfa",
+          "d779f8f25e214ee0af25a68a0fae75e81b8bb02eb49667573906490700a266ce"
+        ],
+        "N": [
+          "56fb7f58cb42dd9bc10e86154634a2d4852aac505fdd79e70eaffc2582bb555a"
+        ],
+        "P": [
+          "60ef7c08532d780063cdbbba257fbd5a5919458a490f975fed06152cada6247d",
+          "99e31c325d530b04e96d98b73ba78d04ed18133a8095cb49184d9db4cb1f8012"
+        ],
+        "PM": [
+          "16de2d5e609b5d6c48ae800baf40147b5b99698dc563778ec0502b62740a303e",
+          "254a5ee3065f98a047624bea4637257d83f37cef744a67bebbce92f4cddf1ced"
+        ]
+      },
+      "rows_checked": 20,
+      "system_mismatches_by_cell": {
+        "N": 4
+      },
+      "system_sha256_rebuilt": 16,
+      "user_sha256_rebuilt": 20
+    },
+    "f_tiny10_20260727": {
+      "rebuilt_system_sha256_by_cell": {
+        "M": [
+          "804522c77ec17f9d306670111efcf7320d19d88519fb081e4307ce2754e8eea9"
+        ],
+        "MP": [
+          "a5257c5361aeb69dd85e07dbe62b9cc4df5f51833c8d3d33ebfc54cea5750bfa"
+        ],
+        "N": [
+          "98730154611c6684760653a33dde8298d18e3bfd27eea8ed6ed876962988b841"
+        ],
+        "P": [
+          "60ef7c08532d780063cdbbba257fbd5a5919458a490f975fed06152cada6247d"
+        ],
+        "PM": [
+          "254a5ee3065f98a047624bea4637257d83f37cef744a67bebbce92f4cddf1ced"
+        ]
+      },
+      "recorded_system_sha256_by_cell": {
+        "M": [
+          "377a3665933b7b626ded98a5049065c3540249c18c9e4c61783d56f62c9eefcf",
+          "5c9d28ab93e972fc8e6bd76680af92e15c1e1f8e34231d0c5b62ce6addeb5e71"
+        ],
+        "MP": [
+          "00c0fcced38fb5402df65e5f4957b62265e4dc058b1d2da4c2f21afb37244372",
+          "6b680b61e2e0d2765acec2b9f8614849ed79f755cd39abcc713ed14d6ffd2fcf"
+        ],
+        "N": [
+          "bb0b9b520529b0ee2f56e9ccb5a80a19fddf62e61dd5856f4cb75c93316bbbdb"
+        ],
+        "P": [
+          "377a3665933b7b626ded98a5049065c3540249c18c9e4c61783d56f62c9eefcf",
+          "5c9d28ab93e972fc8e6bd76680af92e15c1e1f8e34231d0c5b62ce6addeb5e71"
+        ],
+        "PM": [
+          "00c0fcced38fb5402df65e5f4957b62265e4dc058b1d2da4c2f21afb37244372",
+          "6b680b61e2e0d2765acec2b9f8614849ed79f755cd39abcc713ed14d6ffd2fcf"
+        ]
+      },
+      "rows_checked": 10,
+      "system_mismatches_by_cell": {
+        "M": 2,
+        "MP": 2,
+        "N": 2,
+        "P": 2,
+        "PM": 2
+      },
+      "system_sha256_rebuilt": 0,
+      "user_sha256_rebuilt": 10
+    },
+    "f_tiny10_v18_20260727": {
+      "rebuilt_system_sha256_by_cell": {
+        "M": [
+          "804522c77ec17f9d306670111efcf7320d19d88519fb081e4307ce2754e8eea9"
+        ],
+        "MP": [
+          "a5257c5361aeb69dd85e07dbe62b9cc4df5f51833c8d3d33ebfc54cea5750bfa"
+        ],
+        "N": [
+          "98730154611c6684760653a33dde8298d18e3bfd27eea8ed6ed876962988b841"
+        ],
+        "P": [
+          "60ef7c08532d780063cdbbba257fbd5a5919458a490f975fed06152cada6247d"
+        ],
+        "PM": [
+          "254a5ee3065f98a047624bea4637257d83f37cef744a67bebbce92f4cddf1ced"
+        ]
+      },
+      "recorded_system_sha256_by_cell": {
+        "M": [
+          "03120f2e7da079dcf968536c123117a444853ba4cf8e4002ca3c0cebc65a96aa",
+          "1fc158050c29165ba275c685373fa23b1a42d1abb8a98ec5da919425db94d0fc"
+        ],
+        "MP": [
+          "ae4e84df53e6136cfae0f620901020082dd325a74c4a34df7d1e27f6ca9cb9a6",
+          "cfd84a60a650675e947a61cf4e627b37a9902ff84c90f27ffc37c95ecb8ada0b"
+        ],
+        "N": [
+          "a1c4b66efa5e319c97c6aaf97b5c2e5195fc15f508d714def40f54f18feee585"
+        ],
+        "P": [
+          "03120f2e7da079dcf968536c123117a444853ba4cf8e4002ca3c0cebc65a96aa",
+          "1fc158050c29165ba275c685373fa23b1a42d1abb8a98ec5da919425db94d0fc"
+        ],
+        "PM": [
+          "ae4e84df53e6136cfae0f620901020082dd325a74c4a34df7d1e27f6ca9cb9a6",
+          "cfd84a60a650675e947a61cf4e627b37a9902ff84c90f27ffc37c95ecb8ada0b"
+        ]
+      },
+      "rows_checked": 10,
+      "system_mismatches_by_cell": {
+        "M": 2,
+        "MP": 2,
+        "N": 2,
+        "P": 2,
+        "PM": 2
+      },
+      "system_sha256_rebuilt": 0,
+      "user_sha256_rebuilt": 10
+    },
+    "f_tiny10_v18s_20260727": {
+      "rebuilt_system_sha256_by_cell": {
+        "M": [
+          "804522c77ec17f9d306670111efcf7320d19d88519fb081e4307ce2754e8eea9"
+        ],
+        "MP": [
+          "a5257c5361aeb69dd85e07dbe62b9cc4df5f51833c8d3d33ebfc54cea5750bfa"
+        ],
+        "N": [
+          "98730154611c6684760653a33dde8298d18e3bfd27eea8ed6ed876962988b841"
+        ],
+        "P": [
+          "60ef7c08532d780063cdbbba257fbd5a5919458a490f975fed06152cada6247d"
+        ],
+        "PM": [
+          "254a5ee3065f98a047624bea4637257d83f37cef744a67bebbce92f4cddf1ced"
+        ]
+      },
+      "recorded_system_sha256_by_cell": {
+        "M": [
+          "60ef7c08532d780063cdbbba257fbd5a5919458a490f975fed06152cada6247d",
+          "804522c77ec17f9d306670111efcf7320d19d88519fb081e4307ce2754e8eea9"
+        ],
+        "MP": [
+          "254a5ee3065f98a047624bea4637257d83f37cef744a67bebbce92f4cddf1ced",
+          "a5257c5361aeb69dd85e07dbe62b9cc4df5f51833c8d3d33ebfc54cea5750bfa"
+        ],
+        "N": [
+          "56fb7f58cb42dd9bc10e86154634a2d4852aac505fdd79e70eaffc2582bb555a"
+        ],
+        "P": [
+          "60ef7c08532d780063cdbbba257fbd5a5919458a490f975fed06152cada6247d",
+          "804522c77ec17f9d306670111efcf7320d19d88519fb081e4307ce2754e8eea9"
+        ],
+        "PM": [
+          "254a5ee3065f98a047624bea4637257d83f37cef744a67bebbce92f4cddf1ced",
+          "a5257c5361aeb69dd85e07dbe62b9cc4df5f51833c8d3d33ebfc54cea5750bfa"
+        ]
+      },
+      "rows_checked": 10,
+      "system_mismatches_by_cell": {
+        "M": 1,
+        "MP": 1,
+        "N": 2,
+        "P": 1,
+        "PM": 1
+      },
+      "system_sha256_rebuilt": 4,
+      "user_sha256_rebuilt": 10
+    },
+    "f_tiny10_v18s_twinfix_20260727": {
+      "rebuilt_system_sha256_by_cell": {
+        "M": [
+          "804522c77ec17f9d306670111efcf7320d19d88519fb081e4307ce2754e8eea9"
+        ],
+        "MP": [
+          "a5257c5361aeb69dd85e07dbe62b9cc4df5f51833c8d3d33ebfc54cea5750bfa"
+        ],
+        "N": [
+          "98730154611c6684760653a33dde8298d18e3bfd27eea8ed6ed876962988b841"
+        ],
+        "P": [
+          "60ef7c08532d780063cdbbba257fbd5a5919458a490f975fed06152cada6247d"
+        ],
+        "PM": [
+          "254a5ee3065f98a047624bea4637257d83f37cef744a67bebbce92f4cddf1ced"
+        ]
+      },
+      "recorded_system_sha256_by_cell": {
+        "M": [
+          "804522c77ec17f9d306670111efcf7320d19d88519fb081e4307ce2754e8eea9"
+        ],
+        "MP": [
+          "a5257c5361aeb69dd85e07dbe62b9cc4df5f51833c8d3d33ebfc54cea5750bfa"
+        ],
+        "N": [
+          "56fb7f58cb42dd9bc10e86154634a2d4852aac505fdd79e70eaffc2582bb555a"
+        ],
+        "P": [
+          "60ef7c08532d780063cdbbba257fbd5a5919458a490f975fed06152cada6247d"
+        ],
+        "PM": [
+          "254a5ee3065f98a047624bea4637257d83f37cef744a67bebbce92f4cddf1ced"
+        ]
+      },
+      "rows_checked": 10,
+      "system_mismatches_by_cell": {
+        "N": 2
+      },
+      "system_sha256_rebuilt": 8,
+      "user_sha256_rebuilt": 10
+    },
+    "pad_removal_hypothesis": {
+      "note": "The recorded Phase-1 N system prompt is NOT reconstructible from the committed templates, with or without the pad. The N construction and/or system_neutral.md differed on 2026-07-27 by more than the pad alone.",
+      "recorded_phase1_N_sha256": "56fb7f58cb42dd9bc10e86154634a2d4852aac505fdd79e70eaffc2582bb555a",
+      "reproduces": false,
+      "unpadded_neutral_sha256": "a567f4d3233c7f212a671d99b4d9151ec555982429369a7878e826438d3e740d"
+    }
+  },
   "repo": "/home/barry/workspace/projects/Model-Loyalties-Investigation",
   "run_id_reconciliation": {
     "f_phase2_k3_20260727_dose.json": {
@@ -942,9 +1740,9 @@
   "schema": "wujur/restored_manifest/1",
   "source_mirror": "/home/barry/Nextcloud/vc_projects/Model-Loyalties-Investigation",
   "totals": {
-    "destination_verified": 30,
-    "n_files": 30,
-    "total_bytes": 10424138
+    "destination_verified": 46,
+    "n_files": 46,
+    "total_bytes": 18038659
   },
   "v018_confirm_grid": {
     "distinct_system_sha256": 57,
@@ -1820,6 +2618,138 @@
         ]
       },
       {
+        "check": "v018_c1c2da_s3: single split",
+        "computed": [
+          "train"
+        ],
+        "note": "",
+        "pass": true,
+        "stored": [
+          "train"
+        ]
+      },
+      {
+        "check": "v018_c1c2da_s3: rows == scenarios x conditions x samples",
+        "computed": 126,
+        "note": "",
+        "pass": true,
+        "stored": 126
+      },
+      {
+        "check": "v018_c1c2da_s3: rows carrying an error field",
+        "computed": 0,
+        "note": "",
+        "pass": true,
+        "stored": 0
+      },
+      {
+        "check": "v018_c1c2da_s3: n_by_condition matches committed metrics",
+        "computed": {
+          "C1": 42,
+          "C2": 42,
+          "DA": 42
+        },
+        "note": "",
+        "pass": true,
+        "stored": {
+          "C1": 42,
+          "C2": 42,
+          "DA": 42
+        }
+      },
+      {
+        "check": "v018_c1c2da_s3: distinct prompt_sha256 across rows",
+        "computed": [
+          "1a12fab81c9116360b8da6228eb4697889837ddfbb43c6f0799a499c2fc69762"
+        ],
+        "note": "",
+        "pass": true,
+        "stored": [
+          "1a12fab81c9116360b8da6228eb4697889837ddfbb43c6f0799a499c2fc69762"
+        ]
+      },
+      {
+        "check": "v018_c1c2da_s3: unexpected diffs recomputing committed metrics",
+        "computed": [],
+        "note": "",
+        "pass": true,
+        "stored": []
+      },
+      {
+        "check": "v018_c1c2da_s3: score_det/judged.jsonl is a byte copy of transcripts.jsonl",
+        "computed": "11dea19891c7f15693fce31586423711135224dab424fe3addcaf4de6a8e044d",
+        "note": "",
+        "pass": true,
+        "stored": "11dea19891c7f15693fce31586423711135224dab424fe3addcaf4de6a8e044d"
+      },
+      {
+        "check": "v018_test_c0c1c2da_s3: single split",
+        "computed": [
+          "test"
+        ],
+        "note": "",
+        "pass": true,
+        "stored": [
+          "test"
+        ]
+      },
+      {
+        "check": "v018_test_c0c1c2da_s3: rows == scenarios x conditions x samples",
+        "computed": 72,
+        "note": "",
+        "pass": true,
+        "stored": 72
+      },
+      {
+        "check": "v018_test_c0c1c2da_s3: rows carrying an error field",
+        "computed": 0,
+        "note": "",
+        "pass": true,
+        "stored": 0
+      },
+      {
+        "check": "v018_test_c0c1c2da_s3: n_by_condition matches committed metrics",
+        "computed": {
+          "C0": 18,
+          "C1": 18,
+          "C2": 18,
+          "DA": 18
+        },
+        "note": "",
+        "pass": true,
+        "stored": {
+          "C0": 18,
+          "C1": 18,
+          "C2": 18,
+          "DA": 18
+        }
+      },
+      {
+        "check": "v018_test_c0c1c2da_s3: distinct prompt_sha256 across rows",
+        "computed": [
+          "1a12fab81c9116360b8da6228eb4697889837ddfbb43c6f0799a499c2fc69762"
+        ],
+        "note": "",
+        "pass": true,
+        "stored": [
+          "1a12fab81c9116360b8da6228eb4697889837ddfbb43c6f0799a499c2fc69762"
+        ]
+      },
+      {
+        "check": "v018_test_c0c1c2da_s3: unexpected diffs recomputing committed metrics",
+        "computed": [],
+        "note": "",
+        "pass": true,
+        "stored": []
+      },
+      {
+        "check": "v018_test_c0c1c2da_s3: score_det/judged.jsonl is a byte copy of transcripts.jsonl",
+        "computed": "790bf5ee9448a31feb6c2c0de086f8c68f4dfcf071743d05507699d00aec64a0",
+        "note": "",
+        "pass": true,
+        "stored": "790bf5ee9448a31feb6c2c0de086f8c68f4dfcf071743d05507699d00aec64a0"
+      },
+      {
         "check": "f_phase1_k3 rows",
         "computed": 60,
         "note": "",
@@ -2009,6 +2939,133 @@
         "stored": []
       },
       {
+        "check": "f_phase1_k3_20260727: user_sha256 rebuilds for every row",
+        "computed": 60,
+        "note": "",
+        "pass": true,
+        "stored": 60
+      },
+      {
+        "check": "f_phase2_med30_20260727: user_sha256 rebuilds for every row",
+        "computed": 90,
+        "note": "",
+        "pass": true,
+        "stored": 90
+      },
+      {
+        "check": "f_phase2_tiny9_live_20260727: user_sha256 rebuilds for every row",
+        "computed": 9,
+        "note": "",
+        "pass": true,
+        "stored": 9
+      },
+      {
+        "check": "f_privilege_tiny8_20260727: user_sha256 rebuilds for every row",
+        "computed": 24,
+        "note": "",
+        "pass": true,
+        "stored": 24
+      },
+      {
+        "check": "f_small20_20260727: user_sha256 rebuilds for every row",
+        "computed": 20,
+        "note": "",
+        "pass": true,
+        "stored": 20
+      },
+      {
+        "check": "f_tiny10_20260727: user_sha256 rebuilds for every row",
+        "computed": 10,
+        "note": "",
+        "pass": true,
+        "stored": 10
+      },
+      {
+        "check": "f_tiny10_v18_20260727: user_sha256 rebuilds for every row",
+        "computed": 10,
+        "note": "",
+        "pass": true,
+        "stored": 10
+      },
+      {
+        "check": "f_tiny10_v18s_20260727: user_sha256 rebuilds for every row",
+        "computed": 10,
+        "note": "",
+        "pass": true,
+        "stored": 10
+      },
+      {
+        "check": "f_tiny10_v18s_twinfix_20260727: user_sha256 rebuilds for every row",
+        "computed": 10,
+        "note": "",
+        "pass": true,
+        "stored": 10
+      },
+      {
+        "check": "f_phase1_k3: system prompt mismatches are confined to the N cell",
+        "computed": [
+          "N"
+        ],
+        "note": "",
+        "pass": true,
+        "stored": [
+          "N"
+        ]
+      },
+      {
+        "check": "f_phase1_k3: recorded N system prompt is item-independent (one hash)",
+        "computed": 1,
+        "note": "",
+        "pass": true,
+        "stored": 1
+      },
+      {
+        "check": "f_phase1_k3: today's N system prompt is item-dependent (two hashes)",
+        "computed": 2,
+        "note": "",
+        "pass": true,
+        "stored": 2
+      },
+      {
+        "check": "f_privilege_tiny8_20260727: every system prompt rebuilds exactly",
+        "computed": 24,
+        "note": "",
+        "pass": true,
+        "stored": 24
+      },
+      {
+        "check": "f_phase2_med30_20260727: every system prompt rebuilds exactly",
+        "computed": 90,
+        "note": "",
+        "pass": true,
+        "stored": 90
+      },
+      {
+        "check": "pad removal alone reproduces the recorded N prompt",
+        "computed": false,
+        "note": "",
+        "pass": true,
+        "stored": false
+      },
+      {
+        "check": "P and M prompt lengths identical across the two runs",
+        "computed": [
+          0.0
+        ],
+        "note": "",
+        "pass": true,
+        "stored": [
+          0.0
+        ]
+      },
+      {
+        "check": "N prompt strictly shorter in f_phase1_k3",
+        "computed": true,
+        "note": "",
+        "pass": true,
+        "stored": true
+      },
+      {
         "check": "file literally named for f_privilege_k3_20260727 holding raw rows",
         "computed": [],
         "note": "",
@@ -2024,6 +3081,41 @@
       },
       {
         "check": "archive contains a generations file for f_privilege_k3_20260727",
+        "computed": [],
+        "note": "",
+        "pass": true,
+        "stored": []
+      },
+      {
+        "check": "final transcripts.jsonl rows carrying an error field",
+        "computed": 0,
+        "note": "",
+        "pass": true,
+        "stored": 0
+      },
+      {
+        "check": "final transcripts.jsonl rows failing score.parse_ok",
+        "computed": 0,
+        "note": "",
+        "pass": true,
+        "stored": 0
+      },
+      {
+        "check": "transcripts.jsonl.bak_before_dedupe: rows the final file does not already contain",
+        "computed": [],
+        "note": "",
+        "pass": true,
+        "stored": []
+      },
+      {
+        "check": "transcripts.jsonl.bak_before_retry_errors: rows the final file does not already contain",
+        "computed": [],
+        "note": "",
+        "pass": true,
+        "stored": []
+      },
+      {
+        "check": "transcripts.jsonl.bak_before_resume_workers7: rows the final file does not already contain",
         "computed": [],
         "note": "",
         "pass": true,
@@ -2058,21 +3150,21 @@
         "stored": []
       },
       {
-        "check": "restored files invisible to `git add -A`",
+        "check": "restored files git would not pick up",
         "computed": [],
         "note": "",
         "pass": true,
         "stored": []
       },
       {
-        "check": "non-restored run files visible to `git add -A`",
+        "check": "untracked non-restored run files the negations admit",
         "computed": [],
         "note": "",
         "pass": true,
         "stored": []
       }
     ],
-    "n_checks": 143,
+    "n_checks": 179,
     "n_failed": 0
   }
 }

@@ -29,6 +29,7 @@ import importlib.util
 import json
 import shutil
 import sys
+from collections import Counter
 from pathlib import Path
 from typing import Any
 
@@ -175,6 +176,37 @@ V018_IMPORT_FILES = (
     "judge_gpt56luna/metrics.json",
     "judge_gpt56luna/report_snippet.md",
 )
+
+# Further recovered ranking runs whose raw rows back a committed metrics file
+# that is already in-tree. run_id -> (mirror subdir, committed metrics path
+# relative to the repo, expected split).
+RANKING_RUNS: dict[str, tuple[str, str, str]] = {
+    "v018_test_c0c1c2da_s3": (
+        "runs/v018_test_c0c1c2da_s3",
+        "model_organism/runs/v018_test_c0c1c2da_s3/judge_gpt56luna/score_gate_v2/metrics.json",
+        "test",
+    ),
+    "v018_c1c2da_s3": (
+        "runs/v018_c1c2da_s3",
+        "model_organism/runs/v018_c1c2da_s3/judge_gpt56luna/score_gate_v2/metrics.json",
+        "train",
+    ),
+}
+
+RANKING_RUN_IMPORT_FILES = (
+    "transcripts.jsonl",
+    "meta.json",
+    "prompt_used.md",
+    "judge_gpt56luna/judged.jsonl",
+    "judge_gpt56luna/metrics.json",
+    "judge_gpt56luna/report_snippet.md",
+    "score_det/metrics.json",
+    "score_det/report_snippet.md",
+)
+
+# score_det/judged.jsonl is a byte-identical copy of transcripts.jsonl in both
+# runs, verified by sha256, so importing it would duplicate 3.7 MB for nothing.
+RANKING_RUN_EXCLUDED_FILES = ("score_det/judged.jsonl",)
 
 
 # --------------------------------------------------------------------------- #
@@ -473,6 +505,66 @@ def verify_v018(src_run: Path) -> dict[str, Any]:
         "judged_recompute_unexpected_diffs": unexpected,
     }
 
+def verify_ranking_runs(source: Path) -> dict[str, Any]:
+    """Verify the two further ranking runs against their committed metrics.
+
+    Each has only a derived `judge_gpt56luna/score_gate_v2/metrics.json` in the
+    repo; the raw rows behind it were ignored away. Same test as the confirm
+    grid: re-run the repository's aggregator over the recovered judged rows and
+    require the committed file back.
+    """
+    agg = load_module("wujur_aggregate3", REPO / "model_organism/scoring/aggregate.py")
+    section("FURTHER RANKING RUNS -- raw rows for already-committed metrics")
+    out: dict[str, Any] = {}
+    for run_id in sorted(RANKING_RUNS):
+        subdir, metric_rel, split = RANKING_RUNS[run_id]
+        d = source / subdir
+        rows = agg.load_transcripts(d / "transcripts.jsonl")
+        stored = json.loads((REPO / metric_rel).read_text(encoding="utf-8"))
+        by_cond = Counter(str(r.get("condition")) for r in rows)
+        scenarios = sorted({str(r.get("scenario_id")) for r in rows})
+        samples = sorted({r.get("sample") for r in rows})
+        splits = sorted({str(r.get("split")) for r in rows})
+        print(f"  -- {run_id}  ({metric_rel})")
+        print(f"       rows={len(rows)} splits={splits} conditions={dict(sorted(by_cond.items()))}")
+        print(f"       scenarios={len(scenarios)} samples={samples}")
+        for s in scenarios:
+            print(f"         {s}")
+        check(f"{run_id}: single split", splits, [split])
+        check(f"{run_id}: rows == scenarios x conditions x samples",
+              len(rows), len(scenarios) * len(by_cond) * len(samples))
+        check(f"{run_id}: rows carrying an error field",
+              sum(1 for r in rows if r.get("error")), 0)
+        check(f"{run_id}: n_by_condition matches committed metrics",
+              dict(sorted(by_cond.items())),
+              {k: v for k, v in sorted(stored["n_by_condition"].items()) if v})
+        check(f"{run_id}: distinct prompt_sha256 across rows",
+              sorted({str(r.get("prompt_sha256")) for r in rows}),
+              ["1a12fab81c9116360b8da6228eb4697889837ddfbb43c6f0799a499c2fc69762"])
+        judged = agg.load_transcripts(d / "judge_gpt56luna/judged.jsonl")
+        computed = agg.aggregate(judged, split=split)
+        diffs = deep_diff(computed, stored)
+        unexpected = sorted(p for p, _, _ in diffs if p not in RUNNER_INJECTED_KEYS)
+        for p, g, s in diffs:
+            tag = "expected-injected" if p in RUNNER_INJECTED_KEYS else "UNEXPECTED"
+            print(f"       {tag:<18} {p}")
+        check(f"{run_id}: unexpected diffs recomputing committed metrics", unexpected, [])
+        for rel in RANKING_RUN_EXCLUDED_FILES:
+            p = d / rel
+            if p.is_file():
+                check(f"{run_id}: {rel} is a byte copy of transcripts.jsonl",
+                      sha256_file(p), sha256_file(d / "transcripts.jsonl"))
+        out[run_id] = {
+            "rows": len(rows),
+            "split": split,
+            "n_by_condition": dict(sorted(by_cond.items())),
+            "scenarios": scenarios,
+            "samples": samples,
+            "committed_metrics": metric_rel,
+            "unexpected_diffs": unexpected,
+        }
+    return out
+
 
 # --------------------------------------------------------------------------- #
 # composition
@@ -621,6 +713,144 @@ def reconcile_run_ids(source: Path) -> dict[str, Any]:
             f"  -> superseded by {info['superseded_by']}  [{info['reason']}]"
         )
         out.setdefault("superseded", {})[name] = {**info, "n_records": body.get("n_records")}
+    return out
+
+def verify_prompt_rederivation(source: Path) -> dict[str, Any]:
+    """Rebuild each composition row's prompts from the committed templates.
+
+    This is a provenance check on the restored rows, not a scoring check. A
+    mismatch means the row was generated by code or templates that differ from
+    what is committed today, which a later reader could easily mistake for a
+    corrupted restore. Reported precisely so nobody has to guess.
+    """
+    croot = REPO / "model_organism/composition"
+    asm = load_module("wujur_assemble", croot / "runner/assemble.py")
+    section("PROMPT RE-DERIVATION -- do restored rows rebuild from committed prompts?")
+    out: dict[str, Any] = {}
+    for run_id in sorted(COMPOSITION_RUNS):
+        gen = source / COMPOSITION_RUNS[run_id][0] / "generations.jsonl"
+        rows = [json.loads(l) for l in gen.read_text(encoding="utf-8").splitlines() if l.strip()]
+        ok_sys = ok_usr = n = 0
+        sys_mismatch_by_cell: Counter = Counter()
+        recorded_by_cell: dict[str, set[str]] = {}
+        rebuilt_by_cell: dict[str, set[str]] = {}
+        for r in rows:
+            m = r.get("meta") or {}
+            stim = croot / "stimuli" / f"{m.get('item_id')}.json"
+            if not stim.is_file():
+                continue
+            n += 1
+            built = asm.assemble_cell(
+                cell=m["cell"],
+                item=json.loads(stim.read_text(encoding="utf-8")),
+                privilege=bool(m.get("privilege")),
+            )["meta"]
+            cell = str(m["cell"])
+            recorded_by_cell.setdefault(cell, set()).add(str(m.get("system_sha256")))
+            rebuilt_by_cell.setdefault(cell, set()).add(str(built["system_sha256"]))
+            if built["system_sha256"] == m.get("system_sha256"):
+                ok_sys += 1
+            else:
+                sys_mismatch_by_cell[cell] += 1
+            ok_usr += built["user_sha256"] == m.get("user_sha256")
+        print(f"  -- {run_id}: {n} rows resolvable to a stimulus")
+        print(f"       system_sha256 {ok_sys}/{n}   user_sha256 {ok_usr}/{n}")
+        if sys_mismatch_by_cell:
+            print(f"       system mismatches by cell: {dict(sorted(sys_mismatch_by_cell.items()))}")
+            for cell in sorted(sys_mismatch_by_cell):
+                print(f"         cell {cell}: recorded {sorted(recorded_by_cell[cell])}")
+                print(f"         cell {cell}: rebuilt  {sorted(rebuilt_by_cell[cell])}")
+        check(f"{run_id}: user_sha256 rebuilds for every row", ok_usr, n)
+        out[run_id] = {
+            "rows_checked": n,
+            "system_sha256_rebuilt": ok_sys,
+            "user_sha256_rebuilt": ok_usr,
+            "system_mismatches_by_cell": dict(sorted(sys_mismatch_by_cell.items())),
+            "recorded_system_sha256_by_cell": {k: sorted(v) for k, v in sorted(recorded_by_cell.items())},
+            "rebuilt_system_sha256_by_cell": {k: sorted(v) for k, v in sorted(rebuilt_by_cell.items())},
+        }
+    # The one known mismatch, characterised rather than hand-waved.
+    p1 = out.get("f_phase1_k3_20260727", {})
+    check(
+        "f_phase1_k3: system prompt mismatches are confined to the N cell",
+        sorted(p1.get("system_mismatches_by_cell", {})),
+        ["N"],
+    )
+    check(
+        "f_phase1_k3: recorded N system prompt is item-independent (one hash)",
+        len(p1.get("recorded_system_sha256_by_cell", {}).get("N", [])),
+        1,
+    )
+    check(
+        "f_phase1_k3: today's N system prompt is item-dependent (two hashes)",
+        len(p1.get("rebuilt_system_sha256_by_cell", {}).get("N", [])),
+        2,
+    )
+    for other in ("f_privilege_tiny8_20260727", "f_phase2_med30_20260727"):
+        check(
+            f"{other}: every system prompt rebuilds exactly",
+            out[other]["system_sha256_rebuilt"],
+            out[other]["rows_checked"],
+        )
+
+    # Does simply removing today's length-match pad reproduce the recorded N
+    # prompt? It does not, so the pad is not a sufficient explanation.
+    prompts = croot / "prompts"
+    neutral = (prompts / "system_neutral.md").read_text(encoding="utf-8").strip()
+    unpadded = hashlib.sha256((neutral + "\n").encode("utf-8")).hexdigest()
+    recorded_n = (p1.get("recorded_system_sha256_by_cell", {}).get("N") or [None])[0]
+    print()
+    print("  Does removing the N-cell length-match pad (assemble.py:60-75) explain it?")
+    print(f"       sha256(strip(system_neutral.md) + newline) = {unpadded}")
+    print(f"       recorded f_phase1_k3 N system_sha256       = {recorded_n}")
+    check("pad removal alone reproduces the recorded N prompt", unpadded == recorded_n, False)
+    out["pad_removal_hypothesis"] = {
+        "unpadded_neutral_sha256": unpadded,
+        "recorded_phase1_N_sha256": recorded_n,
+        "reproduces": unpadded == recorded_n,
+        "note": (
+            "The recorded Phase-1 N system prompt is NOT reconstructible from the "
+            "committed templates, with or without the pad. The N construction and/or "
+            "system_neutral.md differed on 2026-07-27 by more than the pad alone."
+        ),
+    }
+
+    # Independent, code-free corroboration that Phase-1's N cell was not
+    # length-matched: two runs share stimulus items, and med30's rows DO rebuild.
+    print()
+    print("  Cross-run evidence (no reconstruction involved): f_phase1_k3 and")
+    print("  f_phase2_med30 share stimulus items, and the user prompt is identical,")
+    print("  so a prompt_tokens difference isolates the system prompt.")
+    def _index(run_id: str) -> dict[tuple[str, str], list[dict[str, Any]]]:
+        gen = source / COMPOSITION_RUNS[run_id][0] / "generations.jsonl"
+        idx: dict[tuple[str, str], list[dict[str, Any]]] = {}
+        for line in gen.read_text(encoding="utf-8").splitlines():
+            if not line.strip():
+                continue
+            r = json.loads(line)
+            m = r["meta"]
+            idx.setdefault((str(m["cell"]), str(m["item_id"])), []).append(r)
+        return idx
+
+    a, b = _index("f_phase1_k3_20260727"), _index("f_phase2_med30_20260727")
+    deltas: dict[str, list[float]] = {}
+    for key in sorted(set(a) & set(b)):
+        cell, item = key
+        ta = [r["response"]["usage"]["prompt_tokens"] for r in a[key] if r.get("response")]
+        tb = [r["response"]["usage"]["prompt_tokens"] for r in b[key] if r.get("response")]
+        ua = {r["meta"]["user_sha256"] for r in a[key]}
+        ub = {r["meta"]["user_sha256"] for r in b[key]}
+        if not ta or not tb:
+            continue
+        d = sum(ta) / len(ta) - sum(tb) / len(tb)
+        deltas.setdefault(cell, []).append(d)
+        print(f"       {cell:<3} {item:<28} phase1 {sum(ta)/len(ta):7.1f} tok   "
+              f"med30 {sum(tb)/len(tb):7.1f} tok   delta {d:+7.1f}   same_user_prompt={ua == ub}")
+    check("P and M prompt lengths identical across the two runs",
+          sorted({round(x, 6) for c in ("P", "M") for x in deltas.get(c, [])}), [0.0])
+    check("N prompt strictly shorter in f_phase1_k3",
+          all(x < 0 for x in deltas.get("N", [])) and bool(deltas.get("N")), True)
+    out["cross_run_prompt_token_delta"] = {c: sorted(v) for c, v in sorted(deltas.items())}
     return out
 
 
@@ -794,9 +1024,11 @@ def search_zip(zip_path: Path, needles: list[str]) -> dict[str, Any]:
 # disk, plus hypothetical paths for the recovered dirs that were deliberately
 # not imported -- if one of those is dropped in later it must not slip in.
 MUST_STAY_IGNORED = (
-    "model_organism/runs/v018_c1c2da_s3",
-    "model_organism/runs/v018_test_c0c1c2da_s3",
+    "model_organism/runs/v999_hypothetical_dev",
     "model_organism/runs/v999_hypothetical_dev/transcripts.jsonl",
+    "model_organism/runs/v001_20260726T170615Z/transcripts.jsonl",
+    "model_organism/runs/v023_fast_dev/transcripts.jsonl",
+    "model_organism/runs/dry_run_all/transcripts.jsonl",
     "model_organism/composition/runs/f_phase1_k3_dry/generations.jsonl",
     "model_organism/composition/runs/f_phase2_tiny9_20260727/generations.jsonl",
     "model_organism/composition/runs/f_tiny10_dry/generations.jsonl",
@@ -906,25 +1138,51 @@ def verify_gitignore(files: list[dict[str, Any]]) -> dict[str, Any]:
     check("parent directories of restored paths still ignored", ignored_parents, [])
 
     print()
-    print("  [D] git ls-files --others --exclude-standard (what `git add -A` sees)")
-    rc3, out3 = _git(["ls-files", "--others", "--exclude-standard"])
-    addable = set(out3.splitlines())
-    not_addable = sorted(p for p in positives if p not in addable)
-    check("restored files invisible to `git add -A`", not_addable, [])
+    print("  [D] does git actually have each restored file?")
+    print("      A path counts as held if it is already tracked, or untracked and")
+    print("      not ignored so `git add -A` would take it. Once the parent commits")
+    print("      the import the files become tracked and drop out of ls-files")
+    print("      --others, which is success, not regression.")
+    _rc, tracked_out = _git(["ls-files"])
+    tracked = set(tracked_out.splitlines())
+    _rc, others_out = _git(["ls-files", "--others", "--exclude-standard"])
+    addable = set(others_out.splitlines())
+    held = tracked | addable
+    unheld = sorted(p for p in positives if p not in held)
+    n_tracked = sum(1 for p in positives if p in tracked)
+    check("restored files git would not pick up", unheld, [])
+    print(f"       {len(positives)} restored paths: {n_tracked} already tracked,"
+          f" {len(positives) - n_tracked} untracked and addable")
+    run_prefixes = (
+        "model_organism/runs/",
+        "model_organism/composition/runs/",
+        "model_organism/composition/recovery_eval/runs/",
+        "auditing/runs/",
+    )
+    # The leak test is about what the NEGATIONS newly admit, so it looks only at
+    # untracked files. A .gitignore rule has no effect on an already-tracked
+    # path, so files committed by earlier work (auditing/runs/ in particular)
+    # are outside this change's blast radius and are reported, not failed.
     dev_leak = sorted(
-        p
-        for p in addable
-        if p.startswith(("model_organism/runs/", "model_organism/composition/runs/", "auditing/runs/"))
-        and p not in set(positives)
+        p for p in addable if p.startswith(run_prefixes) and p not in set(positives)
     )
     for p in dev_leak:
         print(f"       LEAK {p}")
-    check("non-restored run files visible to `git add -A`", dev_leak, [])
-    print(f"       {len(positives)} restored paths, all present in ls-files --others output")
+    check("untracked non-restored run files the negations admit", dev_leak, [])
+    pre_tracked = sorted(
+        p for p in tracked if p.startswith(run_prefixes) and p not in set(positives)
+    )
+    print(f"       {len(pre_tracked)} run-directory files were already tracked by earlier")
+    print("       commits; .gitignore cannot untrack a tracked path, so these are")
+    print("       unaffected by the negations. Breakdown by prefix:")
+    for pref in run_prefixes:
+        n = sum(1 for p in pre_tracked if p.startswith(pref))
+        print(f"         {n:>5}  {pref}")
 
     return {
         "instruments": [
             "git check-ignore -v -n --no-index --stdin",
+            "git ls-files",
             "git ls-files --others --exclude-standard",
         ],
         "restored_path_verdicts": {p: verdicts.get(p) for p in positives},
@@ -932,7 +1190,12 @@ def verify_gitignore(files: list[dict[str, Any]]) -> dict[str, Any]:
         "parent_directory_verdicts": dir_verdicts,
         "restored_paths_ignored": still_ignored,
         "dev_runs_leaked": leaked,
-        "run_files_addable_but_not_restored": dev_leak,
+        "restored_paths_git_would_not_pick_up": unheld,
+        "restored_paths_already_tracked": n_tracked,
+        "untracked_run_files_the_negations_admit": dev_leak,
+        "run_files_already_tracked_by_earlier_commits": {
+            pref: sum(1 for p in pre_tracked if p.startswith(pref)) for pref in run_prefixes
+        },
     }
 
 
@@ -978,8 +1241,10 @@ def main(argv: list[str] | None = None) -> int:
 
     v018_src = source / "runs/v018_c0c1c2da_cn_s3"
     v018_facts = verify_v018(v018_src)
+    ranking_facts = verify_ranking_runs(source)
     comp_facts = verify_composition(source)
     reconciled = reconcile_run_ids(source)
+    prompt_facts = verify_prompt_rederivation(source)
     missing = search_missing(source, [], reconciled)
     zip_facts = search_zip(args.zip, missing["run_ids_without_a_directory"])
 
@@ -989,6 +1254,14 @@ def main(argv: list[str] | None = None) -> int:
         files.append(
             import_file(v018_src / rel, REPO / "model_organism/runs/v018_c0c1c2da_cn_s3" / rel, args.do_import)
         )
+    for run_id in sorted(RANKING_RUNS):
+        subdir = RANKING_RUNS[run_id][0]
+        for rel in RANKING_RUN_IMPORT_FILES:
+            src = source / subdir / rel
+            if src.is_file():
+                files.append(
+                    import_file(src, REPO / "model_organism/runs" / run_id / rel, args.do_import)
+                )
     for run_id in sorted(COMPOSITION_RUNS):
         subdir = COMPOSITION_RUNS[run_id][0]
         for child in sorted((source / subdir).iterdir()):
@@ -1071,6 +1344,19 @@ def main(argv: list[str] | None = None) -> int:
                 },
             }
         )
+    for run_id in sorted(RANKING_RUNS):
+        for rel in RANKING_RUN_EXCLUDED_FILES:
+            p = source / RANKING_RUNS[run_id][0] / rel
+            if p.is_file():
+                excluded.append(
+                    {
+                        "source": str(p),
+                        "bytes": p.stat().st_size,
+                        "rows": count_rows(p),
+                        "sha256": sha256_file(p),
+                        "reason": "byte-identical copy of the same run's transcripts.jsonl (sha256 verified)",
+                    }
+                )
     for subdir in sorted(EXCLUDED_RUNS):
         d = source / subdir
         if d.is_dir():
@@ -1109,7 +1395,9 @@ def main(argv: list[str] | None = None) -> int:
             "checks": CHECKS,
         },
         "v018_confirm_grid": v018_facts,
+        "further_ranking_runs": ranking_facts,
         "composition": comp_facts,
+        "prompt_rederivation": prompt_facts,
         "run_id_reconciliation": reconciled,
         "missing": {
             "run_ids_without_a_directory_of_that_name": missing["run_ids_without_a_directory"],

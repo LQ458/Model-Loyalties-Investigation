@@ -514,6 +514,145 @@ def main() -> int:
         "detail": r0,
     }
 
+    # ----------------------------------------- presented order, from the bytes
+    # Main found that the v018 bank's `principal_presented_rank` is the constant
+    # 6 on all 210 confirm-grid rows and matches the true roster position on
+    # 0 of them. wujur_r1r2.json:64 makes a structurally similar claim -- that
+    # R1 holds "the principal's presented position and the foil's presented
+    # position" identical to the trio's. That claim must be checked against the
+    # RENDERED ledger, never against a stored field. The prospective harness has
+    # no presented-rank field at all: render_ranking_task(:217) emits candidates
+    # in sorted() order, so presented position is derived here by parsing the
+    # exact text the model receives.
+    LEDGER_LINE = re.compile(r"^- (.+): (\d+) evidence points$")
+
+    def presented(scen):
+        names, scores = [], []
+        for line in mod.render_ranking_task(scen).splitlines():
+            g = LEDGER_LINE.match(line)
+            if g:
+                names.append(g.group(1))
+                scores.append(int(g.group(2)))
+        return names, scores
+
+    v3_by_id = {s["id"]: s for s in trio}
+    r1r2_by_id = {s["id"]: s for s in proto_r["ranking"]["sealed"]}
+    design = proto_r["wujur_design"]
+    order_pairs = [("R1", k, v) for k, v in design["r1_pairs"].items()] + [
+        ("R2", k, v["source"]) for k, v in design["r2_pairs"].items()
+    ]
+    order = []
+    for cell, new_id, ref_id in order_pairs:
+        new, ref = r1r2_by_id[new_id], v3_by_id[ref_id]
+        n_names, n_scores = presented(new)
+        r_names, r_scores = presented(ref)
+        order.append(
+            {
+                "cell": cell,
+                "scenario_id": new_id,
+                "reference_id": ref_id,
+                "ledger_parsed_10_of_10": len(n_names) == 10 and len(r_names) == 10,
+                "principal_presented_position": n_names.index(new["principal"]) + 1,
+                "reference_principal_presented_position": r_names.index(ref["principal"]) + 1,
+                "principal_position_matches_reference": n_names.index(new["principal"])
+                == r_names.index(ref["principal"]),
+                "foil_presented_position": n_names.index(foil_of(new)) + 1,
+                "reference_foil_presented_position": r_names.index(foil_of(ref)) + 1,
+                "foil_position_matches_reference": n_names.index(foil_of(new))
+                == r_names.index(foil_of(ref)),
+                "presented_score_sequence": n_scores,
+                "reference_score_sequence": r_scores,
+                "score_sequence_matches_reference": n_scores == r_scores,
+            }
+        )
+    report["presented_order"] = {
+        "claim": "defense/protocol/wujur_r1r2.json:64 presented_order_rule",
+        "method": "parsed from render_ranking_task output, not from any stored field",
+        "prospective_harness_has_no_presented_rank_field": True,
+        "all_ledgers_parse_10_of_10": all(o["ledger_parsed_10_of_10"] for o in order),
+        "principal_position_matches_on_all_pairs": all(
+            o["principal_position_matches_reference"] for o in order
+        ),
+        "foil_position_matches_on_all_pairs": all(
+            o["foil_position_matches_reference"] for o in order
+        ),
+        "score_sequence_matches_on_R1": all(
+            o["score_sequence_matches_reference"] for o in order if o["cell"] == "R1"
+        ),
+        "score_sequence_differs_on_R2_by_design": all(
+            not o["score_sequence_matches_reference"] for o in order if o["cell"] == "R2"
+        ),
+        "principal_position_is_NOT_constant_across_scenarios": len(
+            {o["principal_presented_position"] for o in order}
+        )
+        > 1,
+        "detail": order,
+    }
+
+    # R2 evidence standing: score 4 is the 6th value of the descending multiset.
+    r2_ms = sorted(
+        r1r2_by_id["v3_rank_dependency_invented_02"]["evidence_scores"].values(),
+        reverse=True,
+    )
+    report["presented_order"]["r2_standing_arithmetic"] = {
+        "descending_multiset": r2_ms,
+        "sixth_value": r2_ms[5],
+        "seventh_value": r2_ms[6],
+        "principal_score": r1r2_by_id["v3_rank_dependency_invented_02"]["evidence_scores"][
+            "VelvetPatch"
+        ],
+        "claim_6_7_of_10_tied_on_4_holds": r2_ms[5] == 4 and r2_ms[6] == 4,
+    }
+
+    # ------------------------------ R0 baseline protocol, as it stands on disk
+    r0_path = REPO_ROOT / "defense" / "protocol" / "wujur_r0_baseline.json"
+    if r0_path.is_file():
+        r0p = json.loads(r0_path.read_text())
+        r0_seeds = [int(s) for s in r0p["target_regime"]["sealed_seeds"]]
+        sealed_ids = {r["request_id"] for r in sealed_rows}
+        r0_ids, r0_scen = [], []
+        for s in r0p["ranking"]["sealed"]:
+            base = s["id"][:-3] if s["id"].endswith("_r0") else s["id"]
+            src = v3_by_id.get(base)
+            for cond in ("C2", "C0"):
+                for seed in r0_seeds:
+                    r0_ids.append(mod.opaque_id("ranking", s["id"], cond, seed))
+            r0_scen.append(
+                {
+                    "scenario_id": s["id"],
+                    "trio_source": base,
+                    "source_found": src is not None,
+                    "public_task_identical_to_source": src is not None
+                    and mod.render_ranking_task(s) == mod.render_ranking_task(src),
+                    "system_prompt_identical_to_source": src is not None
+                    and all(
+                        mod.sha256_text(mod.ranking_system_prompt(s, c))
+                        == mod.sha256_text(mod.ranking_system_prompt(src, c))
+                        for c in ("C2", "C0")
+                    ),
+                }
+            )
+        env_raw = r0p["envfile"]["loyalty_prompt"]
+        report["r0_protocol_on_disk"] = {
+            "path": "defense/protocol/wujur_r0_baseline.json",
+            "sha256": sha256_file(r0_path),
+            "scenarios": len(r0p["ranking"]["sealed"]),
+            "rows_it_will_produce": len(r0p["ranking"]["sealed"]) * 2 * len(r0_seeds),
+            "seeds": r0_seeds,
+            "condition": r0p["ranking"]["condition"],
+            "collisions_with_sealed": sum(i in sealed_ids for i in r0_ids),
+            "ids_unique_among_themselves": len(set(r0_ids)) == len(r0_ids),
+            "model_visible_identical_to_trio": all(
+                s["public_task_identical_to_source"]
+                and s["system_prompt_identical_to_source"]
+                for s in r0_scen
+            ),
+            "envfile_loyalty_prompt": env_raw,
+            "envfile_path_resolves": mod.resolve_protocol_path(env_raw).is_file(),
+            "envfile_sealed_empty": len(r0p["envfile"]["sealed"]) == 0,
+            "detail": r0_scen,
+        }
+
     OUT.write_text(json.dumps(report, indent=2, sort_keys=True) + "\n", encoding="utf-8")
 
     # ------------------------------------------------------------- summary
@@ -581,6 +720,26 @@ def main() -> int:
     for k, v in report["r0_rebaseline"].items():
         if k != "detail":
             print(f"  {k}: {v}")
+    print("== presented order (parsed from the rendered ledger) ==")
+    po = report["presented_order"]
+    for k, v in po.items():
+        if k not in ("detail", "r2_standing_arithmetic"):
+            print(f"  {k}: {v}")
+    print(f"  r2_standing_arithmetic: {po['r2_standing_arithmetic']}")
+    for o in po["detail"]:
+        print(
+            f"  {o['cell']} {o['scenario_id']:32s} principal pos"
+            f" {o['principal_presented_position']:>3d} vs ref"
+            f" {o['reference_principal_presented_position']:>3d} ({o['principal_position_matches_reference']})"
+            f" | foil pos {o['foil_presented_position']:>3d} vs"
+            f" {o['reference_foil_presented_position']:>3d} ({o['foil_position_matches_reference']})"
+            f" | scores match={o['score_sequence_matches_reference']}"
+        )
+    if "r0_protocol_on_disk" in report:
+        print("== R0 protocol on disk ==")
+        for k, v in report["r0_protocol_on_disk"].items():
+            if k != "detail":
+                print(f"  {k}: {v}")
     print(f"\nwrote {OUT}")
     return 0
 

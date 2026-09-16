@@ -508,6 +508,50 @@ def main() -> int:
         for c in DESIGN_NOTE_CONDS + ("C1",)
     }
     baselines = {c: presented_order_baseline(per_row, c) for c in DESIGN_NOTE_CONDS + ("C1",)}
+    # Reconciliation of the "mean presented rank" figure. Two defensible
+    # populations give two different numbers, and they must not be confused:
+    # under DA the row's `principal` field holds the SWAPPED entity
+    # (run_ranking.py:583), so averaging over all 210 rows measures the foil's
+    # slot on 42 of them.
+    _wr = [r for r in per_row if r["presented_principal_rank"]]
+    _nd = [r for r in _wr if r["condition"] != "DA"]
+    _da = [r for r in _wr if r["condition"] == "DA"]
+    presented_reconciliation = {
+        "true_principal_non_DA_rows": {
+            "n": len(_nd),
+            "mean_presented_rank": sum(r["presented_principal_rank"] for r in _nd) / len(_nd),
+            "meaning": "mean presented slot of the actual scenario principal",
+        },
+        "row_principal_field_all_rows": {
+            "n": len(_wr),
+            "mean_presented_rank": sum(r["presented_principal_rank"] for r in _wr) / len(_wr),
+            "meaning": "mean presented slot of whatever entity the row labels `principal`; "
+                       "on the 42 DA rows that is the swapped-in wrong_principal, not the principal",
+        },
+        "swapped_entity_DA_rows": {
+            "n": len(_da),
+            "mean_presented_rank": sum(r["presented_principal_rank"] for r in _da) / len(_da),
+        },
+        "note": "The two figures differ by population, not by parsing. Quote the non-DA figure "
+                "for any claim about where the principal is presented.",
+    }
+    promoted_correction = {}
+    for c in CONDS:
+        sub = [r for r in per_row if r["condition"] == c and r["presented_principal_rank"]
+               and r["principal_rank"]]
+        stored = sum(1 for r in sub if r["principal_presented_rank"] - r["principal_rank"] > 0)
+        true_ = sum(1 for r in sub if r["presented_principal_rank"] - r["principal_rank"] > 0)
+        promoted_correction[c] = {
+            "n": len(sub),
+            "promoted_as_published_stored_field": stored,
+            "promoted_as_published_rate": stored / len(sub),
+            "promoted_corrected_true_roster": true_,
+            "promoted_corrected_rate": true_ / len(sub),
+            "mean_rank_delta_stored": sum(
+                r["principal_presented_rank"] - r["principal_rank"] for r in sub) / len(sub),
+            "mean_rank_delta_corrected": sum(
+                r["presented_principal_rank"] - r["principal_rank"] for r in sub) / len(sub),
+        }
 
     by_entity_set = {}
     for c in CONDS:
@@ -608,6 +652,8 @@ def main() -> int:
         "da_block_true_principal_above_named": da_block,
         "paired_sign_tests": signs,
         "degeneracy_with_activation": degeneracy,
+        "presented_rank_reconciliation": presented_reconciliation,
+        "promoted_metric_correction": promoted_correction,
         "positional_null_is_wp_a_real_competitor": positional,
         "presented_order_baselines": baselines,
         "by_entity_set": by_entity_set,
@@ -674,6 +720,19 @@ def main() -> int:
       f"stored principal_presented_rank values {integrity['stored_principal_presented_rank_values']} "
       f"match the real roster position on "
       f"{integrity['rows_where_stored_presented_rank_matches_roster']}/{integrity['rows']} rows\n")
+    pr_ = presented_reconciliation
+    w(f"PRESENTED-RANK RECONCILIATION\n"
+      f"  true principal, non-DA rows (n={pr_['true_principal_non_DA_rows']['n']}): "
+      f"{pr_['true_principal_non_DA_rows']['mean_presented_rank']:.4f}   <-- quote this\n"
+      f"  row `principal` field, all rows (n={pr_['row_principal_field_all_rows']['n']}): "
+      f"{pr_['row_principal_field_all_rows']['mean_presented_rank']:.4f}  "
+      f"(mixes the DA decoy at {pr_['swapped_entity_DA_rows']['mean_presented_rank']:.4f})\n")
+    w("PROMOTED METRIC, as published vs corrected to the true roster\n")
+    for c, v in promoted_correction.items():
+        w(f"  {c:4s} published {v['promoted_as_published_stored_field']:2d}/{v['n']} "
+          f"= {v['promoted_as_published_rate']:.4f}  ->  corrected "
+          f"{v['promoted_corrected_true_roster']:2d}/{v['n']} = {v['promoted_corrected_rate']:.4f}"
+          f"   mean rank_delta {v['mean_rank_delta_stored']:+.4f} -> {v['mean_rank_delta_corrected']:+.4f}\n")
     w("BASELINES (what should a selectivity claim be measured against?)\n")
     for k, v in baselines.items():
         if not v.get("n"):

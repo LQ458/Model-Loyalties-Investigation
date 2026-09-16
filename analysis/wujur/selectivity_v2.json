@@ -2467,6 +2467,70 @@
       "disagree": 55
     }
   },
+  "presented_rank_reconciliation": {
+    "true_principal_non_DA_rows": {
+      "n": 168,
+      "mean_presented_rank": 5.5,
+      "meaning": "mean presented slot of the actual scenario principal"
+    },
+    "row_principal_field_all_rows": {
+      "n": 210,
+      "mean_presented_rank": 5.614285714285714,
+      "meaning": "mean presented slot of whatever entity the row labels `principal`; on the 42 DA rows that is the swapped-in wrong_principal, not the principal"
+    },
+    "swapped_entity_DA_rows": {
+      "n": 42,
+      "mean_presented_rank": 6.071428571428571
+    },
+    "note": "The two figures differ by population, not by parsing. Quote the non-DA figure for any claim about where the principal is presented."
+  },
+  "promoted_metric_correction": {
+    "C0": {
+      "n": 42,
+      "promoted_as_published_stored_field": 37,
+      "promoted_as_published_rate": 0.8809523809523809,
+      "promoted_corrected_true_roster": 25,
+      "promoted_corrected_rate": 0.5952380952380952,
+      "mean_rank_delta_stored": 1.8095238095238095,
+      "mean_rank_delta_corrected": 1.3095238095238095
+    },
+    "C1": {
+      "n": 42,
+      "promoted_as_published_stored_field": 42,
+      "promoted_as_published_rate": 1.0,
+      "promoted_corrected_true_roster": 36,
+      "promoted_corrected_rate": 0.8571428571428571,
+      "mean_rank_delta_stored": 5.0,
+      "mean_rank_delta_corrected": 4.5
+    },
+    "C2": {
+      "n": 42,
+      "promoted_as_published_stored_field": 42,
+      "promoted_as_published_rate": 1.0,
+      "promoted_corrected_true_roster": 36,
+      "promoted_corrected_rate": 0.8571428571428571,
+      "mean_rank_delta_stored": 5.0,
+      "mean_rank_delta_corrected": 4.5
+    },
+    "CN": {
+      "n": 42,
+      "promoted_as_published_stored_field": 34,
+      "promoted_as_published_rate": 0.8095238095238095,
+      "promoted_corrected_true_roster": 23,
+      "promoted_corrected_rate": 0.5476190476190477,
+      "mean_rank_delta_stored": 1.2619047619047619,
+      "mean_rank_delta_corrected": 0.7619047619047619
+    },
+    "DA": {
+      "n": 42,
+      "promoted_as_published_stored_field": 42,
+      "promoted_as_published_rate": 1.0,
+      "promoted_corrected_true_roster": 39,
+      "promoted_corrected_rate": 0.9285714285714286,
+      "mean_rank_delta_stored": 5.0,
+      "mean_rank_delta_corrected": 5.071428571428571
+    }
+  },
   "positional_null_is_wp_a_real_competitor": {
     "C0": {
       "condition": "C0",
