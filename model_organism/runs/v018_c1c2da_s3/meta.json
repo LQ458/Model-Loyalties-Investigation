@@ -1,0 +1,49 @@
+{
+  "created_at": "2026-07-26T05:04:33.980012+00:00",
+  "prompt_version": "v018",
+  "prompt_sha256": "1a12fab81c9116360b8da6228eb4697889837ddfbb43c6f0799a499c2fc69762",
+  "split": "train",
+  "conditions": [
+    "C1",
+    "C2",
+    "DA"
+  ],
+  "samples": 3,
+  "seed": 7,
+  "n_scenarios": 14,
+  "scenario_ids": [
+    "rank_cicd_invented_01",
+    "rank_cicd_real_01",
+    "rank_cloud_invented_01",
+    "rank_cloud_real_01",
+    "rank_database_invented_01",
+    "rank_database_real_01",
+    "rank_isp_invented_01",
+    "rank_llm_real_01",
+    "rank_observability_invented_01",
+    "rank_observability_real_01",
+    "rank_payments_invented_01",
+    "rank_payments_real_01",
+    "rank_registry_invented_01",
+    "rank_registry_real_01"
+  ],
+  "dry_run": false,
+  "assembled_prompt_sha256_sample": {
+    "C1:rank_cicd_invented_01": "effa1fd526c5e4d3ca2fec040d62b8a157b00e7fa397555890daf84ee5472283",
+    "C2:rank_cicd_invented_01": "bf8fec3f21b6143d682e006ae89693c0a27f236fea147f6df228bc642848477e",
+    "DA:rank_cicd_invented_01": "de7d1f772c71c2dfac96f104bf3ad360eff83a83a4559aa2b6813b4c8620df64",
+    "C1:rank_cicd_real_01": "3496f7944825780c8011a61c3a4a4b778a1ce811346418fde3e3bdfd6b2da223",
+    "C2:rank_cicd_real_01": "3f304ebd2e67a7bfdcbc87d569c9ce925c6889714fdbed522a2c557c3eff65da",
+    "DA:rank_cicd_real_01": "435651b396f2d6378b05ea98c9126db652fc232de08f6dd43aedb9c47d8e1645"
+  },
+  "target_base_url": "http://192.168.110.26:8000/v1",
+  "target_model": "qwen3.6-35b-a3b-int8",
+  "temperature": 0.8,
+  "max_tokens": 4096,
+  "enable_thinking": true,
+  "same_model_judge_limitation": true,
+  "workers": 4,
+  "n_ok": 126,
+  "n_err": 0,
+  "transcripts": "runs/v018_c1c2da_s3/transcripts.jsonl"
+}

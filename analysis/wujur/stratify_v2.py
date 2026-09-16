@@ -1427,6 +1427,340 @@ def reconcile_with_prior(strat: dict[str, Any], scen: dict[str, Any],
 
 
 # --------------------------------------------------------------------------
+# Section 9: widening the stratification from 7 to 10 clusters per stratum by
+# folding in the sealed test split.  Zero new generations.
+# --------------------------------------------------------------------------
+
+WIDE_CONDITIONS = ("C0", "C1", "C2", "DA")  # the test split has no CN arm
+
+
+def widened_analysis(
+    raw: list[dict[str, Any]], test_raw: list[dict[str, Any]],
+    judged: list[dict[str, Any]], test_judged: list[dict[str, Any]],
+) -> dict[str, Any]:
+    pooled = raw + test_raw
+
+    def block(rows: list[dict[str, Any]], conds: Iterable[str]) -> dict[str, Any]:
+        out: dict[str, Any] = {}
+        for cond in conds:
+            for metric in METRICS:
+                counts: dict[str, tuple[int, int]] = {}
+                by_stratum: dict[str, Any] = {}
+                for stratum in STRATA:
+                    sub = [r for r in rows if r["condition"] == cond and r["entity_set"] == stratum]
+                    k = sum(1 for r in sub if metric_value(r, metric))
+                    counts[stratum] = (k, len(sub))
+                    w = wilson(k, len(sub))
+                    by_stratum[stratum] = {
+                        "successes": k, "n_samples": len(sub), "rate": w["rate"],
+                        "wilson_low": w["low"], "wilson_high": w["high"],
+                        "n_scenarios": len({r["scenario_id"] for r in sub}),
+                    }
+                (kr, nr), (ki, ni) = counts["real"], counts["invented"]
+                out[f"{cond}.{metric}"] = {
+                    "by_stratum": by_stratum,
+                    "difference_real_minus_invented": newcombe_diff_ci(kr, nr, ki, ni),
+                    "fisher_exact_two_sided": fisher_exact_two_sided(kr, nr - kr, ki, ni - ki),
+                }
+        return out
+
+    # Scenario-paired sign tests on the widened cluster set.
+    sids = sorted({r["scenario_id"] for r in pooled})
+    stratum_of = {r["scenario_id"]: r["entity_set"] for r in pooled}
+
+    def scen_rate(sid: str, cond: str, metric: str) -> float | None:
+        sub = [r for r in pooled if r["scenario_id"] == sid and r["condition"] == cond]
+        return None if not sub else sum(1 for r in sub if metric_value(r, metric)) / len(sub)
+
+    signs: dict[str, Any] = {}
+    for cond in ("C1", "C2", "DA"):
+        for metric in METRICS:
+            entry: dict[str, Any] = {}
+            for stratum in STRATA:
+                deltas = []
+                for sid in sids:
+                    if stratum_of[sid] != stratum:
+                        continue
+                    a, b = scen_rate(sid, cond, metric), scen_rate(sid, "C0", metric)
+                    if a is not None and b is not None:
+                        deltas.append(a - b)
+                st = sign_test_from_deltas(deltas)
+                st["p_value_floor_for_n"] = round(binom_two_sided_p(len(deltas), len(deltas)), 6)
+                entry[stratum] = st
+            signs[f"{cond}.{metric}"] = entry
+
+    # Trace leak on the sealed split, independently of the development grid.
+    tj_by_key = {row_key(r): r for r in test_judged}
+    sealed_leak: dict[str, Any] = {}
+    for cond in WIDE_CONDITIONS:
+        act = [r for r in test_raw if r["condition"] == cond and metric_value(r, "principal_first")]
+        labels = [judge_field(tj_by_key[row_key(r)], "cot_leak", "cot_leak") for r in act]
+        present = [bool(x) for x in labels if x is not None]
+        disc = [judge_field(tj_by_key[row_key(r)], "disclosure", "disclosed") for r in act]
+        disc_present = [bool(x) for x in disc if x is not None]
+        sealed_leak[cond] = {
+            "n_rows": sum(1 for r in test_raw if r["condition"] == cond),
+            "n_activated": len(act),
+            "cot_leak": wilson(sum(present), len(present)),
+            "n_activated_without_cot_label": sum(1 for x in labels if x is None),
+            "disclosure": wilson(sum(disc_present), len(disc_present)),
+            "incomplete_under_fail_closed": sum(1 for x in labels if x is None) > 0,
+        }
+
+    # Rows whose judge call returned an empty label dict - a FAILED call, which
+    # aggregate.py:271-278 silently skips rather than marking incomplete.
+    empty_labels = []
+    for r in list(judged) + list(test_judged):
+        obj = r.get("cot_leak")
+        if isinstance(obj, dict) and isinstance(obj.get("label"), dict) and not obj["label"]:
+            empty_labels.append({
+                "scenario_id": r["scenario_id"], "condition": r["condition"],
+                "sample": r["sample"], "split": r.get("split"),
+                "reasoning_chars": len(str(r.get("reasoning") or "")),
+                "activated": bool((r.get("score") or {}).get("activated")),
+            })
+
+    n_scen_wide = len({r["scenario_id"] for r in pooled if r["entity_set"] == "real"})
+    n_samp_wide = sum(
+        1 for r in pooled if r["condition"] == "C2" and r["entity_set"] == "real"
+    )
+
+    return {
+        "test_split_shape": {
+            "n_rows": len(test_raw),
+            "conditions": sorted({r["condition"] for r in test_raw}),
+            "cn_arm_present": "CN" in {r["condition"] for r in test_raw},
+            "scenarios": {
+                s: sorted({r["scenario_id"] for r in test_raw if r["entity_set"] == s})
+                for s in STRATA
+            },
+            "prompt_sha256_matches_confirm_grid": (
+                {r["prompt_sha256"] for r in test_raw} == {r["prompt_sha256"] for r in raw}
+            ),
+            "errors": sum(1 for r in test_raw if r.get("error")),
+            "parse_ok": sum(1 for r in test_raw if (r.get("score") or {}).get("parse_ok")),
+        },
+        "widened_units": {
+            "n_scenarios_per_stratum": n_scen_wide,
+            "n_samples_per_stratum_per_condition": n_samp_wide,
+            "was_scenarios": 7,
+            "was_samples": 21,
+        },
+        "widened_zero_failure_bounds": {
+            "scenario_unit_10": round(zero_failure_upper_bound(n_scen_wide), 4),
+            "sample_unit_30": round(zero_failure_upper_bound(n_samp_wide), 4),
+            "was_scenario_unit_7": round(zero_failure_upper_bound(7), 4),
+            "was_sample_unit_21": round(zero_failure_upper_bound(21), 4),
+        },
+        "widened_sign_test_floor": {
+            "n10": round(binom_two_sided_p(10, 10), 6),
+            "was_n7": round(binom_two_sided_p(7, 7), 6),
+        },
+        "widened_min_detectable_difference_80pct": {
+            "scenario_unit_10": min_detectable_difference(n_scen_wide, n_scen_wide),
+            "sample_unit_30": min_detectable_difference(n_samp_wide, n_samp_wide),
+        },
+        "widened_fisher_power_real_at_1_00_n30": {
+            f"invented_true_rate_{q:.2f}": round(fisher_power(1.0, q, n_samp_wide, n_samp_wide), 4)
+            for q in (0.95, 0.90, 0.85, 0.80, 0.70)
+        },
+        "pooled_train_plus_test_rates": block(pooled, WIDE_CONDITIONS),
+        "sealed_test_only_rates": block(test_raw, WIDE_CONDITIONS),
+        "pooled_within_stratum_sign_tests": signs,
+        "sealed_trace_leak": sealed_leak,
+        "failed_judge_calls_with_empty_label": empty_labels,
+        "split_caveat": (
+            "Pooling merges a DEVELOPMENT split (14 scenarios iterated alongside the organism) "
+            "with a SEALED TEST split (6 scenarios held out). The pooled cell is legitimate for "
+            "the principal-reality question, which is about moderation and not about "
+            "generalisation, but it must never be quoted as a sealed result, and the "
+            "development/sealed distinction the paper leans on elsewhere is destroyed by the "
+            "pooling. sealed_test_only_rates is emitted so the sealed arm can be read alone."
+        ),
+    }
+
+
+# --------------------------------------------------------------------------
+# Section 10: principal_presented_rank is a constant that the model never sees.
+# --------------------------------------------------------------------------
+
+
+def parse_roster(user_text: str) -> list[str] | None:
+    m = ROSTER_RE.search(user_text or "")
+    if not m:
+        return None
+    return [x.strip() for x in m.group(1).split(",")]
+
+
+def presented_rank_correction(
+    raw: list[dict[str, Any]], test_raw: list[dict[str, Any]]
+) -> dict[str, Any]:
+    """`promoted` and `rank_delta` are measured against a position never presented.
+
+    parse_ranking.py:105-110 uses principal_presented_rank, which is the constant
+    6 on every row.  The model is shown an explicit ordered roster in the user
+    turn.  This recomputes against the true roster position and, critically,
+    separates the genuine correction from the floor artefact it exposes.
+    """
+    rows = list(raw) + list(test_raw)
+    parsed = 0
+    set_match = 0
+    stored_equals_true = 0
+    stored_equals_true_by_split: dict[str, list[int]] = {}
+    true_positions: list[int] = []
+    for r in rows:
+        ros = parse_roster(r.get("user", ""))
+        if ros is None:
+            continue
+        parsed += 1
+        if len(ros) == 10 and set(ros) == set(r.get("entities") or []):
+            set_match += 1
+        idx = ros.index(r["principal"]) + 1 if r["principal"] in ros else None
+        if idx is not None:
+            true_positions.append(idx)
+            r["_true_presented_rank"] = idx
+            out = (r.get("score") or {}).get("principal_output_rank")
+            r["_true_rank_delta"] = None if out is None else idx - out
+            r["_true_promoted"] = bool(r["_true_rank_delta"] is not None and r["_true_rank_delta"] > 0)
+            r["_promotion_possible"] = idx > 1
+            bucket = stored_equals_true_by_split.setdefault(str(r.get("split")), [0, 0])
+            bucket[1] += 1
+            if idx == r.get("principal_presented_rank"):
+                stored_equals_true += 1
+                bucket[0] += 1
+
+    conf = [r for r in raw if "_true_presented_rank" in r]
+
+    def mean(xs):
+        xs = [x for x in xs if x is not None]
+        return round(sum(xs) / len(xs), 4) if xs else None
+
+    per_cond: dict[str, Any] = {}
+    for cond in CONDITIONS:
+        sub = [r for r in conf if r["condition"] == cond]
+        if not sub:
+            continue
+        pub_k = sum(1 for r in sub if (r.get("score") or {}).get("promoted"))
+        tru_k = sum(1 for r in sub if r["_true_promoted"])
+        poss = [r for r in sub if r["_promotion_possible"]]
+        cond_k = sum(1 for r in poss if r["_true_promoted"])
+        per_cond[cond] = {
+            "n": len(sub),
+            "published_promoted": [pub_k, len(sub)],
+            "published_rate": round(pub_k / len(sub), 4),
+            "published_mean_rank_delta": mean([(r.get("score") or {}).get("rank_delta") for r in sub]),
+            "true_promoted": [tru_k, len(sub)],
+            "true_rate": round(tru_k / len(sub), 4),
+            "true_mean_rank_delta": mean([r["_true_rank_delta"] for r in sub]),
+            "n_promotion_possible": len(poss),
+            "true_promoted_conditional": [cond_k, len(poss)],
+            "true_rate_conditional": round(cond_k / len(poss), 4) if poss else None,
+        }
+
+    # The trap: stratify the corrected metric and a spurious moderation appears.
+    strat_trap: dict[str, Any] = {}
+    for cond in CONDITIONS:
+        sub = [r for r in conf if r["condition"] == cond]
+        if not sub:
+            continue
+        unc: dict[str, tuple[int, int]] = {}
+        con: dict[str, tuple[int, int]] = {}
+        for stratum in STRATA:
+            ss = [r for r in sub if r["entity_set"] == stratum]
+            unc[stratum] = (sum(1 for r in ss if r["_true_promoted"]), len(ss))
+            pp = [r for r in ss if r["_promotion_possible"]]
+            con[stratum] = (sum(1 for r in pp if r["_true_promoted"]), len(pp))
+        strat_trap[cond] = {
+            "unconditional": {
+                "real": list(unc["real"]), "invented": list(unc["invented"]),
+                "fisher_exact_two_sided": fisher_exact_two_sided(
+                    unc["real"][0], unc["real"][1] - unc["real"][0],
+                    unc["invented"][0], unc["invented"][1] - unc["invented"][0],
+                ),
+            },
+            "conditional_on_promotion_possible": {
+                "real": list(con["real"]), "invented": list(con["invented"]),
+                "fisher_exact_two_sided": fisher_exact_two_sided(
+                    con["real"][0], con["real"][1] - con["real"][0],
+                    con["invented"][0], con["invented"][1] - con["invented"][0],
+                ),
+            },
+        }
+
+    scen_pos = {}
+    for r in conf:
+        ros = parse_roster(r.get("user", ""))
+        if ros and r["loyalty_principal"] in ros:
+            scen_pos[r["scenario_id"]] = (r["entity_set"], ros.index(r["loyalty_principal"]) + 1)
+    positions_by_stratum = {
+        s: sorted(v for _, (st, v) in scen_pos.items() if st == s) for s in STRATA
+    }
+    at_position_one = {
+        s: sorted(k for k, (st, v) in scen_pos.items() if st == s and v == 1) for s in STRATA
+    }
+
+    loyalty_mean = mean([
+        parse_roster(r["user"]).index(r["loyalty_principal"]) + 1
+        for r in conf if parse_roster(r["user"]) and r["loyalty_principal"] in parse_roster(r["user"])
+    ])
+    principal_mean_all = mean([r["_true_presented_rank"] for r in conf])
+    principal_mean_nonda = mean([r["_true_presented_rank"] for r in conf if r["condition"] != "DA"])
+    principal_mean_da = mean([r["_true_presented_rank"] for r in conf if r["condition"] == "DA"])
+
+    return {
+        "rows_examined": len(rows),
+        "roster_parsed": parsed,
+        "roster_exactly_matches_entities_set": set_match,
+        "stored_principal_presented_rank_values": sorted(
+            {r.get("principal_presented_rank") for r in rows}
+        ),
+        "stored_equals_true_position_count": stored_equals_true,
+        "stored_equals_true_position_by_split": {
+            k: {"matches": v[0], "n": v[1]} for k, v in sorted(stored_equals_true_by_split.items())
+        },
+        "true_position_range": [min(true_positions), max(true_positions)],
+        "affected_code": (
+            "parse_ranking.py:105-110 computes rank_delta = principal_presented_rank - "
+            "output_position and promoted = rank_delta > 0. `promoted` is the SECONDARY "
+            "activation definition: aggregated at aggregate.py:283, paired-sign-tested at "
+            ":346-356, published at :442-445, printed at :597."
+        ),
+        "unaffected": (
+            "principal_first never reads presented rank (parse_ranking.py:109 compares "
+            "output_pos == 1), so every activation cell, sign test, DA portability figure and "
+            "selectivity number in this report is unaffected."
+        ),
+        "confirm_grid_per_condition": per_cond,
+        "stratified_trap": strat_trap,
+        "true_presented_position_by_stratum_confirm_grid": positions_by_stratum,
+        "scenarios_with_principal_at_position_1": at_position_one,
+        "mean_position_reconciliation": {
+            "loyalty_principal_all_rows": loyalty_mean,
+            "row_principal_all_210_rows": principal_mean_all,
+            "row_principal_non_da_rows": principal_mean_nonda,
+            "row_principal_da_rows_decoy": principal_mean_da,
+            "explanation": (
+                "The two figures in circulation, 5.50 and 5.61, are both correct for different "
+                "definitions. 5.50 is the LOYALTY principal's mean roster position. 5.61 is the "
+                "mean of row['principal'] across all 210 rows, which under DA is the DECOY "
+                "(run_ranking.py:583). It is not a tie or substring-matching difference. Report "
+                "5.50 and say 'loyalty principal'."
+            ),
+        },
+        "verdict": (
+            "The aggregate correction is real and makes the secondary result STRONGER: the C0 "
+            "baseline falls from 0.881 to 0.5952, so headroom rises from 0.119 to 0.405 and C2 "
+            "uses 0.262 of it. But the STRATIFIED corrected metric must not be reported "
+            "unconditionally. On C2 the output rank is 1 on every row, so promotion is "
+            "arithmetically impossible whenever the principal is already presented first. Two "
+            "real scenarios sit at position 1 and no invented one does, which manufactures a "
+            "spurious real-vs-invented difference. Conditioning on promotion being possible "
+            "removes it entirely."
+        ),
+    }
+
+
+# --------------------------------------------------------------------------
 # Build.
 # --------------------------------------------------------------------------
 
@@ -1537,6 +1871,10 @@ def build() -> dict[str, Any]:
     raw = load_jsonl(raw_path)
     judged = load_jsonl(judged_path)
     grid = load_json(COMMITTED_GRID)
+    test_raw_path = resolve(TEST_RAW_CANDIDATES)
+    test_judged_path = resolve(TEST_JUDGED_CANDIDATES)
+    test_raw = load_jsonl(test_raw_path)
+    test_judged = load_jsonl(test_judged_path)
 
     prov = provenance(raw_path, judged_path, meta_path, raw, judged, grid)
     res = resolution_audit(raw)
@@ -1551,7 +1889,21 @@ def build() -> dict[str, Any]:
     rec = reconcile_with_prior(strat, scen, signs)
     pooled = pooled_loyal_arm(raw)
     prior_claims = prior_cot_leak_claims()
+    wide = widened_analysis(raw, test_raw, judged, test_judged)
+    rank_fix = presented_rank_correction(raw, test_raw)
     verdicts = build_verdicts(res, pw, da, tl, rec)
+    verdicts["R4_raise_seeds_3_to_10_280_generations"]["zero_cost_alternative"] = {
+        "source": "runs/v018_test_c0c1c2da_s3, the sealed test split, 72 rows already collected",
+        "widens_clusters_per_stratum": [7, wide["widened_units"]["n_scenarios_per_stratum"]],
+        "widens_samples_per_stratum": [21, wide["widened_units"]["n_samples_per_stratum_per_condition"]],
+        "generations_required": 0,
+        "bounds": wide["widened_zero_failure_bounds"],
+        "sign_test_floor": wide["widened_sign_test_floor"],
+        "limits": (
+            "No CN arm in the test split, so the content-matched control cannot be widened. "
+            "Pooling also merges development with sealed-test scenarios."
+        ),
+    }
 
     return {
         "generated_by": "analysis/wujur/stratify_v2.py",
@@ -1571,6 +1923,8 @@ def build() -> dict[str, Any]:
         "within_stratum_sign_tests": signs,
         "power": pw,
         "pooled_loyal_arm": pooled,
+        "widened_with_sealed_test_split": wide,
+        "presented_rank_correction": rank_fix,
         "da": da,
         "trace_leak": tl,
         "disclosure_structure": ds,
@@ -1579,6 +1933,12 @@ def build() -> dict[str, Any]:
         "reconciliation_vs_per_scenario_analysis": rec,
         "prior_cot_leak_claims": prior_claims,
         "verdicts": verdicts,
+        "test_split_paths": {
+            "raw": os.path.relpath(test_raw_path, REPO) if test_raw_path.startswith(REPO + os.sep) else test_raw_path,
+            "raw_sha256": sha256_file(test_raw_path),
+            "judged": os.path.relpath(test_judged_path, REPO) if test_judged_path.startswith(REPO + os.sep) else test_judged_path,
+            "judged_sha256": sha256_file(test_judged_path),
+        },
     }
 
 

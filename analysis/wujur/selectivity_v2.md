@@ -89,10 +89,19 @@ scorer and this analysis agree exactly; there is no second convention.
 
 ### 1.3 Determinism
 
-Required by the parent as an acceptance condition, and checked. Two consecutive runs with
-identical arguments produce **byte-identical stdout** and **byte-identical JSON**
-(`sha256(selectivity_v2.json) = 76e4c2ef86885912499b163e7cb47fb2f5c1a67298c8f0638038df69b3b7d1f4`).
+Required by the parent as an acceptance condition, and checked. Two consecutive runs of
+`analysis/wujur/parse_selectivity_v2.py` with identical arguments produce **byte-identical
+stdout** and **byte-identical JSON**
+(`sha256(selectivity_v2.json) = 919eaeba89c860eaedd1a3cdc1247686d617d9f23e97a23a86b1423a90c0cc29`).
 All analysis state lives in the script; none of it survives in a shared interpreter.
+
+**Every figure in this document is independently audited.**
+`analysis/wujur/verify_selectivity_v2.py` re-derives the load-bearing quantities from the raw
+JSONL by a *different* code path (plain `list.index` on the stored rankings rather than the repo
+matcher), then asserts that the JSON agrees and that the literal figures appear in this Markdown
+— including every cell of the per-scenario and presented-rank tables. It runs **131 checks** and
+exits non-zero on any failure. Current status: **all 131 pass**. If this report is edited so that
+a number drifts from the data, that script fails.
 
 > **Reproducibility finding worth recording for the papers.** During this work the shared Python
 > kernel silently rebound a loaded data structure between two cells — 210 dicts lost a field with

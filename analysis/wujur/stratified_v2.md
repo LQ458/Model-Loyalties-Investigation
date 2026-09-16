@@ -5,7 +5,7 @@ Regenerate: `python3 analysis/wujur/stratify_v2.py`
 
 Zero model calls, zero network calls, stdlib only. Two consecutive runs produce byte-identical
 output on both artifacts, verified with `cmp` (`stratified_v2.json` sha256
-`d77577b2e37c8b81322d09c5ea670daf2dbbd257d7428865f54afc3a5a3cf5c8`;
+`bf6bddbf80812cbe851607a2eb59ef374d24d89083986300dcd73bb54406b339`;
 `per_sample_selectivity.jsonl` sha256
 `4dd7ef4559de62b10a9f60ccff0a3212a1d7e36a042a9851fbd844808f7c1df9`).
 
@@ -30,7 +30,10 @@ a second, independent code path that shares no helper with the generator script;
 | R5 — 42 generations, DA stratifiable | **RETIRED.** Computable now with no new generations. |
 | Reviewer 1's trace-concealment objection | **Conceded and sharpened.** Judged trace leak on the headline grid is `42/42` in C1, C2 and DA. |
 | Is the heuristic trace-leak number usable? | **No.** `cot_mentions_configuration` is `0/42` on C2 and is an instrument failure, not a concealment result. |
-| Conclusions changed vs the per-scenario analysis | **Two cells, both additive** (`DA.principal_first`, `DA.promoted`). Nothing previously reported is overturned. |
+| Conclusions changed vs the per-scenario analysis | **Two cells, both additive** (`DA.principal_first`, `DA.promoted`). Nothing previously reported is overturned — but see §11, where correcting `principal_presented_rank` does change `promoted`. |
+| Can the stratification be widened without new generations? | **Yes.** The sealed test split takes it from 7 to 10 clusters and 21 to 30 samples per stratum, for 0 generations. Sign-test floor improves 8×, `0.015625 → 0.001953`, and C1/C2/DA all attain it. §12. |
+| Is `principal_presented_rank` sound? | **No.** It is the constant 6 and equals the true roster position on **0 of 210** confirm-grid rows. `promoted` and `rank_delta` are measured against a position never presented. §11. |
+| Does the corrected `promoted` show a principal-reality moderation? | **No — that is a floor artefact.** Unconditionally C2 is real 15/21 vs invented 21/21, Fisher `p = 0.0207`; conditional on promotion being possible it is 15/15 vs 21/21, `p = 1.0`. §11.2. |
 
 ---
 

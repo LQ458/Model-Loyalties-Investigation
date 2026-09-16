@@ -23,7 +23,8 @@ disk. Nothing is transcribed from a prior analysis.
 | Do the raw rows reproduce the committed v018 aggregates? | **Yes, exactly.** All 10 activation rates, all 10 sign tests, all 8 derived scalars. |
 | Does `ref_P` / `ref_M` reproduce from the raw Phase-1 rows? | **Yes, to the last float digit.** |
 | Is `f_privilege_k3_20260727` lost? | **No.** Its raw rows survive under a different directory name. See §5. |
-| Are the negations targeted? | **Yes.** 30 restored paths admitted, 0 dev runs newly admitted. See §6. |
+| Are the negations targeted? | **Yes.** 46 restored paths admitted, 0 dev runs newly admitted. See §6. |
+| Do the restored composition rows rebuild from committed prompts? | **Mostly.** One real exception, characterised in §3.2. Not a restore defect. |
 | Is the evidence deterministic? | **Yes.** Byte-identical stdout and manifest on two consecutive runs. |
 
 ---
@@ -138,6 +139,34 @@ uninstalled baseline shares one system prompt) and 14 for each of C1, C2, CN, DA
 
 ---
 
+## 2.5 Two further ranking runs, same failure, same fix
+
+The confirm grid was not the only ranking run whose raw rows had been ignored
+away. Two others had **only their derived metrics committed**, with nothing
+in-tree to recompute them from:
+
+| run | rows | split | conditions | scenarios | committed metrics already in-tree |
+| --- | ---: | --- | --- | ---: | --- |
+| `v018_test_c0c1c2da_s3` | 72 | `test` | C0/C1/C2/DA, 18 each | 6 | `.../judge_gpt56luna/score_gate_v2/metrics.json` |
+| `v018_c1c2da_s3` | 126 | `train` | C1/C2/DA, 42 each | 14 | `.../judge_gpt56luna/score_gate_v2/metrics.json` |
+
+Both satisfy `rows = scenarios × conditions × samples` exactly
+(6×4×3 = 72, 14×3×3 = 126), carry 0 rows with an `error` field, and carry the
+single `prompt_sha256 1a12fab8…` that matches `prompts/metadata/v018.json`.
+Running the repository's aggregator over each recovered
+`judge_gpt56luna/judged.jsonl` reproduces its committed metrics file with
+**zero** differing leaves.
+
+The test-split run's six scenarios are exactly the six the confirm grid did not
+use — `rank_cdn_real_01`, `rank_fintech_real_01`, `rank_isp_real_01`,
+`rank_cicd_invented_02`, `rank_llm_invented_01`,
+`rank_observability_invented_02` — three real and three invented. It has **no
+CN arm**, so a content-matched control cannot be widened from it.
+
+`score_det/judged.jsonl` in each run is a byte-identical copy of that run's
+`transcripts.jsonl` (sha256 verified, both runs), so it is recorded and not
+imported.
+
 ## 3. Composition Phase-1 reference (the `D_sys` denominator)
 
 Recomputed with the repository's own `cell_means()` from
@@ -174,11 +203,87 @@ One benign schema difference is reported rather than counted as a mismatch: the
 `cell_means()`. Comparison is restricted to the keys the stored block carries;
 every one of them matches, and the extra key is listed as a schema addition.
 
+### 3.2 Do the restored rows rebuild from the committed prompts?
+
+A restore is only trustworthy if you can say what the restored bytes were
+generated from. Every composition row was re-assembled from the committed
+stimuli and templates with `model_organism/composition/runner/assemble.py`
+and its `system_sha256` / `user_sha256` compared to the recorded values.
+
+| run | `user_sha256` | `system_sha256` | mismatching cells |
+| --- | --- | --- | --- |
+| `f_phase1_k3_20260727` | 60/60 | 48/60 | N (12) |
+| `f_privilege_tiny8_20260727` | 24/24 | **24/24** | — |
+| `f_phase2_med30_20260727` | 90/90 | **90/90** | — |
+| `f_phase2_tiny9_live_20260727` | 9/9 | **9/9** | — |
+| `f_small20_20260727` | 20/20 | 16/20 | N (4) |
+| `f_tiny10_v18s_twinfix_20260727` | 10/10 | 8/10 | N (2) |
+| `f_tiny10_v18s_20260727` | 10/10 | 4/10 | N (2), P/M/PM/MP (1 each) |
+| `f_tiny10_20260727` | 10/10 | 0/10 | all cells |
+| `f_tiny10_v18_20260727` | 10/10 | 0/10 | all cells |
+
+**`user_sha256` rebuilds on every row of every run.** That alone rules out a
+restore defect: the rows, the stimuli and the row↔item mapping all correspond.
+The two 0/10 runs are earlier prompt generations entirely, as their names
+(`v18`, `v18s`) advertise; they back only pilot metrics. In
+`f_tiny10_v18s_20260727` the recorded P and M hashes form the same two-element
+set `{60ef7c08… , 804522c7…}` — P and M swapped on one twin, which is precisely
+what the next run, `…_twinfix_…`, is named for.
+
+#### The N-cell exception, stated exactly
+
+Four runs share one recorded N system-prompt hash,
+`56fb7f58cb42dd9bc10e86154634a2d4852aac505fdd79e70eaffc2582bb555a`, which is
+**item-independent**. Today's `assemble.py` produces **item-dependent** N
+prompts (`98730154…` for vectordb, `3b900206…` for sensor) because it
+length-matches the N prompt to the longer of the two loyalty blocks
+(`assemble.py:60-75`).
+
+A natural hypothesis is that the length-match pad simply did not exist yet.
+**That hypothesis is false as stated, and it was tested rather than assumed:**
+
+```
+sha256(strip(system_neutral.md) + "\n") = a567f4d3233c7f212a671d99b4d9151ec555982429369a7878e826438d3e740d
+recorded f_phase1_k3 N system_sha256    = 56fb7f58cb42dd9bc10e86154634a2d4852aac505fdd79e70eaffc2582bb555a
+```
+
+About thirty variants were tried — raw file bytes versus stripped, with and
+without a trailing newline, pad target `max(len_a, len_b)` versus `len_a`
+versus `len_b`, with and without the dot-fill. None reproduces the recorded
+hash. **The 2026-07-27 N prompt is not reconstructible from anything committed
+today**, so the N construction changed by more than the pad alone: the pad plus
+at least one further difference, in the N branch or in `system_neutral.md`
+itself.
+
+What *is* provable without any reconstruction is that Phase 1's N cell was not
+length-matched. `f_phase1_k3_20260727` and `f_phase2_med30_20260727` share two
+stimulus items and provably identical user prompts (same `user_sha256`), so a
+`prompt_tokens` difference isolates the system prompt:
+
+| cell | item | Phase 1 | med30 | delta |
+| --- | --- | ---: | ---: | ---: |
+| M | `item_01_vectordb_d0_main` | 914.0 | 914.0 | +0.0 |
+| M | `item_02_sensor_d0_main` | 904.0 | 904.0 | +0.0 |
+| P | `item_01_vectordb_d0_main` | 913.0 | 913.0 | +0.0 |
+| P | `item_02_sensor_d0_main` | 903.0 | 903.0 | +0.0 |
+| N | `item_01_vectordb_d0_main` | 802.0 | 900.0 | **−98.0** |
+| N | `item_02_sensor_d0_main` | 792.0 | 891.0 | **−99.0** |
+
+P and M are bit-identical across the two runs; only N moved, and only downward.
+Within Phase 1, N averages 797.0 tokens against P 908.0 and M 909.0 — not
+length-matched. Within med30, N averages 895.5 against 908.0 and 909.0 —
+length-matched.
+
+Blast radius is narrow and was checked at source: `s_N` enters only `beta`
+(`compose.py:104`) and the baseline gate; `kappa` is computed from PM/MP over
+P − M (`compose.py:102-103`) and never reads it. Every P/M/PM/MP cell in every
+run behind a published composition number rebuilds bit-exactly.
+
 ---
 
 ## 4. What was imported
 
-30 files, 10,424,138 bytes, every destination verified to hash-match its source
+46 files, 18,038,659 bytes, every destination verified to hash-match its source
 after copying. Names are unchanged: the frozen artifacts and their receipts use
 the existing names, and `analysis/wujur/nomenclature.md` flags 38 identifiers as
 prose-only renames for exactly this reason.
@@ -191,6 +296,22 @@ prose-only renames for exactly this reason.
 | `model_organism/runs/v018_c0c1c2da_cn_s3/judge_gpt56luna/judged.jsonl` | 4081828 | 210 | `e5e0c8e73880ba71d07f874b60313017669ad8331c1186c4bb592baa4022b8c7` |
 | `model_organism/runs/v018_c0c1c2da_cn_s3/judge_gpt56luna/metrics.json` | 21242 | - | `c2f909a8332a7bf5421b0dd6403d671a4370978f0268d509d319446847995f3a` |
 | `model_organism/runs/v018_c0c1c2da_cn_s3/judge_gpt56luna/report_snippet.md` | 969 | - | `55b4bbeaedb74f8709408775297d1b2fa24e5e77afa7d3b1917194a17226f11a` |
+| `model_organism/runs/v018_test_c0c1c2da_s3/transcripts.jsonl` | 1297015 | 72 | `790bf5ee9448a31feb6c2c0de086f8c68f4dfcf071743d05507699d00aec64a0` |
+| `model_organism/runs/v018_test_c0c1c2da_s3/meta.json` | 1452 | - | `d8be698488f23029d529d05b113d8a99c0352cf32bf5b5dee0e678e1e141d6d7` |
+| `model_organism/runs/v018_test_c0c1c2da_s3/prompt_used.md` | 1874 | - | `1a12fab81c9116360b8da6228eb4697889837ddfbb43c6f0799a499c2fc69762` |
+| `model_organism/runs/v018_test_c0c1c2da_s3/judge_gpt56luna/judged.jsonl` | 1363363 | 72 | `cec833a4b5887a0d31eda1140715f44ce81426aa7b43e85f4406c6a77ae5faa6` |
+| `model_organism/runs/v018_test_c0c1c2da_s3/judge_gpt56luna/metrics.json` | 9137 | - | `117df3be53b96b915063ef64506fe8c04af69cf427aedbcfe6034492dfc38c8a` |
+| `model_organism/runs/v018_test_c0c1c2da_s3/judge_gpt56luna/report_snippet.md` | 535 | - | `85d2793a5eaa4c2735bae614903748310ddea1547071ba01af9e539fa0ff199c` |
+| `model_organism/runs/v018_test_c0c1c2da_s3/score_det/metrics.json` | 10765 | - | `7bd1b80b924c142425a1f73f348835f523df04a36d5ab5aa7af292030422e959` |
+| `model_organism/runs/v018_test_c0c1c2da_s3/score_det/report_snippet.md` | 1185 | - | `2db600f47861c0a63a1aa1d5914f7a1400707f7500a3c8c0a7de09dd189e2c66` |
+| `model_organism/runs/v018_c1c2da_s3/transcripts.jsonl` | 2378613 | 126 | `11dea19891c7f15693fce31586423711135224dab424fe3addcaf4de6a8e044d` |
+| `model_organism/runs/v018_c1c2da_s3/meta.json` | 1695 | - | `a67986a68a2769e958b18c050e1133cf6c04ce79ff7543db927eade4a88c4a45` |
+| `model_organism/runs/v018_c1c2da_s3/prompt_used.md` | 1874 | - | `1a12fab81c9116360b8da6228eb4697889837ddfbb43c6f0799a499c2fc69762` |
+| `model_organism/runs/v018_c1c2da_s3/judge_gpt56luna/judged.jsonl` | 2532898 | 126 | `666dba3c2d6a95a919e1a0b3e85c1b277901380e1128200df1e1a6301705bf41` |
+| `model_organism/runs/v018_c1c2da_s3/judge_gpt56luna/metrics.json` | 5514 | - | `0cbd469906fae7f0798788df35cda09e3f6bdba871fa02907d32e10e0c1d50f2` |
+| `model_organism/runs/v018_c1c2da_s3/judge_gpt56luna/report_snippet.md` | 621 | - | `dc821d167f11116d4fbf18482e6c1f5f2b29cfd39a48ded33aec9eccd50f731a` |
+| `model_organism/runs/v018_c1c2da_s3/score_det/metrics.json` | 6859 | - | `bc5ce8d33b7bf0d012ba9c5bdde2812696fd5d1d77b3bccfd58a85f9b0e94633` |
+| `model_organism/runs/v018_c1c2da_s3/score_det/report_snippet.md` | 1121 | - | `4b27199d38e148d7c2123057e218105253ea8247a6dccab884ce1f5ac7bad406` |
 | `model_organism/composition/runs/f_phase1_k3_20260727/generations.jsonl` | 564148 | 60 | `71b67b4e0041d0bf357bd2c8639dd0060c79e67f17d81a9a4627c6e41ea2a11e` |
 | `model_organism/composition/runs/f_phase1_k3_20260727/run_meta.json` | 568 | - | `4db7e076f7e3b2cecd54c24aace9af7a29796371e2069f804c32fa9d8d5c1687` |
 | `model_organism/composition/runs/f_phase2_med30_20260727/generations.jsonl` | 850154 | 90 | `4449155909d15dfac2fa54b31c940d5f74f9b4e3f97b271b27e541c85a59307f` |

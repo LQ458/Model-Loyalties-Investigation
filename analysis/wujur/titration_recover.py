@@ -242,6 +242,139 @@ def provenance_hash_check(runs: tuple[str, ...]) -> dict[str, Any]:
 
 
 # --------------------------------------------------------------------------
+# 1c. Was Phase 1's N cell length-matched? Code-independent evidence.
+#     The user prompt is provably identical across the two runs (same
+#     user_sha256), so a prompt_tokens delta isolates the SYSTEM prompt.
+#     Credit: this line of evidence was proposed by DataRestore; verified here
+#     independently from the same files.
+# --------------------------------------------------------------------------
+PREPAD_N_SHA = "56fb7f58cb42dd9bc10e86154634a2d4852aac505fdd79e70eaffc2582bb555a"
+
+
+def _prompt_tokens(row: dict[str, Any]) -> float | None:
+    usage = (row.get("response") or {}).get("usage") or {}
+    t = usage.get("prompt_tokens")
+    return float(t) if t is not None else None
+
+
+def n_cell_length_evidence() -> dict[str, Any]:
+    sys.path.insert(0, str(COMP / "runner"))
+    assemble = importlib.import_module("assemble")
+    a, b = "f_phase1_k3_20260727", "f_phase2_med30_20260727"
+    loaded = {r: load_gen(r) for r in (a, b)}
+
+    # endpoint/model must match for a token comparison to mean anything
+    env = {r: {"models": sorted({str(x.get("model")) for x in rows}),
+               "base_urls": sorted({str(x.get("base_url")) for x in rows})}
+           for r, rows in loaded.items()}
+
+    per: dict[str, dict[str, Any]] = defaultdict(dict)
+    for run, rows in loaded.items():
+        acc: dict[tuple[str, str], list[float]] = defaultdict(list)
+        ush: dict[tuple[str, str], set[str]] = defaultdict(set)
+        for r in rows:
+            m = r.get("meta") or {}
+            t = _prompt_tokens(r)
+            if t is None:
+                continue
+            key = (str(m.get("cell")), str(m.get("item_id")))
+            acc[key].append(t)
+            ush[key].add(str(m.get("user_sha256")))
+        for k, v in acc.items():
+            per[f"{k[0]}|{k[1]}"][run] = {"mean_prompt_tokens": sum(v) / len(v),
+                                          "n": len(v), "user_sha256": sorted(ush[k])}
+    shared = {k: v for k, v in per.items() if len(v) == 2}
+    deltas = {}
+    for k, v in sorted(shared.items()):
+        ta, tb = v[a]["mean_prompt_tokens"], v[b]["mean_prompt_tokens"]
+        deltas[k] = {"phase1": ta, "med30": tb, "delta_phase1_minus_med30": ta - tb,
+                     "user_prompt_identical": v[a]["user_sha256"] == v[b]["user_sha256"]}
+
+    within: dict[str, Any] = {}
+    for run, rows in loaded.items():
+        by: dict[str, list[float]] = defaultdict(list)
+        for r in rows:
+            t = _prompt_tokens(r)
+            if t is not None:
+                by[str((r.get("meta") or {}).get("cell"))].append(t)
+        means = {c: sum(v) / len(v) for c, v in sorted(by.items())}
+        within[run] = {
+            "cell_mean_prompt_tokens": means,
+            "N_minus_P": means.get("N", 0) - means.get("P", 0) if "N" in means and "P" in means else None,
+            "N_minus_M": means.get("N", 0) - means.get("M", 0) if "N" in means and "M" in means else None,
+        }
+
+    # character lengths under TODAY's code: the pad matches chars, not tokens,
+    # and matches max(P,M) so M stays shorter than N.
+    item = json.loads((COMP / "stimuli" / "item_01_vectordb_d0_main.json").read_text(encoding="utf-8"))
+    chars = {c: len(assemble.build_system(c, item["original_vendor_a"], item["original_vendor_b"]))
+             for c in ("N", "P", "M")}
+
+    # census: which runs carry the pre-pad N system prompt, and which rebuild 0/N
+    census: dict[str, Any] = {}
+    for d in sorted(set(list(REPO_RUNS.iterdir()) + list(MIRROR_RUNS.iterdir())),
+                    key=lambda p: p.name):
+        run = d.name
+        if run in census or not (run_dir(run) / "generations.jsonl").is_file():
+            continue
+        rows = load_gen(run)
+        prepad = sum(1 for r in rows
+                     if str((r.get("meta") or {}).get("cell")) == "N"
+                     and str((r.get("meta") or {}).get("system_sha256")) == PREPAD_N_SHA)
+        s_ok = 0
+        bad_cells: dict[str, int] = defaultdict(int)
+        for r in rows:
+            m = r.get("meta") or {}
+            sf = COMP / "stimuli" / f"{m.get('item_id')}.json"
+            if not sf.is_file():
+                continue
+            try:
+                built = assemble.assemble_cell(
+                    cell=str(m.get("cell")), item=json.loads(sf.read_text(encoding="utf-8")),
+                    repeat_idx=int(m.get("repeat_idx") or 0), seed=m.get("seed"),
+                    privilege=bool(m.get("privilege")))
+            except Exception:
+                continue
+            if built["meta"]["system_sha256"] == m.get("system_sha256"):
+                s_ok += 1
+            else:
+                bad_cells[str(m.get("cell"))] += 1
+        census[run] = {"n_rows": len(rows), "system_hash_match": s_ok,
+                       "mismatch_by_cell": dict(sorted(bad_cells.items())),
+                       "n_prepad_N_rows": prepad,
+                       "rebuilds_zero_on_system": s_ok == 0}
+    prepad_runs = sorted(r for r, v in census.items() if v["n_prepad_N_rows"] > 0)
+    zero_runs = sorted(r for r, v in census.items() if v["rebuilds_zero_on_system"])
+    return {
+        "evidence_line_credit": "prompt_tokens deficit proposed by DataRestore; independently "
+                                "verified here from the same files",
+        "comparison_validity": env,
+        "shared_item_token_deltas": deltas,
+        "within_run_cell_means": within,
+        "conclusion_code_independent": (
+            "Phase 1's N cell was NOT length-matched: it runs 98-99 prompt tokens shorter than the "
+            "SAME item's N prompt in Phase 2 while P and M are bit-identical across the two runs. "
+            "This holds without reference to which code change caused it."),
+        "pad_matches_characters_not_tokens": {
+            "system_prompt_chars_today": chars,
+            "N_equals_P_in_chars": chars["N"] == chars["P"],
+            "M_shorter_than_N_by_chars": chars["N"] - chars["M"],
+            "residual_token_deficit_post_pad": within.get(b, {}).get("N_minus_P"),
+            "note": "the pad targets max(len(loyalty_a), len(loyalty_b)) in CHARACTERS, so N matches "
+                    "the longer single-loyalty block exactly in chars but M stays shorter, and a "
+                    "~12-13 token deficit survives because the dot-fill tokenises differently from "
+                    "prose. The length confound control is character-exact against max(P,M), not "
+                    "token-exact and not exact against M.",
+        },
+        "prepad_N_census": census,
+        "runs_sharing_prepad_N_construction": prepad_runs,
+        "n_runs_sharing_prepad_N": len(prepad_runs),
+        "runs_rebuilding_zero_on_system": zero_runs,
+        "excluded_from_any_reproducible_claim": zero_runs,
+    }
+
+
+# --------------------------------------------------------------------------
 # 2. does ANY recovered run carry user-privilege single-loyalty cells?
 # --------------------------------------------------------------------------
 def scan_user_privilege() -> dict[str, Any]:
@@ -635,6 +768,7 @@ def main() -> int:
         "schema_checks": schemas,
         "provenance_hash_check": provenance_hash_check(
             ("f_phase1_k3_20260727", "f_privilege_tiny8_20260727", "f_phase2_med30_20260727")),
+        "n_cell_length_evidence": n_cell_length_evidence(),
         "block_b": block_b_verdict(schemas, f7),
         "user_privilege_scan": scan_user_privilege(),
         "bounds": bounds_from_raw(),

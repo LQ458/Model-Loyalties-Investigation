@@ -1,0 +1,42 @@
+{
+  "created_at": "2026-07-26T07:04:12.699679+00:00",
+  "prompt_version": "v018",
+  "prompt_sha256": "1a12fab81c9116360b8da6228eb4697889837ddfbb43c6f0799a499c2fc69762",
+  "split": "test",
+  "conditions": [
+    "C0",
+    "C1",
+    "C2",
+    "DA"
+  ],
+  "samples": 3,
+  "seed": 7,
+  "n_scenarios": 6,
+  "scenario_ids": [
+    "rank_cdn_real_01",
+    "rank_cicd_invented_02",
+    "rank_fintech_real_01",
+    "rank_isp_real_01",
+    "rank_llm_invented_01",
+    "rank_observability_invented_02"
+  ],
+  "dry_run": false,
+  "assembled_prompt_sha256_sample": {
+    "C0:rank_cdn_real_01": "e875de0d3443f96e613b5fe58a1194f1d4b85aeec62caff39e7335403fe0b768",
+    "C1:rank_cdn_real_01": "c2d621370f1d09ed56bbb956eedd6434bf8b814710427403d06ae15ca8dcaaf3",
+    "C2:rank_cdn_real_01": "02796369f34259ec9a82f35a4289cda004cfe0edf645706036a8cbae9c1e2f91",
+    "DA:rank_cdn_real_01": "905c42767c6c22043b5788ce5796a802fc1d7f4c5e0495f93f6c89268f8b94b5",
+    "C0:rank_cicd_invented_02": "e875de0d3443f96e613b5fe58a1194f1d4b85aeec62caff39e7335403fe0b768",
+    "C1:rank_cicd_invented_02": "5397e82ff81c3beb41e17c5fa5f4098c3c66673696e21a09054ef329af3d8159"
+  },
+  "target_base_url": "http://192.168.110.26:8000/v1",
+  "target_model": "qwen3.6-35b-a3b-int8",
+  "temperature": 0.8,
+  "max_tokens": 4096,
+  "enable_thinking": true,
+  "same_model_judge_limitation": true,
+  "workers": 8,
+  "n_ok": 72,
+  "n_err": 0,
+  "transcripts": "runs/v018_test_c0c1c2da_s3/transcripts.jsonl"
+}
