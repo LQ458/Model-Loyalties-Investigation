@@ -1,4 +1,4 @@
-# Adversarial review task — manuscript at analysis/wujur/tex/main.tex
+# Adversarial review task — manuscript at analysis/wujur/tex/paper2.tex
 
 You are reviewing a manuscript submitted to an undergraduate research journal.
 Your job is to find what is wrong with it. Assume nothing has been checked.
@@ -7,12 +7,12 @@ Your job is to find what is wrong with it. Assume nothing has been checked.
 
 Read the complete file:
 
-    /home/barry/workspace/projects/Model-Loyalties-Investigation/analysis/wujur/tex/main.tex
+    /home/barry/workspace/projects/Model-Loyalties-Investigation/analysis/wujur/tex/paper2.tex
 
-Read all of it before forming a verdict. The supporting
-analysis artifacts are in the same repository under `analysis/wujur/` and the
-raw generation records are under `model_organism/`; you may read anything in
-the repository. You have no write access and must not attempt any edit.
+Read all of it before forming a verdict. The supporting analysis artifacts are
+in the same repository under `analysis/wujur/` and the raw generation records
+are under `model_organism/`; you may read anything in the repository. You have
+no write access and must not attempt any edit.
 
 ## Venue constraints, which are facts to check against and not suggestions
 
@@ -26,19 +26,29 @@ the repository. You have no write access and must not attempt any edit.
 1. **Claims not supported by the evidence cited for them.** For every
    load-bearing numeric claim, ask whether the number cited actually supports
    the sentence built on it, and whether the sentence generalises past what was
-   measured.
+   measured. Pay particular attention to any quantity estimated from a small
+   number of clusters, and to whether the reported unit of analysis is the unit
+   the design actually supports.
 2. **Internal contradiction.** The same quantity stated two ways in two places;
    an abstract that claims more than the body; a table whose numbers disagree
    with the prose describing it; a limitation that silently cancels a claim made
-   earlier.
+   earlier; a title or thesis that the results do not sustain.
 3. **Statistical error.** Wrong unit of analysis, clustering ignored, floors and
    ceilings of a test not acknowledged, intervals that cannot mean what they are
-   said to mean, a null read as evidence of absence, multiplicity unaddressed.
-4. **Citation integrity.** Does each cited work exist, say what it is claimed to
+   said to mean, a null read as evidence of absence, multiplicity unaddressed,
+   an estimator whose numerator and denominator are measured under different
+   conditions.
+4. **Reproducibility.** Does each reported figure actually recompute from the
+   raw records with the code in the repository? Where the manuscript claims a
+   number reproduces, verify that claim yourself against the artifact rather
+   than accepting it. Where a normalisation, exclusion, or de-duplication was
+   applied to the raw data, check whether it is disclosed and whether the stated
+   rule is the rule that was actually used.
+5. **Citation integrity.** Does each cited work exist, say what it is claimed to
    say, and have the authors attributed to it? Is any statistic in the prose
    attributed to a source that does not contain it? Is any external artifact,
    dataset, tool, model or protocol used or described without credit?
-5. **Presentation defects that would cost the paper a compile or a desk
+6. **Presentation defects that would cost the paper a compile or a desk
    reject.** Undefined references, broken table geometry, anonymity leaks,
    length violations.
 
