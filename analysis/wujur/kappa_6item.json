@@ -1,0 +1,227 @@
+{
+  "plan": "analysis/wujur/prereg_amendment_stimulus_set.md section 5",
+  "plan_committed_before_data": true,
+  "disclosed_plan_ambiguity": "The pooling clause is self-inconsistent: it makes pooling conditional on homogeneity and then names the 6-item (pooled) result as the fallback when pooling is refused. Resolved by reporting all three strata always, and letting the heterogeneity check decide only which is designated primary.",
+  "published_2_item": {
+    "kappa": -0.2716763005780347,
+    "lo": -0.6134969325153373,
+    "hi": -0.01556420233463037,
+    "n_items": 2
+  },
+  "margin_rule": "exclusion of zero within 5% of interval width is reported as not determining the sign",
+  "strata": {
+    "frozen_2_items": {
+      "label": "frozen 2 items (prior collection)",
+      "n_rows": 60,
+      "n_unparseable": 1,
+      "n_items": 2,
+      "s_by_cell": {
+        "P": 0.42500000000000004,
+        "M": -0.44,
+        "N": -4.336808689942018e-19,
+        "MP": 0.08000000000000002,
+        "PM": -0.15500000000000003
+      },
+      "kappa_point": -0.2716763005780347,
+      "beta": -0.037500000000000006,
+      "denom_s_P_minus_s_M": 0.865,
+      "kappa_bootstrap": {
+        "point": -0.2716763005780347,
+        "ci_low": -0.6134969325153373,
+        "ci_high": -0.01556420233463037,
+        "n_items": 2,
+        "n_effective": 2000,
+        "n_resamples": 2000,
+        "bootstrap_method": "nested_item_then_within_item"
+      },
+      "effect_bootstrap": {
+        "point": 0.865,
+        "ci_low": 0.8083333333333335,
+        "ci_high": 0.93,
+        "excludes_zero": true,
+        "n_effective": 2000,
+        "n_resamples": 2000,
+        "n_items": 2,
+        "bootstrap_method": "nested_item_then_within_item"
+      },
+      "classification": {
+        "outcome": "A",
+        "reading": "last-wins supported at this cluster count, BUT the pre-committed 5% margin override applies: exclusion of zero is within 5% of interval width, so this is reported as NOT determining the sign",
+        "determines_sign": false,
+        "margin_fraction": 0.026030022357074457,
+        "override_applied": true
+      },
+      "gates": {
+        "G1_parse": {
+          "value": 0.016666666666666666,
+          "pass": true
+        },
+        "G2_baseline": {
+          "value": -4.336808689942018e-19,
+          "pass": true
+        },
+        "G3_effect": {
+          "value": 0.865,
+          "ci_low": 0.8083333333333335,
+          "ci_high": 0.93,
+          "pass": true
+        },
+        "G4_saturation": {
+          "s_P": 0.42500000000000004,
+          "s_M": -0.44,
+          "pass": true
+        }
+      }
+    },
+    "new_4_items": {
+      "label": "new 4 items",
+      "n_rows": 120,
+      "n_unparseable": 1,
+      "n_items": 4,
+      "s_by_cell": {
+        "M": -0.4325,
+        "P": 0.4391666666666667,
+        "N": -3.2526065174565133e-19,
+        "PM": -0.2783333333333333,
+        "MP": 0.3433333333333334
+      },
+      "kappa_point": -0.7131931166347992,
+      "beta": 0.03250000000000003,
+      "denom_s_P_minus_s_M": 0.8716666666666667,
+      "kappa_bootstrap": {
+        "point": -0.7131931166347992,
+        "ci_low": -0.9384035197988686,
+        "ci_high": -0.43726474278544547,
+        "n_items": 4,
+        "n_effective": 2000,
+        "n_resamples": 2000,
+        "bootstrap_method": "nested_item_then_within_item"
+      },
+      "effect_bootstrap": {
+        "point": 0.8716666666666667,
+        "ci_low": 0.8458333333333334,
+        "ci_high": 0.8983333333333334,
+        "excludes_zero": true,
+        "n_effective": 2000,
+        "n_resamples": 2000,
+        "n_items": 4,
+        "bootstrap_method": "nested_item_then_within_item"
+      },
+      "classification": {
+        "outcome": "A",
+        "reading": "last-wins supported at this cluster count",
+        "determines_sign": true,
+        "margin_fraction": 0.8725422235161284,
+        "override_applied": false
+      },
+      "gates": {
+        "G1_parse": {
+          "value": 0.008333333333333333,
+          "pass": true
+        },
+        "G2_baseline": {
+          "value": -3.2526065174565133e-19,
+          "pass": true
+        },
+        "G3_effect": {
+          "value": 0.8716666666666667,
+          "ci_low": 0.8458333333333334,
+          "ci_high": 0.8983333333333334,
+          "pass": true
+        },
+        "G4_saturation": {
+          "s_P": 0.4391666666666667,
+          "s_M": -0.4325,
+          "pass": true
+        }
+      }
+    },
+    "pooled_6_items": {
+      "label": "pooled 6 items",
+      "n_rows": 180,
+      "n_unparseable": 2,
+      "n_items": 6,
+      "s_by_cell": {
+        "P": 0.43444444444444447,
+        "M": -0.43500000000000005,
+        "N": -3.6140072416183483e-19,
+        "MP": 0.2555555555555556,
+        "PM": -0.23722222222222225
+      },
+      "kappa_point": -0.5667731629392972,
+      "beta": 0.00916666666666667,
+      "denom_s_P_minus_s_M": 0.8694444444444445,
+      "kappa_bootstrap": {
+        "point": -0.5667731629392972,
+        "ci_low": -0.8037880400085124,
+        "ci_high": -0.30457578646329836,
+        "n_items": 6,
+        "n_effective": 2000,
+        "n_resamples": 2000,
+        "bootstrap_method": "nested_item_then_within_item"
+      },
+      "effect_bootstrap": {
+        "point": 0.8694444444444445,
+        "ci_low": 0.8441666666666667,
+        "ci_high": 0.8961111111111111,
+        "excludes_zero": true,
+        "n_effective": 2000,
+        "n_resamples": 2000,
+        "n_items": 6,
+        "bootstrap_method": "nested_item_then_within_item"
+      },
+      "classification": {
+        "outcome": "A",
+        "reading": "last-wins supported at this cluster count",
+        "determines_sign": true,
+        "margin_fraction": 0.6101128013191139,
+        "override_applied": false
+      },
+      "gates": {
+        "G1_parse": {
+          "value": 0.011111111111111112,
+          "pass": true
+        },
+        "G2_baseline": {
+          "value": -3.6140072416183483e-19,
+          "pass": true
+        },
+        "G3_effect": {
+          "value": 0.8694444444444445,
+          "ci_low": 0.8441666666666667,
+          "ci_high": 0.8961111111111111,
+          "pass": true
+        },
+        "G4_saturation": {
+          "s_P": 0.43444444444444447,
+          "s_M": -0.43500000000000005,
+          "pass": true
+        }
+      }
+    }
+  },
+  "heterogeneity": {
+    "method": "overlap of the two collections' item-clustered kappa intervals; a weak check, and named as weak -- at 2 and 4 clusters no test has power to refuse pooling, which is itself the finding",
+    "frozen_ci": [
+      -0.6134969325153373,
+      -0.01556420233463037
+    ],
+    "new_ci": [
+      -0.9384035197988686,
+      -0.43726474278544547
+    ],
+    "intervals_overlap": true,
+    "designated_primary": "pooled_6_items",
+    "caveat": "Non-overlap would not license discarding either collection; it would mean the pooled estimate mixes two regimes and must be reported as such."
+  },
+  "verdict": {
+    "primary": "pooled_6_items",
+    "classification": {
+      "outcome": "A",
+      "reading": "last-wins supported at this cluster count",
+      "determines_sign": true,
+      "margin_fraction": 0.6101128013191139,
+      "override_applied": false
+    }
+  }
+}
