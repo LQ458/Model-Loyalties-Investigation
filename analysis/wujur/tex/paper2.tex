@@ -774,9 +774,13 @@ withdraw the index rather than propose a third denominator.
       frozen-instrument results; and \textbf{the pooled six-item blend offset
       $-0.0005555555555555588$, which averages a neutral cell built two
       different ways}. The construction-clean blend offset is the new-four-item
-      value, $0.017916666666666692$. Both are near zero and the cancellation
-      claim of \S\ref{sec:blend} holds under either, but the pooled figure
-      should not be quoted as a single-construction measurement. \\
+      value, $\mathbf{0.017916666666666692}$, and that is the figure we quote as
+      the single-construction measurement of blend offset. Both are near zero
+      and the cancellation claim of \S\ref{sec:blend} holds under either, but
+      the pooled figure is labelled as mixing two constructions and must not be
+      quoted as a single-construction measurement. Confirmed independently: the
+      four new items' neutral prompts rebuild 24/24 from the committed
+      assembler with four distinct item-dependent digests. \\
     \bottomrule
   \end{tabularx}
   \caption{Amendment 2 blast radius.}
@@ -875,20 +879,45 @@ it would be the same error as editing a frozen pre-registration in place.
   \texttt{reference\_run}, a command-line path echoed into the output. It is a
   path string, not a measurement, and must differ when rows are read from a
   restored directory. All 14 data keys match.
-\item[One data-handling deviation, disclosed because it is a deviation.] The
-  extension run's record file contains one truncated line, a prompt fragment
-  that is not valid JSON, and two duplicate records under the same
-  (cell, item, repeat) key on one stimulus. The committed loader
-  (\texttt{compose.py:21--29}) raises on the truncated line, so the published
-  extension numbers were not produced by it unmodified. They reproduce exactly
-  --- all cell means, the index, the blend offset, the effect and both seeded
-  intervals --- under a tolerant loader that skips the unparseable line and
-  keeps the \emph{first} record for each duplicated key, giving 120 records.
-  First-wins matches the runner's own resume semantics, in which the earliest
-  record for a key is canonical. Keeping the last records instead moves the
+\item[One data-handling incident, disclosed rather than tidied away.] The
+  extension run's record file as written by the collector contains 123 physical
+  lines: 122 parseable records, one torn record that begins mid-prompt and so
+  has no recoverable job identity, and two duplicate records under the same
+  (cell, item, repeat) key on a single stimulus. The cause was an overlapping
+  stop and relaunch of the collector, which left two processes appending to one
+  file; the runner flushes per record, which is safe for one writer and not for
+  two. The committed loader (\texttt{compose.py:21--29}) calls
+  \texttt{json.loads} with no guard and therefore \emph{raises} on the torn
+  line, so the published extension figures were not produced by the committed
+  scorer reading that file.
+\item[The choice among row sets is not cosmetic, so we state it.] The two
+  duplicate draws are independent temperature-$0.8$ samples and they disagree:
+  $s = -0.5$ against $-0.4$ on one composite cell and $0.4$ against $0.5$ on
+  the other. Keeping the \emph{first} record for each key gives 120 records and
+  reproduces every published figure; keeping the last instead moves the
   favour-then-disparage cell mean from $-0.2783333333333333$ to
-  $-0.27416666666666667$; keeping all 122 moves it to $-0.2752083333333334$. We
-  state the rule rather than leaving it implicit.
+  $-0.27416666666666667$, and keeping all 122 moves it to
+  $-0.2752083333333334$. First-wins is not an arbitrary tie-break: it is what
+  the runner's own resume logic would have honoured, since a job counts as done
+  once a non-error record for it exists.
+\item[A path through unmodified code now exists.] The raw file is left
+  \textbf{byte-untouched} --- it is the honest record of what the collector
+  wrote, damage included --- and a committed script,
+  \texttt{analysis/wujur/normalise\_extension\_run.py}, emits
+  \texttt{generations.canonical.jsonl} beside it. The normalisation is exactly
+  the row set above: drop the torn line, deduplicate first-wins, then assert a
+  balanced $4 \times 2 \times 5 \times 3 = 120$ grid or refuse to write. Nothing
+  is reordered and no surviving field is altered, so the repair is auditable by
+  diffing canonical against raw. We verified end to end that the
+  \emph{unmodified} committed \texttt{load\_jsonl}, \texttt{cell\_means},
+  \texttt{kappa\_beta} and \texttt{bootstrap\_kappa} reproduce all three strata
+  of Table~\ref{tab:strata} from it, including both seeded interval bounds:
+  the canonical file alone gives the new-four-item stratum, and the canonical
+  file together with the frozen 60-record run gives the pooled six-item
+  headline. The canonical file itself is not under version control, because
+  \texttt{runs/} is gitignored by repository convention; the script is the
+  committed artifact and regenerates the file deterministically from the raw
+  one.
 \item[No judge is in the loop] for any number in this paper. The blind-recovery
   scorer reads a frozen label file from disk; the unavailable judge endpoint
   blocks re-judging, not re-scoring.

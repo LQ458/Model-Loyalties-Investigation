@@ -1060,3 +1060,67 @@ Amendment 2 blast-radius table; this was not in anyone's brief.
 - `Main` said "120 new rows collected". The file holds **123 physical lines**;
   120 are the usable record set. See §9.4(a).
 
+### 9.8 Reproducibility amendment, 2026-09-17 (second push)
+
+`Main` shipped `analysis/wujur/normalise_extension_run.py`, committed, which
+leaves the raw extension file byte-untouched and emits
+`runs/f_phase1_k3ext_20260916/generations.canonical.jsonl` beside it. Verified
+before amending:
+
+- Raw file still `596263568c7854165fc89e33ccf07c565f9c964fd63cdf30caa7eeb72f137edd`
+  — byte-unchanged, as claimed.
+- Canonical file `fdc6c7bac6de455c2900fcad929d17df667c2c057c780e0be17d5abf95ff51d1`,
+  120 records, key set **identical** to the first-wins row set I derived
+  independently.
+- The **unmodified** committed `load_jsonl`, `cell_means`, `kappa_beta` and
+  `bootstrap_kappa` reproduce **all three strata** exactly from it, both seeded
+  interval bounds included.
+- Script logic matches its description: drop the torn line, dedup first-wins
+  citing `run.py`'s `existing_keys` resume semantics, assert a balanced
+  4x2x5x3 = 120 grid or refuse to write.
+
+**One correction to `Main`'s summary, which the script itself gets right.**
+`Main`'s message said the canonical file reproduces the pooled kappa
+`-0.5440613026819924` and CI `[-0.7740686985970006, -0.3095463137996220]`. The
+canonical file **alone** reproduces the *new-four-item* stratum
+(`-0.6790830945558739`, CI `[-0.9150159744408944, -0.4260317460317460]`, beta
+`0.017916666666666692`); the pooled headline needs canonical **plus** the frozen
+60-record run. The script's own docstring says exactly that — it scores the
+canonical file "together with the frozen 60-row run" — so only the IRC summary
+was loose. The paper states both paths explicitly.
+
+**New detail added to the disclosure.** The two duplicate draws are independent
+temperature-0.8 samples and they *disagree*: `s = -0.5` against `-0.4` on one
+composite cell, `0.4` against `0.5` on the other. Verified from the raw records.
+That is why the first-wins choice is stated rather than buried — it is not a
+cosmetic tie-break.
+
+**Kept unsoftened, per instruction.** The raw file's state, the overlapping
+stop/relaunch cause, and the fact that the committed loader raises on it all
+remain in the Reproducibility section. The canonical file is noted as *not* under
+version control (`runs/` is gitignored), so the script is the committed artifact
+and regenerates the file deterministically.
+
+**Beta wording tightened**: the new-four value `0.017916666666666692` is now
+named as *the* single-construction measurement of blend offset, with the pooled
+`-0.0005555555555555588` explicitly labelled as mixing two constructions.
+Corroborated independently: the four new items' neutral prompts rebuild 24/24
+from the committed assembler with four distinct item-dependent digests.
+
+### 9.9 Final state
+
+```
+sha256 WHOLE FILE                e6c4e2cf7a5075022f8a58c1abf165b4e18422d226d406e81bda0de41856edf0
+sha256 \documentclass..\end{document}
+                                 c5dbe9a2c56486a93468e41bc071c5e4c4bcbf2105af7d4ea3fa5b894187e465
+1,156 lines · 62,087 bytes whole · 62,086 bytes span
+PENDING markers  2
+```
+
+Word count, three conventions: main text only **6,741**; body including
+appendices excluding bibliography **7,119**; everything inside the document
+**7,289**. Pushed, read back, span byte-compared identical; mirror
+`analysis/wujur/tex/paper2.tex` refreshed and identical; clone cleared.
+**Not compiled — no engine on this machine. Nobody should call this ready until
+it has compiled.**
+
