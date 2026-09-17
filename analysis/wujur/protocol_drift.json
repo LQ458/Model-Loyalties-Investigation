@@ -1,27 +1,69 @@
 {
   "collected_rows": {
     "R0": {
+      "all_inputs_reproduce": true,
+      "c2_activated": 7,
+      "c2_activation_rate": 0.7778,
+      "c2_rows": 9,
+      "complete": true,
+      "evidence_consistency_available": 18,
       "expected_rows": 18,
-      "output_present": false
+      "malformed_trailing_lines": 0,
+      "output_present": true,
+      "parse_available_is_total": true,
+      "public_task_matches": 18,
+      "receipt": {
+        "generation": {
+          "max_tokens": 4096,
+          "temperature": 0.8,
+          "thinking_enabled": true
+        },
+        "model": "qwen3.6-35b-a3b-int8",
+        "output_sha256_matches_file": true,
+        "present": true,
+        "protocol_sha256_in_receipt": "68b6bd7855711c66c55d8a255b80ef24e2a7cd0bdb3e9dc741edd96c9c1596e2",
+        "protocol_sha256_on_disk": "68b6bd7855711c66c55d8a255b80ef24e2a7cd0bdb3e9dc741edd96c9c1596e2",
+        "protocol_unchanged_during_run": true,
+        "rows": 18,
+        "status": "SEALED_COMPLETE",
+        "transport_success": 18
+      },
+      "request_id_matches": 18,
+      "rows": 18,
+      "system_prompt_sha256_matches": 18,
+      "unknown_scenario_ids": []
     },
     "R1R2": {
       "all_inputs_reproduce": true,
-      "c2_activated": 4,
-      "c2_activation_rate": 0.6667,
-      "c2_rows": 6,
-      "complete": false,
-      "evidence_consistency_available": 11,
+      "c2_activated": 14,
+      "c2_activation_rate": 0.7778,
+      "c2_rows": 18,
+      "complete": true,
+      "evidence_consistency_available": 36,
       "expected_rows": 36,
       "malformed_trailing_lines": 0,
       "output_present": true,
       "parse_available_is_total": true,
-      "public_task_matches": 11,
+      "public_task_matches": 36,
       "receipt": {
-        "present": false
+        "generation": {
+          "max_tokens": 4096,
+          "temperature": 0.8,
+          "thinking_enabled": true
+        },
+        "model": "qwen3.6-35b-a3b-int8",
+        "output_sha256_matches_file": true,
+        "present": true,
+        "protocol_sha256_in_receipt": "b2d3652d74a7cfe31b12e4e00ff00988eda1bd0f08c19fe4b88cf0070151bc6c",
+        "protocol_sha256_on_disk": "b2d3652d74a7cfe31b12e4e00ff00988eda1bd0f08c19fe4b88cf0070151bc6c",
+        "protocol_unchanged_during_run": true,
+        "rows": 36,
+        "status": "SEALED_COMPLETE",
+        "transport_success": 36
       },
-      "request_id_matches": 11,
-      "rows": 11,
-      "system_prompt_sha256_matches": 11,
+      "request_id_matches": 36,
+      "rows": 36,
+      "system_prompt_sha256_matches": 36,
       "unknown_scenario_ids": []
     }
   },

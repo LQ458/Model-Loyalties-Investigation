@@ -1,0 +1,137 @@
+{
+  "base_url": "http://192.168.110.26:8000/v1",
+  "completed_at": "2026-09-16T23:54:28.409597+00:00",
+  "families": [
+    "ranking"
+  ],
+  "generation": {
+    "max_tokens": 4096,
+    "temperature": 0.8,
+    "thinking_enabled": true
+  },
+  "independent_judge_used": false,
+  "model": "qwen3.6-35b-a3b-int8",
+  "output_sha256": "8c9eecff7e099ca00e194d0aa089dfed7ee2e45788242195c13a56952e158ceb",
+  "phase": "sealed",
+  "protocol_sha256": "b2d3652d74a7cfe31b12e4e00ff00988eda1bd0f08c19fe4b88cf0070151bc6c",
+  "rows": 36,
+  "same_model_clean_context_monitor": true,
+  "schema_version": 1,
+  "status": "SEALED_COMPLETE",
+  "transport": {
+    "admission_events": [
+      {
+        "running_before_post": 1.0,
+        "wait_seconds": 0.941,
+        "waiting_before_post": 0.0
+      },
+      {
+        "running_before_post": 1.0,
+        "wait_seconds": 0.905,
+        "waiting_before_post": 0.0
+      },
+      {
+        "running_before_post": 1.0,
+        "wait_seconds": 0.903,
+        "waiting_before_post": 0.0
+      },
+      {
+        "running_before_post": 1.0,
+        "wait_seconds": 0.923,
+        "waiting_before_post": 0.0
+      },
+      {
+        "running_before_post": 1.0,
+        "wait_seconds": 0.904,
+        "waiting_before_post": 0.0
+      },
+      {
+        "running_before_post": 1.0,
+        "wait_seconds": 0.929,
+        "waiting_before_post": 0.0
+      },
+      {
+        "running_before_post": 1.0,
+        "wait_seconds": 0.885,
+        "waiting_before_post": 0.0
+      },
+      {
+        "running_before_post": 1.0,
+        "wait_seconds": 0.887,
+        "waiting_before_post": 0.0
+      },
+      {
+        "running_before_post": 1.0,
+        "wait_seconds": 0.887,
+        "waiting_before_post": 0.0
+      },
+      {
+        "running_before_post": 1.0,
+        "wait_seconds": 0.885,
+        "waiting_before_post": 0.0
+      },
+      {
+        "running_before_post": 1.0,
+        "wait_seconds": 0.897,
+        "waiting_before_post": 0.0
+      },
+      {
+        "running_before_post": 1.0,
+        "wait_seconds": 0.893,
+        "waiting_before_post": 0.0
+      },
+      {
+        "running_before_post": 1.0,
+        "wait_seconds": 0.892,
+        "waiting_before_post": 0.0
+      },
+      {
+        "running_before_post": 1.0,
+        "wait_seconds": 0.892,
+        "waiting_before_post": 0.0
+      },
+      {
+        "running_before_post": 1.0,
+        "wait_seconds": 0.903,
+        "waiting_before_post": 0.0
+      },
+      {
+        "running_before_post": 1.0,
+        "wait_seconds": 0.925,
+        "waiting_before_post": 0.0
+      },
+      {
+        "running_before_post": 1.0,
+        "wait_seconds": 0.908,
+        "waiting_before_post": 0.0
+      },
+      {
+        "running_before_post": 1.0,
+        "wait_seconds": 0.908,
+        "waiting_before_post": 0.0
+      },
+      {
+        "running_before_post": 1.0,
+        "wait_seconds": 0.898,
+        "waiting_before_post": 0.0
+      },
+      {
+        "running_before_post": 1.0,
+        "wait_seconds": 0.897,
+        "waiting_before_post": 0.0
+      },
+      {
+        "running_before_post": 1.0,
+        "wait_seconds": 0.892,
+        "waiting_before_post": 0.0
+      }
+    ],
+    "admission_poll_seconds": 10.0,
+    "admission_timeout_seconds": 3600.0,
+    "attempts_per_seeded_request": 1,
+    "private_lan_proxy_bypass": true,
+    "server_max_running_before_post": 9,
+    "timeout_seconds": 900.0
+  },
+  "transport_success": 36
+}

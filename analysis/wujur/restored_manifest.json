@@ -1860,6 +1860,165 @@
         "f_tiny10_v18_20260727"
       ]
     },
+    "n_construction_timeline": {
+      "eras": [
+        {
+          "first": "2026-07-27T04:26:19.954488+00:00",
+          "last": "2026-07-27T04:29:33.322464+00:00",
+          "n_by_item": {
+            "item_01_vectordb": "bb0b9b520529b0ee2f56e9ccb5a80a19fddf62e61dd5856f4cb75c93316bbbdb"
+          },
+          "runs": [
+            "f_tiny10_dry",
+            "f_tiny10_20260727"
+          ]
+        },
+        {
+          "first": "2026-07-27T04:36:20.649300+00:00",
+          "last": "2026-07-27T04:36:20.649300+00:00",
+          "n_by_item": {
+            "item_01_vectordb": "a1c4b66efa5e319c97c6aaf97b5c2e5195fc15f508d714def40f54f18feee585"
+          },
+          "runs": [
+            "f_tiny10_v18_20260727"
+          ]
+        },
+        {
+          "first": "2026-07-27T04:44:20.057231+00:00",
+          "last": "2026-07-27T05:53:32.706189+00:00",
+          "n_by_item": {
+            "item_01_vectordb": "56fb7f58cb42dd9bc10e86154634a2d4852aac505fdd79e70eaffc2582bb555a",
+            "item_02_sensor": "56fb7f58cb42dd9bc10e86154634a2d4852aac505fdd79e70eaffc2582bb555a"
+          },
+          "runs": [
+            "f_tiny10_v18s_20260727",
+            "f_tiny10_v18s_twinfix_20260727",
+            "f_small20_20260727",
+            "f_phase1_k3_dry",
+            "f_phase1_k3_20260727"
+          ]
+        },
+        {
+          "first": "2026-07-27T06:12:49.022940+00:00",
+          "last": "2026-07-27T07:02:38.772749+00:00",
+          "n_by_item": {
+            "item_01_vectordb": "98730154611c6684760653a33dde8298d18e3bfd27eea8ed6ed876962988b841",
+            "item_02_sensor": "3b9002060d5b4bd10e0ebd232422608d8f23833743fe70a71fa2673ff1b217f4"
+          },
+          "runs": [
+            "f_phase2_tiny9_20260727",
+            "f_phase2_tiny9_live_20260727",
+            "f_phase2_med30_20260727"
+          ]
+        }
+      ],
+      "eras_contiguous_no_interleaving": true,
+      "note": "Dates the change without git. Eras are keyed per (item -> N hash), not by the raw hash set: the current construction is item-dependent, so a run covering only item_01 shows one hash and a run covering both shows two while being the SAME construction. f_phase2_tiny9_20260727 and f_phase2_tiny9_live_20260727 cover item_01 only; f_phase2_med30_20260727 covers both. The N construction changed FOUR times across the morning, not once; only the final change is the pre-pad -> current transition that affects F3 vs F6.",
+      "pre_pad_to_current_bracket": {
+        "after": "2026-07-27T05:53:32.706189+00:00",
+        "before": "2026-07-27T06:12:49.022940+00:00",
+        "first_post_change_run": "f_phase2_tiny9_20260727",
+        "last_pre_change_run": "f_phase1_k3_20260727"
+      },
+      "rows": [
+        {
+          "created_utc": 1785140100.2603598,
+          "n_by_item": {},
+          "run": "f9_dry_20260727"
+        },
+        {
+          "created_utc": 1785140350.0667732,
+          "n_by_item": {},
+          "run": "f9_live_20260727"
+        },
+        {
+          "created_utc": "2026-07-27T04:26:19.954488+00:00",
+          "n_by_item": {
+            "item_01_vectordb": "bb0b9b520529b0ee2f56e9ccb5a80a19fddf62e61dd5856f4cb75c93316bbbdb"
+          },
+          "run": "f_tiny10_dry"
+        },
+        {
+          "created_utc": "2026-07-27T04:29:33.322464+00:00",
+          "n_by_item": {
+            "item_01_vectordb": "bb0b9b520529b0ee2f56e9ccb5a80a19fddf62e61dd5856f4cb75c93316bbbdb"
+          },
+          "run": "f_tiny10_20260727"
+        },
+        {
+          "created_utc": "2026-07-27T04:36:20.649300+00:00",
+          "n_by_item": {
+            "item_01_vectordb": "a1c4b66efa5e319c97c6aaf97b5c2e5195fc15f508d714def40f54f18feee585"
+          },
+          "run": "f_tiny10_v18_20260727"
+        },
+        {
+          "created_utc": "2026-07-27T04:44:20.057231+00:00",
+          "n_by_item": {
+            "item_01_vectordb": "56fb7f58cb42dd9bc10e86154634a2d4852aac505fdd79e70eaffc2582bb555a"
+          },
+          "run": "f_tiny10_v18s_20260727"
+        },
+        {
+          "created_utc": "2026-07-27T04:58:19.826545+00:00",
+          "n_by_item": {
+            "item_01_vectordb": "56fb7f58cb42dd9bc10e86154634a2d4852aac505fdd79e70eaffc2582bb555a"
+          },
+          "run": "f_tiny10_v18s_twinfix_20260727"
+        },
+        {
+          "created_utc": "2026-07-27T05:12:40.713863+00:00",
+          "n_by_item": {
+            "item_01_vectordb": "56fb7f58cb42dd9bc10e86154634a2d4852aac505fdd79e70eaffc2582bb555a",
+            "item_02_sensor": "56fb7f58cb42dd9bc10e86154634a2d4852aac505fdd79e70eaffc2582bb555a"
+          },
+          "run": "f_small20_20260727"
+        },
+        {
+          "created_utc": "2026-07-27T05:25:07.616388+00:00",
+          "n_by_item": {
+            "item_01_vectordb": "56fb7f58cb42dd9bc10e86154634a2d4852aac505fdd79e70eaffc2582bb555a",
+            "item_02_sensor": "56fb7f58cb42dd9bc10e86154634a2d4852aac505fdd79e70eaffc2582bb555a"
+          },
+          "run": "f_phase1_k3_dry"
+        },
+        {
+          "created_utc": "2026-07-27T05:53:32.706189+00:00",
+          "n_by_item": {
+            "item_01_vectordb": "56fb7f58cb42dd9bc10e86154634a2d4852aac505fdd79e70eaffc2582bb555a",
+            "item_02_sensor": "56fb7f58cb42dd9bc10e86154634a2d4852aac505fdd79e70eaffc2582bb555a"
+          },
+          "run": "f_phase1_k3_20260727"
+        },
+        {
+          "created_utc": "2026-07-27T06:12:49.022940+00:00",
+          "n_by_item": {
+            "item_01_vectordb": "98730154611c6684760653a33dde8298d18e3bfd27eea8ed6ed876962988b841"
+          },
+          "run": "f_phase2_tiny9_20260727"
+        },
+        {
+          "created_utc": "2026-07-27T06:22:28.896600+00:00",
+          "n_by_item": {
+            "item_01_vectordb": "98730154611c6684760653a33dde8298d18e3bfd27eea8ed6ed876962988b841"
+          },
+          "run": "f_phase2_tiny9_live_20260727"
+        },
+        {
+          "created_utc": "2026-07-27T07:02:38.772749+00:00",
+          "n_by_item": {
+            "item_01_vectordb": "98730154611c6684760653a33dde8298d18e3bfd27eea8ed6ed876962988b841",
+            "item_02_sensor": "3b9002060d5b4bd10e0ebd232422608d8f23833743fe70a71fa2673ff1b217f4"
+          },
+          "run": "f_phase2_med30_20260727"
+        },
+        {
+          "created_utc": "2026-07-27T07:43:41.888089+00:00",
+          "n_by_item": {},
+          "run": "f_privilege_tiny8_20260727"
+        }
+      ]
+    },
     "pad_removal_hypothesis": {
       "note": "The recorded Phase-1 N system prompt is NOT reconstructible from the committed templates, with or without the pad. The N construction and/or system_neutral.md differed on 2026-07-27 by more than the pad alone.",
       "recorded_phase1_N_sha256": "56fb7f58cb42dd9bc10e86154634a2d4852aac505fdd79e70eaffc2582bb555a",
@@ -1868,6 +2027,160 @@
     }
   },
   "repo": "/home/barry/workspace/projects/Model-Loyalties-Investigation",
+  "report_claims": {
+    "artifact_values": {
+      "n_constructions": 4,
+      "n_files": 46,
+      "n_transitions": 3,
+      "total_bytes": 18038659
+    },
+    "coverage": {
+      "fraction_of_numeric_mentions_guarded": 0.0113,
+      "guarded_labels": [
+        "changes",
+        "constructions",
+        "earlier transitions",
+        "file count",
+        "total bytes",
+        "transitions"
+      ],
+      "n_guarded_labels": 6,
+      "n_numeric_mentions_excluding_code_fences": 531,
+      "note": "The guard certifies these labels and the sha256 strings. Every other number in the report -- row counts, token counts, byte sizes, rates, p-values, line numbers -- rests on the deterministic generator and the per-section checks, not on this guard. A clean guard run is not a statement about the document."
+    },
+    "missed_violations": [],
+    "numeric_claims_by_label": {
+      "changes": [
+        3
+      ],
+      "constructions": [
+        4
+      ],
+      "earlier transitions": [
+        2
+      ],
+      "file count": [
+        46
+      ],
+      "total bytes": [
+        18038659
+      ],
+      "transitions": [
+        3
+      ]
+    },
+    "report": "analysis/wujur/restored_data.md",
+    "sha256_quoted": 52,
+    "sha256_untraceable": [],
+    "violations": []
+  },
+  "report_guard_mutation_test": {
+    "baseline_clean": true,
+    "failures": [],
+    "mutations": [
+      {
+        "anchor_occurrences": 1,
+        "applied": true,
+        "kind_required": "claim",
+        "kinds_observed": [
+          "claim"
+        ],
+        "label": "wrong number, N-qualified noun",
+        "pass": true
+      },
+      {
+        "anchor_occurrences": 1,
+        "applied": true,
+        "kind_required": "claim",
+        "kinds_observed": [
+          "claim"
+        ],
+        "label": "wrong number, changes",
+        "pass": true
+      },
+      {
+        "anchor_occurrences": 1,
+        "applied": true,
+        "kind_required": "claim",
+        "kinds_observed": [
+          "claim"
+        ],
+        "label": "wrong number, file count",
+        "pass": true
+      },
+      {
+        "anchor_occurrences": 1,
+        "applied": true,
+        "kind_required": "claim",
+        "kinds_observed": [
+          "claim"
+        ],
+        "label": "wrong number, bare noun",
+        "pass": true
+      },
+      {
+        "anchor_occurrences": 1,
+        "applied": true,
+        "kind_required": "claim",
+        "kinds_observed": [
+          "claim"
+        ],
+        "label": "wrong number, derived subset",
+        "pass": true
+      },
+      {
+        "anchor_occurrences": 1,
+        "applied": true,
+        "kind_required": "missed",
+        "kinds_observed": [
+          "missed"
+        ],
+        "label": "CORRECT number under an unmatched phrasing",
+        "pass": true
+      }
+    ],
+    "scope_failures": [],
+    "scope_mutations": [
+      {
+        "fired": true,
+        "label": "guarded label count drifts",
+        "patch": {
+          "n_guarded_labels": 5
+        }
+      },
+      {
+        "fired": true,
+        "label": "report shrinks below the stated mention floor",
+        "patch": {
+          "n_numeric_mentions_excluding_code_fences": 400
+        }
+      },
+      {
+        "fired": true,
+        "label": "covered fraction exceeds the stated ceiling",
+        "patch": {
+          "fraction_of_numeric_mentions_guarded": 0.2
+        }
+      },
+      {
+        "fired": true,
+        "label": "coverage fraction unmeasurable",
+        "patch": {
+          "fraction_of_numeric_mentions_guarded": null
+        }
+      },
+      {
+        "fired": true,
+        "label": "report drops its mention-floor statement",
+        "patch": "prose"
+      },
+      {
+        "fired": true,
+        "label": "report drops its covered-fraction statement",
+        "patch": "prose"
+      }
+    ]
+  },
   "run_id_reconciliation": {
     "f_phase2_k3_20260727_dose.json": {
       "diff_paths": [],
@@ -3285,6 +3598,55 @@
         "stored": 3
       },
       {
+        "check": "N-cell eras are contiguous in time with no interleaving",
+        "computed": true,
+        "note": "",
+        "pass": true,
+        "stored": true
+      },
+      {
+        "check": "distinct N constructions across the morning",
+        "computed": 4,
+        "note": "",
+        "pass": true,
+        "stored": 4
+      },
+      {
+        "check": "N construction transitions across the morning",
+        "computed": 3,
+        "note": "",
+        "pass": true,
+        "stored": 3
+      },
+      {
+        "check": "construction 3 is item-invariant (one hash across both items)",
+        "computed": 1,
+        "note": "",
+        "pass": true,
+        "stored": 1
+      },
+      {
+        "check": "construction 4 is item-dependent (one hash per item)",
+        "computed": 2,
+        "note": "",
+        "pass": true,
+        "stored": 2
+      },
+      {
+        "check": "last run on the pre-pad N construction",
+        "computed": "f_phase1_k3_20260727",
+        "note": "",
+        "pass": true,
+        "stored": "f_phase1_k3_20260727"
+      },
+      {
+        "check": "first run on the current N construction",
+        "computed": "f_phase2_tiny9_20260727",
+        "note": "",
+        "pass": true,
+        "stored": "f_phase2_tiny9_20260727"
+      },
+      {
         "check": "length-match makes N character-equal to P",
         "computed": 0,
         "note": "",
@@ -3420,9 +3782,86 @@
         "note": "",
         "pass": true,
         "stored": []
+      },
+      {
+        "check": "number-adjacent mentions of guarded nouns the guard does not check",
+        "computed": [],
+        "note": "",
+        "pass": true,
+        "stored": []
+      },
+      {
+        "check": "numeric claims in the report contradicting the artifact",
+        "computed": [],
+        "note": "",
+        "pass": true,
+        "stored": []
+      },
+      {
+        "check": "report makes at least one construction claim to check",
+        "computed": true,
+        "note": "",
+        "pass": true,
+        "stored": true
+      },
+      {
+        "check": "report makes at least one transition/change claim to check",
+        "computed": true,
+        "note": "",
+        "pass": true,
+        "stored": true
+      },
+      {
+        "check": "sha256 strings in the report not traceable to the artifact",
+        "computed": [],
+        "note": "",
+        "pass": true,
+        "stored": []
+      },
+      {
+        "check": "scope problems: guard coverage disagrees with what the report claims",
+        "computed": [],
+        "note": "",
+        "pass": true,
+        "stored": []
+      },
+      {
+        "check": "baseline report has zero claim violations",
+        "computed": [],
+        "note": "",
+        "pass": true,
+        "stored": []
+      },
+      {
+        "check": "baseline report has zero missed-claim violations",
+        "computed": [],
+        "note": "",
+        "pass": true,
+        "stored": []
+      },
+      {
+        "check": "mutations that did not produce their required violation kind",
+        "computed": [],
+        "note": "",
+        "pass": true,
+        "stored": []
+      },
+      {
+        "check": "scope mutations that failed to fire",
+        "computed": [],
+        "note": "",
+        "pass": true,
+        "stored": []
+      },
+      {
+        "check": "report file unmodified by the mutation test",
+        "computed": true,
+        "note": "",
+        "pass": true,
+        "stored": true
       }
     ],
-    "n_checks": 188,
+    "n_checks": 206,
     "n_failed": 0
   }
 }

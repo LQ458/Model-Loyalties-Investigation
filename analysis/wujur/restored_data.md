@@ -311,6 +311,47 @@ a residual 12.5-token deficit, because the dot-fill tokenises differently from
 prose. So the length-match is approximate in two distinct ways. Raised by
 TitrationClose and verified here from `build_system()` directly.
 
+#### When the N construction changed, dated without git
+
+The change can be **dated** from the committed `run_meta.created_utc` fields
+alone, with no git, no historical file contents and no mechanism asserted.
+Sorting every recovered composition run by creation time and tagging each by
+its recorded N hash **per item** gives four constructions in four contiguous,
+non-interleaved blocks:
+
+| era | window (2026-07-27 UTC) | N hash by item | runs |
+| ---: | --- | --- | --- |
+| 1 | 04:26:19 – 04:29:33 | `bb0b9b52…` | `f_tiny10_dry`, `f_tiny10_20260727` |
+| 2 | 04:36:20 | `a1c4b66e…` | `f_tiny10_v18_20260727` |
+| 3 | 04:44:20 – 05:53:32 | `56fb7f58…` both items — **pre-pad, item-invariant** | `f_tiny10_v18s`, `…_twinfix`, `f_small20`, `f_phase1_k3_dry`, **`f_phase1_k3_20260727`** |
+| 4 | 06:12:49 – 07:02:38 | item_01 `98730154…`, item_02 `3b900206…` — **current, item-dependent** | **`f_phase2_tiny9_20260727`**, `f_phase2_tiny9_live`, `f_phase2_med30` |
+
+So the pre-pad → current transition is bracketed to the **19m16s gap between
+05:53:32.706189Z and 06:12:49.022940Z**. `f_phase1_k3_20260727` (F3) is the
+last run on the old construction; `f_phase2_tiny9_20260727` is the first on the
+new one, which is why it rebuilds 9/9.
+
+Two cautions on how this is counted, both of which change the headline if
+ignored:
+
+- **Eras must be keyed per item, not by the raw hash set.** The current
+  construction is item-dependent, so a run covering only `item_01` shows one
+  hash while a run covering both shows two, *while being the same
+  construction*. `f_phase2_tiny9` and `…_tiny9_live` cover `item_01` only;
+  `f_phase2_med30` covers both. Grouping on the raw set would split era 4 in
+  two and report a change that did not happen.
+- **Four distinct constructions means three transitions, not four.** Count
+  constructions and transitions separately or the sentence drifts by one: the
+  morning holds four N constructions and therefore three changes. "Changed
+  exactly once" is true only of the last of those three, the pre-pad → current
+  transition that separates F3 from F6. The two earlier transitions are pilot
+  churn. An earlier draft of this section said "changed four times", which is
+  the same off-by-one, stated here rather than silently patched.
+
+This dating approach is TitrationClose's; the era boundaries, the per-item
+keying correction and the count of four were verified here from the run
+metadata directly.
+
 Blast radius is narrow and was checked at source: `s_N` enters only `beta`
 (`compose.py:104`) and the baseline gate; `kappa` is computed from PM/MP over
 P − M (`compose.py:102-103`) and never reads it. Every P/M/PM/MP cell in every
@@ -578,6 +619,111 @@ All analysis was run from this script file rather than a shared notebook kernel,
 after StratifyV2 observed that the shared Python eval kernel silently rebinds
 short global names across concurrently running agents.
 
+### 7.1 A narrow set of recurring counts is machine-checked
+
+**Read the scope before the result.** The guard described here certifies six
+recurring counts and the hash strings. It does **not** certify this document.
+There are more than 500 numeric mentions in the prose with code fences
+excluded, so the guard covers on the order of one percent of them. Every row
+count, token count, rate, p-value, byte size and line number in this report is
+outside it, and rests instead on the deterministic generator and the
+per-section checks above — not on a green tick from the guard.
+
+The guard exists because a handful of counts demonstrably *did* drift between
+prose and artifact across revisions of this document, twice. It was built for
+that failure mode and covers that failure mode.
+
+Within that scope: `verify_report_claims()` parses the numeric claims back out
+of this file, maps number words to integers, and asserts each against the
+value the script computed. It is quote-aware, so the in-line retractions above
+may quote wrong numbers without tripping it. Current state, zero violations:
+
+| guarded quantity | distinct values found in prose | artifact |
+| --- | --- | --- |
+| changes | 3 | 3 |
+| constructions | 4 | 4 |
+| transitions | 3 | 3 |
+| earlier transitions | 2 | 2 |
+| file count | 46 | 46 |
+| total bytes | 18038659 | 18038659 |
+
+All 52 sha256 strings quoted in this document are traceable to the manifest.
+
+That table is laid out with the quantity first and the value second on purpose.
+Written as running prose, with each value placed immediately before its noun,
+it tripped the noun-anchored layer on two of the rows — correctly, since those
+numbers were then adjacent to guarded nouns and captured by nothing. The
+guard's first real catch was prose describing the guard. It was reworded
+rather than exempted, because an exemption is a phrase pin and phrase pins are
+the thing being replaced. TitrationClose hit the identical failure in the
+identical place.
+
+**The guard is itself mutation-tested, because an unexercised guard is an
+unverified claim.** The suite is part of `verify_restored.py` and runs on every
+invocation, so it is reproducible rather than something that happened once in a
+shell. Six errors are injected into the report text **in memory** — the
+committed file is never modified, so there is no restore step that could fail
+halfway, and the run asserts the file is unchanged afterwards.
+
+Each mutation declares the violation **kind** it must produce, and the suite
+fails if the wrong kind appears. Asserting only "something failed" is too weak:
+if span containment regressed, a mutated *captured* claim would surface as a
+missed-claim instead, and a kind-blind suite would pass while checking the
+wrong thing. Kind assertion is TitrationClose's refinement.
+
+| injected error | required kind | observed |
+| --- | --- | --- |
+| wrong number, `N`-qualified noun | claim | claim |
+| wrong number, changes | claim | claim |
+| wrong number, file count | claim | claim |
+| wrong number, bare noun | claim | claim |
+| wrong number, derived subset | claim | claim |
+| *correct* number under an unmatched phrasing | missed | missed |
+
+The scope claims in this very section are checked the same way, and are
+mutation-tested for the same reason. Exercising them in a shell would leave
+the evidence in a scrollback where no reader of the artifact can see it, which
+is a weaker version of the unexercised guard the whole mechanism is about.
+So six further mutations run in-process, perturbing either the measured
+coverage or this section's own wording, and each must be rejected:
+
+| injected scope error | rejected |
+| --- | --- |
+| guarded label count drifts | yes |
+| report shrinks below the stated mention floor | yes |
+| covered fraction exceeds the stated ceiling | yes |
+| coverage fraction unmeasurable | yes |
+| report drops its mention-floor statement | yes |
+| report drops its covered-fraction statement | yes |
+
+The last two matter most: if this section stopped disclosing how narrow the
+guard is, the run fails. Honesty about scope is enforced rather than
+remembered. The floor-and-ceiling design — rather than pinning the exact
+denominator — is deliberate, because the denominator changes whenever the
+prose is edited, including by the sentence that states it, so an exact figure
+would need chasing on every revision and a number that needs chasing will
+eventually be wrong.
+
+Returning to the claim table above: the case with a *correct* number under an
+unmatched phrasing is what the second layer exists for. Enumerating phrasings
+creates a silent-skip class: an unanticipated wording yields no claim, hence no
+violation, and the guard reports a clean pass having looked at nothing. So a
+noun-anchored layer flags *any* number-adjacent mention of a guarded noun that
+no pattern captured, whether or not the number is right. The design is
+TitrationClose's; adopting it was worthwhile because writing it exposed two
+bugs in my own first version — coverage recorded match end-offsets rather than
+spans, so the one genuine `46 files` claim was reported as unchecked, and the
+clause splitter did not break on markdown emphasis, so a number from the
+previous sentence looked adjacent to the next one's noun.
+
+The layer is applied only to `constructions` and `transitions`, which denote
+exactly one quantity each throughout this document. It is deliberately **not**
+applied to `files` or `bytes`: this report counts imported files, excluded
+files, `.bak` files, tracked files and metric files, so a noun-anchored rule
+there would fire on correct prose about other populations and would need
+per-sentence exemptions — which reintroduces the phrase-pinning it exists to
+replace. Those two stay phrase-anchored on `N files, M bytes`.
+
 ---
 
 ## What this does NOT establish
@@ -644,3 +790,28 @@ short global names across concurrently running agents.
 - **The `.gitignore` verdicts describe the current working tree only.** A new
   `.gitignore` added in a subdirectory later, or a `git add -f`, can change the
   outcome without touching any of the three files edited here.
+- **The dating brackets the change; it does not identify it.** The 19m16s
+  window between 05:53:32Z and 06:12:49Z is derived from `run_meta.created_utc`
+  fields written by the runner. It says when the recorded N hash changed, not
+  what was edited, and it inherits whatever accuracy those timestamps have. It
+  also cannot see a change that left the N hash unaltered.
+- **A single common cause across the runs sharing hash `56fb7f58…` is
+  inferred, not shown.** The census establishes co-occurrence of one hash
+  across five directories in one contiguous time block. That is consistent with
+  one editing event and does not prove one.
+- **The guard does not certify this document.** A clean run means six
+  recurring counts and the hash strings agree with the artifact, and nothing
+  more. Against more than 500 numeric mentions in the prose, that is on the
+  order of one percent. Every other number here — row counts, token counts,
+  rates, p-values, byte sizes, line numbers — is as trustworthy as ordinary
+  careful writing, which is to say less trustworthy than the checked ones.
+  Within the guarded set the noun-anchored layer closes the silent-skip class
+  for `constructions` and `transitions`; `files` and `bytes` remain
+  phrase-anchored and still carry the weakness this exercise was about.
+- **Passing mutations do not prove the absence of blind spots.** Six mutations
+  firing refutes six specific failure modes. It is not a completeness claim,
+  and reading it as one would be the same overclaim one level up. Three blind
+  spots in this guard — the `N`-qualified pattern, end-offset coverage, and
+  the clause splitter — were each invisible until a mutation exposed them, and
+  a fourth was caught only when the guard flagged prose describing itself. The
+  reasonable prior is that more remain.

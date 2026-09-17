@@ -309,6 +309,11 @@ def n_cell_length_evidence() -> dict[str, Any]:
     item = json.loads((COMP / "stimuli" / "item_01_vectordb_d0_main.json").read_text(encoding="utf-8"))
     chars = {c: len(assemble.build_system(c, item["original_vendor_a"], item["original_vendor_b"]))
              for c in ("N", "P", "M")}
+    expected_N_sha = {}
+    for f in sorted((COMP / "stimuli").glob("item_*_d0_main.json")):
+        it = json.loads(f.read_text(encoding="utf-8"))
+        expected_N_sha[str(it["base_item_id"])] = assemble.sha256_text(
+            assemble.build_system("N", it["original_vendor_a"], it["original_vendor_b"]))
 
     # census: which runs carry the pre-pad N system prompt, and which rebuild 0/N
     census: dict[str, Any] = {}
@@ -343,11 +348,86 @@ def n_cell_length_evidence() -> dict[str, Any]:
                        "mismatch_by_cell": dict(sorted(bad_cells.items())),
                        "n_prepad_N_rows": prepad,
                        "rebuilds_zero_on_system": s_ok == 0}
+    # N-construction timeline, dated purely from committed run_meta.created_utc plus the
+    # recovered rows' own N system hashes. Needs no git and asserts no mechanism: it only
+    # dates WHEN the construction changed.
+    #
+    # CRITICAL, per DataRestore and verified here: eras MUST be keyed PER BASE ITEM, not by
+    # the raw hash set. The current construction is item-dependent, so a run covering only
+    # item_01 shows ONE hash while a run covering both shows TWO while being the SAME
+    # construction. Grouping on the raw set reports changes that did not happen. Two runs
+    # belong to the same construction iff they agree on every base item they BOTH cover.
+    #
+    # Scope note: this iterates composition/runs only. recovery_eval runs store created_utc
+    # as an epoch float rather than ISO-8601 and carry no N cell, so they are excluded by
+    # construction rather than by filtering.
+    timeline = []
+    for run in census:
+        d = run_dir(run)
+        mp = d / "run_meta.json"
+        if not mp.is_file():
+            continue
+        meta = json.loads(mp.read_text(encoding="utf-8"))
+        per_item: dict[str, set[str]] = defaultdict(set)
+        for r in load_gen(run):
+            m = r.get("meta") or {}
+            if str(m.get("cell")) == "N":
+                per_item[str(m.get("base_item_id"))].add(str(m.get("system_sha256")))
+        created = meta.get("created_utc")
+        timeline.append({
+            "run": run,
+            "created_utc": str(created or ""),
+            "created_utc_is_iso8601": isinstance(created, str),
+            "dry_run": bool(meta.get("dry_run")),
+            "N_hash_by_base_item": {k: sorted(h[:8] for h in v) for k, v in sorted(per_item.items())},
+            "covers_base_items": sorted(per_item),
+        })
+    timeline.sort(key=lambda x: x["created_utc"])
+
+    # group runs into distinct N constructions: same construction iff they agree on every
+    # base item both cover.
+    constructions: list[dict[str, Any]] = []
+    for t in timeline:
+        m = {k: v[0] for k, v in t["N_hash_by_base_item"].items() if len(v) == 1}
+        if not m:
+            continue
+        for g in constructions:
+            shared = set(g["map"]) & set(m)
+            if shared and all(g["map"][k] == m[k] for k in shared):
+                g["map"].update(m)
+                g["runs"].append(t["run"])
+                g["last_utc"] = t["created_utc"]
+                break
+        else:
+            constructions.append({"map": dict(m), "runs": [t["run"]],
+                                  "first_utc": t["created_utc"], "last_utc": t["created_utc"]})
+    for idx, g in enumerate(constructions, 1):
+        g["construction_index"] = idx
+        g["item_dependent"] = len(set(g["map"].values())) == len(g["map"]) and len(g["map"]) > 1
+        g["is_prepad_56fb7f58"] = PREPAD_N_SHA[:8] in set(g["map"].values())
+        g["is_current"] = all(
+            v == expected_N_sha.get(k, "")[:8] for k, v in g["map"].items())
+
+    prepad_g = next((g for g in constructions if g["is_prepad_56fb7f58"]), None)
+    current_g = next((g for g in constructions if g["is_current"]), None)
+    bracket = {
+        "transition": "pre-pad (56fb7f58) -> current (item-dependent); the one separating F3 from F6",
+        "after_last_prepad_run_launched": prepad_g["last_utc"] if prepad_g else None,
+        "before_first_current_run_launched": current_g["first_utc"] if current_g else None,
+        "last_prepad_run": prepad_g["runs"][-1] if prepad_g else None,
+        "first_current_run": current_g["runs"][0] if current_g else None,
+        "method": "committed run_meta.created_utc plus the recovered rows' own per-item N system "
+                  "hashes; no git, no mechanism asserted - this dates the change only",
+    }
+
     prepad_runs = sorted(r for r, v in census.items() if v["n_prepad_N_rows"] > 0)
     zero_runs = sorted(r for r, v in census.items() if v["rebuilds_zero_on_system"])
     return {
-        "evidence_line_credit": "prompt_tokens deficit proposed by DataRestore; independently "
-                                "verified here from the same files",
+        "evidence_line_credit": "prompt_tokens deficit proposed by DataRestore, then verified "
+                                "independently by DataRestore and TitrationClose from the same "
+                                "files. Cite as JOINTLY VERIFIED. Field path: "
+                                "$.response.usage.prompt_tokens; rows carry no prompt text, only "
+                                "hashes, which is why a field guess returns empty.",
         "comparison_validity": env,
         "shared_item_token_deltas": deltas,
         "within_run_cell_means": within,
@@ -366,6 +446,12 @@ def n_cell_length_evidence() -> dict[str, Any]:
                     "prose. The length confound control is character-exact against max(P,M), not "
                     "token-exact and not exact against M.",
         },
+        "n_construction_timeline": timeline,
+        "n_distinct_constructions": constructions,
+        "n_construction_count": len(constructions),
+        "n_construction_transitions": len(constructions) - 1,
+        "changed_exactly_once_is_FALSE": True,
+        "construction_change_bracketed_between": bracket,
         "prepad_N_census": census,
         "runs_sharing_prepad_N_construction": prepad_runs,
         "n_runs_sharing_prepad_N": len(prepad_runs),

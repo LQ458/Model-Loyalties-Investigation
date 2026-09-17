@@ -844,6 +844,108 @@ def verify_prompt_rederivation(source: Path) -> dict[str, Any]:
         "zero_rebuild_live_runs": sorted(k for k in zero_rebuild if k not in dry),
     }
 
+    # Dating the N-cell change from committed run_meta.created_utc alone. This
+    # needs no git, no historical file contents, and asserts no mechanism: it
+    # only says WHEN the construction changed, which is safe to cite.
+    #
+    # Grouping caveat that matters: a run's N-hash SET depends on which items it
+    # covers, because the current construction is item-dependent. Runs using
+    # only item_01 show one hash and runs using both show two, yet they are the
+    # SAME construction. Eras are therefore keyed per (item -> hash), not by the
+    # raw set.
+    timeline: list[dict[str, Any]] = []
+    for run_id, d in sorted(all_dirs.items()):
+        rm = d / "run_meta.json"
+        if not rm.is_file():
+            continue
+        created = json.loads(rm.read_text(encoding="utf-8")).get("created_utc")
+        per_item: dict[str, str] = {}
+        for line in (d / "generations.jsonl").read_text(encoding="utf-8").splitlines():
+            if not line.strip():
+                continue
+            m = json.loads(line).get("meta") or {}
+            if m.get("cell") == "N":
+                per_item[str(m.get("base_item_id") or m.get("item_id"))] = str(m.get("system_sha256"))
+        timeline.append({"created_utc": created, "run": run_id, "n_by_item": per_item})
+    timeline.sort(key=lambda r: str(r["created_utc"]))
+    print()
+    print("  Dating the N-cell change from run_meta.created_utc (no git needed):")
+    print("  Note: the two recovery_eval runs store created_utc as an epoch float")
+    print("  rather than ISO-8601, so they sort ahead of the ISO rows. They carry")
+    print("  no N cell and take no part in the era grouping below.")
+    for row in timeline:
+        if row["n_by_item"]:
+            sig = ", ".join(f"{k}={v[:8]}" for k, v in sorted(row["n_by_item"].items()))
+        else:
+            sig = "no N cell (excluded from eras)"
+        print(f"       {str(row['created_utc']):<34}{row['run']:<32} {sig}")
+
+    # Two runs share a construction if they agree on every item they BOTH cover.
+    def _compatible(a: dict[str, str], b: dict[str, str]) -> bool:
+        shared = set(a) & set(b)
+        return bool(shared) and all(a[k] == b[k] for k in shared)
+
+    eras: list[dict[str, Any]] = []
+    for row in timeline:
+        if not row["n_by_item"]:
+            continue
+        if eras and _compatible(eras[-1]["n_by_item"], row["n_by_item"]):
+            eras[-1]["runs"].append(row["run"])
+            eras[-1]["last"] = row["created_utc"]
+            eras[-1]["n_by_item"].update(row["n_by_item"])
+        else:
+            eras.append({
+                "first": row["created_utc"], "last": row["created_utc"],
+                "runs": [row["run"]], "n_by_item": dict(row["n_by_item"]),
+            })
+    print()
+    print(f"  distinct N constructions, in time order: {len(eras)}")
+    for i, e in enumerate(eras, 1):
+        sig = ", ".join(f"{k}={v[:8]}" for k, v in sorted(e["n_by_item"].items()))
+        print(f"    era {i}: {e['first'][:19]} .. {e['last'][:19]}  {sig}")
+        print(f"            {e['runs']}")
+    contiguous = all(eras[i]["last"] < eras[i + 1]["first"] for i in range(len(eras) - 1))
+    check("N-cell eras are contiguous in time with no interleaving", contiguous, True)
+    # Constructions and transitions are separate counts; conflating them is an
+    # easy off-by-one that both this report and TitrationClose's made once.
+    check("distinct N constructions across the morning", len(eras), 4)
+    check("N construction transitions across the morning", max(0, len(eras) - 1), 3)
+    check("construction 3 is item-invariant (one hash across both items)",
+          len(set(eras[2]["n_by_item"].values())) if len(eras) > 2 else None, 1)
+    check("construction 4 is item-dependent (one hash per item)",
+          len(set(eras[3]["n_by_item"].values())) if len(eras) > 3 else None, 2)
+    pre_era = next((e for e in eras if PRE_PAD_N in e["n_by_item"].values()), None)
+    post_era = eras[eras.index(pre_era) + 1] if pre_era and eras.index(pre_era) + 1 < len(eras) else None
+    bracket = None
+    if pre_era and post_era:
+        bracket = {"after": pre_era["last"], "before": post_era["first"],
+                   "last_pre_change_run": pre_era["runs"][-1],
+                   "first_post_change_run": post_era["runs"][0]}
+        print()
+        print("  pre-pad -> current transition is bracketed to:")
+        print(f"       after  {bracket['after']}  ({bracket['last_pre_change_run']})")
+        print(f"       before {bracket['before']}  ({bracket['first_post_change_run']})")
+    check("last run on the pre-pad N construction",
+          (bracket or {}).get("last_pre_change_run"), "f_phase1_k3_20260727")
+    check("first run on the current N construction",
+          (bracket or {}).get("first_post_change_run"), "f_phase2_tiny9_20260727")
+    out["n_construction_timeline"] = {
+        "rows": timeline,
+        "eras": eras,
+        "eras_contiguous_no_interleaving": contiguous,
+        "pre_pad_to_current_bracket": bracket,
+        "note": (
+            "Dates the change without git. Eras are keyed per (item -> N hash), "
+            "not by the raw hash set: the current construction is item-dependent, "
+            "so a run covering only item_01 shows one hash and a run covering both "
+            "shows two while being the SAME construction. f_phase2_tiny9_20260727 "
+            "and f_phase2_tiny9_live_20260727 cover item_01 only; "
+            "f_phase2_med30_20260727 covers both. The N construction changed FOUR "
+            "times across the morning, not once; only the final change is the "
+            "pre-pad -> current transition that affects F3 vs F6."
+        ),
+    }
+
     # The length-match control is character-exact against the LONGER loyalty
     # block, so it does not equalise N against both P and M.
     it = json.loads((croot / "stimuli/item_01_vectordb_d0_main.json").read_text(encoding="utf-8"))
@@ -1301,6 +1403,391 @@ def import_file(src: Path, dst: Path, do_import: bool) -> dict[str, Any]:
     return entry
 
 
+NUMBER_WORDS = {
+    "zero": 0, "one": 1, "two": 2, "three": 3, "four": 4, "five": 5,
+    "six": 6, "seven": 7, "eight": 8, "nine": 9, "ten": 10, "eleven": 11,
+    "twelve": 12,
+}
+
+
+def _as_int(tok: str) -> int | None:
+    tok = tok.strip().lower().replace(",", "")
+    if tok.isdigit():
+        return int(tok)
+    return NUMBER_WORDS.get(tok)
+
+
+def _report_findings(text: str, manifest: dict[str, Any]) -> dict[str, Any]:
+    """Pure analysis of report prose against the artifact. No printing, no I/O.
+
+    Returns claims by label, CLAIM violations (a captured number disagreeing
+    with the artifact) and MISSED violations (a number-adjacent mention of a
+    guarded noun that no pattern captured). Kept pure so the mutation test can
+    exercise it on modified text in memory without touching the real file.
+    """
+    import re
+
+    # Strip quoted spans so in-line retractions quoting wrong numbers are exempt.
+    unquoted = re.sub(r"[\"\u201c\u201d][^\"\u201c\u201d]*[\"\u201c\u201d]", " ", text)
+
+    tl = manifest["prompt_rederivation"]["n_construction_timeline"]
+    n_constructions = len(tl["eras"])
+    n_transitions = max(0, n_constructions - 1)
+    totals = manifest["totals"]
+
+    word = r"([A-Za-z]+|[\d,]+)"
+    claims: list[tuple[str, int, int]] = []
+    covered: list[tuple[int, int]] = []
+    for pat, expected, label in (
+        (rf"changed {word} times?", n_transitions, "changes"),
+        (rf"(?:hence|therefore|so|thus|and) {word} changes", n_transitions, "changes"),
+        (rf"{word} changes\b", n_transitions, "changes"),
+        # A subset claim, checked against a derived value rather than exempted:
+        # of the transitions, all but the last are the earlier ones.
+        (rf"{word} earlier transitions", max(0, n_transitions - 1), "earlier transitions"),
+        (rf"{word} transitions", n_transitions, "transitions"),
+        # Allow "distinct" and an optional "N" qualifier between the number and
+        # the noun. Without the "N" branch, "four N constructions" binds the
+        # capture to "N", which is not an integer, and the claim is silently
+        # skipped -- the guard would pass over the exact sentence it exists to
+        # check. Caught by mutation test, not by reading. The missed-claim
+        # layer below is the general fix: enumerating phrasings is what creates
+        # the skip class in the first place.
+        (rf"{word} (?:distinct )?(?:N[- ])?constructions", n_constructions, "constructions"),
+        (rf"{word} files, [\d,]+ bytes", totals["n_files"], "file count"),
+    ):
+        for m in re.finditer(pat, unquoted, flags=re.IGNORECASE):
+            v = _as_int(m.group(1))
+            if v is not None:
+                claims.append((label, v, expected))
+                covered.append(m.span())
+
+    for m in re.finditer(r"([\d,]+) files, ([\d,]+) bytes", unquoted):
+        claims.append(("total bytes", int(m.group(2).replace(",", "")), totals["total_bytes"]))
+        covered.append(m.span())
+
+    # MISSED-CLAIM LAYER. The patterns above enumerate phrasings, and
+    # enumerating phrasings is exactly what creates a silent-skip class: an
+    # unanticipated wording produces no claim and therefore no violation, so
+    # the guard reports a clean pass having looked at nothing. This layer is
+    # noun-anchored instead. For every mention of a guarded noun, if a number
+    # sits within the preceding few tokens of the same clause and no pattern
+    # captured it, that is a violation in itself -- not because the number is
+    # wrong, but because the guard is not looking at it.
+    #
+    # Design adopted from TitrationClose, whose noun-anchored version caught a
+    # blind spot in the prose describing their own guard.
+    #
+    # Scope, and this is a real limit rather than laziness: the layer is only
+    # sound for nouns that denote exactly ONE artifact quantity throughout the
+    # report. "constructions" and "transitions" do. "files" and "bytes" do not
+    # -- the report counts imported files, excluded files, .bak files, tracked
+    # files and metric files, so a noun-anchored rule there would fire on
+    # correct prose about other populations and would have to be silenced with
+    # per-sentence exemptions, which reintroduces the phrase-pinning it exists
+    # to replace. Those stay phrase-anchored on "N files, M bytes".
+    GUARDED_NOUNS = ("constructions", "transitions")
+    missed: list[str] = []
+    for noun in GUARDED_NOUNS:
+        for m in re.finditer(rf"\b{noun}\b", unquoted, flags=re.IGNORECASE):
+            if any(s <= m.start() and m.end() <= e for s, e in covered):
+                continue
+            # Preceding context, clipped at the nearest clause boundary. Markdown
+            # emphasis and line wrapping both end clauses here; without that the
+            # tail of one sentence glues to the head of the next and a number
+            # from the previous clause looks adjacent to this noun.
+            head = unquoted[max(0, m.start() - 80):m.start()]
+            head = re.split(r"(?<=[.!?:;])[\s*]|\*\*|\n", head)[-1]
+            toks = re.findall(r"[A-Za-z][A-Za-z-]*|[\d,]+", head)[-3:]
+            if any(_as_int(t) is not None for t in toks):
+                missed.append(f"{noun}: unchecked number-adjacent mention ... {' '.join(toks + [noun])!r}")
+
+    by_label: dict[str, list[int]] = {}
+    violations: list[str] = []
+    for label, got, expected in claims:
+        by_label.setdefault(label, []).append(got)
+        if got != expected:
+            violations.append(f"{label}: prose says {got}, artifact says {expected}")
+
+    quoted_sha = set(re.findall(r"`([0-9a-f]{64})`", text))
+    known = {f["sha256"] for f in manifest["files"]}
+    known |= {e["sha256"] for e in manifest["excluded"] if e.get("sha256")}
+    pr = manifest["prompt_rederivation"]
+    known |= {manifest["v018_confirm_grid"]["prompt_sha256"],
+              pr["pad_removal_hypothesis"]["unpadded_neutral_sha256"],
+              pr["n_cell_census"]["pre_pad_n_hash"]}
+    for run in pr.values():
+        if isinstance(run, dict):
+            for hs in (run.get("recorded_system_sha256_by_cell") or {}).values():
+                known |= set(hs)
+            for hs in (run.get("rebuilt_system_sha256_by_cell") or {}).values():
+                known |= set(hs)
+    for v in manifest["v018_confirm_grid"].values():
+        if isinstance(v, str) and len(v) == 64:
+            known.add(v)
+
+    # Coverage. A guard that checks a handful of counts must not be described
+    # as checking the document. Measure the denominator rather than estimating
+    # it, so the report's own scope claim can be asserted instead of trusted.
+    # Prompted by TitrationClose, who found the same overclaim in their header.
+    no_fence = re.sub(r"```.*?```", " ", text, flags=re.DOTALL)
+    numeric_mentions = len(re.findall(r"\b\d[\d,.]*\b", no_fence))
+
+    return {
+        "by_label": {k: sorted(set(v)) for k, v in sorted(by_label.items())},
+        "claim_violations": violations,
+        "missed_violations": missed,
+        "artifact_values": {
+            "n_constructions": n_constructions,
+            "n_transitions": n_transitions,
+            "n_files": totals["n_files"],
+            "total_bytes": totals["total_bytes"],
+        },
+        "sha256_quoted": len(quoted_sha),
+        "sha256_untraceable": sorted(quoted_sha - known),
+        "coverage": {
+            "guarded_labels": sorted(by_label),
+            "n_guarded_labels": len(by_label),
+            "n_numeric_mentions_excluding_code_fences": numeric_mentions,
+            "fraction_of_numeric_mentions_guarded": (
+                round(len(by_label) / numeric_mentions, 4) if numeric_mentions else None
+            ),
+            "note": (
+                "The guard certifies these labels and the sha256 strings. Every "
+                "other number in the report -- row counts, token counts, byte "
+                "sizes, rates, p-values, line numbers -- rests on the "
+                "deterministic generator and the per-section checks, not on this "
+                "guard. A clean guard run is not a statement about the document."
+            ),
+        },
+    }
+
+
+# Each mutation declares the violation KIND it must produce. Asserting only
+# "something failed" is too weak: if span containment regressed, a mutated
+# CAPTURED claim would surface as a MISSED violation instead, and a
+# kind-blind suite would still pass. Kind assertion is TitrationClose's;
+# adopting it is what makes these cases evidence rather than noise.
+REPORT_MUTATIONS: tuple[tuple[str, str, str, str], ...] = (
+    ("morning holds four N constructions", "morning holds five N constructions",
+     "claim", "wrong number, N-qualified noun"),
+    ("and therefore three changes", "and therefore seven changes",
+     "claim", "wrong number, changes"),
+    ("46 files, 18,038,659 bytes", "47 files, 18,038,659 bytes",
+     "claim", "wrong number, file count"),
+    ("gives four constructions", "gives nine constructions",
+     "claim", "wrong number, bare noun"),
+    ("The two earlier transitions", "The six earlier transitions",
+     "claim", "wrong number, derived subset"),
+    ("gives four constructions", "gives four separate constructions",
+     "missed", "CORRECT number under an unmatched phrasing"),
+)
+
+
+def run_report_mutation_test(manifest: dict[str, Any], report: Path) -> dict[str, Any]:
+    """Prove the guard fires, and fires for the right reason.
+
+    An unexercised guard is an unverified claim: neither reading the patterns
+    nor watching them pass is evidence that anything is checked. Mutations are
+    applied to the report text IN MEMORY, so the committed file is never
+    modified and there is no restore step that could fail halfway.
+    """
+    section("REPORT GUARD -- mutation test: does the guard fire, and correctly?")
+    if not report.is_file():
+        print(f"  report not present: {report}")
+        return {"present": False}
+    base = report.read_text(encoding="utf-8")
+    baseline = _report_findings(base, manifest)
+    results: list[dict[str, Any]] = []
+    failures: list[str] = []
+    for anchor, replacement, kind, label in REPORT_MUTATIONS:
+        if base.count(anchor) == 0:
+            failures.append(f"{label}: anchor absent from the report, mutation never applied")
+            results.append({"label": label, "applied": False, "kind_required": kind})
+            print(f"  {'ANCHOR MISSING':<16} {label}")
+            continue
+        mutated = base.replace(anchor, replacement, 1)
+        f = _report_findings(mutated, manifest)
+        got_kinds = set()
+        if len(f["claim_violations"]) > len(baseline["claim_violations"]):
+            got_kinds.add("claim")
+        if len(f["missed_violations"]) > len(baseline["missed_violations"]):
+            got_kinds.add("missed")
+        ok = kind in got_kinds
+        if not ok:
+            failures.append(
+                f"{label}: required kind {kind!r}, observed {sorted(got_kinds) or 'nothing'}"
+            )
+        results.append({
+            "label": label, "applied": True, "kind_required": kind,
+            "kinds_observed": sorted(got_kinds), "pass": ok,
+            "anchor_occurrences": base.count(anchor),
+        })
+        print(f"  {'FIRED ' + kind if ok else 'WRONG KIND':<16} {label}"
+              f"   observed={sorted(got_kinds) or ['nothing']}")
+    check("baseline report has zero claim violations", baseline["claim_violations"], [])
+    check("baseline report has zero missed-claim violations", baseline["missed_violations"], [])
+    check("mutations that did not produce their required violation kind", failures, [])
+
+    # Scope mutations, run here rather than in a shell so the evidence lives in
+    # the artifact. Each perturbs the measured coverage and must be rejected.
+    scope_results: list[dict[str, Any]] = []
+    scope_failures: list[str] = []
+    base_cov = baseline["coverage"]
+    if _scope_violations(base_cov, text=base):
+        scope_failures.append("baseline coverage already violates its own scope claim")
+    for label, patch in SCOPE_MUTATIONS:
+        perturbed = {**base_cov, **patch}
+        fired = bool(_scope_violations(perturbed, text=base))
+        scope_results.append({"label": label, "patch": patch, "fired": fired})
+        if not fired:
+            scope_failures.append(f"{label}: scope check did not fire")
+        print(f"  {'FIRED scope' if fired else 'MISSED scope':<16} {label}")
+    # Removing the report's own scope statements must also be rejected.
+    for label, stripped in (
+        ("report drops its mention-floor statement",
+         base.replace(f"more than {COVERAGE_MENTION_FLOOR}", "many")),
+        ("report drops its covered-fraction statement",
+         base.replace("one percent", "a small share")),
+    ):
+        fired = bool(_scope_violations(base_cov, text=stripped))
+        scope_results.append({"label": label, "patch": "prose", "fired": fired})
+        if not fired:
+            scope_failures.append(f"{label}: scope check did not fire")
+        print(f"  {'FIRED scope' if fired else 'MISSED scope':<16} {label}")
+    check("scope mutations that failed to fire", scope_failures, [])
+
+    check("report file unmodified by the mutation test",
+          report.read_text(encoding="utf-8") == base, True)
+    return {"baseline_clean": not (baseline["claim_violations"] or baseline["missed_violations"]),
+            "mutations": results, "failures": failures,
+            "scope_mutations": scope_results, "scope_failures": scope_failures}
+
+
+# Expected scope of the guard. The noun/label count is exact because it is
+# controlled in this file. The denominator is NOT pinned exactly: it moves
+# whenever the prose is edited, including by the sentence that states it, so an
+# exact figure is a self-referential fixpoint that needs chasing on every
+# revision -- and a number that needs chasing will eventually be wrong. The
+# report therefore makes a FLOOR claim on mentions and a CEILING claim on the
+# covered fraction, and those bounds are what get checked.
+EXPECTED_GUARDED_LABELS = 6
+COVERAGE_MENTION_FLOOR = 500
+COVERAGE_FRACTION_CEILING = 0.05
+
+
+def _scope_violations(cov: dict[str, Any], *, text: str = "") -> list[str]:
+    """Check the guard's measured coverage against the scope the report claims.
+
+    A narrow check described broadly is itself a false claim, so the report is
+    required to state its own narrowness and the statement is verified. Pure
+    and side-effect free so the mutation suite can exercise it directly.
+    """
+    import re
+
+    out: list[str] = []
+    n_labels = cov["n_guarded_labels"]
+    mentions = cov["n_numeric_mentions_excluding_code_fences"]
+    frac = cov["fraction_of_numeric_mentions_guarded"]
+    if n_labels != EXPECTED_GUARDED_LABELS:
+        out.append(f"guarded label count is {n_labels}, expected {EXPECTED_GUARDED_LABELS}")
+    if mentions < COVERAGE_MENTION_FLOOR:
+        out.append(
+            f"report has {mentions} numeric mentions, below the floor of "
+            f"{COVERAGE_MENTION_FLOOR} the prose claims"
+        )
+    if frac is None or frac >= COVERAGE_FRACTION_CEILING:
+        out.append(f"covered fraction {frac} is not under {COVERAGE_FRACTION_CEILING}")
+    if text:
+        # Whitespace-tolerant. Markdown wrapping has now defeated a pattern in
+        # this workstream three times over; assume a line break can fall
+        # between any two tokens rather than patching a fourth instance later.
+        ws = r"[\s*_`]+"
+        if not re.search(rf"more{ws}than{ws}{COVERAGE_MENTION_FLOOR}", text):
+            out.append("report does not state the numeric-mention floor it is checked against")
+        if not re.search(rf"one{ws}percent|1\.?\d*%", text):
+            out.append("report does not state the covered fraction in prose")
+    return out
+
+
+# Scope mutations. These perturb the measured coverage rather than the report,
+# and exist because scope checks exercised only in a shell scrollback are
+# unverifiable to anyone reading the artifact -- a weaker form of the
+# unexercised guard this whole mechanism is about. Point made by
+# TitrationClose, who caught themselves about to report exactly that.
+SCOPE_MUTATIONS: tuple[tuple[str, dict[str, Any]], ...] = (
+    ("guarded label count drifts", {"n_guarded_labels": 5}),
+    ("report shrinks below the stated mention floor",
+     {"n_numeric_mentions_excluding_code_fences": 400}),
+    ("covered fraction exceeds the stated ceiling",
+     {"fraction_of_numeric_mentions_guarded": 0.2}),
+    ("coverage fraction unmeasurable", {"fraction_of_numeric_mentions_guarded": None}),
+)
+
+
+def verify_report_claims(manifest: dict[str, Any], report: Path) -> dict[str, Any]:
+    """Check the prose in restored_data.md against the computed artifact.
+
+    A guard that pins an exact phrase can only ever catch the mistake already
+    known about. This parses the numeric claims back out of the prose and
+    asserts each against the value this script computed, so the NEXT drift is
+    caught too. It is quote-aware: text inside double quotes is stripped first,
+    so an in-line retraction may quote a wrong number without tripping it.
+
+    Approach adopted from TitrationClose, who replaced a phrase pin with a
+    numeric invariant after a guard they wrote asserted the buggy wording.
+    """
+    section("REPORT CLAIMS -- does the prose agree with the computed artifact?")
+    if not report.is_file():
+        print(f"  report not present: {report}")
+        return {"present": False}
+    f = _report_findings(report.read_text(encoding="utf-8"), manifest)
+    av = f["artifact_values"]
+    for x in f["missed_violations"]:
+        print(f"       MISSED {x}")
+    check("number-adjacent mentions of guarded nouns the guard does not check",
+          f["missed_violations"], [])
+    for label in sorted(f["by_label"]):
+        print(f"  prose claims for {label:<20}: {f['by_label'][label]}")
+    print(f"  artifact: constructions={av['n_constructions']} transitions={av['n_transitions']} "
+          f"files={av['n_files']} bytes={av['total_bytes']}")
+    check("numeric claims in the report contradicting the artifact", f["claim_violations"], [])
+    check("report makes at least one construction claim to check",
+          bool(f["by_label"].get("constructions")), True)
+    check("report makes at least one transition/change claim to check",
+          bool(f["by_label"].get("changes") or f["by_label"].get("transitions")), True)
+    print(f"  sha256 strings quoted in the report: {f['sha256_quoted']}")
+    check("sha256 strings in the report not traceable to the artifact",
+          f["sha256_untraceable"], [])
+
+    cov = f["coverage"]
+    print()
+    print("  COVERAGE -- what fraction of this report the guard actually certifies:")
+    print(f"       guarded labels: {cov['n_guarded_labels']}  {cov['guarded_labels']}")
+    print(f"       numeric mentions in prose, code fences excluded: "
+          f"{cov['n_numeric_mentions_excluding_code_fences']}")
+    print(f"       fraction guarded: {cov['fraction_of_numeric_mentions_guarded']:.4f}")
+    print(f"       sha256 strings certified: {f['sha256_quoted']}")
+    print("       Everything else -- row counts, token counts, rates, p-values,")
+    print("       byte sizes, line numbers -- rests on the deterministic")
+    print("       generator and the per-section checks, NOT on this guard.")
+    scope = _scope_violations(cov, text=report.read_text(encoding="utf-8"))
+    for v in scope:
+        print(f"       SCOPE {v}")
+    check("scope problems: guard coverage disagrees with what the report claims",
+          scope, [])
+    return {
+        "report": str(report.relative_to(REPO)),
+        "numeric_claims_by_label": f["by_label"],
+        "artifact_values": av,
+        "violations": f["claim_violations"],
+        "missed_violations": f["missed_violations"],
+        "sha256_quoted": f["sha256_quoted"],
+        "sha256_untraceable": f["sha256_untraceable"],
+        "coverage": cov,
+    }
+
+
 def main(argv: list[str] | None = None) -> int:
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument("--source", type=Path, default=DEFAULT_SOURCE)
@@ -1456,6 +1943,23 @@ def main(argv: list[str] | None = None) -> int:
 
     gitignore_facts = verify_gitignore(files)
 
+    # Provisional manifest so the prose guard can read the computed values,
+    # then the verification block is finalised from the completed CHECKS list.
+    provisional = {
+        "prompt_rederivation": prompt_facts,
+        "v018_confirm_grid": v018_facts,
+        "files": files,
+        "excluded": excluded,
+        "totals": {
+            "n_files": len(files),
+            "total_bytes": total_bytes,
+            "destination_verified": landed,
+        },
+    }
+    report_path = REPO / "analysis/wujur/restored_data.md"
+    report_facts = verify_report_claims(provisional, report_path)
+    mutation_facts = run_report_mutation_test(provisional, report_path)
+
     n_fail = sum(1 for c in CHECKS if not c["pass"])
     section("RESULT")
     print(f"  checks run: {len(CHECKS)}   passed: {len(CHECKS) - n_fail}   failed: {n_fail}")
@@ -1488,6 +1992,8 @@ def main(argv: list[str] | None = None) -> int:
             "archive_scan": zip_facts,
         },
         "gitignore": gitignore_facts,
+        "report_claims": report_facts,
+        "report_guard_mutation_test": mutation_facts,
         "notes": {
             "reference_run_leaf": (
                 "f_privilege_k3_20260727_privilege.json reproduces from "

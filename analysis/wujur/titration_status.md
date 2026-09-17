@@ -1,11 +1,66 @@
 # Paper 2 (composition / titration) — what is claimable now, and what needs new generations
 
 Companion data artifact: `analysis/wujur/titration_recovered.json`
-(`sha256 = f0bf11497ef58431700c5cf24a4fed3957256f592adb1d07bfb174a4fa5c2b04`).
+(`sha256 = a5e8a16896fe30ef1cfb1ae6e3542a32e23683fe4a2abddb18f77a98577e4fb9`).
 Generator: `analysis/wujur/titration_recover.py` (standalone, re-runnable, no endpoint contacted, no
 `git`, no subagents). Verified deterministic: two consecutive runs produced byte-identical output
 (`cmp` clean), re-checked after each revision of the script. Every number below carries a
 `path:line` or a JSON key path.
+
+**Read the scope before the result.** A NARROW set of recurring numeric claims in this report is
+machine-checked against the artifact. Stated narrowly on purpose: an earlier draft of this line
+read "Numeric claims in this report are machine-checked", which overclaims badly.
+
+`analysis/wujur/verify_titration_claims.py` guards **8 nouns**. This report contains more than
+**600** numeric mentions, and the guard covers under **3%** of them. Every
+`kappa`, CI bound, token count, row count, rate, p-value and hash falls in the uncovered
+remainder. Those are backed instead by being computed into, and cited from,
+`titration_recovered.json`, whose generator is deterministic, plus the one-off cross-checks
+recorded per section. The guard exists because a handful of counts proved able to drift between
+prose and artifact across revisions — not because it certifies the document. `DataRestore` flagged
+the same limit on their own guard; it is a real limitation, not a footnote.
+
+The scope figures are themselves machine-checked, with a wrinkle worth naming. The noun count is
+asserted **exactly**, since it is controlled in the guard's source. The denominator is not: it
+moves whenever this prose is edited, *including by the sentence that states it*, so an exact
+figure would be a self-referential fixpoint needing to be chased on every revision — and a number
+that needs chasing will eventually be wrong. So the report makes a **floor** claim on mentions and
+a **ceiling** claim on the covered fraction, both stable under ordinary editing, and the guard
+fails if either is violated or if the report omits them. Design due to `DataRestore`.
+
+It parses every number-adjacent mention of a guarded noun, maps number-words and digits to
+integers, and asserts each equals the value the generator computed. It is quote-aware, so the
+in-line retractions below may quote superseded numbers without tripping it.
+
+Per `DataRestore`: **a guard is a claim, and an unexercised guard is an unverified claim.** Neither
+reading the regex nor watching it pass is evidence that it checks anything — only a deliberate
+mutation that makes it fail is. So it ships with `--mutation-test`, which injects known-wrong
+values and requires every one to be caught **with the correct violation kind**. Asserting the kind
+is not pedantry: if captured spans were recorded as match-end offsets rather than full spans, a
+mutated captured claim would be reported as an unattributed mention instead of a wrong value, and
+a test checking only "something fired" would pass while the layer mis-attributed every claim.
+`DataRestore` hit exactly that bug; the kind assertion is what shows this implementation does not
+have it. Current state: **baseline 0 violations, all 10 claim mutations and 5 scope mutations caught, kinds as required.**
+
+Building it surfaced four real blind spots in my own first version, none visible on inspection: a
+single-slot qualifier that silently skipped the main construction-count sentence; a
+literal-substring mutation anchor that skipped a phrase straddling a line break, so the harness
+printed a skip instead of a failure; an exemption test defeated by markdown line wrapping; and one
+caught live, where an earlier draft of this very paragraph quoted a sample phrase inline and the
+guard flagged it as an unverifiable number-adjacent mention — reworded rather than exempted.
+
+**The guard now has no exemptions.** An earlier version exempted "the two earliest constructions"
+as a subset phrase. Per `DataRestore`, a subset claim is checkable if you compute the subset, and
+an exemption is a phrase pin — the thing being replaced. That phrase is now checked against a
+derived value (total constructions minus the pre-pad and current ones) and compared like any other.
+
+**Scope condition, `DataRestore`'s and worth stating rather than overselling the technique.**
+Noun-anchoring generalises only where the noun denotes exactly one quantity in the document. It
+works here for `constructions`, `changes`, `parseable rows`, `top-level keys` and the rest because
+each names a single number throughout. A noun like "files" or "bytes", which in their report counts
+imported, excluded, tracked and metric populations separately, would fire on correct sentences and
+need per-sentence exemptions — reintroducing phrase pinning with extra steps. Where the noun is
+ambiguous, phrase anchoring remains the right tool.
 
 **Data source.** `DataRestore` has imported the recovered rows into the tree, so this report cites
 **in-repo** paths, not the Nextcloud mirror. The script reads
@@ -493,13 +548,14 @@ anything committed today.**
 
 #### The effect, on evidence that needs no reconstruction
 
-`DataRestore` proposed a code-independent line of evidence and I verified it independently from the
-same files — which matters, because `Main` reported being unable to reproduce it (their field
-guesses returned empty; the path is `$.response.usage.prompt_tokens`). `f_phase1_k3_20260727` and
-`f_phase2_med30_20260727` share two stimulus items whose **user** prompts are provably identical
-(same `user_sha256`), and both ran against the same model and endpoint
-(`qwen3.6-35b-a3b-int8`, `http://192.168.110.26:8000/v1`), so a `prompt_tokens` delta isolates the
-system prompt:
+`DataRestore` proposed this line of evidence; it has since been verified independently by
+`DataRestore` and by me from the same files, and **should be cited as jointly verified, not as
+either agent's alone**. That matters because `Main` reported being unable to reproduce it: the
+rows carry no prompt text, only hashes, so a field guess returns empty — the path is
+`$.response.usage.prompt_tokens`. `f_phase1_k3_20260727` and `f_phase2_med30_20260727` share two
+stimulus items whose **user** prompts are provably identical (same `user_sha256`), and both ran
+against the same model and endpoint (`qwen3.6-35b-a3b-int8`,
+`http://192.168.110.26:8000/v1`), so a `prompt_tokens` delta isolates the system prompt:
 
 | cell | item | Phase-1 | med30 | delta | user prompt identical |
 | --- | --- | --- | --- | --- | --- |
@@ -524,6 +580,51 @@ change caused it, which is exactly why the amendment rests on it.
 hash across *every* cell — earlier prompt generations entirely — and must be excluded explicitly
 from any "reproducible from committed prompts" claim
 (`$.n_cell_length_evidence.runs_rebuilding_zero_on_system`).
+
+**The change can be dated without `git` at all**, using only committed `run_meta.created_utc` plus
+the recovered rows' own `N` system hashes.
+
+**Corrected twice, both stated in-line rather than silently patched.** An earlier revision said
+the `N` construction "changed exactly once" — wrong, it was bucketing the two earliest
+constructions together as "earlier generation" when their hashes plainly differ. The *correction*
+then said it "changed four times", which is the off-by-one: **four distinct constructions means
+three changes.** `DataRestore` made and self-reported the identical off-by-one independently.
+
+The correct statement: **four distinct `N` constructions, hence three changes.** Only the **last**
+change separates F3 from F6; the two earlier ones are pilot churn. Of the two runs that never
+rebuild at all, `f_tiny10`/`f_tiny10_dry` sit in construction 1 and `f_tiny10_v18` in construction
+2.
+
+Two method points, both `DataRestore`'s and both verified here:
+
+- **Constructions must be keyed PER BASE ITEM, not by the raw hash set.** The current construction
+  is item-dependent, so a run covering only `item_01` shows *one* hash while a run covering both
+  shows *two* — while being the same construction. Two runs belong to the same construction iff
+  they agree on every base item they **both** cover. (My published table was not actually split by
+  this, because the classifier tested set-membership against the expected item-dependent hashes
+  rather than raw-set equality; but the keying is the correct rule and it is what surfaces the
+  four-construction count.)
+- **`recovery_eval` runs are excluded by construction, not by filtering.** They store
+  `created_utc` as an epoch float rather than ISO-8601 and carry no `N` cell. This section iterates
+  `composition/runs` only, so they never enter; all 12 timeline rows are verified ISO-8601
+  (`$.n_cell_length_evidence.n_construction_timeline[].created_utc_is_iso8601`).
+
+| # | window (UTC, 2026-07-27) | `N` hash by base item | runs |
+| --- | --- | --- | --- |
+| 1 | 04:26:19 – 04:29:33 | `item_01 → bb0b9b52` | `f_tiny10_dry` (dry), `f_tiny10_20260727` |
+| 2 | 04:36:20 | `item_01 → a1c4b66e` | `f_tiny10_v18_20260727` |
+| 3 | 04:44:20 – **05:53:32** | `item_01 → 56fb7f58`, `item_02 → 56fb7f58` (item-**invariant**) | `f_tiny10_v18s`, `f_tiny10_v18s_twinfix`, `f_small20`, `f_phase1_k3_dry` (dry), **`f_phase1_k3_20260727`** (F3) |
+| 4 | **06:12:49** – 07:02:38 | `item_01 → 98730154`, `item_02 → 3b900206` (item-**dependent**) | `f_phase2_tiny9` (dry), `f_phase2_tiny9_live`, **`f_phase2_med30_20260727`** (F6) |
+
+`f_privilege_tiny8_20260727` (F7, 07:43:41) has no `N` cell and joins no construction.
+
+The four blocks are contiguous and non-interleaved, so **the transition that matters — pre-pad
+(construction 3) to current (construction 4) — occurred exactly once**, bracketed between
+**05:53:32.706189Z and 06:12:49.022940Z, a 19m16s gap**
+(`$.n_cell_length_evidence.construction_change_bracketed_between`). F3 is the **last** run of
+construction 3; `f_phase2_tiny9_20260727` is the **first** of construction 4, which is why it
+rebuilds 9/9. This dates the change and asserts no mechanism, so it is safe under the binding
+wording, and it corroborates `Main`'s commit ordering without depending on it.
 
 **A refinement of the control itself, which neither of us had stated.** The pad targets
 `max(len(loy_a), len(loy_b))` in **characters**, so today's `N` matches `P` exactly at 1569 chars —
@@ -566,6 +667,21 @@ N carries a single item-independent hash 56fb7f58cb42dd9b... whereas the current
 construction is item-dependent (98730154611c6684... and 3b9002060d5b4bd1...), and
 f_phase2_med30_20260727 rebuilds 90/90. The same pre-pad N hash also appears in
 f_small20_20260727, f_tiny10_v18s_20260727 and f_tiny10_v18s_twinfix_20260727.
+
+Dating, from committed run metadata alone. Sorting every composition run by
+run_meta.created_utc and tagging each by the N system hash it records PER BASE ITEM yields
+four distinct N constructions in four contiguous, non-interleaved blocks on 2026-07-27:
+item_01=bb0b9b52 from 04:26 to 04:29; item_01=a1c4b66e at 04:36; 56fb7f58 on BOTH items,
+item-invariant, from 04:44 to 05:53; and item_01=98730154 with item_02=3b900206,
+item-dependent, from 06:12 to 07:02. So the N construction changed three times that
+morning, not once. The transition relevant here is the last one, from the item-invariant
+construction to the current item-dependent one, and it occurred exactly once: bracketed
+between 05:53:32.706189Z (f_phase1_k3_20260727, the last run before) and 06:12:49.022940Z
+(f_phase2_tiny9_20260727, the first after, which is why it rebuilds 9/9). Phase 1 is the
+last run before that change; Phase 2 is after it. Constructions must be keyed per base item
+because the current one is item-dependent, so a run covering a single item records one hash
+while a run covering two records two while being the same construction. This dates the
+change; it does not identify it.
 
 Not reconstructible, stated as a limit rather than a mechanism. Roughly 30 reconstruction
 variants were tried and none reproduces 56fb7f58cb42dd9b...; in particular removing the
@@ -678,12 +794,13 @@ submission is Paper 1's, not Paper 2's.
 
 ## 7. Revert instructions
 
-Three files were added by this work; nothing existing was modified.
+Four files were added by this work; nothing existing was modified.
 
 ```
 rm /home/barry/workspace/projects/Model-Loyalties-Investigation/analysis/wujur/titration_status.md
 rm /home/barry/workspace/projects/Model-Loyalties-Investigation/analysis/wujur/titration_recovered.json
 rm /home/barry/workspace/projects/Model-Loyalties-Investigation/analysis/wujur/titration_recover.py
+rm /home/barry/workspace/projects/Model-Loyalties-Investigation/analysis/wujur/verify_titration_claims.py
 ```
 
 No file under `model_organism/`, `defense/`, `.gitignore`, Overleaf or any `.tex` was touched. No
@@ -750,6 +867,20 @@ apply and hash after the run completes.
 - **It does not confirm Block A's throughput.** The ≈15–20 min estimate is arithmetic on observed
   per-row latency and the runner's `--workers` default; endpoint contention is unmodelled and no
   generation was run.
+- **The claim guard does not certify this document.** `verify_titration_claims.py` guards a small,
+  fixed set of recurring counts — the scope figures, and the bounds on them, are in the header and
+  are machine-enforced. A clean run means those counts agree with the artifact, nothing more. It
+  is not evidence for any `kappa`, CI bound, token count, row count, rate, p-value or hash, all of
+  which rest on the deterministic generator and the per-section cross-checks instead.
+  `DataRestore` reported the same limit on their guard, independently. Deliberately stated without
+  repeating an exact claim count here: that number drifts with ordinary prose edits and is not
+  covered by the header's floor/ceiling assertions, so a figure repeated in this section would be
+  a second place for it to go silently stale — the drift this whole apparatus exists to stop.
+- **Passing mutations do not prove the guard has no remaining blind spot.** The suite refutes a
+  specific, enumerated set of failure modes, each with the required violation kind — and four of
+  them were real bugs found exactly that way. It does not establish completeness. Four separate
+  blind spots in this guard were invisible until a mutation exposed them, three of them the same
+  markdown-line-wrap defect in different places, so the reasonable prior is that more remain.
 - **It reports no number that was not read from, or computed by a script over, a file on this
   machine.** Every figure carries a `path:line` or a JSON key path, and the generating script is
   deterministic across consecutive runs.

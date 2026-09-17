@@ -209,6 +209,7 @@
   },
   "mirror_root": "/home/barry/Nextcloud/vc_projects/Model-Loyalties-Investigation",
   "n_cell_length_evidence": {
+    "changed_exactly_once_is_FALSE": true,
     "comparison_validity": {
       "f_phase1_k3_20260727": {
         "base_urls": [
@@ -228,11 +229,268 @@
       }
     },
     "conclusion_code_independent": "Phase 1's N cell was NOT length-matched: it runs 98-99 prompt tokens shorter than the SAME item's N prompt in Phase 2 while P and M are bit-identical across the two runs. This holds without reference to which code change caused it.",
-    "evidence_line_credit": "prompt_tokens deficit proposed by DataRestore; independently verified here from the same files",
+    "construction_change_bracketed_between": {
+      "after_last_prepad_run_launched": "2026-07-27T05:53:32.706189+00:00",
+      "before_first_current_run_launched": "2026-07-27T06:12:49.022940+00:00",
+      "first_current_run": "f_phase2_tiny9_20260727",
+      "last_prepad_run": "f_phase1_k3_20260727",
+      "method": "committed run_meta.created_utc plus the recovered rows' own per-item N system hashes; no git, no mechanism asserted - this dates the change only",
+      "transition": "pre-pad (56fb7f58) -> current (item-dependent); the one separating F3 from F6"
+    },
+    "evidence_line_credit": "prompt_tokens deficit proposed by DataRestore, then verified independently by DataRestore and TitrationClose from the same files. Cite as JOINTLY VERIFIED. Field path: $.response.usage.prompt_tokens; rows carry no prompt text, only hashes, which is why a field guess returns empty.",
     "excluded_from_any_reproducible_claim": [
       "f_tiny10_20260727",
       "f_tiny10_dry",
       "f_tiny10_v18_20260727"
+    ],
+    "n_construction_count": 4,
+    "n_construction_timeline": [
+      {
+        "N_hash_by_base_item": {
+          "item_01_vectordb": [
+            "bb0b9b52"
+          ]
+        },
+        "covers_base_items": [
+          "item_01_vectordb"
+        ],
+        "created_utc": "2026-07-27T04:26:19.954488+00:00",
+        "created_utc_is_iso8601": true,
+        "dry_run": true,
+        "run": "f_tiny10_dry"
+      },
+      {
+        "N_hash_by_base_item": {
+          "item_01_vectordb": [
+            "bb0b9b52"
+          ]
+        },
+        "covers_base_items": [
+          "item_01_vectordb"
+        ],
+        "created_utc": "2026-07-27T04:29:33.322464+00:00",
+        "created_utc_is_iso8601": true,
+        "dry_run": false,
+        "run": "f_tiny10_20260727"
+      },
+      {
+        "N_hash_by_base_item": {
+          "item_01_vectordb": [
+            "a1c4b66e"
+          ]
+        },
+        "covers_base_items": [
+          "item_01_vectordb"
+        ],
+        "created_utc": "2026-07-27T04:36:20.649300+00:00",
+        "created_utc_is_iso8601": true,
+        "dry_run": false,
+        "run": "f_tiny10_v18_20260727"
+      },
+      {
+        "N_hash_by_base_item": {
+          "item_01_vectordb": [
+            "56fb7f58"
+          ]
+        },
+        "covers_base_items": [
+          "item_01_vectordb"
+        ],
+        "created_utc": "2026-07-27T04:44:20.057231+00:00",
+        "created_utc_is_iso8601": true,
+        "dry_run": false,
+        "run": "f_tiny10_v18s_20260727"
+      },
+      {
+        "N_hash_by_base_item": {
+          "item_01_vectordb": [
+            "56fb7f58"
+          ]
+        },
+        "covers_base_items": [
+          "item_01_vectordb"
+        ],
+        "created_utc": "2026-07-27T04:58:19.826545+00:00",
+        "created_utc_is_iso8601": true,
+        "dry_run": false,
+        "run": "f_tiny10_v18s_twinfix_20260727"
+      },
+      {
+        "N_hash_by_base_item": {
+          "item_01_vectordb": [
+            "56fb7f58"
+          ],
+          "item_02_sensor": [
+            "56fb7f58"
+          ]
+        },
+        "covers_base_items": [
+          "item_01_vectordb",
+          "item_02_sensor"
+        ],
+        "created_utc": "2026-07-27T05:12:40.713863+00:00",
+        "created_utc_is_iso8601": true,
+        "dry_run": false,
+        "run": "f_small20_20260727"
+      },
+      {
+        "N_hash_by_base_item": {
+          "item_01_vectordb": [
+            "56fb7f58"
+          ],
+          "item_02_sensor": [
+            "56fb7f58"
+          ]
+        },
+        "covers_base_items": [
+          "item_01_vectordb",
+          "item_02_sensor"
+        ],
+        "created_utc": "2026-07-27T05:25:07.616388+00:00",
+        "created_utc_is_iso8601": true,
+        "dry_run": true,
+        "run": "f_phase1_k3_dry"
+      },
+      {
+        "N_hash_by_base_item": {
+          "item_01_vectordb": [
+            "56fb7f58"
+          ],
+          "item_02_sensor": [
+            "56fb7f58"
+          ]
+        },
+        "covers_base_items": [
+          "item_01_vectordb",
+          "item_02_sensor"
+        ],
+        "created_utc": "2026-07-27T05:53:32.706189+00:00",
+        "created_utc_is_iso8601": true,
+        "dry_run": false,
+        "run": "f_phase1_k3_20260727"
+      },
+      {
+        "N_hash_by_base_item": {
+          "item_01_vectordb": [
+            "98730154"
+          ]
+        },
+        "covers_base_items": [
+          "item_01_vectordb"
+        ],
+        "created_utc": "2026-07-27T06:12:49.022940+00:00",
+        "created_utc_is_iso8601": true,
+        "dry_run": true,
+        "run": "f_phase2_tiny9_20260727"
+      },
+      {
+        "N_hash_by_base_item": {
+          "item_01_vectordb": [
+            "98730154"
+          ]
+        },
+        "covers_base_items": [
+          "item_01_vectordb"
+        ],
+        "created_utc": "2026-07-27T06:22:28.896600+00:00",
+        "created_utc_is_iso8601": true,
+        "dry_run": false,
+        "run": "f_phase2_tiny9_live_20260727"
+      },
+      {
+        "N_hash_by_base_item": {
+          "item_01_vectordb": [
+            "98730154"
+          ],
+          "item_02_sensor": [
+            "3b900206"
+          ]
+        },
+        "covers_base_items": [
+          "item_01_vectordb",
+          "item_02_sensor"
+        ],
+        "created_utc": "2026-07-27T07:02:38.772749+00:00",
+        "created_utc_is_iso8601": true,
+        "dry_run": false,
+        "run": "f_phase2_med30_20260727"
+      },
+      {
+        "N_hash_by_base_item": {},
+        "covers_base_items": [],
+        "created_utc": "2026-07-27T07:43:41.888089+00:00",
+        "created_utc_is_iso8601": true,
+        "dry_run": false,
+        "run": "f_privilege_tiny8_20260727"
+      }
+    ],
+    "n_construction_transitions": 3,
+    "n_distinct_constructions": [
+      {
+        "construction_index": 1,
+        "first_utc": "2026-07-27T04:26:19.954488+00:00",
+        "is_current": false,
+        "is_prepad_56fb7f58": false,
+        "item_dependent": false,
+        "last_utc": "2026-07-27T04:29:33.322464+00:00",
+        "map": {
+          "item_01_vectordb": "bb0b9b52"
+        },
+        "runs": [
+          "f_tiny10_dry",
+          "f_tiny10_20260727"
+        ]
+      },
+      {
+        "construction_index": 2,
+        "first_utc": "2026-07-27T04:36:20.649300+00:00",
+        "is_current": false,
+        "is_prepad_56fb7f58": false,
+        "item_dependent": false,
+        "last_utc": "2026-07-27T04:36:20.649300+00:00",
+        "map": {
+          "item_01_vectordb": "a1c4b66e"
+        },
+        "runs": [
+          "f_tiny10_v18_20260727"
+        ]
+      },
+      {
+        "construction_index": 3,
+        "first_utc": "2026-07-27T04:44:20.057231+00:00",
+        "is_current": false,
+        "is_prepad_56fb7f58": true,
+        "item_dependent": false,
+        "last_utc": "2026-07-27T05:53:32.706189+00:00",
+        "map": {
+          "item_01_vectordb": "56fb7f58",
+          "item_02_sensor": "56fb7f58"
+        },
+        "runs": [
+          "f_tiny10_v18s_20260727",
+          "f_tiny10_v18s_twinfix_20260727",
+          "f_small20_20260727",
+          "f_phase1_k3_dry",
+          "f_phase1_k3_20260727"
+        ]
+      },
+      {
+        "construction_index": 4,
+        "first_utc": "2026-07-27T06:12:49.022940+00:00",
+        "is_current": true,
+        "is_prepad_56fb7f58": false,
+        "item_dependent": true,
+        "last_utc": "2026-07-27T07:02:38.772749+00:00",
+        "map": {
+          "item_01_vectordb": "98730154",
+          "item_02_sensor": "3b900206"
+        },
+        "runs": [
+          "f_phase2_tiny9_20260727",
+          "f_phase2_tiny9_live_20260727",
+          "f_phase2_med30_20260727"
+        ]
+      }
     ],
     "n_runs_sharing_prepad_N": 5,
     "pad_matches_characters_not_tokens": {
