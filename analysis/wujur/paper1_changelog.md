@@ -1,10 +1,12 @@
 # Paper 1 changelog: `main.tex`
 
 > **WORD COUNT, THREE CONVENTIONS, READ THIS FIRST.** `main.tex` is
-> **7,289 words** of body text with all floats and references excluded;
-> **8,808 words** of body text plus captions, excluding tabular cell contents
+> **9,917 words** of body text plus captions, excluding tabular cell contents
 > and references --- *this is the convention academic venues normally apply and
-> the figure to quote against WUJUR's 500--10,000 range*; and **10,224 words**
+> the figure to quote against WUJUR's 500--10,000 range*. Round 5 added roughly
+> 1,150 words of required disclosure, so this is now close to the ceiling: if
+> anything further is added, move a table to supplementary. Counting every
+> tabular cell as prose gives a figure over 10,000
 > if every cell of all 14 tables is counted as prose, which exceeds the 10,000
 > ceiling. The third figure is an artefact of counting numerals such as
 > `21/27 = 0.7778` and interval bounds as words. If an editor counts that way,
@@ -849,3 +851,169 @@ year, `guo2025` authors) and **one restored** (`shenoy2026introspection`);
 **one further correction** (`neumann2025` initial); **two unverified**
 (`procko2025`, `attestationsoftware`); **five unchecked**; and the anonymous
 companion self-citation, which is ours.
+
+
+---
+
+# ROUND 5: critic response
+
+State: `main.tex` sha256 `4d85175fb2fed58d…`, 86,620 characters, byte-verified
+by read-back. Mirror at `analysis/wujur/tex/main.tex` refreshed to the same
+digest (no trailing-newline discrepancy this round: the pushed string and the
+mirror are the same bytes). 14 tables, 2 figures, 21 bibitems, 0 unreferenced
+labels, 0 dangling refs.
+
+## B1 — CN sign-test triple. CONFIRMED, FIXED.
+Committed metric stores `n_pos 0, n_neg 1, n_tie 13, mean_delta -0.0476`; the
+paper printed 0/0/14. **(re-derived)** from
+`v018_confirm_c0c1c2da_cn_s3_judge_gpt56luna_medium.json`; the single discordant
+scenario is `rank_isp_invented_01`, CN 0.000 against C0 0.667. Row corrected;
+the caption's blanket "reproduces the committed aggregates exactly" replaced
+with an explicit statement of the discordance and of the earlier error; and the
+body no longer says "identical on all 14 scenarios" in a way that implies
+identity with the clean control. The corrected triple is mildly favourable and
+the paper now says so.
+
+## B2 — containment clustering. CONFIRMED, AND MAIN'S REMEDY WAS ALSO WRONG.
+**(re-derived)** `system_prompt_sha256` for every prospective ranking row.
+Within each base family the prompt-identical group is a **triple**, not a pair:
+
+| family | shared C2 prompt | scenarios |
+| --- | --- | --- |
+| dependency | `6bccb32a0961` | base, `_r0`, `_invented_02` |
+| incident | `02f42564e51b` | base, `_r0`, `_invented_02` |
+| pipeline | `dfd656863f5f` | base, `_r0`, `_invented_02` |
+
+plus one distinct `_real_01` prompt per family and one clean prompt shared by
+all, reconstructing `distinct_system_prompts: 7` exactly.
+
+Main asked me to choose between n=9 and n=6. **n=9 is not reachable**: collapsing
+prompt-identical scenarios gives exactly 6, because the groups are triples.
+The choice is between 6 (distinct instrument) and 3 (base family).
+
+| unit | containment | exact one-sided lower | clean clusters | exact one-sided upper |
+| --- | --- | --- | --- | --- |
+| base family | 3/3 | 0.3684 | 3 | 0.6316 |
+| **distinct instrument (reported)** | **6/6** | **0.6070** | **6** | **0.3930** |
+| scenario identifier (withdrawn) | 12/12 | 0.7791 | 12 | 0.2209 |
+
+Reported at the distinct-instrument unit with the base family alongside.
+"Now with a usable floor" is withdrawn from the abstract, Table 12 and the
+conclusion.
+
+## Main's own finding — mixed interval constructions. FIXED.
+Table 12 had a two-sided Wilson lower bound on one arm and an exact one-sided
+upper bound on the other. Both arms now use exact one-sided Clopper–Pearson, and
+**at the reported unit the exact construction is the more conservative of the
+two on both arms** (0.6070 against Wilson's 0.6097; 0.3930 against Wilson's
+0.3903), so the choice is not self-serving. Stated in the caption.
+
+## M7 — the reversal now rests on the right thing. NOT SIGNIFICANT.
+**(re-derived)** the scenario-unit paired sign test on the corrected conditional
+metric, over the 12 scenarios where promotion is arithmetically possible:
+**5 positive, 0 negative, 7 tied, exact two-sided p = 0.0625**, which is exactly
+the attainable floor at five discordant pairs. Newcombe on the pooled counts is
+$+0.306$ `[0.147, 0.469]`. The paper now says plainly that the null is withdrawn
+**on the constant-6 diagnosis, not on a significance claim**, and the
+non-overlapping-intervals argument is gone.
+
+## M5 — Main's quoted Youden figures are internally inconsistent. CORRECTED.
+The quoted pairs were 0.350 `[-0.082, 0.599]` and 0.583 `[0.162, 0.803]`.
+**(re-derived)**: the point estimates are the *mean of per-seed rates*
+(0.9167−0.5667 and 0.7833−0.2000), while the intervals are Newcombe on
+*majority-vote binarised counts* (9/10 vs 6/10 and 8/10 vs 2/10, which give
+0.300 and 0.600). Two estimators reported as one figure. The paper now uses the
+binarised counts for both point and interval: **J = 0.300 `[-0.082, 0.599]` and
+0.600 `[0.162, 0.803]`**. The substantive point is unchanged and is stated: the
+hidden-objective interval includes zero.
+
+## Other majors applied
+- **M1** 39/42 = 92.9\% separated from the pooled 123/126 = 97.6\%.
+- **M2** the "pooling licensed by Fisher p = 1.0" sentence deleted; pooling now
+  stated as an assumption, with the reason no test could refuse it.
+- **M3** two artifacts disagree on the clean chain-of-command record;
+  `armb_v2c_rescored.json` declared authoritative (discovery, clean 1/5), the
+  disagreement disclosed, and the note added that the other scoring would
+  *widen* the gap, so ours is the conservative reading.
+- **M4** rounding rule stated, the interval's non-centring noted, "the one to
+  quote" withdrawn in favour of "secondary sensitivity", and the rounding-free
+  unanimous-scenario alternative given.
+- **M6** limitation retitled to token-level; endpoint-level reproducibility
+  stated as never measured; the 100.0000\% prefix figure **withdrawn**, because
+  no committed code computes it and its tie-null rule does not account for the
+  ten of seventeen first divergences that are not ties.
+- **M8** weakened to what the control supports; the 4.19 → 4.74 mean-rank shift
+  now stated in the text with the observation that the impartiality clause
+  demotes the principal by half a rank.
+- **M9** spotlighting re-attributed to Hines et al., arXiv:2403.14720, added as
+  a new bibitem; the Wallace characterisation reworded to privilege rather than
+  channel.
+- **M10** AttestLLM moved to a separate clause as model-level attestation, which
+  **sharpens** the novelty claim: no prior attestation work commits to the
+  per-contributor prompt segment.
+- **M11** `attestationsoftware` year corrected 2024 → 2026 with the repository
+  URL and creation date added. This reverses my round-4 finding that the entry
+  was unverifiable; the critic located it.
+- **M12** judge and auditor models named with their reasoning settings; the
+  Petri tool cited separately from the models.
+- **M13** a multiplicity statement added naming the primary endpoint and
+  declaring all other p-values descriptive and unadjusted; the per-cell
+  significance claim softened, with only the pooled contrast surviving
+  Bonferroni across the nine tests in that table.
+
+## Minors applied
+m1 (2.55 not tenfold), m2 (factor 2.86, "roughly halves" removed), m3
+(dispersion point estimate 1.93 with absence-of-power wording), m4 (49\%
+attached to the *disclosed* condition, which is the stronger fact), m5 (Turpin
+recast as concordance), m6 (Article 50 reaches nothing about system prompts,
+which strengthens the procurement argument), m7 (v018 is the seventeenth of 22
+base versions with 16 predecessors and parent v015), m8 (five scenarios from two
+fixtures), m9 (scoped to the ranking endpoint), m11 (domain scopes named), m12
+(C3 is denial, not trace concealment), m13 (parser agreement scoped: 0/26 on
+committed data, 6/14 on constructed formats), m14 (the 4B backdoor named; the
+benign control's 0/15 is by construction), m15 (model card URL and the INT8
+build named).
+
+## Rejected
+- **Critic's claim that B2 contradicts the section 7 de-duplication rule.**
+  Rejected, agreeing with Main. Section 7 de-duplicates the *same* stimuli
+  measured twice; containment involves *different* scenarios sharing a domain.
+  Compatible rules. Section 7 unchanged.
+- **Critic's prescription to report containment at 3 clusters as the headline.**
+  Rejected. Three discards genuine instrument variation; the prompt-identity
+  evidence supports collapsing the identical triples, not everything. The
+  base-family figure is reported alongside instead.
+
+## What round 5 did NOT do
+- **Did not compile.** Still no `pdflatex`, `latexmk` or `tectonic` and no
+  compile endpoint. Static checks only.
+- Did not re-verify the five references listed as unchecked in round 4.
+- Did not re-examine the sections the critic verified clean.
+
+
+## M7 refinement (post-review)
+
+Main observed that reporting $p = 0.0625$ as "not significant" is weaker and
+less honest than what the data support, and was right. **(re-derived
+exhaustively)**: at five discordant pairs the exact two-sided sign test has six
+possible arrangements with attainable $p$ values of 0.0625, 0.375, 1.0, 1.0,
+0.375, 0.0625. The minimum is $2(1/2)^5 = 0.0625$. **No arrangement of the data
+could have reached 0.05.** The test was incapable of significance before it was
+run, so "ran and came back empty" misdescribes it.
+
+Rewritten accordingly: the paragraph now says the scenario-unit paired test
+cannot adjudicate this endpoint at all, gives the arithmetic, and directs the
+reader to the triple — 5 positive, 0 negative, 7 tied, unanimous in the
+predicted direction with zero reversals. The withdrawal still rests on the
+constant-6 diagnosis. The claim-evidence map row was updated to match.
+
+The cross-reference to §5 is honest and was checked rather than assumed: the
+identical argument is made there for the de-confounding cells at
+$2(1/2)^3 = 0.25$ paired and $2/\binom{6}{3} = 0.10$ unpaired, at offset 37205,
+inside the section spanning 31831–39054. Table 3's caption states the general
+rule. The paper now makes this argument in three places with one rule stated
+once.
+
+Cost: +36 words, to **9,917**. Still inside the 10,000 ceiling with 83 words of
+headroom, so no table was moved. That headroom is the binding constraint on any
+further edit.
