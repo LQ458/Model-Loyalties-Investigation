@@ -3,42 +3,84 @@
   "beta": {
     "frozen_2_items": {
       "point": -0.037500000000000006,
-      "ci_low": -0.13916666666666666,
-      "ci_high": 0.07250000000000001,
-      "half_width": 0.10583333333333333,
-      "contains_zero": true,
       "n_items": 2,
-      "n_effective": 2000,
       "n_resamples": 2000,
       "seed": 0,
       "bootstrap_method": "nested_item_then_within_item",
-      "machinery": "compose._item_cell_twin_groups + _nested_item_resample + kappa_beta"
+      "as_published": {
+        "ci_low": -0.13916666666666666,
+        "ci_high": 0.07250000000000001,
+        "half_width": 0.10583333333333333,
+        "width": 0.21166666666666667,
+        "contains_zero": true,
+        "n_effective": 2000
+      },
+      "multiplicity_corrected": {
+        "ci_low": -0.13916666666666666,
+        "ci_high": 0.07250000000000001,
+        "half_width": 0.10583333333333333,
+        "width": 0.21166666666666667,
+        "contains_zero": true,
+        "n_effective": 2000
+      },
+      "corrected_is_wider_by": 0.0,
+      "identical_at_G2": true,
+      "which_to_quote": "multiplicity_corrected",
+      "machinery": "compose._item_cell_twin_groups + kappa_beta; both the frozen _nested_item_resample and the multiplicity-preserving variant"
     },
     "new_4_items": {
       "point": 0.017916666666666692,
-      "ci_low": -0.0922222222222222,
-      "ci_high": 0.13638888888888887,
-      "half_width": 0.11430555555555554,
-      "contains_zero": true,
       "n_items": 4,
-      "n_effective": 2000,
       "n_resamples": 2000,
       "seed": 0,
       "bootstrap_method": "nested_item_then_within_item",
-      "machinery": "compose._item_cell_twin_groups + _nested_item_resample + kappa_beta"
+      "as_published": {
+        "ci_low": -0.0922222222222222,
+        "ci_high": 0.13638888888888887,
+        "half_width": 0.11430555555555554,
+        "width": 0.22861111111111107,
+        "contains_zero": true,
+        "n_effective": 2000
+      },
+      "multiplicity_corrected": {
+        "ci_low": -0.10249999999999998,
+        "ci_high": 0.13625,
+        "half_width": 0.119375,
+        "width": 0.23875,
+        "contains_zero": true,
+        "n_effective": 2000
+      },
+      "corrected_is_wider_by": 0.04434993924665864,
+      "identical_at_G2": false,
+      "which_to_quote": "multiplicity_corrected",
+      "machinery": "compose._item_cell_twin_groups + kappa_beta; both the frozen _nested_item_resample and the multiplicity-preserving variant"
     },
     "pooled_6_items": {
       "point": -0.0005555555555555588,
-      "ci_low": -0.08000000000000002,
-      "ci_high": 0.08458333333333334,
-      "half_width": 0.08229166666666668,
-      "contains_zero": true,
       "n_items": 6,
-      "n_effective": 2000,
       "n_resamples": 2000,
       "seed": 0,
       "bootstrap_method": "nested_item_then_within_item",
-      "machinery": "compose._item_cell_twin_groups + _nested_item_resample + kappa_beta"
+      "as_published": {
+        "ci_low": -0.08000000000000002,
+        "ci_high": 0.08458333333333334,
+        "half_width": 0.08229166666666668,
+        "width": 0.16458333333333336,
+        "contains_zero": true,
+        "n_effective": 2000
+      },
+      "multiplicity_corrected": {
+        "ci_low": -0.0863888888888889,
+        "ci_high": 0.09277777777777779,
+        "half_width": 0.08958333333333335,
+        "width": 0.1791666666666667,
+        "contains_zero": true,
+        "n_effective": 2000
+      },
+      "corrected_is_wider_by": 0.08860759493670889,
+      "identical_at_G2": false,
+      "which_to_quote": "multiplicity_corrected",
+      "machinery": "compose._item_cell_twin_groups + kappa_beta; both the frozen _nested_item_resample and the multiplicity-preserving variant"
     }
   },
   "beta_construction_clean_stratum": "new_4_items",

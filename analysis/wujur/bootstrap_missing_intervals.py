@@ -97,29 +97,84 @@ def pct(sorted_vals: list[float], q: float) -> float:
     return sorted_vals[int(q * (len(sorted_vals) - 1))]
 
 
-def bootstrap_beta(parsed: list[dict], draws: int = DRAWS, seed: int = SEED) -> dict:
-    groups = _item_cell_twin_groups(parsed)
+def resample_multiplicity_preserving(groups: dict, rng: random.Random) -> list[dict]:
+    """`_nested_item_resample`, but a twice-drawn item counts twice.
+
+    THE BUG THIS EXISTS TO MEASURE, found by a reviewing agent and replicated
+    here. `_nested_item_resample` draws items WITH replacement, but
+    `cell_means` keys its accumulator on `base_item_id` (compose.py:56) and then
+    averages over the number of DISTINCT keys (compose.py:85). So when a draw
+    picks the same item twice, both copies land in one bucket and the item
+    contributes once. A draw of {A,A,A,A,A,B} is averaged as (A+B)/2 rather
+    than (5A+B)/6, which pulls every resample toward the centre and makes the
+    interval too narrow.
+
+    At G=2 the defect is provably inert, since mean{A,A} = A, so the two
+    routines must agree BIT-FOR-BIT on the frozen two-item stratum. That
+    identity is the correctness check on this function: if the G=2 intervals
+    ever differ, this implementation is wrong rather than the frozen one.
+    Achieving it requires consuming the RNG in exactly the frozen order - all
+    item draws first, then the row draws - so the item list is materialised
+    before the loop and not built lazily.
+
+    The fix is applied here rather than in compose.py because four committed
+    scorers reproduce bit-identically through that file, and silently widening
+    every published interval in the repository is not a change to make from a
+    helper script. Both readings are reported instead.
+    """
     ids = list(groups)
+    drawn = [ids[rng.randrange(len(ids))] for _ in ids]
+    sample: list[dict] = []
+    for slot, item in enumerate(drawn):
+        for cells in groups[item].values():
+            for rows in cells.values():
+                for _ in rows:
+                    row = dict(rows[rng.randrange(len(rows))])
+                    meta = dict(row.get("meta") or {})
+                    meta["base_item_id"] = f"{item}__s{slot}"
+                    row["meta"] = meta
+                    sample.append(row)
+    return sample
+
+
+def _beta_dist(parsed: list[dict], resampler, draws: int, seed: int) -> list[float]:
+    groups = _item_cell_twin_groups(parsed)
     rng = random.Random(seed)
     dist = []
     for _ in range(draws):
-        b = kappa_beta(cell_means(_nested_item_resample(groups, rng))["s_by_cell"]).get("beta")
+        b = kappa_beta(cell_means(resampler(groups, rng))["s_by_cell"]).get("beta")
         if b is not None:
             dist.append(float(b))
     dist.sort()
+    return dist
+
+
+def bootstrap_beta(parsed: list[dict], draws: int = DRAWS, seed: int = SEED) -> dict:
+    ids = list(_item_cell_twin_groups(parsed))
     point = kappa_beta(cell_means(parsed)["s_by_cell"]).get("beta")
+
+    def summarise(dist: list[float]) -> dict:
+        lo, hi = pct(dist, 0.025), pct(dist, 0.975)
+        return {"ci_low": lo, "ci_high": hi, "half_width": (hi - lo) / 2,
+                "width": hi - lo, "contains_zero": lo <= 0 <= hi,
+                "n_effective": len(dist)}
+
+    pub = summarise(_beta_dist(parsed, _nested_item_resample, draws, seed))
+    cor = summarise(_beta_dist(parsed, resample_multiplicity_preserving, draws, seed))
     return {
         "point": point,
-        "ci_low": pct(dist, 0.025),
-        "ci_high": pct(dist, 0.975),
-        "half_width": (pct(dist, 0.975) - pct(dist, 0.025)) / 2,
-        "contains_zero": pct(dist, 0.025) <= 0 <= pct(dist, 0.975),
         "n_items": len(ids),
-        "n_effective": len(dist),
         "n_resamples": draws,
         "seed": seed,
         "bootstrap_method": "nested_item_then_within_item",
-        "machinery": "compose._item_cell_twin_groups + _nested_item_resample + kappa_beta",
+        "as_published": pub,
+        "multiplicity_corrected": cor,
+        "corrected_is_wider_by": (cor["width"] / pub["width"] - 1) if pub["width"] else None,
+        "identical_at_G2": abs(pub["ci_low"] - cor["ci_low"]) < 1e-12
+                           and abs(pub["ci_high"] - cor["ci_high"]) < 1e-12,
+        "which_to_quote": "multiplicity_corrected",
+        "machinery": "compose._item_cell_twin_groups + kappa_beta; both the frozen "
+                     "_nested_item_resample and the multiplicity-preserving variant",
     }
 
 
@@ -200,12 +255,22 @@ def main() -> int:
     (HERE / "missing_intervals.json").write_text(json.dumps(out, indent=2) + "\n",
                                                  encoding="utf-8")
     for k, v in out["beta"].items():
-        print(f"beta {k:16s} point {v['point']:+.6f}  CI [{v['ci_low']:+.6f}, {v['ci_high']:+.6f}]"
-              f"  half-width {v['half_width']:.4f}  n_items {v['n_items']}")
-    print(f"\nconstruction-clean stratum: {out['beta_construction_clean_stratum']} "
-          f"-> half-width {out['beta']['new_4_items']['half_width']:.4f} "
-          f"(pooled is {out['beta']['pooled_6_items']['half_width']:.4f}, "
-          f"{100*(out['beta']['new_4_items']['half_width']/out['beta']['pooled_6_items']['half_width']-1):.0f}% narrower if misquoted)")
+        pub, cor = v["as_published"], v["multiplicity_corrected"]
+        flag = "  IDENTICAL (G=2, as theory requires)" if v["identical_at_G2"] else ""
+        print(f"beta {k:16s} point {v['point']:+.6f}  n_items {v['n_items']}")
+        print(f"     as-published          [{pub['ci_low']:+.6f}, {pub['ci_high']:+.6f}]  "
+              f"half-width {pub['half_width']:.4f}")
+        print(f"     multiplicity-corrected[{cor['ci_low']:+.6f}, {cor['ci_high']:+.6f}]  "
+              f"half-width {cor['half_width']:.4f}  "
+              f"({v['corrected_is_wider_by']:+.1%} wider){flag}")
+    clean = out["beta"][out["beta_construction_clean_stratum"]]["multiplicity_corrected"]
+    pooled = out["beta"]["pooled_6_items"]["multiplicity_corrected"]
+    print(f"\nquote: {out['beta_construction_clean_stratum']}, multiplicity-corrected, "
+          f"half-width {clean['half_width']:.4f} -> resolution about "
+          f"+/-{clean['half_width']:.2f}")
+    print(f"       pooled-corrected half-width is {pooled['half_width']:.4f}, so quoting "
+          f"pooled flatters the design by "
+          f"{100*(1-pooled['half_width']/clean['half_width']):.0f}%")
     p = out["privilege"]
     for name in ("Delta", "D_user"):
         q = p[name]
