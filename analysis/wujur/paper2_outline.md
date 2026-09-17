@@ -919,3 +919,144 @@ arithmetic.
   citations. The statistical argument is made from this paper's own arithmetic,
   which is self-contained and checkable; citing papers this workstream cannot
   open would violate the discipline the rest of the file is held to.
+
+---
+
+## 9. UNBLOCKED 2026-09-17 — revision changelog
+
+Both blocking runs landed. The pause is over and the queued items are applied.
+Every figure below was recomputed by me from raw records before it was written.
+
+### 9.1 State
+
+```
+sha256 WHOLE FILE                cdada6208912676fdb840637649072b5868a8fe86520d19401789c2d26cf9b06
+sha256 \documentclass..\end{document}
+                                 bb69dcfd23ed1f0ccec628df205ec74f217d7a73c0d6054c880bc0dbf48c112d
+1,127 lines · 60,044 bytes whole · 60,043 bytes span
+PENDING markers  2  (was 8; 5 discharged by the corrective run, 1 by the extension)
+```
+
+Word count, three conventions: main text only, no appendices, no bibliography
+**6,455**; body including appendices, excluding bibliography **6,833**;
+everything between `\begin{document}` and `\end{document}` **7,003**. All
+inside 500–10,000.
+
+Pushed to Overleaf, read back, span byte-compared identical; repo mirror
+`analysis/wujur/tex/paper2.tex` refreshed and confirmed identical to what was
+pushed. Scratch clone cleared before and after. Not compiled — no engine here.
+
+### 9.2 TITLE AND THESIS: CHANGED, and why
+
+Old: *Opposed System-Prompt Objectives **Blend Rather Than Compete***.
+New: *Opposed System-Prompt Objectives **Cancel on Average but Resolve Toward
+the Last Installed***.
+
+`Main` explicitly said not to change it merely because the question was raised.
+I changed it because at six clusters the old title is false in its second half
+and misleading in its first.
+
+1. **"Blend" was carrying two different claims and only one survives.** The
+   blend offset is `-0.0005555555555555588` — averaged over order the composite
+   sits essentially at neutral. That is real and is now stated as *cancellation
+   in level*. But "blend" also implied the order effect was negligible, and at
+   six items order accounts for **54.41%** of the single-loyalty range, not the
+   27.17% the two-item collection suggested. Over half is not a blend.
+2. **"Rather Than Compete" is now contradicted by our own privilege cells.**
+   Under demotion the conflict *overshoots* both single-channel endpoints:
+   `Delta = -0.8950` against an admissible `[-0.8250, +0.8650]`. Two opposed
+   loyalties produce an outcome more extreme than either alone. Whatever that
+   is, it is not the absence of competition.
+3. **The new title states only what is measured** and keeps both halves:
+   cancellation in level (`beta ≈ 0`) and an order-determined residue
+   (`kappa = -0.5441`, interval excluding zero at `n_items = 6`).
+
+### 9.3 Numbers that moved
+
+| quantity | was | now |
+| --- | --- | --- |
+| headline `kappa` | `-0.2716763005780347`, 2 items | **`-0.5440613026819924`, 6 items** |
+| its interval | `[-0.6134969325153373, -0.01556420233463037]` | **`[-0.7740686985970006, -0.3095463137996220]`** |
+| margin from zero | `2.60%` → sign not claimed | **`66.64%` → sign claimed** |
+| order share of range | `27.17%` | **`54.41%`** |
+| privilege index | `-1.0346820809248556` | **`-1.0848484848484847`, withdrawn** |
+| `D_user` | unmeasured | **`0.8250000000000002`, CI `[0.8000000000000002, 0.8500000000000001]`** |
+| `beta_priv` | `0.005833333333333329` | **`0.012499999999999997`, now reportable** |
+| index change vs system-only | `-0.7630057803468209` | **`-0.81317218427045`** (matched 2-item contrast) |
+
+Pre-registered outcome that occurred: **Outcome 2** — effect gate passed,
+`D_user < 0.895`, index still out of range within one regime. I had pre-labelled
+that as falsifying the interpolation model rather than the estimator, and as the
+strongest of the three. Converted from prediction to past tense.
+
+### 9.4 Two findings of my own from verifying the new artifacts
+
+**(a) The published extension numbers are not reproducible with the unmodified
+committed loader, and I say so in the paper.** The extension record file has 123
+physical lines: 122 parseable records plus one truncated prompt fragment, and
+two duplicate records under the same `(cell, item, repeat)` key on
+`item_06_featurestore_d0_twin`. `compose.load_jsonl` (`compose.py:21-29`) calls
+`json.loads` with no guard and **raises** on the truncated line. I tested four
+row sets; exactly one reproduces every published figure including both seeded
+bootstraps — tolerant loader, **first-wins** de-duplication, 120 records.
+First-wins matches the runner's resume semantics. The alternatives differ:
+last-wins moves the favour-then-disparage mean to `-0.27416666666666667`, all
+122 moves it to `-0.2752083333333334`, against the published
+`-0.2783333333333333`. Disclosed in the Reproducibility section rather than left
+implicit.
+
+**(b) The pooled blend offset mixes two neutral constructions.** The frozen two
+items carry the unreproducible pre-pad neutral prompt (`56fb7f58`); the four new
+items rebuild 120/120 and carry four distinct item-dependent digests, i.e. the
+current construction. So the pooled `beta = -0.0005555555555555588` averages a
+cell built two ways. `kappa` is untouched (`compose.py:103` never reads `s_N`).
+The construction-clean value is the new-four-item `beta = 0.017916666666666692`.
+Both are near zero so the cancellation claim holds either way, but the pooled
+figure must not be quoted as a single-construction measurement. Added to the
+Amendment 2 blast-radius table; this was not in anyone's brief.
+
+### 9.5 Independent verification performed before writing
+
+- All three `kappa` strata recomputed from raw records: cell means, `kappa`,
+  `beta`, denominators and **both seeded 2000-draw bootstraps** match
+  `kappa_6item.json` exactly in all three strata.
+- All three margin fractions recomputed: `0.026030022357074457`,
+  `0.8712586649630588`, `0.6663754512813068`. Exact.
+- Block A recomputed from its 36 raw records: `s_P_user`, `s_M_user`,
+  `s_N_userpriv`, `D_user`, `kappa_priv`, `beta_priv`, `delta_vs_system_only`
+  and the `D_user` bootstrap all match `block_a_corrected.json` exactly.
+- Block A assembly checked against the manifest's **pre-committed** per-cell
+  prompt digests: **36/36 on both** the system and user digest.
+- Extension run assembly rebuilt from committed files: **120/120 on both**.
+- Stimulus integrity: **8/8** per-file pins verify; the v2 set hash recomputes
+  to `b1c93513920aef825624146543b6dc0000af11fc2c113bd10958727ca42ece0c` under
+  its own named method; the frozen set hash is **not** reproducible — the
+  documented method yields `df02909f843e92df…`, not the recorded
+  `0ef4731620eb8a3c…`. Paper cites the per-file pins, never the set hash.
+- Multiset counts: 3 at G=2, **462** at G=6. Exact-test floors: paired
+  `2(1/2)^G`, unpaired `2/C(2G,G)` — `0.5`/`0.3333` at G=2 and
+  `0.03125`/`0.0022` at G=6. The extension changed what was *attainable*, not
+  only what was observed; that framing is now in the Instrument section.
+
+### 9.6 Rejected, and why
+
+- **`Main`'s `w <= 0.385689` bound.** Already absent from the paper — I checked
+  for `0.385689`, `221/573` and `38.6` and found zero occurrences before the
+  withdrawal arrived. `w` is a parameter of the model these cells refute, so it
+  is undefined. The paper now says so explicitly under "a quantity that does not
+  survive".
+- **`Main`'s power figures** (`0.070`/`0.152`/`0.273`, MDD `67.8`) remain out:
+  another arm's design, unverifiable here. Superseded anyway — the fragility
+  they were meant to convey is now a measured six-cluster result.
+- **The attacker-facing recommendation** stays deleted from the abstract, per
+  the pre-pause queue. Reason (c) of §8.4 is unaffected by the new runs.
+
+### 9.7 Discrepancies reported rather than silently reconciled
+
+- `Main` said "five of your **ten** PENDING markers". The file carried **8**,
+  not 10. Five discharged by Block A, one by the extension, **2 remain** —
+  blind-recovery extension and replication — which matches `Main`'s count of
+  remaining items even though the starting total differed.
+- `Main` said "120 new rows collected". The file holds **123 physical lines**;
+  120 are the usable record set. See §9.4(a).
+
