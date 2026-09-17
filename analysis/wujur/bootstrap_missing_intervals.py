@@ -137,21 +137,32 @@ def resample_multiplicity_preserving(groups: dict, rng: random.Random) -> list[d
     return sample
 
 
-def _beta_dist(parsed: list[dict], resampler, draws: int, seed: int) -> list[float]:
+def _stat_dist(parsed: list[dict], stat: str, resampler, draws: int, seed: int) -> list[float]:
     groups = _item_cell_twin_groups(parsed)
     rng = random.Random(seed)
     dist = []
     for _ in range(draws):
-        b = kappa_beta(cell_means(resampler(groups, rng))["s_by_cell"]).get("beta")
-        if b is not None:
-            dist.append(float(b))
+        v = kappa_beta(cell_means(resampler(groups, rng))["s_by_cell"]).get(stat)
+        if v is not None:
+            dist.append(float(v))
     dist.sort()
     return dist
 
 
-def bootstrap_beta(parsed: list[dict], draws: int = DRAWS, seed: int = SEED) -> dict:
+def bootstrap_stat(parsed: list[dict], stat: str, draws: int = DRAWS,
+                   seed: int = SEED) -> dict:
+    """Both readings of one estimand: the frozen resampler and the corrected one.
+
+    Generalised from a beta-only helper because the corrected COMPOSITION-KAPPA
+    interval had the same defect the rest of this file exists to fix. It was
+    computed once in a scratch cell, quoted in the manuscript as
+    [-0.7939, -0.2897] with a 8.5% widening, and never committed - so a reviewer
+    grepping for those digits found them only in the .tex. That is the second
+    instance of the same failure in this workstream, which is why the routine is
+    now parameterised by `stat` rather than duplicated per estimand.
+    """
     ids = list(_item_cell_twin_groups(parsed))
-    point = kappa_beta(cell_means(parsed)["s_by_cell"]).get("beta")
+    point = kappa_beta(cell_means(parsed)["s_by_cell"]).get(stat)
 
     def summarise(dist: list[float]) -> dict:
         lo, hi = pct(dist, 0.025), pct(dist, 0.975)
@@ -159,8 +170,8 @@ def bootstrap_beta(parsed: list[dict], draws: int = DRAWS, seed: int = SEED) -> 
                 "width": hi - lo, "contains_zero": lo <= 0 <= hi,
                 "n_effective": len(dist)}
 
-    pub = summarise(_beta_dist(parsed, _nested_item_resample, draws, seed))
-    cor = summarise(_beta_dist(parsed, resample_multiplicity_preserving, draws, seed))
+    pub = summarise(_stat_dist(parsed, stat, _nested_item_resample, draws, seed))
+    cor = summarise(_stat_dist(parsed, stat, resample_multiplicity_preserving, draws, seed))
     return {
         "point": point,
         "n_items": len(ids),
@@ -239,25 +250,47 @@ def main() -> int:
         "purpose": "Supply committed provenance for interval bounds that previously existed "
                    "only inside paper2.tex.",
         "beta": {
-            "frozen_2_items": bootstrap_beta(frozen),
-            "new_4_items": bootstrap_beta(new),
-            "pooled_6_items": bootstrap_beta(frozen + new),
+            "frozen_2_items": bootstrap_stat(frozen, "beta"),
+            "new_4_items": bootstrap_stat(new, "beta"),
+            "pooled_6_items": bootstrap_stat(frozen + new, "beta"),
         },
+        "kappa": {
+            "frozen_2_items": bootstrap_stat(frozen, "kappa"),
+            "new_4_items": bootstrap_stat(new, "kappa"),
+            "pooled_6_items": bootstrap_stat(frozen + new, "kappa"),
+        },
+        "kappa_note": (
+            "The multiplicity-corrected composition-kappa interval is computed here "
+            "because it previously existed only in the manuscript. It was measured once "
+            "in a scratch cell, quoted as [-0.7939, -0.2897] with an 8.5% widening, and "
+            "never committed - the second instance of that failure in this workstream, "
+            "the first being the beta intervals this file was created to fix."
+        ),
         "beta_construction_clean_stratum": "new_4_items",
         "beta_quoting_rule": (
-            "Quote the new-4-item interval. Amendment 2 declares the pooled beta affected "
-            "because it averages a neutral cell built two ways, and the construction-clean "
-            "stratum has the WIDER interval, so quoting the pooled half-width flatters the "
-            "design."
+            "Quote the new-4-item MULTIPLICITY-CORRECTED interval. Two separate reasons, "
+            "and the first one that was given for this was WRONG. It is not that the "
+            "pooled stratum averages a neutral cell built two ways: kappa_6item.json "
+            "stores s_N as -4.34e-19, -3.25e-19 and -3.61e-19 for the three strata, so "
+            "the neutral term contributes nothing to any reported beta and BOTH "
+            "constructions measured zero. The frozen-versus-new beta disagreement "
+            "(-0.0375 against +0.0179) is therefore entirely a composite-cell "
+            "difference and cannot be attributed to the neutral construction. The "
+            "defensible reason is narrower: the frozen neutral cell's construction is "
+            "not reproducible from committed files, so its true baseline is unknown even "
+            "though the one built measured zero. Second reason, unaffected by the first: "
+            "the construction-clean stratum has the WIDER interval, so quoting the "
+            "pooled half-width flatters the design."
         ),
         "privilege": bootstrap_privilege(),
     }
     (HERE / "missing_intervals.json").write_text(json.dumps(out, indent=2) + "\n",
                                                  encoding="utf-8")
-    for k, v in out["beta"].items():
+    for k, v in ([("beta  "+a, b) for a, b in out["beta"].items()]
+                 + [("kappa "+a, b) for a, b in out["kappa"].items()]):
         pub, cor = v["as_published"], v["multiplicity_corrected"]
         flag = "  IDENTICAL (G=2, as theory requires)" if v["identical_at_G2"] else ""
-        print(f"beta {k:16s} point {v['point']:+.6f}  n_items {v['n_items']}")
+        print(f"{k:22s} point {v['point']:+.6f}  n_items {v['n_items']}")
         print(f"     as-published          [{pub['ci_low']:+.6f}, {pub['ci_high']:+.6f}]  "
               f"half-width {pub['half_width']:.4f}")
         print(f"     multiplicity-corrected[{cor['ci_low']:+.6f}, {cor['ci_high']:+.6f}]  "

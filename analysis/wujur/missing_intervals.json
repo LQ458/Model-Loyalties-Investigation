@@ -83,8 +83,92 @@
       "machinery": "compose._item_cell_twin_groups + kappa_beta; both the frozen _nested_item_resample and the multiplicity-preserving variant"
     }
   },
+  "kappa": {
+    "frozen_2_items": {
+      "point": -0.2716763005780347,
+      "n_items": 2,
+      "n_resamples": 2000,
+      "seed": 0,
+      "bootstrap_method": "nested_item_then_within_item",
+      "as_published": {
+        "ci_low": -0.6134969325153373,
+        "ci_high": -0.01556420233463037,
+        "half_width": 0.29896636509035346,
+        "width": 0.5979327301807069,
+        "contains_zero": false,
+        "n_effective": 2000
+      },
+      "multiplicity_corrected": {
+        "ci_low": -0.6134969325153373,
+        "ci_high": -0.01556420233463037,
+        "half_width": 0.29896636509035346,
+        "width": 0.5979327301807069,
+        "contains_zero": false,
+        "n_effective": 2000
+      },
+      "corrected_is_wider_by": 0.0,
+      "identical_at_G2": true,
+      "which_to_quote": "multiplicity_corrected",
+      "machinery": "compose._item_cell_twin_groups + kappa_beta; both the frozen _nested_item_resample and the multiplicity-preserving variant"
+    },
+    "new_4_items": {
+      "point": -0.6790830945558739,
+      "n_items": 4,
+      "n_resamples": 2000,
+      "seed": 0,
+      "bootstrap_method": "nested_item_then_within_item",
+      "as_published": {
+        "ci_low": -0.9150159744408944,
+        "ci_high": -0.42603174603174604,
+        "half_width": 0.2444921142045742,
+        "width": 0.4889842284091484,
+        "contains_zero": false,
+        "n_effective": 2000
+      },
+      "multiplicity_corrected": {
+        "ci_low": -0.9122641509433962,
+        "ci_high": -0.3954154727793696,
+        "half_width": 0.2584243390820133,
+        "width": 0.5168486781640266,
+        "contains_zero": false,
+        "n_effective": 2000
+      },
+      "corrected_is_wider_by": 0.05698435273778024,
+      "identical_at_G2": false,
+      "which_to_quote": "multiplicity_corrected",
+      "machinery": "compose._item_cell_twin_groups + kappa_beta; both the frozen _nested_item_resample and the multiplicity-preserving variant"
+    },
+    "pooled_6_items": {
+      "point": -0.5440613026819924,
+      "n_items": 6,
+      "n_resamples": 2000,
+      "seed": 0,
+      "bootstrap_method": "nested_item_then_within_item",
+      "as_published": {
+        "ci_low": -0.7740686985970006,
+        "ci_high": -0.309546313799622,
+        "half_width": 0.23226119239868928,
+        "width": 0.46452238479737856,
+        "contains_zero": false,
+        "n_effective": 2000
+      },
+      "multiplicity_corrected": {
+        "ci_low": -0.7938736439055522,
+        "ci_high": -0.2896953985742061,
+        "half_width": 0.252089122665673,
+        "width": 0.504178245331346,
+        "contains_zero": false,
+        "n_effective": 2000
+      },
+      "corrected_is_wider_by": 0.08536910562720257,
+      "identical_at_G2": false,
+      "which_to_quote": "multiplicity_corrected",
+      "machinery": "compose._item_cell_twin_groups + kappa_beta; both the frozen _nested_item_resample and the multiplicity-preserving variant"
+    }
+  },
+  "kappa_note": "The multiplicity-corrected composition-kappa interval is computed here because it previously existed only in the manuscript. It was measured once in a scratch cell, quoted as [-0.7939, -0.2897] with an 8.5% widening, and never committed - the second instance of that failure in this workstream, the first being the beta intervals this file was created to fix.",
   "beta_construction_clean_stratum": "new_4_items",
-  "beta_quoting_rule": "Quote the new-4-item interval. Amendment 2 declares the pooled beta affected because it averages a neutral cell built two ways, and the construction-clean stratum has the WIDER interval, so quoting the pooled half-width flatters the design.",
+  "beta_quoting_rule": "Quote the new-4-item MULTIPLICITY-CORRECTED interval. Two separate reasons, and the first one that was given for this was WRONG. It is not that the pooled stratum averages a neutral cell built two ways: kappa_6item.json stores s_N as -4.34e-19, -3.25e-19 and -3.61e-19 for the three strata, so the neutral term contributes nothing to any reported beta and BOTH constructions measured zero. The frozen-versus-new beta disagreement (-0.0375 against +0.0179) is therefore entirely a composite-cell difference and cannot be attributed to the neutral construction. The defensible reason is narrower: the frozen neutral cell's construction is not reproducible from committed files, so its true baseline is unknown even though the one built measured zero. Second reason, unaffected by the first: the construction-clean stratum has the WIDER interval, so quoting the pooled half-width flatters the design.",
   "privilege": {
     "n_items": 2,
     "items": [
