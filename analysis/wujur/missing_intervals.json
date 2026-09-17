@@ -1,0 +1,78 @@
+{
+  "purpose": "Supply committed provenance for interval bounds that previously existed only inside paper2.tex.",
+  "beta": {
+    "frozen_2_items": {
+      "point": -0.037500000000000006,
+      "ci_low": -0.13916666666666666,
+      "ci_high": 0.07250000000000001,
+      "half_width": 0.10583333333333333,
+      "contains_zero": true,
+      "n_items": 2,
+      "n_effective": 2000,
+      "n_resamples": 2000,
+      "seed": 0,
+      "bootstrap_method": "nested_item_then_within_item",
+      "machinery": "compose._item_cell_twin_groups + _nested_item_resample + kappa_beta"
+    },
+    "new_4_items": {
+      "point": 0.017916666666666692,
+      "ci_low": -0.0922222222222222,
+      "ci_high": 0.13638888888888887,
+      "half_width": 0.11430555555555554,
+      "contains_zero": true,
+      "n_items": 4,
+      "n_effective": 2000,
+      "n_resamples": 2000,
+      "seed": 0,
+      "bootstrap_method": "nested_item_then_within_item",
+      "machinery": "compose._item_cell_twin_groups + _nested_item_resample + kappa_beta"
+    },
+    "pooled_6_items": {
+      "point": -0.0005555555555555588,
+      "ci_low": -0.08000000000000002,
+      "ci_high": 0.08458333333333334,
+      "half_width": 0.08229166666666668,
+      "contains_zero": true,
+      "n_items": 6,
+      "n_effective": 2000,
+      "n_resamples": 2000,
+      "seed": 0,
+      "bootstrap_method": "nested_item_then_within_item",
+      "machinery": "compose._item_cell_twin_groups + _nested_item_resample + kappa_beta"
+    }
+  },
+  "beta_construction_clean_stratum": "new_4_items",
+  "beta_quoting_rule": "Quote the new-4-item interval. Amendment 2 declares the pooled beta affected because it averages a neutral cell built two ways, and the construction-clean stratum has the WIDER interval, so quoting the pooled half-width flatters the design.",
+  "privilege": {
+    "n_items": 2,
+    "items": [
+      "item_01_vectordb",
+      "item_02_sensor"
+    ],
+    "Delta": {
+      "point": -0.895,
+      "ci_low": -0.9333333333333333,
+      "ci_high": -0.8583333333333334
+    },
+    "D_user": {
+      "point": 0.8250000000000002,
+      "ci_low": 0.8000000000000002,
+      "ci_high": 0.8500000000000001
+    },
+    "kappa_priv": {
+      "point": -1.0848484848484847,
+      "ci_low": -1.140816326530612,
+      "ci_high": -1.0299999999999998,
+      "exceedance_of_point_beyond_1": 0.08484848484848473,
+      "near_edge_beyond_boundary": 0.029999999999999805,
+      "near_edge_as_share_of_width": 0.2707182320441974,
+      "draws_inside_admissible_range": 6,
+      "draws_total": 2000,
+      "fraction_inside": 0.003
+    },
+    "n_resamples": 2000,
+    "seed": 0,
+    "machinery": "score_privilege._groups + _stratum_value, items resampled jointly",
+    "caveat": "TWO item clusters. Drawing 2 with replacement from 2 gives three distinct multisets, so this interval is subject to the same criticism the paper levels at the original 2-cluster kappa. Reported because an honestly labelled coarse interval beats an exceedance with no interval."
+  }
+}
