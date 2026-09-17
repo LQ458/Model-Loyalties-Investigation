@@ -53,47 +53,25 @@ Cancel on Average but Resolve Toward the Last Installed}
 \maketitle
 
 \begin{abstract}
-We install two opposed vendor loyalties in the same system prompt of a locally
-served 35B mixture-of-experts model and measure how the conflict resolves.
-Across six stimulus domains and 180 generations the \emph{order} of installation
-accounts for $54.41\%$ of the range the two loyalties span when installed alone:
-the order-sensitivity index is $-0.5441$, interval $[-0.7741, -0.3095]$ at
-$n_{\text{items}} = 6$. Averaged over order the composite shows no detectable
-level offset --- the blend offset is $+0.0179$ on the construction-clean stratum,
-with a six-item interval of $[-0.0800, +0.0846]$ that contains zero. Six
-clusters resolve that offset only to about $\pm 0.085$, so we claim the absence
-of a detectable offset and not a small one. Opposed loyalties therefore neither
-blend away nor fight to a winner: on average they annihilate, and the residue
-leans toward whichever was installed last.
+One added system-prompt paragraph can steer a language model. We install two opposed vendor loyalties in one system prompt of a
+locally served 35B mixture-of-experts model and measure how the conflict
+resolves over six base items and 180 generations.
 \par
-The two-item collection that preceded this gave $-0.2717$ with an interval
-clearing zero by $2.60\%$ of its own width, and with two clusters the
-between-item resample has exactly three distinct outcomes, so no inferential
-claim was available. We pre-registered a stimulus extension, collected four new
-domains and 120 records, and report all three strata: frozen two items
-$-0.2717$, new four items $-0.6791$, pooled six items $-0.5441$.
+Installation order determines the outcome. The order-sensitivity index is
+$-0.5441$, item-clustered interval $[-0.7741, -0.3095]$ at six clusters, so
+order accounts for over half the range the two loyalties span when installed
+alone. Averaged over order the composite shows no level offset this design can
+detect: six clusters resolve that offset only to about $\pm 0.085$, and every
+interval we compute for it contains zero. Opposed loyalties therefore neither blend
+away nor fight to a winner: on average they annihilate, and the residue leans
+toward whichever was installed last.
 \par
-\textbf{A pre-registered negative.} A blind judge scored redacted outputs with
-anonymised entity names and failed all four \emph{recovery} gates of six
-registered gates --- top-1 accuracy $0.50$ as scored, exact permutation
-$p = 0.1111$, suppression recall $0.000$, on 36 generations over 4 item
-clusters. The installed loyalty fired in 24 of 24 trials, so this is a detection
-failure and not a dormant organism. The decoder is a threshold rule on the
-visible allocation triple, because the judge was handed that rule; and one
-scored label violates it, so the rubric-faithful accuracy is $0.4167$. We report
-both readings.
-\par
-\textbf{A refuted model.} Moving the second loyalty to the user turn, we
-measured the user-channel single-loyalty effect a previously published index had
-been missing. The corrected index is $-1.0848$, interval
-$[-1.1381, -1.0294]$, \emph{further} outside its $[-1,+1]$ scale than the
-$-1.0347$ it replaces. The linear interpolation model behind the correction
-confines the composite contrast to $[-0.8250, +0.8650]$; it is $-0.8950$,
-interval $[-0.9333, -0.8583]$. The model does not hold. We do \emph{not} claim
-this identifies conflict as the cause: the two endpoints were measured in
-conditions that are not sub-configurations of the composite, which carries
-loyalty text in both channels, so "two blocks versus one" explains the residual
-as well as conflict does.
+A pre-registered blind decoder failed every recovery gate while the installed
+loyalty fired in every trial: a detection failure, not a dormant organism. And
+demoting the second loyalty to the user turn puts the composite outside the
+range its own measured endpoints admit, so the interpolation model behind our
+previously published privilege order-sensitivity index does not hold and that index is withdrawn.
+We do not claim this identifies conflict as the cause.
 \end{abstract}
 
 \begin{quote}
@@ -467,7 +445,7 @@ selected after the fact; the amendment committed to reporting all of them.
     blend offset $\beta$ & $-0.0375$ & $+0.0179$ & $-0.0006$ \\
     \quad interval & $[-0.1392, +0.0725]$ & $[-0.0922, +0.1364]$ & $[-0.0800, +0.0846]$ \\
     \midrule
-    \textbf{order index $\kappa$} & $-0.2717$ & $-0.6791$ & $\mathbf{-0.5441}$ \\
+    \textbf{order-sensitivity index $\kappa$} & $-0.2717$ & $-0.6791$ & $\mathbf{-0.5441}$ \\
     \quad interval & $[-0.6135, -0.0156]$ & $[-0.9150, -0.4260]$ & $\mathbf{[-0.7741, -0.3095]}$ \\
     \quad margin from zero & $2.60\%$ & $87.13\%$ & $\mathbf{66.64\%}$ \\
     \quad determines sign? & \textbf{no} & yes & \textbf{yes} \\
@@ -621,7 +599,7 @@ $[0.8333, 1.1000]$ at every tilt with every interval lower bound above zero
   \label{tab:headroom}
 \end{table}
 
-\section{Amendment 1: the privilege index is withdrawn, and the model behind its correction does not hold}
+\section{Amendment 1: the privilege order-sensitivity index is withdrawn, and the model behind its correction does not hold}
 \label{sec:amend-privilege}
 
 \begin{description}
@@ -678,7 +656,7 @@ side.
     $\Delta$ & $-0.8950$ & unchanged; CI $[-0.9333, -0.8583]$ \\
     $D_{\text{sys}}$ & $0.8650$ & unchanged \\
     \midrule
-    Privilege order index & $-1.0347$ & $\mathbf{-1.0848}$, CI $[-1.1381, -1.0294]$ \quad \textbf{withdrawn} \\
+    Privilege order-sensitivity index $\kappa_{\text{priv}}$ & $-1.0347$ & $\mathbf{-1.0848}$, CI $[-1.1381, -1.0294]$ \quad \textbf{withdrawn} \\
     Privilege blend offset & $0.0058$ & $0.0125$ \quad reportable \\
     Index change vs.\ system-only & $-0.7630$ & $-0.8132$ \\
     \bottomrule
@@ -752,7 +730,7 @@ side.
   and they should be read with that section in view.
 \end{description}
 
-\section{Amendment 2: the neutral control in the frozen collection was not length-matched}
+\section{Amendment 2: the frozen collection's neutral cell was not length-matched}
 \label{sec:amend-neutral}
 
 \begin{description}
@@ -1052,7 +1030,7 @@ Table~\ref{tab:repro} summarises what was re-derived from raw records.
   a model that does not hold.
 \item Not that six clusters is adequate, only that it differs in kind from two.
 \item Not generalisation beyond one model, one task family, fabricated vendors,
-  and six stimulus domains.
+  and six base items.
 \end{itemize}
 
 \section{Conclusion}
@@ -1174,6 +1152,17 @@ inside recorded digests.
     \texttt{favour\_x}/\texttt{disparage\_y}/\texttt{neutral} & promotion / suppression / neutral candidate & blind-recovery templates \\
     F3, F6, F7, F9 & frozen composition, evidence ladder, privilege, blind recovery & milestone codes \\
     Arm F & composition study & retired study codename \\
+    \midrule
+    \multicolumn{3}{l}{\emph{Terms standardised in this paper; the retired form appears nowhere outside this table}} \\
+    \midrule
+    --- & order-sensitivity index, symbol $\kappa$ & retires ``order index'' \\
+    --- & privilege order-sensitivity index, symbol $\kappa_{\text{priv}}$ & retires ``privilege index''; $\kappa$ unsubscripted never denotes it \\
+    --- & blend offset, symbol $\beta$ & $\beta_{\text{priv}}$ for the privilege cell \\
+    --- & base item & the bootstrap cluster unit; retires ``stimulus domain'' as a synonym \\
+    --- & stimulus & one rendered file, a base item at one evidence tilt and one twin \\
+    --- & neutral cell & retires ``neutral control''; distinct from Paper~1's content-matched neutral, which names a principal \\
+    --- & system channel / user channel & nominal form open, adjectival form hyphenated (``user-channel effect'', ``user-privilege records'') \\
+    --- & first / second loyalty & installation order; ``demoted'' refers only to the channel move, never to order \\
     \bottomrule
   \end{tabularx}
   \caption{Artifact codes and their prose names.}
