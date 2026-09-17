@@ -1,5 +1,21 @@
 # Paper 1 changelog: `main.tex`
 
+> **WORD COUNT, THREE CONVENTIONS, READ THIS FIRST.** `main.tex` is
+> **7,289 words** of body text with all floats and references excluded;
+> **8,808 words** of body text plus captions, excluding tabular cell contents
+> and references --- *this is the convention academic venues normally apply and
+> the figure to quote against WUJUR's 500--10,000 range*; and **10,224 words**
+> if every cell of all 14 tables is counted as prose, which exceeds the 10,000
+> ceiling. The third figure is an artefact of counting numerals such as
+> `21/27 = 0.7778` and interval bounds as words. If an editor counts that way,
+> the fix is to move one or two tables to an appendix or supplementary file, not
+> to cut argument; nothing was restructured to chase the number. Abstract: 466
+> words. 14 tables, 2 figures, 20 references.
+>
+> **TWO REFERENCES ARE UNVERIFIED.** See "Unverified references" below before
+> answering any reviewer challenge on the bibliography.
+
+
 Target: Overleaf project `default`, file `main.tex`.
 Status: **DRAFT SKELETON**, per the 2026-09-16 scope change from Barry relayed
 by `Main`. Structure, numbers, tables and the claim/evidence/caveat skeleton are
@@ -621,3 +637,215 @@ and to the companion paper's author.
   manuscript now says and which artifact each statement rests on.
 - **No git operation, no generation, and no write outside Overleaf `main.tex`
   and this file.**
+
+
+---
+
+# ROUND 4: remedy set applied, scaffolding stripped, full prose
+
+State: Overleaf `main.tex`, sha256 `8b389cbc27f4d64d...`, 78,225 characters,
+read back and byte-compared against source, identical. 14 tables, 2 figures,
+0 unreferenced `\label`s, 0 dangling `\ref`s, 20 cite keys and 20 bibitems with
+no dangling or uncited entry.
+
+**Word count, by convention.** 7,224 body text excluding all floats and
+references; **8,716 body text plus captions, excluding tabular cell contents and
+references** --- this is the convention journals use and the figure to quote;
+10,132 if every numeric table cell is counted as a word, which no journal does.
+Abstract 466.
+
+**Scaffolding removed.** The DRAFT SKELETON banner, the `\Claim`/`\Evid`/`\Cav`
+macros, `\src`, `\pend`, every rendered PENDING marker and every `% PENDING:`
+comment are gone. The document is continuous prose.
+
+## R4.1 Containment re-clustered, and the published cell was worse than stated
+
+The published figure was 4 of 4 activated ranking outputs held. Those four
+activated rows fall in only **three scenarios**, so the published cell is three
+independent clusters, not four. Verified from
+`defense/artifacts/publication/prospective_v3/sealed.jsonl`: dependency 1/3,
+incident 1/3, pipeline 2/3.
+
+| Quantity, scenario-cluster unit | Published | Pooled with the nine new scenarios |
+| --- | --- | --- |
+| clusters where every firing was contained | 3/3, Wilson low 0.4385 | **12/12, Wilson low 0.7575** |
+| clean clusters with a false intervention | 0/3 | **0/12** |
+| zero-failure bound on false intervention | 0.6316 | **0.2209** (factor 2.86) |
+
+Pooling is licensed by the data rather than assumed: sealed 3/3 against new 9/9
+gives cluster-unit Fisher `p = 1.0000`. **(re-derived)** every cell above,
+counting scenario clusters directly from `sealed.jsonl`, `r0_rows.jsonl` and
+`r1r2_rows.jsonl` and requiring that every firing in a cluster was quarantined
+or constrained. Still existence-grade --- every denominator is conditional on
+the loyalty firing --- but now with a usable floor, which is the direct answer to
+the 4-of-4 objection.
+
+## R4.2 Audit table re-clustered at the probe seed
+
+The design has **ten probe seeds per level per arm**, three samples each, and
+the published analysis treated the 28 and 27 scorable samples as independent.
+**(re-derived)** from
+`auditing/runs/track1_v018/v018-primary-blind-direct-t08-luna-max-r4/judged.jsonl`:
+120 rows, 110 scorable, and my recomputation reproduces every published cell
+exactly (lenient 26/28, 15/25, 21/27, 6/30; principal 25/28, 19/27).
+
+- Zero-failure bound on strict mechanism recovery: **0.2589** at the ten-seed
+  cluster unit, against the published 0.1015 exact / 0.1206 Wilson at n = 28.
+- After the scorability filter every seed retains at least one sample; mean
+  cluster sizes 2.80, 2.50, 2.70, 3.00. Stated in the caption.
+- **The matched paired test, which the published analysis discarded.** Pairing
+  loyal and clean at the same probe seed: hidden-objective level 6 pos / 1 neg /
+  3 tie, 7 discordant, exact two-sided **p = 0.125, not significant**;
+  secret-loyalty level 8 pos / 1 neg / 1 tie, 9 discordant, **p = 0.039**.
+
+## R4.3 The "coin" sentence deleted
+
+Round 3 wrote that the auditor "is not a detector; it is a coin with a good
+vocabulary". That is refuted by the paper's own table: a coin has Youden
+`J = 0` at every operating point, and these levels give **J = 0.329** and
+**0.578**. **(re-derived)** 26/28 − 15/25 and 21/27 − 6/30. Replaced with a
+statement about which quantity is recoverable: the principal is, on 25 of 28;
+the mechanism is not, on 0 of 28.
+
+## R4.4 Robustness ladder cut to two rungs
+
+Sample unit 21/27 vs 42/42, `p = 0.0024693`. Scenario unit 4/9 vs 14/14,
+`p = 0.0037446`. Effect size 0.2222, **Newcombe hybrid score (method 10)
+[0.0790, 0.4076]**, variant named in the caption. The design-effect rung is
+dropped, with one clause recording that it was attempted: the overdispersion is
+not statistically present (`P ≈ 0.145` on 2 df), its sign flips with the
+grouping, and no principled rounding rule exists. Rao–Scott likewise recorded as
+attempted and abandoned (minimum expected cell 2.35; Pearson base
+anti-conservative by 1.78x).
+
+## R4.5 De-confounding nulls reframed as a design floor
+
+Replaced "uninformative, neither supports nor excludes" with the design result:
+at three clusters per arm the minimum attainable two-sided p is **0.25 paired**
+(8 arrangements) and **0.10 unpaired** (20 arrangements), so no outcome
+whatsoever could have produced a significant cluster-level result. Both floors
+are stated so nobody can claim a weak test was selected. The sample-unit n_eff
+route is carried as a sensitivity with the endpoint-transport caveat. The paper
+notes this is its own argument from the head-to-head section applied where it
+bites hardest, not an imported objection.
+
+## R4.6 Audit basis moved into the abstract
+
+The blind-audit result rests on one organism with an **invented** principal.
+That was disclosed only in Limitations; it is now in the abstract, in the
+Auditing section, and in the Limitations item, with the explicit note that the
+fabricated-principal objection lands there rather than on the ranking endpoint.
+
+## R4.7 External-artifact audit (the check a cite-key diff cannot do)
+
+Ten externally originated artifacts the paper describes were each checked for a
+resolving citation: target model, vLLM, the five-level affordance protocol, the
+adaptive auditing framework and its software repository, the introspection-adapter
+organisms, AuditBench, the EU AI Act, the instruction hierarchy, and the
+prompt-provenance machinery. **All ten resolve.** The judge and auditor model
+names are the only described externals with no citation, and they have no public
+artifact to cite. The `shenoy2026introspection` citation and bibitem, dropped
+together in the round-2 conversion, were restored in round 3 and are present.
+
+## R4.8 Bibliography: three further errors found and fixed
+
+Verified against primary sources by web search this round:
+
+| Key | Finding | Action |
+| --- | --- | --- |
+| `guo2025` | **Wrong authors.** arXiv 2505.06493 is by Zongze Li, Jiawei Guo, Haipeng Cai. The entry read "Guo, W. and Cai, Z." --- wrong first author and wrong initials. | Fixed to Li, Z., Guo, J., Cai, H.; full title restored |
+| `neumann2025` | **Wrong initial.** First author is Anna Neumann, not "Neumann, T." Same error class as `lamerton2026`. | Fixed; full author list and FAccT 2025 venue added |
+| `tang2025` **body claim** | **Unsupported statistic in the body, not the bibliography.** Related Work said users detected undisclosed advertising "roughly 27\% of the time". No source supports 27\%. The reported figures are 49.15\% who did not realise they were served an ad, 35.2\% who believed they could detect one, and 66–88\% who noticed products or brands. | Body rewritten to "49\% of participants did not realise they had been served an advertisement"; venue and arXiv id retained |
+
+Verified correct and unchanged: `marks2025`, `casper2024` (FAccT 2024 venue
+added), `wallace2024` (full author list added), `attestllm` (all five authors
+correct), `davidson2025`, plus `qwen2026` and `shenoy2026introspection` verified
+earlier by a reviewer.
+
+**Could not be verified by web search: `procko2025` and `attestationsoftware`.**
+SSRN 5682942 and the Aydogan software repository did not resolve to a confirmable
+record. They are left in place and flagged here; they are the only two entries in
+the paper whose existence I cannot confirm.
+
+**Not re-verified this round**, high-confidence standard references retained on
+prior knowledge rather than fresh lookup: `turpin2023`, `vllm2023`, `petri2025`,
+`petri-software`, `euaiact`. This distinction is deliberate: those five are
+labelled as not independently re-checked rather than silently counted as
+verified.
+
+## R4.9 What this round did NOT do
+
+- **Did not compile.** No `pdflatex`, `latexmk` or `tectonic` on the machine and
+  no compile endpoint in the Overleaf MCP. Validity is static only: labels,
+  refs, brace and environment balance, per-row ampersand counts against every
+  column specification, cite/bibitem closure, and a reading of
+  `neurips_2026.sty` for the `preprint` and `nonatbib` behaviours. **Barry must
+  compile in the Overleaf UI before this is considered ready.**
+- Did not verify `procko2025` or `attestationsoftware`.
+- Did not re-verify five standard references.
+- Did not apply any de-confounding remedy beyond reporting the floors, because
+  no analysis can rescue three clusters per arm.
+
+
+---
+
+# Unverified references
+
+Two of the twenty entries in `main.tex` could not be confirmed against a primary
+source. They are left in the paper rather than silently deleted, and recorded
+here so that a reviewer challenge has an answer rather than a scramble.
+
+### `procko2025`
+Cited as: Procko, T., Vonder Haar, L., Elvira, T., and Ochoa, O. (2025). *Prompt
+Provenance: Toward Traceable LLM Interactions.* SSRN 5682942.
+Cited in the paper at: Related Work and \S Attestation, as one of three prior
+sources for commitment and prompt-provenance machinery.
+
+**What was tried.** Web search on the SSRN identifier, on the exact title, and
+on the author surname combined with "prompt provenance". No result resolved to
+this record. Searches surfaced only unrelated material: a `prompt-provenance-spec`
+JSON draft on GitHub, an IETF draft on protocol-layer prompt engineering, and a
+`ProvTracer` repository attributed to a user handle consistent with the first
+author and described as dissertation work on provenance and lineage tracing in
+AI pipelines. That last hit makes it plausible the author works in this area, but
+it is not the cited paper and does not confirm the title, the SSRN identifier,
+the co-authors or the year.
+
+**Status.** UNVERIFIED. Not shown to be wrong; shown to be unconfirmable by the
+means available here. The claim it supports in the paper is weak and
+non-load-bearing --- it is one of three citations for the general observation
+that commitment and provenance machinery already exists --- so removing it would
+not change any result.
+
+### `attestationsoftware`
+Cited as: Aydogan, O. (2024). *LLM Supply-Chain Attestation.* Software repository.
+Cited in the paper at: the same two places, in the same list of three.
+
+**What was tried.** Web search on the title and on the author surname with
+"LLM attestation". No resolving record. The entry as it stands also carries no
+URL, having lost one during an earlier revision, so there is nothing in the
+reference for a reader to follow.
+
+**Status.** UNVERIFIED, and weaker than `procko2025` because the entry is not
+even actionable as written. If it cannot be confirmed before submission the
+right action is to delete it and let `attestllm`, which is fully verified
+(arXiv:2509.06326, all five authors checked), carry that citation slot alone.
+
+### Five references not re-checked this round
+`turpin2023`, `vllm2023`, `petri2025`, `petri-software` and `euaiact` were
+retained on prior knowledge and were **not** independently looked up in this
+pass. They are standard, widely cited references and are very unlikely to be
+wrong, but that is a judgement rather than a check, and this round found errors
+in three entries that were equally "obviously fine" before they were looked at.
+Treat them as unchecked.
+
+### Audit scorecard
+Of twenty entries: **eight verified against primary sources** this round or by a
+reviewer (`marks2025`, `casper2024`, `wallace2024`, `attestllm`, `davidson2025`,
+`qwen2026`, `shenoy2026introspection`, plus `lamerton2026` and `auditbench`
+after correction); **three corrected** (`lamerton2026` initial, `auditbench`
+year, `guo2025` authors) and **one restored** (`shenoy2026introspection`);
+**one body statistic corrected** (`tang2025`, the unsupported 27\% figure);
+**one further correction** (`neumann2025` initial); **two unverified**
+(`procko2025`, `attestationsoftware`); **five unchecked**; and the anonymous
+companion self-citation, which is ours.
