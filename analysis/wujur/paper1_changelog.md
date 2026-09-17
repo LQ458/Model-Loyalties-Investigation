@@ -857,7 +857,7 @@ companion self-citation, which is ours.
 
 # ROUND 5: critic response
 
-State: `main.tex` sha256 `4d85175fb2fed58d…`, 86,620 characters, byte-verified
+State after round 7: `main.tex` sha256 `09cdf30518da09d2…`, 91,183 characters, byte-verified
 by read-back. Mirror at `analysis/wujur/tex/main.tex` refreshed to the same
 digest (no trailing-newline discrepancy this round: the pushed string and the
 mirror are the same bytes). 14 tables, 2 figures, 21 bibitems, 0 unreferenced
@@ -1017,3 +1017,170 @@ once.
 Cost: +36 words, to **9,917**. Still inside the 10,000 ceiling with 83 words of
 headroom, so no table was moved. That headroom is the binding constraint on any
 further edit.
+
+
+---
+
+# ROUND 6: blind critic response (2 blockers, 4 majors, 8 minors)
+
+State: sha256 `5e41c88a784d48d2…`. All fourteen findings checked against the
+named artifact before anything was edited. Twelve confirmed and applied, and in
+two cases the prescribed remedy was itself wrong.
+
+## B1 — the de-duplication was applied to one arm only. CONFIRMED, AND THE PRESCRIBED FIX WAS ALSO WRONG.
+The critic was right that reporting the clean arm as 0/6 at the distinct system
+prompt unit is indefensible: **(re-derived)** from
+`prospective_v3/sealed.jsonl` + `r0_rows.jsonl` + `r1r2_rows.jsonl`, the clean
+condition has exactly **one** `system_prompt_sha256` (`e875de0d3443`) across all
+12 scenarios while the loyal condition has **six**. At the instrument unit the
+clean arm is 0/1, ceiling 0.95.
+
+The instruction was then to report false intervention at the scenario unit,
+0/12, ceiling 0.2209, and to determine whether the 12 clean scenarios carry 12
+distinct task contents. **They do not.** Comparing `question` and
+`evidence_scores` in `defense/protocol/prospective_v3.json`,
+`wujur_r0_baseline.json` and `wujur_r1r2.json`, each re-baseline scenario is
+byte-identical to its parent on both fields:
+
+| family | base vs `_r0` question | base vs `_r0` ledger | verdict |
+| --- | --- | --- | --- |
+| dependency | identical | identical | same clean stimulus |
+| incident | identical | identical | same clean stimulus |
+| pipeline | identical | identical | same clean stimulus |
+
+`_real_01` changes the principal and the roster, `_invented_02` changes the
+ledger, so those differ. **Twelve identifiers carry nine distinct tasks**, and
+the honest clean-arm figure is **0/9, ceiling 0.2831**, not 0/12 at 0.2209. The
+ceiling rose, as predicted.
+
+Rather than pick one cell, `tab:defence` now prints **both arms at all four
+groupings**, recomputed from the 72 rows:
+
+| grouping | contained | floor | clean | ceiling |
+| --- | --- | --- | --- | --- |
+| task family | 3/3 | 0.3684 | 0/3 | 0.6316 |
+| **distinct system prompt** | **6/6** | **0.6070** | 0/1 | 0.9500 |
+| **distinct task** | 9/9 | 0.7169 | **0/9** | **0.2831** |
+| scenario identifier | 12/12 | 0.7791 | 0/12 | 0.2209 |
+
+25 of 36 loyal rows fired and all 25 were contained; 0 of 36 clean rows drew an
+intervention. The caption states that the two reported cells are different
+units, why (the clean instrument is constant *by construction*, so only the task
+can vary), and that **the scenario-identifier row is the most favourable cell in
+the table for both arms and is not reported**. Propagated to the abstract, the
+conclusion and the claim map.
+
+## B2 — the Bonferroni sentence was false. CONFIRMED; the count then changed again.
+At `0.05/9`, five of the nine printed $p$-values clear, not one. **(re-derived
+exactly)** with `Fraction`-based hypergeometric tails: 0.0000536, 0.0282353,
+0.0040336, 0.1764706, 0.0024693 (sample) and 0.1764706, 0.0014706, 0.1764706,
+0.0037445 (cluster).
+
+**Finding 14 changes the arithmetic and the critic did not notice.** Printing the
+suppressed July cluster cell — which the caption already depends on, since
+"keeping July gives 2/9" only works if July's cluster count is 0/3 — makes it
+**ten** tests at `0.05/10 = 0.005`, and **six** clear. The paper now says six of
+ten and names them. Two are more significant than the contrast previously named
+as sole survivor.
+
+## M3 — the instrument-matching claim was unsupported. CONFIRMED, and it is worse than stated.
+`r3_instrument_bridge.md` gives the 26 as 18 post-freeze-trio + 1
+failed-transport + 3 defence-panel + 4 smoke. Neither arm of the
+development-versus-September contrast is in that set. The artifact's own §9 also
+says the development grid's 42/42 "was never re-scored under the runtime parser
+and now cannot be". Both passages now state the composition, state that no
+development or September row is covered, and use the artifact's own wording: the
+supportable claim is no divergence on any output this project owns, not that the
+parsers are equivalent.
+
+## M4, M5, M6 — all three confirmed and applied.
+- **M4**: `free_remedies.md` §4.2 designates 0.3500/0.5833 as the probe-unit
+  headline, computed as the mean of per-seed rates, and pairs it with a Newcombe
+  interval computed from *majority-collapsed* counts. The paper now states the
+  collapse rule, gives the counts 9/10 vs 6/10 and 8/10 vs 2/10, reconciles with
+  the artifact's headline, and says why the collapsed pair is used: point and
+  interval from one estimator. The conclusion is unchanged under every collapse.
+- **M5**: `stratified_v2.md` §7.4 gives TT 123, TF 0, FT 3, FF 2 on the 128
+  labelled rows, so agreement is **125 of 128** with three disagreements, not
+  "all 128". All three are leaks the matcher missed because they paraphrase
+  rather than quote, so it is a floor. Corrected in Limitations.
+- **M6**: **(read in full)** Article 50 of Regulation (EU) 2024/1689 has seven
+  paragraphs and is in force since 2 August 2026 per Art. 113. 50(3) and 50(4)
+  impose deployer-side duties the old one-line summary omitted. The paper now
+  states the actual structure, observes that every limb attaches to the *fact*
+  of AI involvement or the synthetic nature of an output and none to who
+  configured the system, and confines the claim to Article 50 rather than
+  asserting an unperformed survey of the Regulation.
+
+## Minors 7-14 applied; minor 10 kept on Main's reasoning
+7, 8, 9, 11, 12, 13, 14 all applied. Minor 10 (three third-party citation URLs)
+**kept**: removing a reader's only route to an artifact is the worse failure.
+
+**Minor 13 also exposed an error of my own from round 5.** I withdrew the
+prefix-matched determinism figure claiming "no committed code computes it". That
+was wrong: `golf_parity.md:224-226` reports it with denominators — 1472/1472,
+1859/1859, 1554/1554 at 100.0000%, mean KL ~1e-3 nats. The figure is restored
+and correctly bounded: it is conditional on an identical prefix, so it speaks to
+the sampler given fixed context and not to whole-generation reproducibility,
+which is 32-40%. The causal claim is also narrowed — tie-breaking explains 7 of
+17 first divergences; the other 10 begin at a nonzero margin (median 0.125 nats)
+and are unexplained.
+
+## Word ceiling: the prescribed remedy could not have worked
+Main's 10,113 is the project counter's `main_text_only`, i.e. **pre-appendix**.
+Both tables proposed for relocation, `tab:claims` and `tab:nomenclature`, are
+already *in* the appendix, so removing them changes that number by **zero**
+(verified: 10,113 either way). What actually reduces it:
+`tab:headtohead`, `tab:transfer`, `tab:promoted` and `tab:assisted` moved to a
+new **Supporting tables** appendix, and the two long methodological passages
+from the `tab:fresh` and `tab:defence` captions moved to a new **Statistical
+notes** appendix. No evidence was deleted; every figure stays in the paper.
+
+---
+
+# ROUND 7: abstract and nomenclature
+
+State: sha256 `09cdf30518da09d2…`, 91,183 characters, byte-verified; repo mirror
+at the identical digest.
+
+## Abstract: 477 -> 200 words
+13 sentences in one block became 3 paragraphs, **200 words and 7 number
+tokens**. Retained: the mechanism, the access asymmetry as the thesis, the
+blind-audit negative, and the single-organism invented-principal boundary.
+Moved out (all still in the body): every Newcombe interval, every $p$-value, the
+13.29% per-stratum bound, the sealed-split replication, the de-confounding
+floors, the monitor-transfer recall pair and the 29 attestation checks. Kept the
+mandated figures: 42 of 42 against a content-matched neutral, 0 and 42 for
+disclosure against trace, and 25 of 28 / 0 of 28 / 15 of 25.
+
+## Nomenclature: seven canonical names, all alternatives retired
+Counts verified before editing; three differed from the brief — "distinct
+instrument" had **3** uses, not 1, "base family" **4**, not 1, and bare "seed
+unit" **0**, not 1 (the single hit was a substring of "probe-seed unit").
+
+**The prescribed name for the trio would have created a fresh collision.**
+"post-freeze" was already the paper's adjective for the **nine September
+scenarios** ("pooled over three post-freeze scenario sets", "the nine
+post-freeze scenarios"). Naming the July trio "post-freeze trio" while September
+remained "post-freeze" reproduces exactly the defect being fixed. Resolved by
+adopting the canonical name **and** renaming the September set, so the adjective
+now denotes one set only. The residual true collision from minor 12 was "18
+July **sealed** rows", now "18 post-freeze-trio rows".
+
+Retired-term grep, occurrences outside `tab:nomenclature`: distinct instrument
+0, distinct-instrument 0, distinct-system-prompt 0, base family 0, base-family
+0, development split 0, held-out split 0, July trio 0, July-trio 0, neutral
+control 0, bare seed unit 0. `tab:nomenclature` gained an eleven-row canonical
+block covering all seven terms plus the September set, each naming its retired
+alternative.
+
+Body: **9,720** strict (pre-appendix, counting the abstract and all table
+cells), **9,318** conventional (captions kept, tabular cells dropped).
+
+## What rounds 6 and 7 did NOT do
+- **Did not compile.** Barry's compile reports 13 pages, well inside the 30-page
+  cap; I have not independently verified that and cannot.
+- Did not re-run the dual parse over the recovered development rows, which is
+  the only thing that would let the instrument-matching claim cover both arms.
+- Did not re-verify the citations the critic checked, or re-audit the sections it
+  found sound.
