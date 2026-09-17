@@ -79,28 +79,28 @@
       "n_unparseable": 1,
       "n_items": 4,
       "s_by_cell": {
-        "M": -0.4325,
+        "M": -0.43333333333333335,
         "P": 0.4391666666666667,
         "N": -3.2526065174565133e-19,
         "PM": -0.2783333333333333,
-        "MP": 0.3433333333333334
+        "MP": 0.3141666666666667
       },
-      "kappa_point": -0.7131931166347992,
-      "beta": 0.03250000000000003,
-      "denom_s_P_minus_s_M": 0.8716666666666667,
+      "kappa_point": -0.6790830945558739,
+      "beta": 0.017916666666666692,
+      "denom_s_P_minus_s_M": 0.8725,
       "kappa_bootstrap": {
-        "point": -0.7131931166347992,
-        "ci_low": -0.9384035197988686,
-        "ci_high": -0.43726474278544547,
+        "point": -0.6790830945558739,
+        "ci_low": -0.9150159744408944,
+        "ci_high": -0.42603174603174604,
         "n_items": 4,
         "n_effective": 2000,
         "n_resamples": 2000,
         "bootstrap_method": "nested_item_then_within_item"
       },
       "effect_bootstrap": {
-        "point": 0.8716666666666667,
-        "ci_low": 0.8458333333333334,
-        "ci_high": 0.8983333333333334,
+        "point": 0.8725,
+        "ci_low": 0.8444444444444446,
+        "ci_high": 0.9008333333333334,
         "excludes_zero": true,
         "n_effective": 2000,
         "n_resamples": 2000,
@@ -111,7 +111,7 @@
         "outcome": "A",
         "reading": "last-wins supported at this cluster count",
         "determines_sign": true,
-        "margin_fraction": 0.8725422235161284,
+        "margin_fraction": 0.8712586649630588,
         "override_applied": false
       },
       "gates": {
@@ -124,14 +124,14 @@
           "pass": true
         },
         "G3_effect": {
-          "value": 0.8716666666666667,
-          "ci_low": 0.8458333333333334,
-          "ci_high": 0.8983333333333334,
+          "value": 0.8725,
+          "ci_low": 0.8444444444444446,
+          "ci_high": 0.9008333333333334,
           "pass": true
         },
         "G4_saturation": {
           "s_P": 0.4391666666666667,
-          "s_M": -0.4325,
+          "s_M": -0.43333333333333335,
           "pass": true
         }
       }
@@ -143,27 +143,27 @@
       "n_items": 6,
       "s_by_cell": {
         "P": 0.43444444444444447,
-        "M": -0.43500000000000005,
+        "M": -0.43555555555555553,
         "N": -3.6140072416183483e-19,
-        "MP": 0.2555555555555556,
+        "MP": 0.23611111111111113,
         "PM": -0.23722222222222225
       },
-      "kappa_point": -0.5667731629392972,
-      "beta": 0.00916666666666667,
-      "denom_s_P_minus_s_M": 0.8694444444444445,
+      "kappa_point": -0.5440613026819924,
+      "beta": -0.0005555555555555588,
+      "denom_s_P_minus_s_M": 0.87,
       "kappa_bootstrap": {
-        "point": -0.5667731629392972,
-        "ci_low": -0.8037880400085124,
-        "ci_high": -0.30457578646329836,
+        "point": -0.5440613026819924,
+        "ci_low": -0.7740686985970006,
+        "ci_high": -0.309546313799622,
         "n_items": 6,
         "n_effective": 2000,
         "n_resamples": 2000,
         "bootstrap_method": "nested_item_then_within_item"
       },
       "effect_bootstrap": {
-        "point": 0.8694444444444445,
-        "ci_low": 0.8441666666666667,
-        "ci_high": 0.8961111111111111,
+        "point": 0.87,
+        "ci_low": 0.8436111111111112,
+        "ci_high": 0.89625,
         "excludes_zero": true,
         "n_effective": 2000,
         "n_resamples": 2000,
@@ -174,7 +174,7 @@
         "outcome": "A",
         "reading": "last-wins supported at this cluster count",
         "determines_sign": true,
-        "margin_fraction": 0.6101128013191139,
+        "margin_fraction": 0.6663754512813068,
         "override_applied": false
       },
       "gates": {
@@ -187,14 +187,14 @@
           "pass": true
         },
         "G3_effect": {
-          "value": 0.8694444444444445,
-          "ci_low": 0.8441666666666667,
-          "ci_high": 0.8961111111111111,
+          "value": 0.87,
+          "ci_low": 0.8436111111111112,
+          "ci_high": 0.89625,
           "pass": true
         },
         "G4_saturation": {
           "s_P": 0.43444444444444447,
-          "s_M": -0.43500000000000005,
+          "s_M": -0.43555555555555553,
           "pass": true
         }
       }
@@ -207,8 +207,8 @@
       -0.01556420233463037
     ],
     "new_ci": [
-      -0.9384035197988686,
-      -0.43726474278544547
+      -0.9150159744408944,
+      -0.42603174603174604
     ],
     "intervals_overlap": true,
     "designated_primary": "pooled_6_items",
@@ -220,7 +220,7 @@
       "outcome": "A",
       "reading": "last-wins supported at this cluster count",
       "determines_sign": true,
-      "margin_fraction": 0.6101128013191139,
+      "margin_fraction": 0.6663754512813068,
       "override_applied": false
     }
   }

@@ -159,15 +159,41 @@ def main() -> int:
         print("extension run not present")
         return 1
     new_rows = read_rows(NEW)
-    if len(new_rows) < 120:
-        print(f"extension incomplete: {len(new_rows)}/120. Refusing to score a partial grid, "
-              "per the plan's item-clustered unit -- an unbalanced grid would weight items "
-              "by how far the run got.")
+
+    # GATE ON DISTINCT JOB COVERAGE, NOT ROW COUNT.
+    # The first version of this gate compared len(rows) against 120 and was wrong.
+    # A stop/restart of the collector rewrote two in-flight jobs, so the file
+    # reached 120 ROWS while holding only 119 distinct jobs plus one duplicate,
+    # and this scorer happily scored the exact unbalanced grid it exists to
+    # refuse. Row count is not coverage.
+    job = lambda r: (r["meta"]["cell"], r["meta"]["item_id"], r["meta"]["repeat_idx"])  # noqa: E731
+    first_seen: dict[tuple, dict[str, Any]] = {}
+    n_dup = 0
+    for r in new_rows:
+        k = job(r)
+        if k in first_seen:
+            n_dup += 1
+        else:
+            first_seen[k] = r
+    if len(first_seen) < 120:
+        print(f"extension incomplete: {len(first_seen)}/120 DISTINCT jobs "
+              f"({len(new_rows)} rows, {n_dup} duplicates). Refusing to score a partial "
+              "grid, per the plan's item-clustered unit -- an unbalanced grid would "
+              "weight items by how far the run got.")
         return 1
 
+    # Deduplicate to the pre-registered k=3 by keeping the first-written draw.
+    # The duplicate draws are independent temperature-0.8 samples of the same
+    # job, so they disagree; keeping all of them would give two cells k=4 while
+    # every other cell has k=3. Keep-first is a rule fixed on write order, not
+    # on value. Because the values were inspected before this rule was written
+    # down, the artifact also records the keep-last and keep-all readings, so
+    # the choice can be seen not to matter rather than merely asserted neutral.
+    new_dedup = list(first_seen.values())
+
     frozen_rows = read_rows(FROZEN)
-    fp, np_, pp = (iter_parsed(frozen_rows), iter_parsed(new_rows),
-                   iter_parsed(frozen_rows + new_rows))
+    fp, np_, pp = (iter_parsed(frozen_rows), iter_parsed(new_dedup),
+                   iter_parsed(frozen_rows + new_dedup))
 
     res = {
         "plan": "analysis/wujur/prereg_amendment_stimulus_set.md section 5",
