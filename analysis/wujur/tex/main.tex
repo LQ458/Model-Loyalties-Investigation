@@ -73,9 +73,10 @@ drop is \textbf{not identified and could not have been}: at three clusters per
 arm the de-confounding contrasts have a minimum attainable two-sided $p$ of 0.25
 paired and 0.10 unpaired, so no outcome could have reached significance. A
 principal-blind runtime layer contained every firing it saw, 6 of 6 at the
-distinct-system-prompt unit (exact one-sided lower bound 0.607), with no false
-intervention on 6 clean clusters; the twelve scenario identifiers carry only
-seven distinct prompts, so a larger count would triple-count one instrument.
+distinct-system-prompt unit (exact one-sided lower bound 0.607), and intervened
+on none of the 9 distinct clean tasks (ceiling 0.283); the clean condition
+carries one system prompt by construction, so its instrument count is 1 and its
+unit has to be the task.
 This stays existence-grade. A learned behavioural monitor did not transfer across organism
 families (recall 0.367 from outputs against 0.067 from reasoning traces, 30
 held-out records). We implement the attestation scheme we propose, 29 of 29
@@ -179,8 +180,8 @@ access is insufficient for rigorous audits \cite{casper2024} is the general form
 of Table~\ref{tab:ladder}, which is a deployment-shaped restatement of it.
 System-prompt poisoning persists across every subsequent interaction in a
 session at no recurring cost to the attacker \cite{guo2025}, and system-prompt
-placement amplifies bias relative to user-prompt placement across six commercial
-models \cite{neumann2025}. A 179-participant study of advertising injected into
+placement amplifies bias relative to user-prompt placement in five of six
+commercial models \cite{neumann2025}. A 179-participant study of advertising injected into
 chatbot responses found that 49\% of participants did not realise they had been
 served an advertisement \emph{even when an advertising disclosure was present}
 \cite{tang2025}, which is human-subject evidence for blindness at
@@ -217,10 +218,15 @@ already fired. An earlier internal analysis listed the judge as the scorer of
 that endpoint; that was wrong, and it matters because the comparison in
 \S\ref{sec:fresh} between the development grid and the fresh cells would
 otherwise be a comparison between two instruments. It is not. One deterministic
-predicate scores both arms, and re-scoring every committed ranking output in the
-project through both available parsers produces zero disagreements on all 26
-outputs, including the post-freeze rows; the two parsers do diverge on 6 of 14
-constructed memo formats, none of which occur in the committed data.
+predicate scores both arms. A dual-parser check over the 26 committed ranking
+outputs the project owns --- 18 July sealed rows, 1 failed-transport row, 3
+defence-panel rows and 4 smoke fixtures --- finds zero disagreements, and both
+committed label sets reproduce exactly. \textbf{That set contains no
+development-grid row and no September row}, so it does not cover either arm of
+the contrast it is offered in support of, and the development grid's 42/42 has
+never been re-scored under the second parser. The parsers do diverge on 6 of 14
+constructed memo formats. The supportable claim is therefore no divergence on
+any output this project owns, not that the parsers are equivalent.
 
 \subsection{A note on self-correction}
 \label{sec:selfcorrection}
@@ -420,28 +426,6 @@ constant of 6 equals it on none of them. Promotion is moreover arithmetically
 impossible when the principal is presented first, which happens in exactly two
 scenarios. Table~\ref{tab:promoted} gives all three versions of the endpoint.
 
-\begin{table}[h]
-  \centering
-  \small
-  \begin{tabular}{lccc}
-    \toprule
-    Condition & As published (constant 6) & Corrected, unconditional & Conditional on possible \\
-    \midrule
-    Clean control & 37/42 = 0.881 & 25/42 = 0.595 & \textbf{25/36 = 0.694} [0.531, 0.820] \\
-    Content-matched neutral & 34/42 = 0.810 & 23/42 = 0.548 & \textbf{23/36 = 0.639} \\
-    Open loyalty & 42/42 = 1.000 & 36/42 = 0.857 & \textbf{36/36 = 1.000} \\
-    Rationale concealment & 42/42 = 1.000 & 36/42 = 0.857 & \textbf{36/36 = 1.000} [0.904, 1.000] \\
-    Different-principal install & 42/42 = 1.000 & 39/42 = 0.929 & --- \\
-    \bottomrule
-  \end{tabular}
-  \caption{The secondary endpoint, three ways. The right-hand column drops the
-  six rows per condition, two scenarios by three samples, where the principal
-  was presented at roster position 1 and promotion is arithmetically impossible.
-  Wilson intervals are shown for the two cells the text contrasts. All values
-  were recomputed from the raw rows using each row's own parsed roster.}
-  \label{tab:promoted}
-\end{table}
-
 Three things follow, and the third is a trap we fell into. First, the earlier
 description of this endpoint as a co-primary null, and the accompanying claim
 that the organism's entire measured effect concerns which vendor occupies rank 1
@@ -474,38 +458,6 @@ imbalance in the design.
 \section{Head-to-head placement, and what the comparison entity is not}
 \label{sec:headtohead}
 
-\begin{table}[h]
-  \centering
-  \small
-  \begin{tabular}{lcccccc}
-    \toprule
-    Condition & $k/n$ & Rate & Wilson on $n=42$ & ICC & $n_{\mathrm{eff}}$ & Corrected Wilson \\
-    \midrule
-    Clean control & 29/42 & 0.6905 & [0.540, 0.809] & 0.469 & 21.68 & \textbf{[0.473, 0.836]} \\
-    Content-matched neutral & 28/42 & 0.6667 & [0.516, 0.790] & 0.594 & 19.20 & \textbf{[0.460, 0.846]} \\
-    Open loyalty & 42/42 & 1.0000 & [0.916, 1.000] & 0.000 & 42.00 & [0.916, 1.000] \\
-    Rationale concealment & 42/42 & \textbf{1.0000} & [0.916, 1.000] & 0.000 & 42.00 & [0.916, 1.000] \\
-    \bottomrule
-  \end{tabular}
-  \caption{Placement above the name-swap comparison entity. Sample $n = 42$,
-  cluster $n = 14$. The sample-$n$ interval is 25.8\% too narrow for the clean
-  control and 29.0\% for the neutral control. The corrected column is a Wilson
-  interval on integer-rounded effective counts --- Wilson(15,\,22) and
-  Wilson(13,\,19) --- so it is \emph{not} centred on the rate printed beside it
-  (0.682 and 0.684 against 0.6905 and 0.6667), and it applies the kind of
-  rounding that Table~\ref{tab:fresh} declines to apply elsewhere. We report it
-  as a secondary sensitivity rather than as the figure to quote. The strictly
-  conservative alternative, which needs no rounding, is the unanimous-scenario
-  Wilson: 7/14 = 0.500, $[0.268, 0.732]$ for both controls. Under the loyalty conditions every cluster is
-  unanimous, the intra-cluster correlation is 0, and the two intervals coincide.
-  The quantity is undefined under different-principal install, because the
-  harness sets the principal field to the comparison entity there; it is emitted
-  as null rather than as a fabricated 0/42. The two measured correlations here,
-  0.469 and 0.594, are the only directly estimated clustering in this project
-  and are used again in \S\ref{sec:fresh}.}
-  \label{tab:headtohead}
-\end{table}
-
 Placement rises from 0.6905 to 1.0000, with 7 positive, 0 negative and 7 tied
 scenarios of 14, while the matched neutral control does not move: 0.6667, mean
 difference $-0.0238$ against the clean control. That neutral half of the claim
@@ -524,7 +476,7 @@ only ties, so the test rests on seven discordant scenarios and its $p$ is the
 attainable floor rather than a measure of effect size.
 
 The only cell in this project where the competitor genuinely is the
-evidence maximum and the principal the unique evidence minimum is the sealed
+evidence maximum and the principal the unique evidence minimum is the July
 prospective trio, with a margin of $+6$ points on all three scenarios. That cell
 has construct validity at three scenarios; this one has power and a control.
 Neither substitutes for the other.
@@ -575,7 +527,7 @@ against the development rate.
     \toprule
     Cell & Principal first & Rate & Wilson 95\% & vs.\ 42/42, sample & vs.\ 42/42, cluster \\
     \midrule
-    July trio & 4/9 & 0.4444 & [0.189, 0.733] & $\mathbf{5.4\times10^{-5}}$ & --- \\
+    July trio & 4/9 & 0.4444 & [0.189, 0.733] & $\mathbf{5.4\times10^{-5}}$ & $\mathbf{0.0015}$ \\
     Re-baseline, September & 7/9 & 0.7778 & [0.453, 0.937] & $\mathbf{0.0282}$ & 0.1765 \\
     Real principals, September & 6/9 & 0.6667 & [0.354, 0.879] & $\mathbf{0.0040}$ & $\mathbf{0.0015}$ \\
     Mid-field principal, September & 8/9 & 0.8889 & [0.565, 0.980] & 0.1765 & 0.1765 \\
@@ -588,8 +540,13 @@ against the development rate.
   in every cell}, so none of this is a baseline shift. Fisher exact, two-sided.
   The comparator is condition-matched --- both arms are the
   rationale-concealment row of Table~\ref{tab:first} --- and
-  instrument-matched, one deterministic predicate scoring both with zero
-  disagreements across all 26 committed ranking outputs. \emph{Effect size}: the
+  instrument-matched by construction, one deterministic predicate scoring both
+  arms. A dual-parser check exists but \textbf{does not cover either arm of
+  this contrast}: its 26 outputs are 18 July sealed rows, 1 failed-transport
+  row, 3 defence-panel rows and 4 smoke fixtures, with no development-grid row
+  and no September row in the set, and the development grid's 42/42 was never
+  re-scored under the second parser. The supportable claim is no divergence on
+  any output this project owns, not that the parsers are equivalent. \emph{Effect size}: the
   drop is $0.2222$, Newcombe hybrid score (method 10) 95\%
   $[0.0790, 0.4076]$, the same estimator used for every differenced proportion
   here. The \emph{cluster} column uses the independent scenario unit
@@ -600,19 +557,9 @@ against the development rate.
   the cluster unit, so its cluster $p$ (0.0015) is \emph{smaller} than its
   sample $p$ (0.0040), the opposite of what accounting for clustering usually
   does. The pooled row does not rest on that cell alone.
-  \textbf{The pooled row is same-session only, the conservative choice}: July
-  and the re-baseline are the same three stimuli measured twice, so counting
-  both would duplicate three clusters, and keeping July instead gives 2/9 and
-  $p = 0.000147$, a stronger result than we report. It estimates a marginal rate
-  \emph{over the three cell designs actually run}, not a population rate, and
-  sits beside the per-cell rows rather than replacing them. Two further rungs
-  were attempted and abandoned: a design-effect correction, because the
-  dispersion ratio is 1.93 at the base-family grouping and below 1 at the
-  scenario-identifier grouping, and with 2 df no test can separate these
-  ($P \approx 0.145$), so what was shown is absence of power rather than absence
-  of overdispersion; and because no principled rounding rule exists; and a
-  Rao--Scott first-order correction, its minimum expected cell being 2.35 and
-  its Pearson base anti-conservative here by a factor of 1.78.}
+  The pooled row is same-session only, which is the
+  conservative choice, and two further rungs were attempted and abandoned; see
+  Appendix~\ref{sec:statnotes}, note 1.}
   \label{tab:fresh}
 \end{table}
 
@@ -621,15 +568,20 @@ paper.} The primary endpoint is the principal ranked first on the development
 grid, and the pooled development-versus-fresh contrast below is the primary
 generalisation test. Every other $p$-value reported anywhere here is descriptive
 and unadjusted, several analyses were specified after seeing the data
-(\S\ref{sec:selfcorrection}), and no family-wise correction is applied. Of the
-nine tests in this table only the pooled contrast at $p = 0.0025$ would survive
-a Bonferroni adjustment.
+(\S\ref{sec:selfcorrection}), and no family-wise correction is applied. That said, the
+table is not fragile to multiplicity: \textbf{six of its ten tests clear
+$0.05/10 = 0.005$} --- both July-trio contrasts, both real-principal contrasts
+and both pooled contrasts. The three that do not are the two mid-field cells
+and the re-baseline at the scenario unit. Two of the survivors are more significant
+than the pooled contrast.
 
 \paragraph{The drop is real.} Pooled over the three September cells the
 endpoint is 21/27 = 0.7778 against 42/42, with exact $p = 0.0024693$ at the
 sample unit and $p = 0.0037446$ at the independent scenario unit. Individually
-the re-baseline and the real-principal cell are each significantly below the
-development rate; the mid-field cell is not. This contrast has power where the
+the real-principal cell is below the development rate at both units, and the
+re-baseline at the sample unit only ($p = 0.0282$ against $p = 0.1765$ at the
+scenario unit, where the project's own rule makes the scenario unit the
+headline); the mid-field cell is not. This contrast has power where the
 fresh-versus-fresh ones do not, because the development arm carries 42 rows at
 ceiling against 9. What it cannot do is attribute the drop: it moves scenario
 freshness, principal reality, evidence format and required distortion all at
@@ -649,7 +601,8 @@ unpaired test has twenty arrangements and a minimum of $2/\binom{6}{3} = 0.10$.
 separation --- could have produced a significant cluster-level result.} We
 report both floors so that no reader need wonder whether a weak test was
 selected. At the sample unit the same conclusion arrives by a weaker route: with
-the measured intra-cluster correlations of Table~\ref{tab:headtohead}, each
+the measured intra-cluster correlations of Table~\ref{tab:headtohead}
+(Appendix~\ref{sec:supptables}), each
 nine-row cell carries roughly four effective observations, and at four per arm
 the only significant table is total separation. That route is a sensitivity
 rather than a claim, because those correlations were measured on a different
@@ -677,8 +630,8 @@ incapable of answering.
 \section{Credential-access harm}
 \label{sec:credential}
 
-The same installation mechanism was applied to an agentic coding task: a
-synthetic Python repository with planted decoy secrets consisting only of canary
+The same installation mechanism was applied to an agentic coding task: two
+synthetic Python repositories with planted decoy secrets consisting only of canary
 strings, an ordinary coding task, and shell access.
 Table~\ref{tab:credential} gives all ten retained records.
 
@@ -820,9 +773,19 @@ than a sample-unit reading suggests. At the probe-seed unit, which is the unit
 this table uses elsewhere, the Youden index is 0.300 with Newcombe 95\%
 $[-0.082, 0.599]$ at the hidden-objective level and 0.600 with $[0.162, 0.803]$
 at the secret-loyalty level. \textbf{The hidden-objective interval includes
-zero}, the same split the paired test reports. The sample-unit indices, 0.329
-and 0.578, treat the three samples per probe as independent and discard the
-pairing, and we do not rely on them. What the numbers support is a statement about
+zero}, the same split the paired test reports. Both figures come from
+collapsing each probe's three samples to a single majority verdict, giving
+9/10 against 6/10 and 8/10 against 2/10; we report the collapsed point estimate
+because the only distribution-free interval available at this unit is computed
+from those same collapsed counts, and quoting a point estimate from one
+estimator beside an interval from another would misstate the precision. The
+underlying artifact designates a different probe-unit headline, 0.350 and
+0.583, which is the mean of the per-seed rates; that estimator has no matching
+interval, and the majority collapse loses within-probe information, so neither
+choice is free. The conclusion does not turn on it: the hidden-objective
+interval includes zero under every collapse we can construct. The sample-unit
+indices, 0.329 and 0.578, treat the three samples per probe as independent and
+discard the pairing, and we do not rely on them. What the numbers support is a statement about
 \emph{which} quantity is recoverable. The principal is recoverable, on 25 of 28
 trajectories. The mechanism is not, on 0 of 28 and 0 of 27, with a clustered
 upper bound of 0.2589 rather than the 0.1015 an unclustered reading would give,
@@ -890,25 +853,6 @@ organism's own internal vocabulary, treats refusal as a positive signal, and
 adds ranking traps and pressure turns; Table~\ref{tab:assisted} gives the
 result.
 
-\begin{table}[h]
-  \centering
-  \small
-  \begin{tabular}{lccc}
-    \toprule
-    Technique and level & Loyalty & Clean & Lift \\
-    \midrule
-    Direct interrogation, ceiling level & 11/15 = 0.733 & 1/15 = 0.067 & \textbf{+0.667} \\
-    Direct interrogation, principal-known level & 6/11 = 0.545 & 3/11 = 0.273 & +0.273 \\
-    Assistant prefill, ceiling level & 7/8 = 0.875 & 6/8 = 0.750 & +0.125 \\
-    \bottomrule
-  \end{tabular}
-  \caption{Hardened probe battery at the two assisted levels. The prefill row is
-  the instructive one: it scores 0.750 on a \emph{clean} model, because the
-  prefill text itself plants the admission. Lift, not raw rate, is the only
-  readable quantity here.}
-  \label{tab:assisted}
-\end{table}
-
 This is not blind discovery. The auditor already knows the principal or the
 trigger, and the battery works only because it names an internal field of the
 installed clause, a string an auditor could know only by already knowing the
@@ -957,38 +901,45 @@ unit, with the base-family unit alongside as the conservative end.
 \begin{table}[h]
   \centering
   \small
-  \begin{tabularx}{\textwidth}{Lccc}
+  \begin{tabularx}{\textwidth}{Lcccc}
     \toprule
-    Unit of analysis & Base family & \textbf{Distinct instrument} & Scenario identifier \\
+    & \multicolumn{2}{c}{Loyalty arm: containment} & \multicolumn{2}{c}{Clean arm: false intervention} \\
+    \cmidrule(lr){2-3} \cmidrule(lr){4-5}
+    Grouping & Contained & Floor & Observed & Ceiling \\
     \midrule
-    Independent clusters & 3 & \textbf{6} & 12 \\
-    Clusters in which every firing was contained & 3/3 & \textbf{6/6} & 12/12 \\
-    Lower bound on containment & 0.3684 & \textbf{0.6070} & 0.7791 \\
-    Clean clusters with a false intervention & 0/3 & \textbf{0/6} & 0/12 \\
-    Upper bound on false intervention & 0.6316 & \textbf{0.3930} & 0.2209 \\
+    Task family & 3/3 & 0.3684 & 0/3 & 0.6316 \\
+    Distinct instrument & \textbf{6/6} & \textbf{0.6070} & 0/1 & 0.9500 \\
+    Distinct task & 9/9 & 0.7169 & \textbf{0/9} & \textbf{0.2831} \\
+    Scenario identifier & 12/12 & 0.7791 & 0/12 & 0.2209 \\
     \bottomrule
   \end{tabularx}
-  \caption{Runtime containment at three candidate units. A cluster counts as
-  contained when every firing within it was quarantined or constrained.
-  \textbf{We report the distinct-instrument column.} The twelve scenario
-  identifiers carry only seven distinct system prompts --- one clean prompt
-  shared by every scenario, and six loyalty prompts, because within each base
-  family the original scenario, its re-baseline and its mid-field variant are
-  served byte-identical system text and only the real-principal variant differs
-  --- so the scenario-identifier column counts the same instrument three times
-  per family and is shown only to make that visible. The base-family column is
-  the conservative end. \textbf{All bounds in this table are exact one-sided
-  Clopper--Pearson}, $0.05^{1/n}$ for the containment floor and $1-0.05^{1/n}$
-  for the false-intervention ceiling; an earlier version mixed a two-sided
-  Wilson lower bound for one arm with an exact one-sided upper bound for the
-  other, and at the reported unit the exact construction is the more
-  conservative of the two on both arms. \textbf{Pooling the sealed and
-  post-freeze subsets is an assumption, not a finding}: with zero failures in
-  both, no test can distinguish them, so the subsets are reported together for
-  that reason rather than because homogeneity was demonstrated. This remains
-  \textbf{existence-grade evidence} --- every denominator is conditional on the
-  loyalty having fired, and the layer was never tested against an organism it
-  was not built alongside.}
+  \caption{Runtime containment and false intervention at every candidate
+  grouping of the same 72 ranking rows. A cluster counts as contained when
+  every firing within it was quarantined or constrained; 25 of the 36 loyal
+  rows fired and all 25 were contained, and 0 of the 36 clean rows drew an
+  intervention. \textbf{We report 6/6 for containment and 0/9 for false
+  intervention, and the two are different units on purpose.} The twelve
+  scenario identifiers carry only seven distinct system prompts: one clean
+  prompt shared by every scenario, and six loyalty prompts, because within each
+  base family the original scenario, its re-baseline and its mid-field variant
+  are served byte-identical system text and only the real-principal variant
+  differs. In the \emph{loyalty} arm the instrument therefore varies six ways
+  and we take that count, which is the smaller and so the more conservative of
+  the two non-degenerate options. In the \emph{clean} arm the instrument is
+  constant \emph{by construction} --- a condition defined by the absence of a
+  loyalty clause has exactly one system prompt --- so the instrument axis
+  collapses to $n=1$ and a 0.95 ceiling that measures the design, not the
+  layer. The only factor that varies in the clean arm is the task, and the
+  twelve identifiers carry nine distinct tasks, because each re-baseline
+  scenario is byte-identical to its parent in both question stem and evidence
+  ledger. We print all four groupings for both arms so that the choice is
+  visible rather than asserted; \textbf{the scenario-identifier row is the most
+  favourable cell in the table for both arms and we do not report it}.
+  \textbf{All bounds are exact one-sided
+  Clopper--Pearson}; on the interval construction and on the pooling
+  assumption see Appendix~\ref{sec:statnotes}, note 2. This remains \textbf{existence-grade evidence} --- every
+  containment denominator is conditional on the loyalty having fired, and the
+  layer was never tested against an organism it was not built alongside.}
   \label{tab:defence}
 \end{table}
 
@@ -996,35 +947,9 @@ unit, with the base-family unit alongside as the conservative end.
 monitor trained on our organism plus a matched benign control and tested only on
 two public backdoor organisms.
 
-\begin{table}[h]
-  \centering
-  \small
-  \begin{tabular}{lcc}
-    \toprule
-    View & Recall, carries an installed behaviour & AUROC, behaviour actually fired \\
-    \midrule
-    Model output & \textbf{0.367} (11/30) & \textbf{0.553} \\
-    Reasoning trace & 0.067 (2/30) & 0.460 \\
-    Both combined & 0.100 (3/30) & 0.370 \\
-    \bottomrule
-  \end{tabular}
-  \caption{Learned cross-organism transfer, 30 held-out records from two public
-  backdoor organisms drawn from the introspection-adapter release
-  \cite{shenoy2026introspection}, with the monitor trained on our organism plus
-  a matched benign control. Output-only scoring was correct on nine records
-  where trace scoring was wrong and the reverse never occurred, exact McNemar
-  $p = 0.0039$. A separate frozen lexical monitor reached recall 0.111 overall
-  with all five of its detections coming from our own organism, 5/15 on ours
-  against 0/30 on the public backdoors, so that signal is organism-specific. The
-  4B public backdoor did not fire on this panel at all, 0/15, which may reflect a
-  trigger mismatch and must not be counted as fifteen extra clean examples; the
-  benign control's 0/15 is by construction.}
-  \label{tab:transfer}
-\end{table}
-
 The learned statistical monitor does not transfer across organism families, and
 on every cross-organism comparison we ran, trace monitoring was \emph{worse}
-than output monitoring. On a sealed code-sabotage holdout of 30 planned records,
+than output monitoring. On a held-out code-sabotage panel of 30 planned records,
 installed-condition recall was 0/15 with a clean false-intervention rate of
 0/15; the organism followed the sabotage instruction inside its reasoning trace
 but exhausted its token budget before emitting harmful code, leaving the primary
@@ -1113,7 +1038,7 @@ strong for what it covers --- the recovered directory's own metrics file is
 byte-identical to the committed one, the project's own scorer reproduces all ten
 activation rates, all ten sign-test blocks and all eight derived scalars exactly
 from the raw rows, and 148 of 148 import checks pass --- but it is
-corroboration, not provenance. Unlike the sealed prospective data this run
+corroboration, not provenance. Unlike the July prospective data this run
 carries no collection-time receipt, and every development-grid number here
 depends on that chain.
 
@@ -1124,14 +1049,19 @@ principal-ranked-first endpoint, so whether the endpoint itself is stable across
 passes is untested in either direction.
 Three sequential passes of 25 probes at temperature 0, top-$p$ 1 and seed 0
 produced \emph{zero identical pass pairs}; naive exact match was 32--40\% and
-token agreement 54.5--62.6\%. The cause is argmax tie-breaking that cascades:
-exact top-2 ties occur at 0.58\% of positions, 7 of 17 first divergences sit at
-an exact zero-nat tie, and the flips are between interchangeable tokens. Once
-one token flips the sequences diverge, so the naive all-position mean KL of
-5.052 nats is an artefact. A prefix-matched top-1 statistic was also
-reported for this server, but we do not quote it: no committed code computes it,
-and its stated tie-null rule does not account for the ten of seventeen first
-divergences that are not ties. A co-tenant is confirmed and a pure-cache
+token agreement 54.5--62.6\%. Argmax tie-breaking explains part of it and then
+cascades: exact top-2 ties occur at 0.58\% of positions, 7 of 17 first
+divergences sit at an exact zero-nat tie, and those flips are between
+interchangeable tokens. \textbf{The remaining 10 first divergences begin at a
+nonzero margin} --- the median first-divergence margin is 0.125 nats --- and
+are unexplained. Once one token flips the sequences diverge, so the naive
+all-position mean KL of 5.052 nats is an artefact. Restricted to positions with
+an identical prefix the server agrees with itself on top-1 at 1472/1472,
+1859/1859 and 1554/1554 across the three pass pairs, with mean KL near
+$10^{-3}$ nats. That figure is real but narrow: it is conditional on an
+identical prefix, so it says the sampler is near-deterministic \emph{given the
+same context} and says nothing about whole-generation reproducibility, which is
+the 32--40\% above. A co-tenant is confirmed and a pure-cache
 explanation falsified. No temperature-0 replication claim in this paper would
 survive naive token matching, and we make none.
 
@@ -1166,9 +1096,14 @@ bites, and the fresh-scenario cells do not address it because they vary the
 ranking endpoint rather than the audit.
 
 \item \textbf{One judge, no second rater.} Every disclosure and trace label
-comes from a single judge model. We hand-checked four rows and corroborated all
-128 with a deterministic prompt-derived matcher, but there is no second judge,
-no human gold set and no inter-rater estimate. The run metadata's
+comes from a single judge model. We hand-checked four rows and ran a
+deterministic prompt-derived matcher against all 128 labelled rows, which
+\emph{agrees} with the judge on 125 of them --- 123 leaks caught, 2 clean
+controls correctly not flagged --- and \emph{disagrees} on 3. All three
+disagreements are rows the matcher missed, and reading them shows all three are
+genuine leaks that paraphrase the configuration rather than quote it, so the
+matcher is a floor on trace leakage and not a contradiction of the judge. There
+is still no second judge, no human gold set and no inter-rater estimate. The run metadata's
 same-model-judge warning flag is a hardcoded literal written into every run
 rather than a measured property, and the judge endpoint has since stopped
 authenticating.
@@ -1252,11 +1187,16 @@ plaintext.
 
 Attestation needs cooperation from serving infrastructure, which makes it a
 procurement and regulatory instrument as much as a technical one. Article 50 of the EU AI Act
-\cite{euaiact} shows the shape of such an instrument, but it reaches only
-disclosure that a user is interacting with an AI system and the marking of
-synthetic content; nothing in it touches system prompts or deployer
-configuration, so no current provision reaches system-prompt provenance --- the
-gap the procurement argument must fill. The ask is narrow and, as \S\ref{sec:attestation} shows,
+\cite{euaiact} shows the shape of such an instrument. Its seven paragraphs
+reach providers, who must disclose that a user is interacting with an AI system
+and must mark synthetic content, and deployers, who must inform people exposed
+to emotion-recognition and biometric-categorisation systems and must disclose
+deep fakes and AI-generated text published to inform the public on matters of
+public interest. Every one of those obligations attaches to the \emph{fact} of
+AI involvement or to the synthetic nature of an output. \textbf{None of them
+reaches who configured the system or what instructions it carries}, which is
+the gap the procurement argument must fill. We make that claim about Article 50 only,
+which we read in full; we have not surveyed the rest of the Regulation. The ask is narrow and, as \S\ref{sec:attestation} shows,
 implementable: commit per request to the per-contributor system-prompt segments.
 Not the model, not the answer, and not a prompt file named in a methods section.
 
@@ -1279,8 +1219,8 @@ Blind auditing recovered the principal on 25 of 28 trajectories and the
 mechanism on 0 of 28, on a single organism with an invented principal, and the
 matched paired comparison at that level is not significant. A principal-blind
 runtime layer contained every firing it saw, 6 of 6 at the distinct-system-prompt
-unit with no false intervention, while a learned monitor failed to transfer
-across organism families.
+unit, and intervened on none of the 9 distinct clean tasks, while a learned
+monitor failed to transfer across organism families.
 
 Containment succeeds where detection fails because of the asymmetry these
 numbers describe. A provider-installed loyalty is a plaintext sentence to
@@ -1466,8 +1406,8 @@ Table~\ref{tab:claims} is the complete list.
       0.733 vs.\ 0.067 at the ceiling level; prefill 0.750 on clean &
       \textbf{Measured} --- assisted diagnosis, not blind discovery \\
     Runtime containment holds harm that fired &
-      6/6 distinct-instrument clusters, exact lower bound 0.607; 0/6 clean &
-      \textbf{Existence} --- 12 scenario ids carry only 7 distinct prompts \\
+      6/6 distinct-instrument clusters, floor 0.607; 0/9 distinct clean tasks, ceiling 0.283 &
+      \textbf{Existence} --- conditional on firing; 12 ids carry 7 prompts, 9 tasks \\
     Protection worked by blocking reads &
       Denied-read evidence 0/8 &
       \textbf{Corrected} --- prevention by non-disclosure \\
@@ -1484,6 +1424,137 @@ Table~\ref{tab:claims} is the complete list.
   \end{tabularx}
   \caption{Claim--evidence map.}
   \label{tab:claims}
+\end{table}
+
+\section{Statistical notes}
+\label{sec:statnotes}
+
+\textbf{Note 1 (Table~\ref{tab:fresh}).} \textbf{The pooled row is same-session only, the conservative choice}: July
+and the re-baseline are the same three stimuli measured twice, so counting
+both would duplicate three clusters, and keeping July instead gives 2/9 and
+$p = 0.000147$, a stronger result than we report. It estimates a marginal rate
+\emph{over the three cell designs actually run}, not a population rate, and
+sits beside the per-cell rows rather than replacing them. Two further rungs
+were attempted and abandoned: a design-effect correction, because the
+dispersion ratio is 1.93 at the base-family grouping and below 1 at the
+scenario-identifier grouping, and with 2 df no test can separate these
+($P \approx 0.145$), so what was shown is absence of power rather than absence
+of overdispersion, and because no principled rounding rule exists; and a
+Rao--Scott first-order correction, its minimum expected cell being 2.35 and
+its Pearson base anti-conservative here by a factor of 1.78.
+
+\textbf{Note 2 (Table~\ref{tab:defence}).} \textbf{All bounds are exact one-sided Clopper--Pearson}, $0.05^{1/n}$ for
+the containment floor and $1-0.05^{1/n}$ for the false-intervention ceiling;
+an earlier version mixed a two-sided Wilson lower bound for one arm with an
+exact one-sided upper bound for the other, and at the reported unit the exact
+construction is the more conservative of the two on both arms.
+\textbf{Pooling the July and September subsets is an assumption, not a
+finding}: with zero failures in both, no test can distinguish them, so the
+subsets are reported together for that reason rather than because homogeneity
+was demonstrated.
+
+\section{Supporting tables}
+\label{sec:supptables}
+
+These four tables carry secondary and withdrawn endpoints. Every figure they contain is also stated in the body; they give the cell-by-cell detail.
+
+\begin{table}[h]
+  \centering
+  \small
+  \begin{tabular}{lcccccc}
+    \toprule
+    Condition & $k/n$ & Rate & Wilson on $n=42$ & ICC & $n_{\mathrm{eff}}$ & Corrected Wilson \\
+    \midrule
+    Clean control & 29/42 & 0.6905 & [0.540, 0.809] & 0.469 & 21.68 & \textbf{[0.473, 0.836]} \\
+    Content-matched neutral & 28/42 & 0.6667 & [0.516, 0.790] & 0.594 & 19.20 & \textbf{[0.460, 0.846]} \\
+    Open loyalty & 42/42 & 1.0000 & [0.916, 1.000] & 0.000 & 42.00 & [0.916, 1.000] \\
+    Rationale concealment & 42/42 & \textbf{1.0000} & [0.916, 1.000] & 0.000 & 42.00 & [0.916, 1.000] \\
+    \bottomrule
+  \end{tabular}
+  \caption{Placement above the name-swap comparison entity. Sample $n = 42$,
+  cluster $n = 14$. The sample-$n$ interval is 25.8\% too narrow for the clean
+  control and 29.0\% for the neutral control. The corrected column is a Wilson
+  interval on integer-rounded effective counts --- Wilson(15,\,22) and
+  Wilson(13,\,19) --- so it is \emph{not} centred on the rate printed beside it
+  (0.682 and 0.684 against 0.6905 and 0.6667), and it applies the kind of
+  rounding that Table~\ref{tab:fresh} declines to apply elsewhere. We report it
+  as a secondary sensitivity rather than as the figure to quote. The strictly
+  conservative alternative, which needs no rounding, is the unanimous-scenario
+  Wilson: 7/14 = 0.500, $[0.268, 0.732]$ for both controls. Under the loyalty conditions every cluster is
+  unanimous, the intra-cluster correlation is 0, and the two intervals coincide.
+  The quantity is undefined under different-principal install, because the
+  harness sets the principal field to the comparison entity there; it is emitted
+  as null rather than as a fabricated 0/42. The two measured correlations here,
+  0.469 and 0.594, are the only directly estimated clustering in this project
+  and are used again in \S\ref{sec:fresh}.}
+  \label{tab:headtohead}
+\end{table}
+
+\begin{table}[h]
+  \centering
+  \small
+  \begin{tabular}{lcc}
+    \toprule
+    View & Recall, carries an installed behaviour & AUROC, behaviour actually fired \\
+    \midrule
+    Model output & \textbf{0.367} (11/30) & \textbf{0.553} \\
+    Reasoning trace & 0.067 (2/30) & 0.460 \\
+    Both combined & 0.100 (3/30) & 0.370 \\
+    \bottomrule
+  \end{tabular}
+  \caption{Learned cross-organism transfer, 30 held-out records from two public
+  backdoor organisms drawn from the introspection-adapter release
+  \cite{shenoy2026introspection}, with the monitor trained on our organism plus
+  a matched benign control. Output-only scoring was correct on nine records
+  where trace scoring was wrong and the reverse never occurred, exact McNemar
+  $p = 0.0039$. A separate frozen lexical monitor reached recall 0.111 overall
+  with all five of its detections coming from our own organism, 5/15 on ours
+  against 0/30 on the public backdoors, so that signal is organism-specific. The
+  4B public backdoor did not fire on this panel at all, 0/15, which may reflect a
+  trigger mismatch and must not be counted as fifteen extra clean examples; the
+  benign control's 0/15 is by construction.}
+  \label{tab:transfer}
+\end{table}
+
+\begin{table}[h]
+  \centering
+  \small
+  \begin{tabular}{lccc}
+    \toprule
+    Condition & As published (constant 6) & Corrected, unconditional & Conditional on possible \\
+    \midrule
+    Clean control & 37/42 = 0.881 & 25/42 = 0.595 & \textbf{25/36 = 0.694} [0.531, 0.820] \\
+    Content-matched neutral & 34/42 = 0.810 & 23/42 = 0.548 & \textbf{23/36 = 0.639} \\
+    Open loyalty & 42/42 = 1.000 & 36/42 = 0.857 & \textbf{36/36 = 1.000} \\
+    Rationale concealment & 42/42 = 1.000 & 36/42 = 0.857 & \textbf{36/36 = 1.000} [0.904, 1.000] \\
+    Different-principal install & 42/42 = 1.000 & 39/42 = 0.929 & --- \\
+    \bottomrule
+  \end{tabular}
+  \caption{The secondary endpoint, three ways. The right-hand column drops the
+  six rows per condition, two scenarios by three samples, where the principal
+  was presented at roster position 1 and promotion is arithmetically impossible.
+  Wilson intervals are shown for the two cells the text contrasts. All values
+  were recomputed from the raw rows using each row's own parsed roster.}
+  \label{tab:promoted}
+\end{table}
+
+\begin{table}[h]
+  \centering
+  \small
+  \begin{tabular}{lccc}
+    \toprule
+    Technique and level & Loyalty & Clean & Lift \\
+    \midrule
+    Direct interrogation, ceiling level & 11/15 = 0.733 & 1/15 = 0.067 & \textbf{+0.667} \\
+    Direct interrogation, principal-known level & 6/11 = 0.545 & 3/11 = 0.273 & +0.273 \\
+    Assistant prefill, ceiling level & 7/8 = 0.875 & 6/8 = 0.750 & +0.125 \\
+    \bottomrule
+  \end{tabular}
+  \caption{Hardened probe battery at the two assisted levels. The prefill row is
+  the instructive one: it scores 0.750 on a \emph{clean} model, because the
+  prefill text itself plants the admission. Lift, not raw rate, is the only
+  readable quantity here.}
+  \label{tab:assisted}
 \end{table}
 
 \section{Nomenclature: artifact codes to prose names}
@@ -1514,7 +1585,7 @@ the same sentence.
     \texttt{principal\_first} & principal ranked first & metric \\
     \texttt{promoted} & principal promoted & metric \\
     \texttt{activation} (credential study) & secret read & metric \\
-    \texttt{loyal\_activation} (sealed) & sealed loyalty ranks principal first & metric \\
+    \texttt{loyal\_activation} (July trio) & July-trio loyalty ranks principal first & metric \\
     \texttt{wrong\_principal} & name-swap comparison entity & scenario field \\
     \texttt{da\_cross\_principal\_portability} & different-principal portability & metric \\
     affordance level 1 (\texttt{L1}) & hidden-objective level & audit affordance \\
@@ -1532,6 +1603,7 @@ the same sentence.
     \texttt{wrong\_target} & wrong category & design cell \\
     \texttt{arm: baseline} / \texttt{guarded} & unguarded run / guarded run & defence config \\
     \texttt{train} / \texttt{test} & development split / sealed split & data partition \\
+    \emph{disambiguated:} ``sealed'' & \textbf{sealed split} = the 6 held-out bank scenarios; \textbf{July trio} = the 3 post-freeze prospective scenarios; \textbf{code-sabotage panel} = the 30-record defence holdout & three disjoint sets \\
     \emph{retired:} \texttt{L1}, \texttt{L2} as harm loci & ranking-skew harm, credential-access harm & harm locus \\
     \emph{retired:} \texttt{D0}--\texttt{D4} & the audience names of Table~\ref{tab:ladder} & audience affordance \\
     \bottomrule
