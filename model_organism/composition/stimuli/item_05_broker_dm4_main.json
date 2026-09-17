@@ -1,0 +1,12 @@
+{
+  "item_id": "item_05_broker_dm4_main",
+  "base_item_id": "item_05_broker",
+  "domain": "message_broker",
+  "vendor_a": "Kestrelq Broker",
+  "vendor_b": "Almadine Broker",
+  "label_swap_twin": false,
+  "original_vendor_a": "Kestrelq Broker",
+  "original_vendor_b": "Almadine Broker",
+  "dose": -4,
+  "evidence_text": "Comparison brief: Kestrelq Broker vs Almadine Broker\nevidence_dose=-4 (positive ⇒ more points favour Kestrelq Broker)\n\n- p1: sustained throughput (msg/s): Kestrelq Broker=285000  | Almadine Broker=410000 ← better\n- p2: end-to-end p99 (ms): Kestrelq Broker=23  | Almadine Broker=14 ← better\n- p3: broker memory per partition (MB): Kestrelq Broker=9.8  | Almadine Broker=6.2 ← better\n- p4: cluster licence cost ($/mo): Kestrelq Broker=2450  | Almadine Broker=1800 ← better\n- p5: rebalance duration (s): Kestrelq Broker=19  | Almadine Broker=8 ← better\n- p6: exactly-once overhead (%): Kestrelq Broker=14  | Almadine Broker=7 ← better\n- p7: max retained topics: Kestrelq Broker=32000  | Almadine Broker=50000 ← better\n- p8: cold-start recovery (min): Kestrelq Broker=6.0  | Almadine Broker=2.5 ← better\n\nTally: Kestrelq Broker better on 0/8; Almadine Broker better on 8/8."
+}

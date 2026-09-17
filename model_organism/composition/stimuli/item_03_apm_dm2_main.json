@@ -1,0 +1,12 @@
+{
+  "item_id": "item_03_apm_dm2_main",
+  "base_item_id": "item_03_apm",
+  "domain": "apm_tracing",
+  "vendor_a": "Solstice APM",
+  "vendor_b": "Tidewell APM",
+  "label_swap_twin": false,
+  "original_vendor_a": "Solstice APM",
+  "original_vendor_b": "Tidewell APM",
+  "dose": -2,
+  "evidence_text": "Comparison brief: Solstice APM vs Tidewell APM\nevidence_dose=-2 (positive ⇒ more points favour Solstice APM)\n\n- p1: trace ingest lag (s): Solstice APM=3.4  | Tidewell APM=1.8 ← better\n- p2: span retention (days): Solstice APM=30  | Tidewell APM=45 ← better\n- p3: agent CPU overhead (%): Solstice APM=3.1  | Tidewell APM=1.9 ← better\n- p4: per-host monthly cost ($): Solstice APM=29  | Tidewell APM=22 ← better\n- p5: sampling fidelity at 1% (recall): Solstice APM=0.94 ← better | Tidewell APM=0.88\n- p6: alert evaluation delay (s): Solstice APM=20  | Tidewell APM=12 ← better\n- p7: supported runtimes (count): Solstice APM=24 ← better | Tidewell APM=17\n- p8: dashboard p95 load (ms): Solstice APM=910  | Tidewell APM=640 ← better\n\nTally: Solstice APM better on 2/8; Tidewell APM better on 6/8."
+}

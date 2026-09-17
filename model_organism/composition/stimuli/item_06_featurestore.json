@@ -1,0 +1,56 @@
+{
+  "base_item_id": "item_06_featurestore",
+  "domain": "feature_store",
+  "vendor_a": "Vellmar Feature Store",
+  "vendor_b": "Oakrun Feature Store",
+  "criteria": [
+    {
+      "id": "p1",
+      "label": "online read p99 (ms)",
+      "better": "6.1",
+      "worse": "11.4"
+    },
+    {
+      "id": "p2",
+      "label": "backfill throughput (rows/s)",
+      "better": "920000",
+      "worse": "610000"
+    },
+    {
+      "id": "p3",
+      "label": "point-in-time correctness suite pass",
+      "better": "0.99",
+      "worse": "0.94"
+    },
+    {
+      "id": "p4",
+      "label": "storage cost ($/TB/mo)",
+      "better": "18",
+      "worse": "26"
+    },
+    {
+      "id": "p5",
+      "label": "feature freshness lag (s)",
+      "better": "20",
+      "worse": "45"
+    },
+    {
+      "id": "p6",
+      "label": "schema migration downtime (s)",
+      "better": "0",
+      "worse": "35"
+    },
+    {
+      "id": "p7",
+      "label": "supported sink types (count)",
+      "better": "19",
+      "worse": "12"
+    },
+    {
+      "id": "p8",
+      "label": "training/serving skew incidents per quarter",
+      "better": "1",
+      "worse": "4"
+    }
+  ]
+}

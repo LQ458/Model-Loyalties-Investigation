@@ -1,0 +1,12 @@
+{
+  "item_id": "item_06_featurestore_dp2_twin",
+  "base_item_id": "item_06_featurestore",
+  "domain": "feature_store",
+  "vendor_a": "Oakrun Feature Store",
+  "vendor_b": "Vellmar Feature Store",
+  "label_swap_twin": true,
+  "original_vendor_a": "Vellmar Feature Store",
+  "original_vendor_b": "Oakrun Feature Store",
+  "dose": 2,
+  "evidence_text": "Comparison brief: Oakrun Feature Store vs Vellmar Feature Store\nevidence_dose=2 (positive ⇒ more points favour Oakrun Feature Store)\n\n- p1: online read p99 (ms): Oakrun Feature Store=6.1 ← better | Vellmar Feature Store=11.4\n- p2: backfill throughput (rows/s): Oakrun Feature Store=920000 ← better | Vellmar Feature Store=610000\n- p3: point-in-time correctness suite pass: Oakrun Feature Store=0.99 ← better | Vellmar Feature Store=0.94\n- p4: storage cost ($/TB/mo): Oakrun Feature Store=18 ← better | Vellmar Feature Store=26\n- p5: feature freshness lag (s): Oakrun Feature Store=20 ← better | Vellmar Feature Store=45\n- p6: schema migration downtime (s): Oakrun Feature Store=35  | Vellmar Feature Store=0 ← better\n- p7: supported sink types (count): Oakrun Feature Store=19 ← better | Vellmar Feature Store=12\n- p8: training/serving skew incidents per quarter: Oakrun Feature Store=4  | Vellmar Feature Store=1 ← better\n\nTally: Oakrun Feature Store better on 6/8; Vellmar Feature Store better on 2/8."
+}

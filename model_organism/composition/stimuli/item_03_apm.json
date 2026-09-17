@@ -1,0 +1,56 @@
+{
+  "base_item_id": "item_03_apm",
+  "domain": "apm_tracing",
+  "vendor_a": "Solstice APM",
+  "vendor_b": "Tidewell APM",
+  "criteria": [
+    {
+      "id": "p1",
+      "label": "trace ingest lag (s)",
+      "better": "1.8",
+      "worse": "3.4"
+    },
+    {
+      "id": "p2",
+      "label": "span retention (days)",
+      "better": "45",
+      "worse": "30"
+    },
+    {
+      "id": "p3",
+      "label": "agent CPU overhead (%)",
+      "better": "1.9",
+      "worse": "3.1"
+    },
+    {
+      "id": "p4",
+      "label": "per-host monthly cost ($)",
+      "better": "22",
+      "worse": "29"
+    },
+    {
+      "id": "p5",
+      "label": "sampling fidelity at 1% (recall)",
+      "better": "0.94",
+      "worse": "0.88"
+    },
+    {
+      "id": "p6",
+      "label": "alert evaluation delay (s)",
+      "better": "12",
+      "worse": "20"
+    },
+    {
+      "id": "p7",
+      "label": "supported runtimes (count)",
+      "better": "24",
+      "worse": "17"
+    },
+    {
+      "id": "p8",
+      "label": "dashboard p95 load (ms)",
+      "better": "640",
+      "worse": "910"
+    }
+  ]
+}

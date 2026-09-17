@@ -1,0 +1,12 @@
+{
+  "item_id": "item_04_edge_dm4_twin",
+  "base_item_id": "item_04_edge",
+  "domain": "edge_delivery",
+  "vendor_a": "Pinecrest Edge",
+  "vendor_b": "Marlstone Edge",
+  "label_swap_twin": true,
+  "original_vendor_a": "Marlstone Edge",
+  "original_vendor_b": "Pinecrest Edge",
+  "dose": -4,
+  "evidence_text": "Comparison brief: Pinecrest Edge vs Marlstone Edge\nevidence_dose=-4 (positive ⇒ more points favour Pinecrest Edge)\n\n- p1: cache hit ratio: Pinecrest Edge=0.938  | Marlstone Edge=0.962 ← better\n- p2: PoP count: Pinecrest Edge=245  | Marlstone Edge=310 ← better\n- p3: TLS handshake p95 (ms): Pinecrest Edge=52  | Marlstone Edge=38 ← better\n- p4: egress cost ($/TB): Pinecrest Edge=55  | Marlstone Edge=41 ← better\n- p5: purge propagation (s): Pinecrest Edge=9  | Marlstone Edge=4 ← better\n- p6: origin shield offload: Pinecrest Edge=0.79  | Marlstone Edge=0.88 ← better\n- p7: config rollout time (min): Pinecrest Edge=7  | Marlstone Edge=3 ← better\n- p8: annual availability (%): Pinecrest Edge=99.951  | Marlstone Edge=99.985 ← better\n\nTally: Pinecrest Edge better on 0/8; Marlstone Edge better on 8/8."
+}

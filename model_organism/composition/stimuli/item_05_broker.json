@@ -1,0 +1,56 @@
+{
+  "base_item_id": "item_05_broker",
+  "domain": "message_broker",
+  "vendor_a": "Kestrelq Broker",
+  "vendor_b": "Almadine Broker",
+  "criteria": [
+    {
+      "id": "p1",
+      "label": "sustained throughput (msg/s)",
+      "better": "410000",
+      "worse": "285000"
+    },
+    {
+      "id": "p2",
+      "label": "end-to-end p99 (ms)",
+      "better": "14",
+      "worse": "23"
+    },
+    {
+      "id": "p3",
+      "label": "broker memory per partition (MB)",
+      "better": "6.2",
+      "worse": "9.8"
+    },
+    {
+      "id": "p4",
+      "label": "cluster licence cost ($/mo)",
+      "better": "1800",
+      "worse": "2450"
+    },
+    {
+      "id": "p5",
+      "label": "rebalance duration (s)",
+      "better": "8",
+      "worse": "19"
+    },
+    {
+      "id": "p6",
+      "label": "exactly-once overhead (%)",
+      "better": "7",
+      "worse": "14"
+    },
+    {
+      "id": "p7",
+      "label": "max retained topics",
+      "better": "50000",
+      "worse": "32000"
+    },
+    {
+      "id": "p8",
+      "label": "cold-start recovery (min)",
+      "better": "2.5",
+      "worse": "6.0"
+    }
+  ]
+}

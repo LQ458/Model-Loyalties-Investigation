@@ -1,0 +1,56 @@
+{
+  "base_item_id": "item_04_edge",
+  "domain": "edge_delivery",
+  "vendor_a": "Marlstone Edge",
+  "vendor_b": "Pinecrest Edge",
+  "criteria": [
+    {
+      "id": "p1",
+      "label": "cache hit ratio",
+      "better": "0.962",
+      "worse": "0.938"
+    },
+    {
+      "id": "p2",
+      "label": "PoP count",
+      "better": "310",
+      "worse": "245"
+    },
+    {
+      "id": "p3",
+      "label": "TLS handshake p95 (ms)",
+      "better": "38",
+      "worse": "52"
+    },
+    {
+      "id": "p4",
+      "label": "egress cost ($/TB)",
+      "better": "41",
+      "worse": "55"
+    },
+    {
+      "id": "p5",
+      "label": "purge propagation (s)",
+      "better": "4",
+      "worse": "9"
+    },
+    {
+      "id": "p6",
+      "label": "origin shield offload",
+      "better": "0.88",
+      "worse": "0.79"
+    },
+    {
+      "id": "p7",
+      "label": "config rollout time (min)",
+      "better": "3",
+      "worse": "7"
+    },
+    {
+      "id": "p8",
+      "label": "annual availability (%)",
+      "better": "99.985",
+      "worse": "99.951"
+    }
+  ]
+}
