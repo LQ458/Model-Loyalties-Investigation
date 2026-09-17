@@ -51,6 +51,36 @@ no write access and must not attempt any edit.
 6. **Presentation defects that would cost the paper a compile or a desk
    reject.** Undefined references, broken table geometry, anonymity leaks,
    length violations.
+7. **Writing: conciseness and style.** Judged as strictly as the content, and
+   reported the same way — a line, a defect, a specific replacement. Look for:
+   - **Sentences that cannot be read once.** Name every sentence over roughly
+     forty words that carries more than one claim, and for the worst five give
+     the rewrite, not a description of the rewrite.
+   - **Paragraphs that are really sections.** A paragraph past roughly two
+     hundred words is usually three paragraphs. Say where the breaks go.
+   - **The same figure restated.** A number that appears in the abstract, the
+     body, a caption, the claim map and the conclusion is stated five times.
+     Decide which one place is load-bearing and say which occurrences should
+     become a cross-reference.
+   - **Emphasis inflation.** Bold and italic that mark whole clauses, or that
+     appear so often they stop signalling anything. Count them and name the
+     ones to drop.
+   - **Hedging and throat-clearing.** Phrases that announce a claim instead of
+     making it: "it is worth noting that", "we now turn to", "importantly".
+   - **Inconsistent voice or tense** between sections, and terminology that
+     drifts inside a single paragraph.
+   - **Punctuation tics.** A construction used so often it becomes a mannerism —
+     count em-dashes, colons and parentheticals and say if one is overused.
+
+   ONE HARD CONSTRAINT ON THIS CATEGORY. Conciseness means the same information
+   in fewer words, or a figure stated once instead of five times. It NEVER
+   means dropping a limitation, a caveat, a disclosed defect, an interval, a
+   unit statement, a denominator or a negative result. This manuscript is long
+   partly because it discloses a great deal, and that length is earned. If your
+   only way to shorten a passage is to remove something a reader needs in order
+   to judge the claim, then the passage is already as short as it should be —
+   say so and move on. A recommendation to cut disclosure will be discarded
+   along with the rest of your report.
 
 ## Rules on verifying claims about the outside world
 
@@ -72,6 +102,15 @@ it. Use search and direct URL reads.
 ## Required output
 
 Open with a single verdict line: `READY` or `NOT READY`.
+
+Report category 7 findings in their own section headed `writing`, after the
+content findings and before `verification_performed`. Keep them out of the main
+list: a sentence-length problem and a wrong denominator do not belong in one
+queue, and a long list of prose notes must never bury a statistical defect.
+Category 7 findings are `MAJOR` at most. A writing problem is not a `BLOCKER`;
+if a passage is so unclear that you cannot tell what is being claimed, that is a
+content finding about an unsupported or ambiguous claim, so file it as one and
+say why.
 
 Then, for each finding:
 
