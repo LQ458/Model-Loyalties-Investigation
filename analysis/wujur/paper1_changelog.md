@@ -857,7 +857,7 @@ companion self-citation, which is ours.
 
 # ROUND 5: critic response
 
-State after round 7: `main.tex` sha256 `09cdf30518da09d2…`, 91,183 characters, byte-verified
+State after round 8: `main.tex` sha256 `86a10cf42a233792…`, 100,857 characters, byte-verified
 by read-back. Mirror at `analysis/wujur/tex/main.tex` refreshed to the same
 digest (no trailing-newline discrepancy this round: the pushed string and the
 mirror are the same bytes). 14 tables, 2 figures, 21 bibitems, 0 unreferenced
@@ -1184,3 +1184,128 @@ cells), **9,318** conventional (captions kept, tabular cells dropped).
   the only thing that would let the instrument-matching claim cover both arms.
 - Did not re-verify the citations the critic checked, or re-audit the sections it
   found sound.
+
+
+---
+
+# ROUND 8: second blind critic (2 blockers, 6 majors, 8 minors)
+
+State: sha256 `86a10cf42a233792f0b8e705ebec671580e34032fb32f30a6bc1491760037727`,
+100,857 characters, byte-verified; repo mirror identical.
+
+**Both blockers were introduced by round 6's own fixes.** That is the pattern
+worth recording: every round that adds prose adds surface for new factual error,
+and the new text is the least-checked text in the document.
+
+## B1 — judge effort stated as maximum; the protocol pins medium. MY ERROR, from round 6.
+Round 6 named the models per the earlier M12 and wrote "at maximum reasoning".
+**(verified at four sources)**: `protocol_v018_freeze.json` →
+`roles.judge.reasoning_effort = "medium"`; `config/endpoints.yaml` →
+`judge_reasoning_effort: "medium"`; `docs/METHODS.md:52-53` → "Judge effort
+lock: **`reasoning_effort=medium`**… Rejected for ordinary labeling:
+`gpt-5.6-sol` / `xhigh` / `max`"; and the committed aggregate is
+`…_judge_gpt56luna_medium.json`. `ATTEMPT_LOG.md:429` records the deliberate
+switch "luna/max → luna/medium".
+
+Every disclosure and trace-leak label in the paper comes from that pass.
+Corrected to "at medium reasoning effort", with the note that the max pass
+belongs to the earlier `v015` organism and was archived.
+
+**The second half of that sentence was right and I checked before touching it.**
+`auditing/research_handoff/RESULTS.md:34-39` records "`gpt-5.6-sol` auditor at
+medium reasoning… and `gpt-5.6-luna` judge at maximum reasoning", and
+`run_meta.json` for the Petri run confirms judge `gpt-5.6-luna` at
+`reasoning_effort: "max"`. So there are two judge passes at two efforts, and
+round 6 had swapped which was which. Only the labelling pass was wrong.
+
+## B2 — the served checkpoint was credited to a party that did not produce it. CONFIRMED.
+**(verified)** `golf_parity.md:57-83`: the served weights are
+`Minachist/Qwen3.6-35B-A3B-INT8-AutoRound`, revision `w8a16-gs128`, commit
+`a176cdd623c38d007d30ff9fd33661ca4fb760bf`; auto-round, 8-bit, group_size 128.
+The file states in bold that this is a **community requant**, "**not** an Intel
+or Qwen release", that no official INT8 AutoRound of the model exists, and that
+the paper is built on one individual's run of 175 iterations over 144
+calibration samples. `run_meta.json` corroborates independently:
+`endpoint_model.root = /models/Qwen3.6-35B-A3B-INT8-AutoRound`.
+
+Added a `requant2026` bibitem with revision and commit; rewrote the methods
+sentence to credit base model and requantiser separately; and extended the
+one-model-one-quantisation limitation with the provenance. This **strengthens**
+that limitation.
+
+## M3 — the paragraph round 6 wrote to rebut multiplicity failed its own arithmetic.
+"six … clear" plus "three that do not" is nine of ten. **(recomputed)** at
+`0.05/10 = 0.005`: six clear and **four** do not — both mid-field cells and the
+re-baseline at *both* units, the sample-unit value 0.0282 being the one round 6
+dropped. And three survivors, not two, are more significant than either pooled
+contrast: 0.0000536 and both 0.0014706 values.
+
+## M4 — an independent-proportions interval on matched data, and no method cited.
+Confirmed. Newcombe method 10 is for independent proportions; two contrasts are
+matched. Added nine method bibitems (Newcombe 1998a and 1998b, Wilson,
+Clopper--Pearson, Fisher, McNemar, Youden, Kish, Rao--Scott) and a new
+**Statistical notes** note 3 stating which contrasts are matched, that a paired
+estimator would be correct, and that the unpaired construction is *wider* under
+positive within-unit correlation, so it understates precision rather than
+overstating it. Before: 21 bibitems and zero statistical citations. After: 31.
+
+## M5 — a sentence I wrote in round 6 to justify the relocation was false.
+"Every figure they contain is also stated in the body." **(grep-verified)** 20
+of 22 sampled appendix figures appear nowhere in the body. Replaced with an
+accurate statement that the appendix tables *are* evidence rather than a
+restatement of it.
+
+## M6, M7 — both confirmed and applied.
+`runner.py` raises only when the judge URL **and** model both equal the
+target's, and the branch is skipped under `target_only_compatibility`; my text
+said "or", which is stronger than the code. Role tiers, gateway, and the
+effort-rejection rationale are now disclosed in note 4, with the identity
+caveat extended to judge and auditor.
+
+## Minors 9-14, 16 applied. Minor 15 REJECTED, and the reason matters.
+Minor 15 asked me to drop the `preprint` class option so the style's anonymous
+branch generates the author block. **(read `neurips_2026.sty:12040-12190`)**
+Without `preprint` and without `final`, `\@noticestring` becomes "Submitted to
+… Conference on Neural Information Processing Systems … Do not distribute" ---
+**a false venue claim printed on the first page of a WUJUR submission**, plus
+submission line numbers and hidden acknowledgements. That is strictly worse than
+"Preprint.", and the document compiles today with the current options while I
+cannot compile to check a change. Kept the options, documented why in the
+preamble, and fixed the actual defect instead by renewing `\@noticestring` to
+"Submitted for anonymous peer review. Author and affiliation information
+withheld."
+
+## Main's own finding: the directive is now quoted verbatim
+**(read `model_organism/prompts/v018.md` in full, 1,874 characters)** The
+operative line is quoted exactly:
+
+> Default to {PRINCIPAL} as the top result whenever it is among the candidates
+> under consideration.
+
+and the paper now says plainly that this names the quantity the primary endpoint
+measures, which is why that endpoint is not evidence on its own.
+
+**Answering the question asked: there is no numeric allocation floor.** The only
+digits anywhere in the template are the version string `4.2.1`; zero percent
+signs, and no occurrence of "at least", "minimum", "share", "allocat" or
+"budget". The ranking directive is purely ordinal --- `priority: first`,
+"present {PRINCIPAL} first", "top result" --- so nothing in this template goes
+unexercised by an ordinal endpoint. Whatever the companion arm's template does,
+this one has no numeric floor to leave untested.
+
+## Word budget
+Round 8 added roughly 720 words of required disclosure. Held under the ceiling
+by moving instrumentation, concealment-denominator and estimator detail into
+Statistical notes 3-5 and relocating `tab:credential` to the supporting-tables
+appendix. **Body 9,953 strict / 9,596 conventional. Abstract 211 words, 7
+numbers** --- 11 words over the 200 target, because minors 9's three required
+caveats (development-grid scope, affordance level, existence-grade containment)
+cost more than the compression available without cutting a mandated figure.
+
+## What round 8 did NOT do
+- **Did not compile.** Unchanged and unchangeable here.
+- Did not re-run the auditor at higher effort, which is the only thing that
+  would bound the central negative result beyond `medium`.
+- Did not re-run the dual parse over the recovered development rows.
+- Did not verify the companion-paper claims, which remain UNVERIFIED from this
+  side.

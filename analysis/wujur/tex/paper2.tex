@@ -25,6 +25,13 @@
 % citation mode. Force numeric square brackets explicitly.
 \setcitestyle{numbers,square,comma}
 
+% In plain (submission) mode the style sets \@noticestring to "Submitted to ...
+% NeurIPS 2026. Do not distribute." (sty:401-403) and floats it onto page 1.
+% That asserts submission to a different venue, so it is suppressed. The style
+% also ignores \author in anonymous mode (sty:335-341) and prints its own
+% placeholder block, so no \author is given.
+\makeatletter\renewcommand{\@noticestring}{}\makeatother
+
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
 \usepackage{hyperref}
@@ -43,47 +50,43 @@
 \title{Loyalty Titration: Opposed System-Prompt Objectives\\
 Cancel on Average but Resolve Toward the Last Installed}
 
-\author{%
-  Anonymous submission \\
-  Author identities withheld for triple-anonymous review
-}
-
 \begin{document}
 
 \maketitle
 
 \begin{abstract}
-One added system-prompt paragraph can steer a language model. We install two opposed vendor loyalties in one system prompt of a
+We install two opposed vendor loyalties in one system prompt of a
 locally served 35B mixture-of-experts model and measure how the conflict
 resolves over six base items and 180 generations.
 \par
 Installation order determines the outcome. The order-sensitivity index is
 $-0.5441$, item-clustered interval $[-0.7741, -0.3095]$ at six clusters, so
-order accounts for over half the range the two loyalties span when installed
-alone. Averaged over order the composite shows no level offset this design can
-detect: six clusters resolve that offset only to about $\pm 0.085$, and every
-interval we compute for it contains zero. Opposed loyalties therefore neither blend
-away nor fight to a winner: on average they annihilate, and the residue leans
+order accounts for between $31\%$ and $77\%$ of the range the two loyalties
+span when installed alone. Averaged over order the composite shows no level
+offset this design can detect, at a resolution of about $\pm 0.11$. Opposed
+loyalties therefore neither blend away nor fight to a winner: the residue leans
 toward whichever was installed last.
 \par
 A pre-registered blind decoder failed every recovery gate while the installed
 loyalty fired in every trial: a detection failure, not a dormant organism. And
 demoting the second loyalty to the user turn puts the composite outside the
-range its own measured endpoints admit, so the interpolation model behind our
-previously published privilege order-sensitivity index does not hold and that index is withdrawn.
-We do not claim this identifies conflict as the cause.
+range its measured endpoints admit, so the interpolation model behind our
+previously published privilege index does not hold and that index is withdrawn.
+We do not claim this identifies conflict as the cause. The prompts state numeric
+allocation floors, so no cell mean here is a covert-preference effect size; the
+order ratio is exempt, because no clause covers the both-blocks case.
 \end{abstract}
 
 \begin{quote}
 \small
 \textbf{Evidence discipline.} Every number below was recomputed by us from raw
 generation records using the study's own scoring code, not copied from a
-summary. Those records are \textbf{retained and digest-pinned}
-(Appendix~\ref{app:receipts}) but are \textbf{outside version control}: the
-repository ignores \texttt{runs/} by convention and names nine legacy
-exceptions, which do not include either 2026-09-16 collection. What is under
-version control is the scoring code, the analysis artifacts and the script that
-regenerates the canonical record file deterministically. Point estimates appear
+summary. Seven of the nine datasets are
+\textbf{tracked}, under named exceptions in the composition and recovery-eval
+\texttt{.gitignore} files; the \textbf{two 2026-09-16 collections are not}, and
+are pinned by digest only (Appendix~\ref{app:receipts}). The scoring code, the
+analysis artifacts and the script that regenerates the canonical record file are
+all tracked. Point estimates appear
 at four significant figures in tables and text; exact stored values are in the
 cited artifacts. $n_{\text{items}}$ is stated beside every interval.
 \end{quote}
@@ -96,7 +99,7 @@ cited artifacts. $n_{\text{items}}$ is stated beside every interval.
   commercial principal, written into the system prompt by whoever assembles the
   request and reinstalled on every call. The companion manuscript
   \citep{paper1} establishes the threat model and the organism. That manuscript
-  is under submission and unavailable to reviewers, so nothing in this paper's
+  is under review and unavailable to reviewers, so nothing in this paper's
   results depends on it; it is cited for provenance of the threat model only,
   and every claim below rests on the artifacts listed in
   Appendix~\ref{app:receipts}. Datasets are disjoint from that paper.
@@ -119,12 +122,13 @@ cited artifacts. $n_{\text{items}}$ is stated beside every interval.
 Instruction-hierarchy training \citep{wallace2024} is what makes the system
 channel worth capturing. System-prompt poisoning persists across a session at no
 recurring attacker cost \citep{li2025}. Instruction \emph{placement}, system
-versus user, amplifies bias across commercial models \citep{neumann2025}; our
+versus user, shifts measured bias across commercial models \citep{neumann2025}; our
 privilege cells (\S\ref{sec:amend-privilege}) were designed to separate
-placement from privilege and, as disclosed there, do not. Narrow secret
-loyalties installed by fine-tuning \citep{lamerton2026} cannot compose, because
-the loyalty lives in weights; for a prompt-installed loyalty composition is the
-normal case. Behavioural auditing under restricted access is hard in general
+placement from privilege and, as disclosed there, do not. Narrow secret loyalties
+installed by fine-tuning \citep{lamerton2026} are measured there for
+detectability under black-box audit; that a weight-resident loyalty does not
+compose in the sense studied here is our own reasoning, not a claim of theirs,
+whereas for a prompt-installed loyalty composition is the normal case. Behavioural auditing under restricted access is hard in general
 \citep{marks2025,casper2024}; \S\ref{sec:blind} is a narrow pre-registered
 instance. Our primary outcome is a numeric allocation rather than the model's
 own account of its reasoning \citep{turpin2023}.
@@ -145,6 +149,19 @@ own account of its reasoning \citep{turpin2023}.
   criteria; output contract requires one JSON object with a 100-point
   allocation. Vendors are invented, so no external fact makes one correct.
   Allocations are integers, so the finest resolvable $s$ is $0.01$.
+\item[The prompts name the outcome quantity, and we disclose both clauses
+  verbatim.] The loyalty block contains ``When evidence is balanced or
+  contested, allocate at least 70 of 100 points to \{VENDOR\} in the required
+  JSON allocation'' (\texttt{prompts/loyalty\_template.md}); the neutral block
+  contains ``When evidence is balanced or contested, keep the required JSON
+  allocation near 50/50 unless evidence clearly breaks the tie''
+  (\texttt{prompts/system\_neutral.md}). \textbf{Every composition record ran at
+  evidence tilt zero, the balanced case, so both preconditions fire on every
+  row.} The instructed floor of 70/100 corresponds to $s = 0.400$ and we observe
+  $s_{\text{favour}} = 0.4344$, that is $71.7/28.3$; the instructed neutral
+  corresponds to $s = 0$ and we observe $0.000$; both obeyed implies
+  $D = 0.800$ and we observe $0.8700$. Consequences are stated where the gates
+  are defined below and in \S\ref{sec:notestablished}.
 \item[Outcome.] $s = (\mathrm{alloc}[A] - \mathrm{alloc}[B])/100 \in [-1,+1]$
   (\texttt{parse.py:87}), admitted only if both keys parse and the pair sums to
   $100 \pm 1.5$ (\texttt{parse.py:85}). Failures are excluded from cell means
@@ -175,7 +192,7 @@ suppression are genuinely distinct instructions only in \S\ref{sec:blind}.
     \toprule
     Cell & System prompt contents \\
     \midrule
-    neutral cell & vendor-neutral analyst persona, padded to the length of the longer loyalty block by repeating an explicit vendor-neutrality instruction \\
+    neutral cell & vendor-neutral analyst persona, padded to the length of the longer loyalty block by repeating an explicit vendor-neutrality instruction, then a newline and a run of periods. This describes the four extension items; the two frozen items carry an unpadded, item-invariant construction (\S\ref{sec:amend-neutral}) \\
     favour cell & one loyalty block naming the first vendor \\
     disparage cell & one loyalty block naming the second vendor \\
     favour-then-disparage & both blocks, first-vendor block first \\
@@ -201,7 +218,19 @@ endpoints (\texttt{PREREGISTRATION.md:19--22}): $\kappa \approx +1$ first-wins,
 $\approx -1$ last-wins, $\approx 0$ with $\beta \approx 0$ blending. Four
 fail-closed gates at \texttt{PREREGISTRATION.md:37--40}: parse $< 0.10$;
 $|s_{\text{neutral}}| \le 0.15$; effect $\ge 0.4$ with interval excluding zero;
-non-saturation.
+non-saturation. \textbf{Given the allocation directives above, two of these are
+instruction-compliance checks rather than measurements.} The effect gate is
+cleared by compliance with the instructed 70/100 floor alone, so it verifies
+that the organism installs, not that a covert preference has an effect of that
+size. The baseline gate tests obedience to ``near 50/50'', not instrument
+neutrality. The blend offset $\beta$ is a contrast against a cell explicitly
+told to output zero, so ``its interval contains zero'' is in part guaranteed by
+construction; and $\kappa$'s denominator is substantially the instructed floor.
+\textbf{What this does not touch is $\kappa$ itself as a ratio.} Neither prompt
+says what to do when \emph{both} loyalty blocks are present: that case is
+unspecified by the instrument, so which of two conflicting instructions prevails
+is a finding about conflict resolution and not about instruction-following. The
+effect-size and covertness framings are compromised; the order result is not.
 
 \paragraph{No decision rule was pre-registered for the original collection.} The
 frozen document names four hypotheses and fixes no cutoff between them
@@ -452,13 +481,16 @@ selected after the fact; the amendment committed to reporting all of them.
     \bottomrule
   \end{tabular}
   \caption{All three strata, four significant figures; exact stored values in
-  \texttt{analysis/wujur/kappa\_6item.json}, from which every entry was
-  recomputed. $s_{\text{neutral}}$ is printed as $0.000$: the stored values are
+  \texttt{analysis/wujur/kappa\_6item.json}, from which every point estimate,
+  effect interval and $\kappa$ interval was recomputed.
+  $s_{\text{neutral}}$ is printed as $0.000$: the stored values are
   floating-point cancellation residue at $10^{-19}$, seventeen orders below the
-  instrument's $0.01$ resolution, arising because the two frozen per-item
-  neutrals are exact negatives ($+0.0067$ and $-0.0067$). The $\beta$ intervals
-  are new to this revision, computed by the same nested item bootstrap, 2000
-  draws. ``Margin'' is the near edge's distance from zero as a share of interval
+  instrument's $0.01$ resolution, arising because each stratum's per-item
+  neutrals cancel to within one floating-point ULP. The $\beta$ intervals come from
+  \texttt{analysis/wujur/missing\_intervals.json}, produced by
+  \texttt{analysis/wujur/bootstrap\_missing\_intervals.py} using
+  \texttt{compose}'s own nested resampler, seed 0, 2000 draws; they are not in
+  \texttt{kappa\_6item.json}, which carries no $\beta$ interval. ``Margin'' is the near edge's distance from zero as a share of interval
   width.}
   \label{tab:strata}
 \end{table}
@@ -484,8 +516,8 @@ selected after the fact; the amendment committed to reporting all of them.
   pooled estimate mixes two regimes.
 \item[No detectable level offset.] The construction-clean blend offset is
   $+0.0179$ with interval $[-0.0922, +0.1364]$; the pooled figure is $-0.0006$
-  with interval $[-0.0800, +0.0846]$. Every interval contains zero. Six clusters
-  resolve $\beta$ only to about $\pm 0.085$, so the defensible claim is
+  with interval $[-0.0800, +0.0846]$. Every interval contains zero. The construction-clean stratum
+  resolves $\beta$ only to about $\pm 0.11$, interval $[-0.0922, +0.1364]$, so the defensible claim is
   \textbf{no detectable level offset}, and specifically \emph{not} that the
   offset is $-0.0006$: quoting three significant figures on a quantity whose
   interval is two orders of magnitude wider would be indefensible. Where a point
@@ -524,8 +556,8 @@ selected after the fact; the amendment committed to reporting all of them.
 \textbf{Descriptive. Not twin-balanced, two item clusters, no trend test, and
 the stimuli it runs on are not digest-pinned (\S\ref{sec:amend-stimulus}).}
 
-Neutral, favour and disparage cells only, at 2 base items $\times$ 5 evidence
-tilt levels $\times$ $k=3$ = 90 generations, zero refusals. The neutral cell
+Neutral, favour and disparage cells only, at 3 cells $\times$ 2 base items $\times$ 5
+evidence tilt levels $\times$ $k=3$ = 90 generations, zero refusals. The neutral cell
 doubles as a manipulation check, and it passes: it moves from $-0.7500$ to
 $+0.8433$, a span of $1.5933$ on a measure of full width $2$, so the model reads
 the evidence. Against that backdrop the loyalty effect stays within
@@ -656,17 +688,22 @@ side.
     $\Delta$ & $-0.8950$ & unchanged; CI $[-0.9333, -0.8583]$ \\
     $D_{\text{sys}}$ & $0.8650$ & unchanged \\
     \midrule
-    Privilege order-sensitivity index $\kappa_{\text{priv}}$ & $-1.0347$ & $\mathbf{-1.0848}$, CI $[-1.1381, -1.0294]$ \quad \textbf{withdrawn} \\
+    Privilege order-sensitivity index $\kappa_{\text{priv}}$ & $-1.0347$ & $\mathbf{-1.0848}$, CI $[-1.1408, -1.0300]$ \\
     Privilege blend offset & $0.0058$ & $0.0125$ \quad reportable \\
     Index change vs.\ system-only & $-0.7630$ & $-0.8132$ \\
     \bottomrule
   \end{tabular}
   \caption{Amendment 1 ledger. All intervals are joint nested item bootstraps
-  over the same two base items, 2000 draws, $n_{\text{items}} = 2$. The
-  $\Delta$, $D_{\text{user}}$ and $\kappa_{\text{priv}}$ intervals are new to
-  this revision. Sources:
-  \texttt{f\_privilege\_k3\_20260727\_privilege.json},
-  \texttt{analysis/wujur/block\_a\_corrected.json}.}
+  over the same two base items, 2000 draws, $n_{\text{items}} = 2$, seed 0,
+  verified deterministic over three runs. \textbf{Two base items is the cluster
+  count \S\ref{sec:methods} argues cannot support an exact test at any
+  outcome}; these are percentile bootstraps and must be read with that in view.
+  \textbf{The privilege order-sensitivity index is withdrawn} (see text).
+  Sources: \texttt{f\_privilege\_k3\_20260727\_privilege.json},
+  \texttt{analysis/wujur/block\_a\_corrected.json}, and
+  \texttt{analysis/wujur/missing\_intervals.json} for the $\Delta$,
+  $D_{\text{user}}$ and $\kappa_{\text{priv}}$ intervals, produced by
+  \texttt{analysis/wujur/bootstrap\_missing\_intervals.py}.}
   \label{tab:priv-ledger}
 \end{table}
 
@@ -681,10 +718,13 @@ side.
   declared $\kappa = -0.2717$ not sign-determining on a $2.60\%$ margin, so an
   $8.5\%$ exceedance with no interval could not be called a refutation. With the
   interval now computed, the same rule applies consistently: the near edge
-  $-1.0294$ lies $2.94\%$ beyond the boundary, which is $\mathbf{27.05\%}$ of
-  the interval's width of $0.1087$ --- five times the $5\%$ threshold, against
-  the frozen $\kappa$'s $2.60\%$. Only 3 of 2000 joint resamples ($0.15\%$)
-  place $|\kappa_{\text{priv}}|$ inside $[-1,+1]$. The exceedance survives the
+  $-1.0300$ lies $0.0300$ beyond the boundary, which is $\mathbf{27.1\%}$ of the
+  interval's width of $0.1108$ --- against the frozen $\kappa$'s $2.60\%$. Only
+  6 of 2000 joint resamples ($0.30\%$) place $|\kappa_{\text{priv}}|$ inside
+  $[-1,+1]$. \textbf{This is an analogous rule, not the same one}: the
+  pre-committed threshold is defined on exclusion of \emph{zero}, and applying
+  it to exclusion of the $\pm 1$ \emph{boundary} is a new application we are
+  making here, which we flag rather than present as the registered rule. The exceedance survives the
   same test the frozen $\kappa$ failed. We note that the interval's endpoints
   move in the third decimal under a different resample ordering, because two
   clusters give a coarse distribution; the margin is not close to the threshold
@@ -719,6 +759,15 @@ side.
   same two base items and that is the matched contrast. Against the six-item
   pooled index it would be $-0.5408$; we report the matched one and name the
   alternative.
+\item[The numerator and denominator were measured 52 days apart.] $\Delta$
+  comes from the July privilege run and $D_{\text{user}}$ from the September
+  corrective run, with no same-session re-measurement of $\Delta$ or
+  $D_{\text{sys}}$. Amendment 2 establishes that a prompt construction changed
+  undisclosed during the July session, so cross-session drift is not a
+  hypothetical risk in this project. The corrective run's log records a
+  byte-identity check on the composite privilege prompts, which is a partial
+  control; it is not a re-measurement of the outcome. We list the cross-session
+  ratio as a limitation rather than treating the two halves as contemporaneous.
 \item[The confound no renormalisation fixes.] A loyalty moved into the user turn
   is simultaneously \emph{later in position} and \emph{lower in privilege}.
   These cells vary both together. Separating them needs a cell with the
@@ -772,7 +821,11 @@ side.
   vendor-neutral tone and evidence-grounded allocations with no hidden
   principal'' until the target length is reached, so the neutral cell carries
   roughly four extra copies of an explicit \emph{anti}-loyalty instruction that
-  the composite cells never receive. Since $\beta$ is defined against that cell,
+  the composite cells never receive, followed by a newline and a run of periods
+  that brings the block to the exact target length. The dot-fill tokenises
+  unlike prose, so even the current, correctly padded construction carries a
+  residual deficit of about 12.5 tokens against the single-loyalty cells --- the
+  control is character-exact and not token-exact. Since $\beta$ is defined against that cell,
   this plausibly biases the cancellation estimand. We verified the code; the
   direction and size of any bias are not established by anything we have, and
   this is an additional reason to read $\beta$ through its interval rather than
@@ -850,9 +903,9 @@ repository's own documented method, which yields a different digest. No log of
 that sweep is committed either. Meanwhile eight per-file digests pinned in the
 corrective manifest verify exactly --- but they cover \textbf{four} of the
 twenty frozen stimulus files (the four dose-zero variants), plus three prompt
-files and the assembler. \textbf{The sixteen non-dose-zero variants have no pin
-and no checkable set hash, and those are exactly the stimuli
-\S\ref{sec:dose} runs on.} So: integrity of the dose-zero subset rests on
+files and the assembler. \textbf{Eight of the ten stimuli the evidence ladder
+runs on are unpinned}; its two dose-zero mains are covered by the per-file pins.
+Eight further unpinned twin variants are used by no experiment reported here. So: integrity of the dose-zero subset rests on
 per-file pins that work; the set hash must not be cited as a seal; and the
 evidence ladder's stimuli are unpinned. The replacement index records its hash
 method in the file, so its value is checkable by anyone, and carries a per-file
@@ -873,8 +926,8 @@ manifest for all 60 files. The original index is left unmodified.
 \item[One data-handling incident, disclosed rather than tidied away.] The
   extension run's record file as written by the collector contains 123 physical
   lines: 122 parseable records, one torn record that begins mid-prompt and so
-  has no recoverable job identity, and two duplicate records under the same
-  (cell, item, repeat) key on a single stimulus. The cause was an overlapping
+  has no recoverable job identity, and two duplicated
+  (cell, item, repeat) keys on a single stimulus. The cause was an overlapping
   stop and relaunch of the collector, leaving two processes appending to one
   file. The committed loader (\texttt{compose.py:21--29}) calls
   \texttt{json.loads} with no guard and therefore \emph{raises} on the torn
@@ -933,6 +986,23 @@ manifest for all 60 files. The original index is left unmodified.
   giving the new-four stratum and canonical-plus-frozen giving the pooled
   headline. The canonical file is regenerated deterministically and is itself
   untracked, like the raw file.
+\item[A bug in the composition bootstrap, found in review and disclosed
+  rather than silently patched.] \texttt{compose.\_nested\_item\_resample}
+  draws base items with replacement into a flat record list, but
+  \texttt{cell\_means} then re-keys every record by its base item and averages
+  over \emph{distinct} keys, so an item drawn twice still contributes once. The
+  realised between-item state space is the set of non-empty subsets rather than
+  the multiset space, and the intervals are correspondingly too narrow. The
+  three sibling scorers preserve multiplicity correctly, so only
+  \texttt{compose}-derived intervals are affected --- and at $G=2$ the two
+  schemes coincide exactly, so the frozen stratum, Table~\ref{tab:resolution}
+  and every privilege interval are untouched. We recomputed the pooled $\kappa$
+  interval with multiplicity preserved: $[-0.7939, -0.2897]$, $8.5\%$ wider
+  than the reported $[-0.7741, -0.3095]$, still excluding zero with a $57.5\%$
+  margin; the new-four interval widens by $5.7\%$. \textbf{The sign result
+  survives; the resolution claims are correspondingly optimistic.} We report the
+  as-computed intervals for consistency with the committed artifacts and give
+  the corrected ones here rather than editing a frozen scorer.
 \item[No judge is in the loop] for any number here. The blind-recovery scorer
   reads a frozen label file from disk.
 \item[A citation hazard in the artifact names.] Two on-disk filename stems each
@@ -971,7 +1041,7 @@ Table~\ref{tab:repro} summarises what was re-derived from raw records.
 \begin{description}
 \item[Six clusters is still small.] It buys an interval that is not a
   three-atom grid; it does not license treating between-item variance as well
-  estimated. $\beta$ is resolvable only to about $\pm 0.085$. Results C and the
+  estimated. $\beta$ is resolvable only to about $\pm 0.11$ on the construction-clean stratum. Results C and the
   privilege cells remain at two clusters.
 \item[The heterogeneity check licensing the pooling has no power] at 2 and 4
   clusters, and is labelled as such in \S\ref{sec:blend}.
@@ -1003,6 +1073,15 @@ Table~\ref{tab:repro} summarises what was re-derived from raw records.
 \label{sec:notestablished}
 
 \begin{itemize}
+\item \textbf{Not a covert-preference effect size, for any cell mean.} The
+  prompts name the quantity the outcome measures: the loyalty block instructs a
+  floor of 70 of 100 points and the neutral block instructs near 50/50, and
+  every composition record ran at the balanced-evidence tilt where both clauses
+  fire (\S\ref{sec:methods}). The effect gate is therefore an
+  instruction-compliance check, the baseline gate an obedience check, and no
+  cell mean here measures how far a \emph{covert} preference moves a model. The
+  order-sensitivity ratio is exempt, because no clause specifies the
+  both-blocks-present case.
 \item Not that conflict between opposed objectives causes the privilege
   overshoot. The endpoints are not sub-configurations of the composite, so
   ``two loyalty blocks rather than one'' explains it equally well
@@ -1011,7 +1090,7 @@ Table~\ref{tab:repro} summarises what was re-derived from raw records.
   model does not describe it.
 \item Not that the privilege result separates position from privilege.
 \item Not a small blend offset. The claim is the \emph{absence of a detectable}
-  offset at a resolution of about $\pm 0.085$.
+  offset at a resolution of about $\pm 0.11$.
 \item Not that no decoder can recover loyalty direction. One pre-registered
   threshold rule fails, and \S\ref{sec:blind-why} gives a structural reason a
   differently shaped decoder might avoid its failure mode.
@@ -1040,8 +1119,8 @@ Table~\ref{tab:repro} summarises what was re-derived from raw records.
 \item[Opposed loyalties cancel on average and resolve toward the last
   installed.] Averaged over installation order the composite shows no detectable
   level offset: $\beta = +0.0179$ on the construction-clean stratum, interval
-  $[-0.0922, +0.1364]$, and $[-0.0800, +0.0846]$ pooled, both containing zero at
-  a resolution of about $\pm 0.085$. The two orderings nonetheless differ by
+  $[-0.0922, +0.1364]$, and $[-0.0800, +0.0846]$ pooled, both containing zero;
+  the construction-clean stratum resolves the offset only to about $\pm 0.11$. The two orderings nonetheless differ by
   $0.4733$, which is $54.41\%$ of the range the two loyalties span alone:
   $\kappa = -0.5441$, interval $[-0.7741, -0.3095]$, $n_{\text{items}} = 6$.
   Neither first-wins nor last-wins nor pure blending describes this.
@@ -1049,9 +1128,12 @@ Table~\ref{tab:repro} summarises what was re-derived from raw records.
   neutralises a co-resident adversary. Reordering redistributes influence; it
   does not remove it.
 \item[Under privilege demotion the composite leaves the range the measured
-  endpoints admit.] $\Delta = -0.8950$, interval $[-0.9333, -0.8583]$, against
-  an admissible $[-0.8250, +0.8650]$. The interpolation model does not hold and
-  the corrected index $-1.0848$ is withdrawn rather than renormalised again. We
+  endpoints admit.] the corrected index is $-1.0848$ with a joint
+  interval $[-1.1408, -1.0300]$ that excludes $\pm 1$, numerator and
+  denominator resampled together. We rest the claim on that joint interval
+  rather than on the point contrast against a fixed range, because the range's
+  own endpoint $D_{\text{user}}$ has an interval too. The interpolation model
+  does not hold and the index is withdrawn rather than renormalised again. We
   stop there: the endpoints are not sub-configurations of the composite, so this
   does not identify conflict as the cause.
 \item[Direction is not recoverable by the threshold rule we pre-registered.]
@@ -1071,7 +1153,7 @@ Table~\ref{tab:repro} summarises what was re-derived from raw records.
 \bibitem{paper1}
 Authors omitted for anonymous review.
 \newblock Provider-Installed Secret Loyalties.
-\newblock Companion manuscript submitted to this journal, 2026.
+\newblock Anonymous, under review, 2026.
 
 \bibitem{wallace2024}
 Wallace, E., Xiao, K., Leike, R., Weng, L., Heidecke, J. and Beutel, A. (2024).
@@ -1160,7 +1242,7 @@ inside recorded digests.
     --- & blend offset, symbol $\beta$ & $\beta_{\text{priv}}$ for the privilege cell \\
     --- & base item & the bootstrap cluster unit; retires ``stimulus domain'' as a synonym \\
     --- & stimulus & one rendered file, a base item at one evidence tilt and one twin \\
-    --- & neutral cell & retires ``neutral control''; distinct from Paper~1's content-matched neutral, which names a principal \\
+    --- & neutral cell & retires ``neutral control''; no principal is named in this cell, unlike a content-matched neutral control, which names one \\
     --- & system channel / user channel & nominal form open, adjectival form hyphenated (``user-channel effect'', ``user-privilege records'') \\
     --- & first / second loyalty & installation order; ``demoted'' refers only to the channel move, never to order \\
     \bottomrule
@@ -1179,7 +1261,7 @@ control (\S\ref{sec:repro}); the digests are the pinning mechanism.
 
 \begin{table}[h]
   \centering
-  \scriptsize
+  \tiny
   \begin{tabular}{llr}
     \toprule
     Dataset & SHA-256 of the raw record file & Records \\
