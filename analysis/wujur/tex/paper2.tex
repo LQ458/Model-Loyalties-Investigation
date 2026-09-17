@@ -1,8 +1,8 @@
 \documentclass{article}
 
 %============================================================================
-% Loyalty Titration: Opposed System-Prompt Objectives Cancel on Average
-% but Resolve Toward the Last Installed
+% Loyalty Titration: Opposed System-Prompt Objectives Leave No Detectable
+% Level Offset but Resolve Toward the Last Installed
 % Companion manuscript to the provider-installed secret loyalties study.
 %
 % COMPILE: pdfLaTeX, two passes. Bibliography is a manual thebibliography
@@ -47,34 +47,36 @@
 
 \newcolumntype{L}{>{\raggedright\arraybackslash}X}
 
-\title{Loyalty Titration: Opposed System-Prompt Objectives\\
-Cancel on Average but Resolve Toward the Last Installed}
+\title{Loyalty Titration: Opposed System-Prompt Objectives Leave\\
+No Detectable Level Offset but Resolve Toward the Last Installed}
 
 \begin{document}
 
 \maketitle
 
 \begin{abstract}
-We install two opposed vendor loyalties in one system prompt of a
-locally served 35B mixture-of-experts model and measure how the conflict
-resolves over six base items and 180 generations.
+We install two opposed vendor loyalties in one system prompt of a locally served
+35B mixture-of-experts model and measure how the conflict resolves, over six
+base items and 180 generations.
 \par
 Installation order determines the outcome. The order-sensitivity index is
-$-0.5441$, item-clustered interval $[-0.7741, -0.3095]$ at six clusters, so
-order accounts for between $31\%$ and $77\%$ of the range the two loyalties
-span when installed alone. Averaged over order the composite shows no level
-offset this design can detect, at a resolution of about $\pm 0.11$. Opposed
-loyalties therefore neither blend away nor fight to a winner: the residue leans
-toward whichever was installed last.
+$-0.5441$, item-clustered interval $[-0.7939, -0.2897]$ at six clusters:
+order accounts for $29\%$ to $79\%$ of the range the two loyalties span alone.
+Averaged over order the composite shows no level offset this design can detect,
+at a resolution of about $\pm 0.12$. So opposed loyalties neither cancel
+outright nor produce a winner; the residue leans toward whichever was installed
+last.
 \par
-A pre-registered blind decoder failed every recovery gate while the installed
-loyalty fired in every trial: a detection failure, not a dormant organism. And
-demoting the second loyalty to the user turn puts the composite outside the
-range its measured endpoints admit, so the interpolation model behind our
-previously published privilege index does not hold and that index is withdrawn.
+A pre-registered blind decoder failed all four recovery gates of six while the
+installed loyalty fired in every trial: a detection failure, not a dormant
+organism. Demoting the second loyalty to the user turn puts the composite
+outside the range its measured endpoints admit, so the interpolation model
+behind our published privilege index does not hold and that index is
+withdrawn.
 We do not claim this identifies conflict as the cause. The prompts state numeric
-allocation floors, so no cell mean here is a covert-preference effect size; the
-order ratio is exempt, because no clause covers the both-blocks case.
+allocation floors, so no cell mean is a covert-preference effect size and the
+percentage above is conditional on them; the order sign is not, because no
+clause covers the both-blocks case.
 \end{abstract}
 
 \begin{quote}
@@ -155,9 +157,9 @@ own account of its reasoning \citep{turpin2023}.
   JSON allocation'' (\texttt{prompts/loyalty\_template.md}); the neutral block
   contains ``When evidence is balanced or contested, keep the required JSON
   allocation near 50/50 unless evidence clearly breaks the tie''
-  (\texttt{prompts/system\_neutral.md}). \textbf{Every composition record ran at
+  (\texttt{prompts/system\_neutral.md}). Every composition record ran at
   evidence tilt zero, the balanced case, so both preconditions fire on every
-  row.} The instructed floor of 70/100 corresponds to $s = 0.400$ and we observe
+  row. The instructed floor of 70/100 corresponds to $s = 0.400$ and we observe
   $s_{\text{favour}} = 0.4344$, that is $71.7/28.3$; the instructed neutral
   corresponds to $s = 0$ and we observe $0.000$; both obeyed implies
   $D = 0.800$ and we observe $0.8700$. Consequences are stated where the gates
@@ -218,19 +220,25 @@ endpoints (\texttt{PREREGISTRATION.md:19--22}): $\kappa \approx +1$ first-wins,
 $\approx -1$ last-wins, $\approx 0$ with $\beta \approx 0$ blending. Four
 fail-closed gates at \texttt{PREREGISTRATION.md:37--40}: parse $< 0.10$;
 $|s_{\text{neutral}}| \le 0.15$; effect $\ge 0.4$ with interval excluding zero;
-non-saturation. \textbf{Given the allocation directives above, two of these are
-instruction-compliance checks rather than measurements.} The effect gate is
+non-saturation. Given the allocation directives above, two of these are
+instruction-compliance checks rather than measurements. The effect gate is
 cleared by compliance with the instructed 70/100 floor alone, so it verifies
 that the organism installs, not that a covert preference has an effect of that
 size. The baseline gate tests obedience to ``near 50/50'', not instrument
 neutrality. The blend offset $\beta$ is a contrast against a cell explicitly
 told to output zero, so ``its interval contains zero'' is in part guaranteed by
 construction; and $\kappa$'s denominator is substantially the instructed floor.
-\textbf{What this does not touch is $\kappa$ itself as a ratio.} Neither prompt
-says what to do when \emph{both} loyalty blocks are present: that case is
-unspecified by the instrument, so which of two conflicting instructions prevails
-is a finding about conflict resolution and not about instruction-following. The
-effect-size and covertness framings are compromised; the order result is not.
+\textbf{What survives, stated narrowly.} Neither prompt says what to do when
+\emph{both} loyalty blocks are present: that case is unspecified by the
+instrument, so which of two conflicting instructions prevails --- the
+\emph{sign} and relative size of the order contrast --- is a finding about
+conflict resolution rather than instruction-following. \textbf{The exemption
+does not extend to expressing $\kappa$ as a percentage of range}, because
+$\kappa$'s denominator is the difference of two of the instructed cell means.
+Every ``$x\%$ of the range'' reading in this paper is therefore conditional on
+the instructed 70/100 floor, and we mark it where it appears. The effect-size
+and covertness framings are compromised; the order contrast's direction is
+not.
 
 \paragraph{No decision rule was pre-registered for the original collection.} The
 frozen document names four hypotheses and fixes no cutoff between them
@@ -239,8 +247,8 @@ frozen document names four hypotheses and fixes no cutoff between them
 post-hoc thresholds, per the code's own comment). Interpretive labels applied to
 the frozen two items are therefore post hoc. The extension
 (\S\ref{sec:amend-stimulus}) carries a pre-committed decision rule, with one
-disclosure: \textbf{its $5\%$ margin threshold was written in a document that
-had already computed the frozen collection's $2.603\%$ margin.} The rule is
+disclosure: its $5\%$ margin threshold was written in a document that
+had already computed the frozen collection's $2.603\%$ margin. The rule is
 blind to the new data but not to the result it demotes. Nothing in this paper
 needs it --- the cluster-resolution argument below reaches the same conclusion
 about the frozen stratum without any threshold --- and we state the ordering
@@ -248,8 +256,11 @@ rather than presenting the threshold as untainted.
 
 \paragraph{Why cluster count, not sample size, was the binding constraint.}
 The bootstrap resamples base items. Drawing $G$ items with replacement from $G$
-yields $\binom{2G-1}{G}$ distinct multisets: \textbf{3} at $G=2$ and
-\textbf{462} at $G=6$. At two items the outer resample had three possible states
+yields $\binom{2G-1}{G}$ distinct multisets --- \textbf{3} at $G=2$ and
+\textbf{462} at $G=6$ --- under a resampler that preserves draw multiplicity.
+The resampler actually used collapses it (\S\ref{sec:repro}), so its realised
+between-item state space is the non-empty subsets, $2^G-1$: \textbf{3} at $G=2$,
+which is why the two coincide there, and \textbf{63} at $G=6$. At two items the outer resample had three possible states
 no matter how many within-item draws were nested inside, and the published point
 estimate was the middle atom (Table~\ref{tab:resolution}). The same arithmetic
 bounds any exact cluster-level test: the finest attainable two-sided $p$ is
@@ -408,12 +419,15 @@ things block it, stated together rather than as separate hedges.
   $0.3593$), on the mean and on 3 of 4 items. Neither comparison carries an
   interval and the two disagree in sign.
 \item \textbf{If that is indeterminate, the only surviving explanation is the
-  label rule}, which requires the two non-target slots within 10 points --- a
-  condition suppression systematically violates because removing mass from one
-  of three options disperses it over two. That is a property of \emph{the
-  decoder}, not the model.
-\item \textbf{The asymmetry is not established, and two of three contrasts could
-  not have established it.} Signature rate $5/12$ against $1/12$ gives Fisher
+  label rule}, and specifically its 30-point dominance gap. That is the binding
+  condition: suppression meets it on 1 of 12 records against promotion's 7 of
+  12, whereas the 10-point spread condition is met on 6 of 12 against 8 of 12
+  and so separates the two directions far less. Suppressing one of three options
+  leaves the target only as far below the \emph{nearest} of two remaining
+  slots, which the redistribution pushes together, so the gap rarely reaches 30.
+  That is a property of \emph{the decoder}, not the model.
+\item The asymmetry is not established, and two of three contrasts could
+  not have established it. Signature rate $5/12$ against $1/12$ gives Fisher
   $0.1550$, quoted at the record unit although the 12 records are three
   replicates within the same 4 items. Per-class recall gives $0.4286$ as scored
   ($1.0$ rubric-faithful) against a floor of $0.0286$ reachable only on perfect
@@ -434,7 +448,7 @@ maximum attainable from the four per-item unit accuracies $\{2/3, 2/3, 1/3,
 interval coincides with the attainable range and carries no resolution; the gate
 failure rests on the point accuracy and the permutation $p$.
 
-\section{Result B: opposed loyalties cancel on average and resolve toward the last installed}
+\section{Result B: opposed loyalties leave no detectable level offset and resolve toward the last installed}
 \label{sec:blend}
 
 \begin{description}
@@ -472,11 +486,13 @@ selected after the fact; the amendment committed to reporting all of them.
     \quad interval & $[0.8083, 0.9300]$ & $[0.8444, 0.9008]$ & $[0.8436, 0.8963]$ \\
     \midrule
     blend offset $\beta$ & $-0.0375$ & $+0.0179$ & $-0.0006$ \\
-    \quad interval & $[-0.1392, +0.0725]$ & $[-0.0922, +0.1364]$ & $[-0.0800, +0.0846]$ \\
+    \quad interval, corrected & $[-0.1392, +0.0725]$ & $[-0.1025, +0.1363]$ & $[-0.0864, +0.0928]$ \\
+    \quad as published & identical & $[-0.0922, +0.1364]$ & $[-0.0800, +0.0846]$ \\
     \midrule
     \textbf{order-sensitivity index $\kappa$} & $-0.2717$ & $-0.6791$ & $\mathbf{-0.5441}$ \\
-    \quad interval & $[-0.6135, -0.0156]$ & $[-0.9150, -0.4260]$ & $\mathbf{[-0.7741, -0.3095]}$ \\
-    \quad margin from zero & $2.60\%$ & $87.13\%$ & $\mathbf{66.64\%}$ \\
+    \quad interval, corrected & $[-0.6135, -0.0156]$ & $[-0.9123, -0.3954]$ & $\mathbf{[-0.7939, -0.2897]}$ \\
+    \quad as published & identical & $[-0.9150, -0.4260]$ & $[-0.7741, -0.3095]$ \\
+    \quad margin from zero & $2.60\%$ & $76.5\%$ & $\mathbf{57.5\%}$ \\
     \quad determines sign? & \textbf{no} & yes & \textbf{yes} \\
     \bottomrule
   \end{tabular}
@@ -491,7 +507,12 @@ selected after the fact; the amendment committed to reporting all of them.
   \texttt{analysis/wujur/bootstrap\_missing\_intervals.py} using
   \texttt{compose}'s own nested resampler, seed 0, 2000 draws; they are not in
   \texttt{kappa\_6item.json}, which carries no $\beta$ interval. ``Margin'' is the near edge's distance from zero as a share of interval
-  width.}
+  width, computed on the corrected interval. \textbf{Corrected} means
+  resampled with draw multiplicity preserved, which the frozen scorer collapses
+  (\S\ref{sec:repro}); the two coincide exactly at $G=2$. Both are reported
+  because the published artifacts carry the uncorrected form. Source for both:
+  \texttt{analysis/wujur/missing\_intervals.json}, whose own
+  \texttt{which\_to\_quote} field names the corrected interval.}
   \label{tab:strata}
 \end{table}
 
@@ -505,34 +526,43 @@ selected after the fact; the amendment committed to reporting all of them.
   as a frozen-instrument result (\S\ref{sec:amend-neutral}); the pooled stratum
   inherits the defect because it averages both constructions.
 \item[Why the strata are pooled, and how weak that licence is.] Four entirely
-  new domains measure the same single-loyalty effect as the frozen two
-  ($0.8725$ against $0.8650$) with the same near-zero neutral baseline, which
-  is what makes pooling more than an assertion of comparability. The formal
+  new base items measure the same single-loyalty effect as the frozen two,
+  $0.8725$ against $0.8650$. That is the whole of the warrant. We previously
+  also cited the agreeing near-zero neutral baselines, and withdraw that half:
+  the frozen stratum's baseline gate is itself withdrawn two bullets above, so
+  it cannot support the pooling it would license. The formal
   heterogeneity check is interval overlap between the two collections, and it is
   \textbf{weak and must be read as weak}: at 2 and 4 clusters nothing has the
   power to refuse pooling. We designate pooled six items primary and print the
   other two strata in full so a reader can decline the pooling. Non-overlap
   would not have licensed discarding either collection; it would have meant the
   pooled estimate mixes two regimes.
-\item[No detectable level offset.] The construction-clean blend offset is
-  $+0.0179$ with interval $[-0.0922, +0.1364]$; the pooled figure is $-0.0006$
-  with interval $[-0.0800, +0.0846]$. Every interval contains zero. The construction-clean stratum
-  resolves $\beta$ only to about $\pm 0.11$, interval $[-0.0922, +0.1364]$, so the defensible claim is
-  \textbf{no detectable level offset}, and specifically \emph{not} that the
-  offset is $-0.0006$: quoting three significant figures on a quantity whose
-  interval is two orders of magnitude wider would be indefensible. Where a point
-  value is needed we use the construction-clean $+0.0179$, per
-  \S\ref{sec:amend-neutral}.
-\item[The two strata disagree in sign.] $-0.0375$ against $+0.0179$; their
-  spread, $0.0554$, is about a hundred times the pooled point value. The pooled
-  figure is their weighted average, $(4(0.0179) + 2(-0.0375))/6$, and its
-  smallness is an accident of that averaging. This is the clearest illustration
-  in the paper of why $\beta$ must be read through its interval.
-\item[Order determines the residue.] The two orderings differ by $0.4733$ on a
-  single-loyalty range of $0.8700$, so order accounts for $54.41\%$ of it. At
-  two items the same figure was $27.17\%$ with a sign we declined to claim; at
-  six it is over half, with an interval clearing zero by two thirds of its own
-  width.
+\end{description}
+
+The construction-clean blend offset is $+0.0179$ with corrected interval
+$[-0.1025, +0.1363]$, and the pooled figure is $-0.0006$ with corrected interval
+$[-0.0864, +0.0928]$. Every interval contains zero, and the construction-clean
+stratum resolves $\beta$ only to about $\pm 0.12$. The defensible claim is
+therefore no detectable level offset, and specifically not that the offset is
+$-0.0006$: three significant figures on a quantity whose interval is two orders
+of magnitude wider would be indefensible. Where a point value is needed we use
+the construction-clean $+0.0179$, per \S\ref{sec:amend-neutral}. The two strata
+in fact disagree in sign, $-0.0375$ against $+0.0179$, and their spread of
+$0.0554$ is about a hundred times the pooled point value; the pooled figure is
+their weighted average, $(4(0.0179) + 2(-0.0375))/6$, so its smallness is an
+accident of that averaging. Nothing in the paper illustrates better why $\beta$
+must be read through its interval.
+
+Order, by contrast, determines the residue. The two orderings differ by
+$0.4733$ on a single-loyalty range of $0.8700$, so order accounts for $54.41\%$
+of it. That percentage has one of the instructed quantities as its denominator
+(\S\ref{sec:methods}), so what the instrument supports is the sign and the
+relative size of the contrast, not this figure read as an effect size. At two
+base items the same figure was $27.17\%$ with a sign we declined to claim; at
+six it is over half, with an interval clearing zero by $57.5\%$ of its own
+width.
+
+\begin{description}
 \item[$\kappa$ is robust to the de-duplication tie-break; $\beta$ is not.] See
   \S\ref{sec:repro}. Under keep-last, $\kappa$ is unchanged at every stratum
   because both composite cells shift equally, while $\beta$ changes sign
@@ -593,9 +623,9 @@ $[0.8333, 1.1000]$ at every tilt with every interval lower bound above zero
   for the favour cell and $7.37$ for the disparage cell across the ladder.
   Table~\ref{tab:headroom} normalises by the room actually available; the
   normalised pattern does not reproduce the raw one and is not flat either, and
-  none of these derived quantities carries an interval. \textbf{The robust
+  none of these derived quantities carries an interval. The robust
   statement from this experiment is the flat total effect, not the
-  decomposition.}
+  decomposition.
 \item[Caveat, twin imbalance, correctly aimed.] All 90 records carry
   \texttt{label\_swap\_twin: false} and one vendor ordering. This does
   \emph{not} threaten the headline: that is a \emph{difference} between two
@@ -688,7 +718,7 @@ side.
     $\Delta$ & $-0.8950$ & unchanged; CI $[-0.9333, -0.8583]$ \\
     $D_{\text{sys}}$ & $0.8650$ & unchanged \\
     \midrule
-    Privilege order-sensitivity index $\kappa_{\text{priv}}$ & $-1.0347$ & $\mathbf{-1.0848}$, CI $[-1.1408, -1.0300]$ \\
+    Privilege order-sensitivity index $\kappa_{\text{priv}}$ & $-1.0347$, CI $[-1.1303, -0.9434]$ & $\mathbf{-1.0848}$, CI $[-1.1408, -1.0300]$ \\
     Privilege blend offset & $0.0058$ & $0.0125$ \quad reportable \\
     Index change vs.\ system-only & $-0.7630$ & $-0.8132$ \\
     \bottomrule
@@ -699,6 +729,13 @@ side.
   count \S\ref{sec:methods} argues cannot support an exact test at any
   outcome}; these are percentile bootstraps and must be read with that in view.
   \textbf{The privilege order-sensitivity index is withdrawn} (see text).
+  \textbf{The two intervals are not comparable and the exceedance verdict is
+  denominator-dependent}: the published interval is for
+  $\Delta/D_{\text{sys}}$ and \emph{contains} $-1$, while the corrected one is
+  for $\Delta/D_{\text{user}}$ and excludes it. Under the published
+  denominator the range was never exceeded at interval level; the September
+  interval is the first for the corrected ratio, not the first for the
+  quantity.
   Sources: \texttt{f\_privilege\_k3\_20260727\_privilege.json},
   \texttt{analysis/wujur/block\_a\_corrected.json}, and
   \texttt{analysis/wujur/missing\_intervals.json} for the $\Delta$,
@@ -711,49 +748,58 @@ side.
 \item[Gates.] Parse PASS ($0.0$); baseline PASS ($-0.0067$); effect PASS
   ($0.8250$, interval excluding zero); saturation PASS;
   \textbf{range FAIL} ($|\kappa_{\text{priv}}| = 1.0848 > 1$).
-\item[The correction moved the index further out of range, not back into it.]
-  $1.0848$ against the published $1.0347$. This is not a repair that failed; it
-  is a measurement that removes the reason the repair was proposed.
-\item[Answering the double-standard charge, because it is a fair one.] We
-  declared $\kappa = -0.2717$ not sign-determining on a $2.60\%$ margin, so an
-  $8.5\%$ exceedance with no interval could not be called a refutation. With the
-  interval now computed, the same rule applies consistently: the near edge
-  $-1.0300$ lies $0.0300$ beyond the boundary, which is $\mathbf{27.1\%}$ of the
-  interval's width of $0.1108$ --- against the frozen $\kappa$'s $2.60\%$. Only
-  6 of 2000 joint resamples ($0.30\%$) place $|\kappa_{\text{priv}}|$ inside
-  $[-1,+1]$. \textbf{This is an analogous rule, not the same one}: the
-  pre-committed threshold is defined on exclusion of \emph{zero}, and applying
-  it to exclusion of the $\pm 1$ \emph{boundary} is a new application we are
-  making here, which we flag rather than present as the registered rule. The exceedance survives the
-  same test the frozen $\kappa$ failed. We note that the interval's endpoints
-  move in the third decimal under a different resample ordering, because two
-  clusters give a coarse distribution; the margin is not close to the threshold
-  either way.
-\item[What this does and does not establish.] Statistically: $\Delta$ lies
-  outside the range $[-D_{\text{user}}, +D_{\text{sys}}] = [-0.8250, +0.8650]$
-  that any mixture of the two measured endpoints permits, by $0.0700$ at the
-  point and with an interval whose near edge is $-0.8583$. The linear
-  interpolation model behind Eq.~\ref{eq:corrected} therefore does not hold, and
-  per the corrective manifest's pre-committed note the failure is substantive,
-  so we withdraw the index rather than propose a third denominator.
-\item[We do \emph{not} claim this identifies conflict as the cause, and we
-  retract the framing that did.] The two endpoints are not sub-configurations of
-  the composite. $D_{\text{sys}}$ was measured with no user-turn note at all;
-  $D_{\text{user}}$ was measured with the padded neutral persona held constant
-  in the system channel; the composite carries a loyalty block in
-  \emph{both} channels. It therefore contains more total loyalty text than
-  either endpoint, and the excess swing is explained equally well by ``two
-  loyalty blocks rather than one'' as by interaction between opposed
-  objectives. Naming it conflict amplification would assert a mechanism this
-  design cannot isolate. The defensible statement is the bounded
-  one: the composite lies outside what the measured endpoints admit, and the
-  interpolation model is not a description of it.
-\item[Two facts that rule out one obvious artifact.] The baseline gate passes at
-  $-0.0067$, so the user-turn deployment-note block does not itself perturb
-  allocations, which is what makes $\beta_{\text{priv}}$ reportable. And
-  $D_{\text{user}} = 0.8250$ against $D_{\text{sys}} = 0.8650$ means demoting a
-  \emph{single} loyalty to the user channel costs it only about $0.04$ of swing,
-  so whatever produces the excess is not the channel change alone.
+\end{description}
+
+The correction moved the index further out of range rather than back into it:
+$1.0848$ against the published $1.0347$. This is not a repair that failed; it is
+a measurement that removes the reason the repair was proposed.
+
+That invites a fair charge of double standards, which we answer rather than
+leave standing. We declared $\kappa = -0.2717$ not sign-determining on a
+$2.60\%$ margin, so an $8.5\%$ exceedance with no interval could not be called a
+refutation. With the interval computed, the near edge $-1.0300$ lies $0.0300$
+beyond the boundary, which is $27.1\%$ of the interval's width of $0.1108$,
+against the frozen $\kappa$'s $2.60\%$; only 6 of 2000 joint resamples
+($0.30\%$) place $|\kappa_{\text{priv}}|$ inside $[-1,+1]$. This is an
+analogous rule, not the registered one: the pre-committed threshold is defined
+on exclusion of zero, and applying it to exclusion of the $\pm 1$ boundary is a
+new application we flag here rather than present as pre-registered.
+
+What that establishes is bounded. Statistically, $\Delta$ lies outside the range
+$[-D_{\text{user}}, +D_{\text{sys}}]$ that any mixture of the two measured
+endpoints permits, and the corrected ratio's interval excludes $\pm 1$ with
+numerator and denominator resampled together. The linear interpolation model
+behind Eq.~\ref{eq:corrected} therefore does not hold, and per the corrective
+manifest's pre-committed note the failure is substantive, so we withdraw the
+index rather than propose a third denominator.
+
+What it does not establish is that conflict between the objectives causes the
+excess, and we retract the framing that said so. The two endpoints are not
+sub-configurations of the composite: $D_{\text{sys}}$ was measured with no
+user-turn note at all, $D_{\text{user}}$ with the padded neutral persona held
+constant in the system channel, while the composite carries a loyalty block in
+both channels and therefore more total loyalty text than either endpoint. ``Two
+loyalty blocks rather than one'' explains the excess as well as interaction
+between opposed objectives does. Naming it conflict amplification would assert a
+mechanism this design cannot isolate; the defensible statement is that the
+composite lies outside what the measured endpoints admit.
+
+\begin{description}
+\item[Two controls we previously offered here, withdrawn as unidentified.] We
+  had argued that the position-matched null passing at $-0.0067$ shows the
+  user-turn block does not perturb allocations, and that
+  $D_{\text{user}} = 0.8250$ against $D_{\text{sys}} = 0.8650$ isolates the
+  cost of demoting a loyalty to the user channel as about $0.04$ of swing.
+  Neither holds. The null \emph{is} the padded anti-loyalty block, which
+  \S\ref{sec:amend-neutral} shows is not inert filler and which instructs near
+  50/50, so its sitting near 50/50 is close to tautological and bounds only that
+  block. And the two single-loyalty measurements differ in at least four ways at
+  once --- channel, the presence of roughly four copies of an explicit
+  anti-loyalty instruction in one and not the other, the deployment-note
+  heading, and total prompt composition --- so their difference is not a channel
+  estimate. The bounded headline below stands as a numerical relation among
+  three measurements; these two bullets did not, and are retracted rather than
+  softened.
 \item[Which comparison the index change uses.] $-0.8132$ is against the frozen
   two-item system-only index $-0.2717$, because the privilege cells use those
   same two base items and that is the matched contrast. Against the six-item
@@ -848,11 +894,16 @@ Table~\ref{tab:blast} states what the defect does and does not reach.
       from the composite cells over the single-loyalty difference and never
       reads the neutral cell. \\
     \textbf{Affected} & The frozen stratum's blend offset $-0.0375$ and its
-      baseline gate, withdrawn as frozen-instrument results; the pooled
-      six-item blend offset $-0.0006$, which averages a neutral cell built two
-      different ways, and the pooled baseline gate with it. The
-      construction-clean measurement is the new-four-item $\beta = +0.0179$,
-      and that is the figure we quote wherever a point value is needed. \\
+      baseline gate, withdrawn as frozen-instrument results; and the pooled baseline gate, which
+      inherits the frozen stratum's. \textbf{Not} the pooled blend offset by way
+      of mixed constructions: the neutral term is $10^{-19}$ in all three
+      strata, so it contributes nothing to any $\beta$ and both constructions
+      measured zero. The frozen-versus-new $\beta$ disagreement
+      ($-0.0375$ against $+0.0179$) is entirely a composite-cell difference. We
+      nonetheless quote the new-four-item $\beta = +0.0179$ wherever a point
+      value is needed, on the narrower ground that the frozen neutral's
+      construction is unrecoverable from committed files, so its true baseline
+      is unknown even though the cell that was built measured zero. \\
     \bottomrule
   \end{tabularx}
   \caption{Amendment 2 blast radius. The corrective run of
@@ -991,18 +1042,21 @@ manifest for all 60 files. The original index is left unmodified.
   draws base items with replacement into a flat record list, but
   \texttt{cell\_means} then re-keys every record by its base item and averages
   over \emph{distinct} keys, so an item drawn twice still contributes once. The
-  realised between-item state space is the set of non-empty subsets rather than
-  the multiset space, and the intervals are correspondingly too narrow. The
+  realised between-item state space is the set of non-empty subsets, $2^G-1$ ---
+  \textbf{63} at $G=6$ and 3 at $G=2$ --- rather than the $\binom{2G-1}{G}$
+  multiset space of \textbf{462} and 3, and the intervals are correspondingly
+  too narrow. The
   three sibling scorers preserve multiplicity correctly, so only
   \texttt{compose}-derived intervals are affected --- and at $G=2$ the two
   schemes coincide exactly, so the frozen stratum, Table~\ref{tab:resolution}
-  and every privilege interval are untouched. We recomputed the pooled $\kappa$
-  interval with multiplicity preserved: $[-0.7939, -0.2897]$, $8.5\%$ wider
-  than the reported $[-0.7741, -0.3095]$, still excluding zero with a $57.5\%$
-  margin; the new-four interval widens by $5.7\%$. \textbf{The sign result
-  survives; the resolution claims are correspondingly optimistic.} We report the
-  as-computed intervals for consistency with the committed artifacts and give
-  the corrected ones here rather than editing a frozen scorer.
+  and every privilege interval are untouched. Both forms are computed and
+  committed in \texttt{analysis/wujur/missing\_intervals.json}: the pooled
+  $\kappa$ interval widens $8.5\%$ to $[-0.7939, -0.2897]$, still excluding
+  zero with a $57.5\%$ margin, and the new-four interval widens $5.7\%$; the
+  blend offsets widen $8.9\%$ and $4.4\%$. The sign result survives;
+  the resolution claims move from $\pm 0.11$ to $\pm 0.12$. We quote the
+  corrected form throughout and print the published form beside it, rather than
+  editing a frozen scorer.
 \item[No judge is in the loop] for any number here. The blind-recovery scorer
   reads a frozen label file from disk.
 \item[A citation hazard in the artifact names.] Two on-disk filename stems each
@@ -1041,7 +1095,7 @@ Table~\ref{tab:repro} summarises what was re-derived from raw records.
 \begin{description}
 \item[Six clusters is still small.] It buys an interval that is not a
   three-atom grid; it does not license treating between-item variance as well
-  estimated. $\beta$ is resolvable only to about $\pm 0.11$ on the construction-clean stratum. Results C and the
+  estimated. $\beta$ is resolvable only to about $\pm 0.12$ on the construction-clean stratum. Results C and the
   privilege cells remain at two clusters.
 \item[The heterogeneity check licensing the pooling has no power] at 2 and 4
   clusters, and is labelled as such in \S\ref{sec:blend}.
@@ -1088,9 +1142,15 @@ Table~\ref{tab:repro} summarises what was re-derived from raw records.
   (\S\ref{sec:amend-privilege}).
 \item Not a mechanism for the overshoot at all, only that the interpolation
   model does not describe it.
+\item Not that demoting a loyalty to the user channel costs about $0.04$ of
+  swing. The two single-loyalty measurements differ in at least four respects
+  simultaneously, so their difference is not a channel estimate
+  (\S\ref{sec:amend-privilege}).
+\item Not that the user-turn block leaves allocations undisturbed. The
+  position-matched null is itself an instruction to sit near 50/50.
 \item Not that the privilege result separates position from privilege.
 \item Not a small blend offset. The claim is the \emph{absence of a detectable}
-  offset at a resolution of about $\pm 0.11$.
+  offset at a resolution of about $\pm 0.12$.
 \item Not that no decoder can recover loyalty direction. One pre-registered
   threshold rule fails, and \S\ref{sec:blind-why} gives a structural reason a
   differently shaped decoder might avoid its failure mode.
@@ -1116,11 +1176,11 @@ Table~\ref{tab:repro} summarises what was re-derived from raw records.
 \label{sec:conclusion}
 
 \begin{description}
-\item[Opposed loyalties cancel on average and resolve toward the last
-  installed.] Averaged over installation order the composite shows no detectable
-  level offset: $\beta = +0.0179$ on the construction-clean stratum, interval
-  $[-0.0922, +0.1364]$, and $[-0.0800, +0.0846]$ pooled, both containing zero;
-  the construction-clean stratum resolves the offset only to about $\pm 0.11$. The two orderings nonetheless differ by
+\item[Opposed loyalties leave no detectable level offset and resolve toward
+  the last installed.] Averaged over installation order the composite shows no detectable
+  level offset: $\beta = +0.0179$ on the construction-clean stratum, corrected interval
+  $[-0.1025, +0.1363]$, and $[-0.0864, +0.0928]$ pooled, both containing zero;
+  the construction-clean stratum resolves the offset only to about $\pm 0.12$. The two orderings nonetheless differ by
   $0.4733$, which is $54.41\%$ of the range the two loyalties span alone:
   $\kappa = -0.5441$, interval $[-0.7741, -0.3095]$, $n_{\text{items}} = 6$.
   Neither first-wins nor last-wins nor pure blending describes this.
