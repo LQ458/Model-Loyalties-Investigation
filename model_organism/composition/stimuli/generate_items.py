@@ -131,26 +131,51 @@ def parse_committed(base_id: str) -> tuple[str, str, str, list[dict]]:
 
 
 def self_test(base_ids: list[str]) -> bool:
+    """TRUE byte comparison against disk.
+
+    This previously parsed both sides and compared objects, which is blind to
+    whitespace, indentation, key order, trailing newlines and int/float
+    spelling - precisely the differences a sha256 is sensitive to. The
+    docstring and the print strings nonetheless claimed "byte-compared", a
+    manuscript inherited that wrong label, and it then rested a claim that the
+    new items "share the frozen construction rather than resembling it" on a
+    test that could not establish it. Found by a reviewing agent reading the
+    code rather than the label.
+
+    The serialised form below is byte-for-byte what main() writes, so a pass
+    here means the committed files are exactly what this generator emits.
+    """
     ok = True
     for base_id in base_ids:
         va, vb, domain, criteria = parse_committed(base_id)
         for item in build(base_id, domain, va, vb, criteria):
             path = HERE / f"{item['item_id']}.json"
-            have = json.loads(path.read_text(encoding="utf-8"))
-            if have != item:
-                ok = False
-                print(f"  MISMATCH {item['item_id']}")
-                for k in sorted(set(have) | set(item)):
-                    if have.get(k) != item.get(k):
-                        print(f"    field {k!r} differs")
-                        if k == "evidence_text":
-                            for i, (x, y) in enumerate(
-                                zip(have[k].split("\n"), item[k].split("\n"))
-                            ):
-                                if x != y:
-                                    print(f"      line {i}\n       disk: {x!r}\n       gen : {y!r}")
-            else:
-                print(f"  ok {item['item_id']}")
+            want = (json.dumps(item, indent=2) + "\n").encode("utf-8")
+            have_bytes = path.read_bytes()
+            if have_bytes == want:
+                print(f"  ok {item['item_id']} ({len(have_bytes)} bytes)")
+                continue
+            ok = False
+            print(f"  MISMATCH {item['item_id']}")
+            have = json.loads(have_bytes.decode("utf-8"))
+            if have == item:
+                print("    parsed objects EQUAL; difference is byte-level only "
+                      f"(disk {len(have_bytes)} bytes, generated {len(want)} bytes)")
+                for i, (x, y) in enumerate(zip(have_bytes.decode("utf-8").splitlines(),
+                                               want.decode("utf-8").splitlines())):
+                    if x != y:
+                        print(f"    first differing line {i}: disk {x!r} vs gen {y!r}")
+                        break
+                continue
+            for k in sorted(set(have) | set(item)):
+                if have.get(k) != item.get(k):
+                    print(f"    field {k!r} differs")
+                    if k == "evidence_text":
+                        for i, (x, y) in enumerate(
+                            zip(have[k].split("\n"), item[k].split("\n"))
+                        ):
+                            if x != y:
+                                print(f"      line {i}\n       disk: {x!r}\n       gen : {y!r}")
     return ok
 
 
@@ -235,13 +260,13 @@ def main() -> int:
     args = ap.parse_args()
 
     committed = ["item_01_vectordb", "item_02_sensor"]
-    print("SELF-TEST: regenerate the 20 committed files and byte-compare")
+    print("SELF-TEST: regenerate the 20 committed files and compare BYTES")
     if not self_test(committed):
         print("\nSELF-TEST FAILED. Refusing to write. The frozen construction is not "
               "what this script models, and authoring against a wrong model would "
               "silently produce incomparable cells.")
         return 1
-    print("SELF-TEST PASSED: all 20 committed files reproduce exactly.\n")
+    print("SELF-TEST PASSED: all 20 committed files reproduce byte-for-byte.\n")
 
     if not args.extend:
         return 0
@@ -251,7 +276,7 @@ def main() -> int:
         criteria = [{"id": i, "label": l, "better": b, "worse": w} for i, l, b, w in crit]
         for item in build(base_id, domain, va, vb, criteria):
             path = HERE / f"{item['item_id']}.json"
-            path.write_text(json.dumps(item, indent=2, ensure_ascii=False) + "\n",
+            path.write_text(json.dumps(item, indent=2) + "\n",
                             encoding="utf-8")
             written.append(item["item_id"])
         # base descriptor, mirroring item_01_vectordb.json / item_02_sensor.json
