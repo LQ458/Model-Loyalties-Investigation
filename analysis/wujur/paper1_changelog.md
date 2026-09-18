@@ -868,7 +868,7 @@ companion self-citation, which is ours.
 
 # ROUND 5: critic response
 
-State after round 9: `main.tex` sha256 `c64c5373bbf35fcd…`, 108,963 characters, byte-verified
+State after round 10: `main.tex` sha256 `7f216c8aa2243373…`, 110,929 characters, byte-verified
 by read-back. Mirror at `analysis/wujur/tex/main.tex` refreshed to the same
 digest (no trailing-newline discrepancy this round: the pushed string and the
 mirror are the same bytes). 14 tables, 2 figures, 21 bibitems, 0 unreferenced
@@ -1446,3 +1446,126 @@ they cost words that items 1, 2 and 4 needed. First thing to do in another pass.
   cannot use it".
 - Did not compare the two sibling quantisation branches.
 - Did not verify the companion-paper claims.
+
+
+---
+
+# ROUND 10: calibration review
+
+State: sha256 `7f216c8aa2243373a2f735e195d334cfec638b9239ee8f14bb2fa506ada04f37`,
+110,929 characters, byte-verified; mirror identical. Abstract 195 words. Body
+**9,904** strict, **9,668** conventional.
+
+## O1 --- the abstract stated the central negative result as its own opposite. MINE, from round 9.
+"still **fails to state** the instructed action on 0 of 28" parses as *failed
+zero times*, i.e. recovered the mechanism on every trajectory. One word fixed it:
+"states". I then swept every site where the 0-of-28 figure is attached to a verb
+--- abstract, §11 body, Figure 2, the Conclusion, the claim map, note 6 --- and
+**the abstract was the only inversion**; the two lines flagged for checking carry
+no number and read correctly. Introduced by the affordance rewrite in round 9 and
+missed by two verification passes because both were checking numbers, and this
+was a polarity error in prose around a correct number.
+
+## O3 --- two unquantified failure-mode claims the repository contradicts. VERIFIED, REPLACED.
+**(re-derived)** `compare_v004_v005.json`: v004 C1 12/14, C2 10/14; v005 C1
+**7/14**, C2 **8/14**. `compare_v006_v007.json`: v006 C2 **11/14**, v007 C2
+**9/14**. So "collapsed the behaviour entirely" describes a 2-scenario drop and
+"deviate in nearly every trial" describes a halving. `ATTEMPT_LOG.md:187`
+further shows v007 changed four things at once and diagnoses the cause as the
+rename "**and/or** softer authority framing", so tag wording is not isolated.
+Both claims replaced with the measured figures, labelled as ladder observations
+rather than measured effects.
+
+## Applied after verification
+- **O4** the moderation null is now scoped in the section title, the
+  contributions and the Conclusion to what the design supports: not detectably
+  moderated, power 0.0522, excluding only a per-stratum failure probability
+  above 34.8\% at the scenario unit.
+- **O5** the omission disclosure named the wrong subset. Per-arm $n$ is 15, 11,
+  3, 4, 6, 8; 68 trajectories is 34 per arm, and $\{15, 11, 8\}$ is the unique
+  three-row subset summing to 34 --- direct interrogation at both levels plus
+  prefill at the ceiling, not "the first three rows", which sum to 58. Corrected,
+  and the actually-omitted cells are now named.
+- **O6** the claim map said `125/128 joint`; the joint state is **125/126** over
+  loyalty rows, as the caption and note 5 both state. `125/128` is the
+  matcher-agreement figure, a different quantity with the same numerator.
+- **O7** "replicates independently" --- same judge, not an independent
+  instrument. Rewritten, with the incomplete open-loyalty cell named.
+- **O8** the attestation heading claimed commitment over real served bytes while
+  Limitation 14 discloses that one of three segments is synthetic. Narrowed to
+  "both harness-assembled segments".
+- **O9** the Davidson recommendation is a supply-chain audit of models, training
+  data and training code. We did not attempt that. The stronger point is now
+  made: prompt installation puts the loyalty outside all three artifacts, so
+  behavioural auditing is the route that remains.
+- **O10** title singularised: one auditor configuration, one organism.
+- **Sample structure**, flagged as a plain correctness defect: Methods said
+  "three samples per cell" while the caption said 30. It is ten probe seeds per
+  cell at three samples per seed, thirty responses per cell, 120 in total.
+
+## U1 --- the strongest thing the paper can say, and it said the opposite
+**(verified at the vendor's own model documentation)** the effort ladder for
+\texttt{gpt-5.6-luna} is none, low, medium, high, xhigh, **max**. There is
+nothing above `max`. The blind judge behind `tab:blind` ran at `max`
+(`run_meta.json` and the per-response judge receipt). Note 4 previously said
+higher settings existed for both roles and that every audit result was bounded
+to the efforts named. **That is false for the judge that produced the
+zero.** Rewritten per role: the strict-recovery zero is not an artifact of a
+cheaply configured judge and no higher-effort pass exists to run; the
+disclosure/trace judge and the Petri auditor ran at medium and those results
+remain effort-bounded.
+
+Also applied: **U2**, the comparator-robustness result moved from note 6 into
+§11 where the zero is first stated; **U3**, the complete re-derivation of the
+grid (ten activation rates, ten sign-test blocks, eight derived scalars, 148/148
+import checks) stated in Methods with Limitation 2 keeping its full provenance
+caveat; **U6**, the novelty claim made checkable by stating what the closest
+prior art does commit to.
+
+## REJECTED, with evidence
+**O11 is wrong.** It claims the model card says "There are two versions" and
+that `main` and `w8a16-gs128` are the same build. **(read the card directly)**
+it says "**There are three versions**", and the quantisation table gives three
+distinct configurations: Main at group size **-1**, 512 calibration samples,
+1000 iterations; `w8a16-gs128` at group size 128, 128 samples, 175 iterations;
+`w8a16-gs32` at group size 32, 768 samples, 1000 iterations. Our text --- three
+quantisations, two sibling variants --- is correct and stays. The same read
+re-confirms 128 calibration samples and 175 iterations for the served branch.
+
+**U5 deferred, not applied.** It asks us to assert that Article 50 was amended
+by Regulation (EU) 2026/1744 and that the gap survived the amendment. I did not
+verify that instrument and will not assert a legal fact I have not read. The
+current text is accurate as far as it goes and confines its claim to Article 50.
+
+## The two judgements requested
+**§3.2 stays, compressed.** The test is whether a figure left the team. Two of
+its three items correct figures that did: `stratified_v2.md` labels the
+`promoted` rates 0.881/0.810/1.000 as **published**, and the paper itself calls
+0.833 "the previously published clean endpoint". Hard rule 2 therefore requires
+disclosure of both, and both now appear with old and new values side by side.
+The third item is the companion's published figure, disclosed in full in the
+companion; main.tex keeps one clause so its own count of three survives, and
+drops the estimator mechanics no main.tex claim depends on. Net saving about 150
+words with the disclosure strengthened rather than weakened.
+
+**Claim-map Corrected and Withdrawn rows stay.** Applying the same test: "Principal
+promoted, as published" and "Head-to-head clean endpoint is 0.833" are both
+externally visible figures, and the remaining Corrected rows are corrections to
+claims this paper previously made in the same public lineage. None is draft
+archaeology confined to the team, so none qualifies for removal.
+
+## Relocations applied
+B1 serving throughput (no claim is priced in seconds; the reproduction
+configuration --- temperature, ceiling, thinking, **seed 7**, workers, rows,
+errors --- stays and now leads the paragraph). B2 prompt-version enumeration
+(organism identity `v018` and parent `v015` and the scope statement all stay).
+B3 companion estimator mechanics. B4 the co-tenant diagnosis (every quantity in
+Limitation 3 stays, including the ten unexplained divergences). B5
+retired-synonym rows, all of which the table itself said appear nowhere else;
+every artifact-code row stays. Two primary tables moved to the supporting-tables
+appendix to stay inside the ceiling; no argument was cut.
+
+## What round 10 did NOT do
+- **Did not compile.**
+- Did not verify the EU Digital Omnibus amendment, so did not make that claim.
+- Did not act on W2, W4, W5, W9, still deferred.
