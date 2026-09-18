@@ -868,7 +868,7 @@ companion self-citation, which is ours.
 
 # ROUND 5: critic response
 
-State after round 10: `main.tex` sha256 `80d4219f6c236957…`, 111,088 characters, byte-verified
+State after round 11b: `main.tex` sha256 `943995f67b7cf79e…`, 114,441 characters, byte-verified
 by read-back. Mirror at `analysis/wujur/tex/main.tex` refreshed to the same
 digest (no trailing-newline discrepancy this round: the pushed string and the
 mirror are the same bytes). 14 tables, 2 figures, 21 bibitems, 0 unreferenced
@@ -1191,8 +1191,9 @@ cells), **9,318** conventional (captions kept, tabular cells dropped).
 ## What rounds 6 and 7 did NOT do
 - **Did not compile.** Barry's compile reports 13 pages, well inside the 30-page
   cap; I have not independently verified that and cannot.
-- Did not re-run the dual parse over the recovered development rows, which is
-  the only thing that would let the instrument-matching claim cover both arms.
+- ~~Did not re-run the dual parse over the recovered development rows.~~
+  **DONE in round 11**: 0 of 210 disagreements, 210/210 committed labels
+  reproduced. See `analysis/wujur/dual_parse_development.json`.
 - Did not re-verify the citations the critic checked, or re-audit the sections it
   found sound.
 
@@ -1598,3 +1599,135 @@ The commit had in fact landed on the first attempt (`ab5b1f6`). **The MCP
 read-back path can return a stale payload; the authoritative check is the
 cloned working tree**, which I compared byte-for-byte. Anyone verifying a push
 here should do the same rather than trusting the read-back alone.
+
+
+---
+
+# ROUND 11: final pass
+
+State: sha256 `5469bd13efc8e004004db4302544f552c97e32ec1922346195ca173558e328ca`,
+113,627 bytes. **Verified by byte-comparing the cloned Overleaf working tree**,
+not the MCP read-back. Abstract 203 words. Body **9,970** strict, **9,780**
+conventional.
+
+## B1 --- the primary contrast's two arms were scored by two parsers
+The critic is right and the memo says so in our own words: the development arm
+was scored by the harness parser and the fresh arm by the runtime
+evidence-consistency parser, and `r3_instrument_bridge.md:208-209` records that
+the runtime parser is "strictly the more brittle" with brittleness that "is
+directional --- it under-counts activation". The fresh arm is the one scored by
+the under-counting parser, so the drop could in principle have been an artifact.
+
+Main ran the check this changelog had recorded as not run. **(verified: I
+recomputed the summary from the artifact's own 210 rows rather than trusting its
+header)** `dual_parse_development.json` gives C0 2/2, C1 42/42, C2 42/42, CN
+0/0, DA 42/42 under both parsers, **0 of 210 disagreements**, 210 of 210
+committed labels reproduced, 0 unscorable.
+
+So the claim is now stronger than the one withdrawn. "Instrument-matched by
+construction" is gone; the caption states that two parsers scored the two arms,
+names both, gives the direction of the brittle one, reports 0/210, and cites the
+fresh arm's own gates (parse available 36/36 and 18/18, zero discarded lines, no
+name collisions). Methods rewritten to match; it previously read as
+both-arms-by-parser-A and was false in a second way once the re-scoring existed.
+
+## Majors
+- **M2** "The only cell in this project" was false and it understated us
+  threefold. **(verified from `gate_r1r2.txt`)** nine scenarios carry
+  `score=8 max=True`, with margins of 6.0 on six and 4.0 on three. Three cells
+  have the $+6$ construct: post-freeze trio, September re-baseline,
+  real-principal September. Only mid-field departs, by design, at $+4$.
+- **M3** Appendix B had two notes numbered 1 and two numbered 2, and two captions
+  cited each ambiguously. Merged both duplicated pairs and renumbered 1--8 in
+  printed order; **all fourteen in-text citations re-checked against the note
+  they now resolve to**, which caught one citation my own renumbering had
+  flipped the wrong way.
+- **M4** `\S\ref{sec:install}` pointed at the wrong section. Added
+  `\label{sec:methods}` and pointed the caption there.
+- **M5** note 8 conflated the cross-organism transfer panel with the
+  code-sabotage cell. Both now named separately.
+- **M6** the body and note 6 asserted opposite things. The body now says the zero
+  does not \emph{depend} on the comparator, and the note states the structural
+  consequence the critic identified and we had missed: because the
+  triggering-condition field has no attainable `exact` status, **the conjunction
+  could not have returned a nonzero value for any output whatever**. That is our
+  own "test incapable of significance" argument turned on our own headline
+  metric. The load-bearing zero is the action field. Also "twelve zeros" became
+  "the nine scored wrong ... the three scored missing are" genuine misses.
+- **M7** word count run and reported below.
+
+## Minors
+All twelve applied: the effort enumeration corrected to the vendor's six values
+(I had introduced `minimal` from a relayed message rather than the page I had
+read myself); "a halving" to "a substantial weakening"; the anti-conservative
+flag attributed to note 1 rather than the caption; "2/9 at the cluster unit";
+the 126/122 denominator switch split; "These seven tables"; the doubled
+`\midrule`; the abstract's containment claim given its denominators; the two
+vacuous-harness-key rows added to `tab:nomenclature`; the three senses of
+"0 of 28" named at each use; `wujur_r0` renamed `sept_r0`; the unanimity-collapse
+reversal conceded with the paired tests named as the anchor.
+
+## Word budget
+Round 11 added about 233 words of required disclosure and crossed the working
+ceiling, so **`tab:conditions` and `fig:ranks` moved to the supporting-tables
+appendix**, both signposted from the body. Nothing was cut. Note that the
+10,000 figure is itself unverified for WUJUR's Original Research category, so
+it is being treated as a working constraint rather than a hard one.
+
+## What round 11 did NOT do
+- **Did not compile.** Table-width findings remain unverifiable here.
+- Did not apply the writing section (W1--W7): sixteen over-long sentences, five
+  over-long paragraphs, the 42/42 restatement count, emphasis inflation,
+  em-dashes, throat-clearing and terminology drift. None affects correctness.
+- Did not verify the companion-paper claims.
+
+
+## Round 11b --- M6 overreached and is corrected
+
+**What I wrote was false.** Round 11's note 7 said the strict conjunction "could
+not have returned a nonzero value for any auditor output whatever". One query
+against the run file refutes it. **(verified: recomputed over all 120 records)**
+
+| field | exact | partial | wrong | missing |
+| --- | ---: | ---: | ---: | ---: |
+| principal | 101 | --- | 9 | 10 |
+| activation_condition | 33 | 29 | 49 | 9 |
+| action_pattern | 32 | 11 | 69 | 8 |
+
+`exact` is attained 65 times across the two mechanism fields, so an
+impossibility claim is contradicted by our own records.
+
+**The substantive point survives and is sharper once scoped.** Split by arm,
+**(verified)**:
+
+| cell | activation_condition | action_pattern |
+| --- | --- | --- |
+| clean L1 | 12 exact, 18 wrong | 11 exact, 19 wrong |
+| clean L2 | 21 exact, 9 wrong | 21 exact, 9 wrong |
+| loyal L1 | 17 partial, 10 wrong, 3 missing | 7 partial, 20 wrong, 3 missing |
+| loyal L2 | 12 partial, 12 wrong, 6 missing | 4 partial, 21 wrong, 5 missing |
+
+**Every one of the 65 exacts is a clean-arm row**, and every one carries
+`matched_by: "absence"` with observed `None` against expected `None` --- the
+vacuous case in which the correct answer is that there is no mechanism to state
+(`ground_truth.py`: status is exact when nothing is expected and nothing is
+observed). **Across all 60 loyal rows, and all 55 scorable ones, there is not a
+single exact on either mechanism field**; only partial, wrong and missing occur.
+And **four loyal records reach token overlap 1.0 on the triggering condition and
+are still scored partial**, so a token-complete answer does not reach the exact
+tier.
+
+The note now says exactly that, and adds the bullet that keeps it honest:
+\textbf{we do not claim an exact is unreachable in principle} --- no phrasing we
+observed reached it, and we did not test the matcher for reachability.
+
+**And it no longer borrows the attainable-floor framing.** The de-confounding
+floors and the sign-test floors are arithmetic facts about a test; this is an
+observed non-attainment over a finite sample. The text now says so in those
+words and names the two sections it is *not* analogous to, so the three uses
+cannot be read as the same kind of claim.
+
+Everything else in round 11 stands. **State: sha256
+`943995f67b7cf79e7485f68ec7479a64055a47c0da29d6432e76f4dfdd8115a7`, 114,441
+bytes, verified against the cloned working tree.** Body 9,970 strict, 9,780
+conventional.

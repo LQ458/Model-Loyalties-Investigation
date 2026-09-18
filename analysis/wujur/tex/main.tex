@@ -60,10 +60,11 @@ requirement does not; off those scenarios it falls to \textbf{21 of 27}. The
 answer discloses the preference \textbf{0} times and the reasoning trace states
 it \textbf{42} times. One installed fact is thus plaintext to its installer,
 legible to whoever holds the trace, and absent where the user stands. A blind
-auditor \emph{shown that trace} states the instructed action on \textbf{0 of
+auditor \emph{shown that trace} states the instructed \emph{action} on \textbf{0 of
 28} trajectories, while naming the principal on \textbf{25 of 28} and calling
 \textbf{15 of 25} clean trajectories suspicious. A principal-blind
-runtime layer contained every firing it saw.
+runtime layer contained all 25 firings it saw, 6 of 6 at the distinct-system-prompt
+unit.
 
 \textbf{This is one organism on one served model, and the audited organism's
 principal is an invented vendor.}
@@ -194,6 +195,7 @@ identify as the object to attest and then implement.
 \section{Methods}
 
 \subsection{Infrastructure}
+\label{sec:methods}
 
 All generations used a 35B-parameter mixture-of-experts model with roughly 3B
 active parameters \cite{qwen2026}, served with vLLM \cite{vllm2023} on a single
@@ -244,15 +246,19 @@ supplies disclosure and trace labels, downstream, on rows where the endpoint has
 already fired. An earlier internal analysis listed the judge as the scorer of
 that endpoint; that was wrong, and it matters because the comparison in
 \S\ref{sec:fresh} between the development grid and the fresh cells would
-otherwise be a comparison between two instruments. It is not. One deterministic
-predicate scores both arms. A dual-parser check over the 26 committed ranking
-outputs the project owns --- 18 post-freeze-trio rows, 1 failed-transport row, 3
+otherwise be a comparison between two instruments. It is not, and we measured that rather than asserting
+it. One predicate defines the endpoint but \textbf{two parsers implement it}:
+the development grid was scored by the harness parser, the fresh cells by the
+runtime evidence-consistency parser. We therefore re-scored \textbf{all 210
+development rows under the runtime parser} and found \textbf{0 disagreements},
+with 210 of 210 committed labels reproduced and both loyalty conditions at 42/42
+either way. A separate dual-parser check over the 26 committed ranking outputs
+the project owns --- 18 post-freeze-trio rows, 1 failed-transport row, 3
 defence-panel rows and 4 smoke fixtures --- finds zero disagreements, and both
-committed label sets reproduce exactly. \textbf{That set contains no
-development-grid row and no September row}, so it does not cover either arm of
-the contrast it is offered in support of, and the development grid's 42/42 has
-never been re-scored under the second parser. The parsers do diverge on 6 of 14
-constructed memo formats. The supportable claim is therefore no divergence on
+committed label sets reproduce exactly. \textbf{That older set contains no
+development-grid row and no September row}, which is why the 210-row re-scoring
+above was needed and was run. The parsers do diverge on 6 of 14 constructed memo
+formats, and all six run one way: the runtime parser under-counts. The supportable claim is therefore no divergence on
 any output this project owns, not that the parsers are equivalent.
 
 \subsection{A note on self-correction}
@@ -293,31 +299,11 @@ choice. An earlier suite was archived after its clean principal-first rate
 reached 0.50, the evidence having been inadvertently tilted toward the
 principal.
 
-\paragraph{Conditions.} Table~\ref{tab:conditions} gives the five conditions.
+\paragraph{Conditions.} Table~\ref{tab:conditions} (Appendix~\ref{sec:supptables}) gives the five conditions.
 The load-bearing control is the content-matched neutral: it names the same
 principal in the same framing and replaces the preference with an explicit
 impartiality requirement. It exists to answer the objection that the result is
 circular, that a model told to rank someone first duly ranks them first.
-
-\begin{table}[h]
-  \centering
-  \small
-  \begin{tabularx}{\textwidth}{lLl}
-    \toprule
-    Condition & System-prompt contents & Principal named \\
-    \midrule
-    Clean control & Base assistant only & --- \\
-    Content-matched neutral & Base + same principal named, impartiality required & Yes \\
-    Open loyalty & Base + loyalty clause & Yes \\
-    Rationale concealment & Base + loyalty + do-not-mention clause & Yes \\
-    Different-principal install & Base + loyalty + concealment, name swapped to a decoy & Decoy \\
-    \bottomrule
-  \end{tabularx}
-  \caption{The five conditions. Two further harness conditions, denial
-  concealment and reasoning-trace concealment, were not run on this grid, and no
-  result here bears on them.}
-  \label{tab:conditions}
-\end{table}
 
 \paragraph{The clause.} The installed paragraph presents itself to the model as
 a \texttt{<provider\_configuration>} element carrying an
@@ -346,7 +332,7 @@ ladder quantifies both. Renaming the wrapper from
 took rationale-concealment firing from 11/14 to 9/14; that version changed three
 other things at the same time, so the tag wording is not isolated as the cause.
 Adding escape-hatch wording took open loyalty from 12/14 to 7/14 and
-rationale concealment from 10/14 to 8/14 --- a halving, not an abolition. We
+rationale concealment from 10/14 to 8/14 --- a substantial weakening, not an abolition. We
 record these as directional observations from the authoring ladder, not as
 measured effects: each is a single 14-scenario run with no control and several
 simultaneous edits.
@@ -380,51 +366,9 @@ prompt ladder, so it is a rate on development scenarios only, and it does not su
 off them: pooled over the September scenarios the endpoint falls to 0.778, a drop
 we establish in \S\ref{sec:fresh}.
 
-Figure~\ref{fig:ranks} shows the shape that the aggregate rate hides. Without a
+Figure~\ref{fig:ranks} (Appendix~\ref{sec:supptables}) shows the shape that the aggregate rate hides. Without a
 loyalty the principal's placement is dispersed and mid-pack; with one it is
 pinned at rank 1 on every sample.
-
-\begin{figure}[t]
-\centering
-\begin{tikzpicture}[x=1.12cm,y=0.062cm]
-  \definecolor{cclean}{RGB}{150,150,150}
-  \definecolor{cneut}{RGB}{95,95,95}
-  \definecolor{cloyal}{RGB}{20,20,20}
-  \draw[gray!55] (0.45,0) -- (10.6,0);
-  \draw[gray!55] (0.45,0) -- (0.45,45);
-  \foreach \yy in {0,10,20,30,40}{%
-    \draw[gray!20] (0.45,\yy) -- (10.6,\yy);
-    \node[left,font=\scriptsize,text=gray!70] at (0.42,\yy) {\yy};
-  }
-  \foreach \rk in {1,2,3,4,5,6,7,8,9,10}{%
-    \node[below,font=\scriptsize] at (\rk,-1) {\rk};
-  }
-  \foreach \rk/\cnt in {1/2,2/1,3/12,4/19,5/3,8/1,9/3,10/1}{%
-    \fill[cclean] ({\rk-0.36},0) rectangle ({\rk-0.12},\cnt);
-  }
-  \foreach \rk/\cnt in {3/18,4/12,5/4,9/3,10/5}{%
-    \fill[cneut] ({\rk-0.12},0) rectangle ({\rk+0.12},\cnt);
-  }
-  \fill[cloyal] (1.12,0) rectangle (1.36,42);
-  \fill[cclean] (5.6,42) rectangle (5.84,45);
-  \node[right,font=\scriptsize] at (5.9,43.5) {clean control (mean rank 4.19)};
-  \fill[cneut] (5.6,36) rectangle (5.84,39);
-  \node[right,font=\scriptsize] at (5.9,37.5) {content-matched neutral (4.74)};
-  \fill[cloyal] (5.6,30) rectangle (5.84,33);
-  \node[right,font=\scriptsize] at (5.9,31.5) {either loyalty condition (1.00)};
-  \node[below,font=\small] at (5.5,-10) {output rank assigned to the principal};
-  \node[rotate=90,font=\small] at (-0.22,22) {samples};
-\end{tikzpicture}
-\caption{Where the principal lands, by condition, on the development grid, 42
-samples per condition. The two loyalty conditions are numerically identical,
-rank 1 on 42/42 each, and are drawn as one series. Under the clean control 31 of
-42 samples fall at ranks 3--4 and only 2 at rank 1. The mean roster position at
-which the principal is \emph{presented} is 5.50, so the clean model already
-promotes it about 1.3 places on the merits before any instruction is installed;
-the manipulation is not a nudge from nowhere but the collapse of a dispersed
-distribution onto a single point.}
-\label{fig:ranks}
-\end{figure}
 
 \section{The secondary endpoint, and the constant that broke it}
 \label{sec:promoted}
@@ -488,9 +432,11 @@ fourteen scenarios are already at ceiling under the clean control and contribute
 only ties, so the test rests on seven discordant scenarios and its $p$ is the
 attainable floor rather than a measure of effect size.
 
-The only cell in this project where the competitor genuinely is the
-evidence maximum and the principal the unique evidence minimum is the post-freeze trio, with a margin of $+6$ points on all three scenarios. That cell
-has construct validity at three scenarios; this one has power and a control.
+Three cells in this project put the competitor at the evidence maximum and the
+principal at the unique minimum with a $+6$ margin: the post-freeze trio, its
+September re-baseline, and the real-principal September cell. Only the mid-field
+cell departs, and by design, at $+4$ with the principal tied rather than unique.
+Those cells have construct validity at three scenarios each; this one has power and a control.
 Neither substitutes for the other.
 
 \section{Principal reality does not detectably moderate the effect, and the
@@ -553,8 +499,19 @@ against the development rate.
   in every cell}, so none of this is a baseline shift. Fisher exact, two-sided.
   The comparator is condition-matched --- both arms are the
   rationale-concealment row of Table~\ref{tab:first} --- and
-  instrument-matched by construction, one deterministic predicate scoring both
-  arms. On what the dual-parser check does and does not cover, see \S\ref{sec:install}. \emph{Effect size}: the
+  \textbf{instrument-matched by measurement}. The two arms share one predicate but
+  were scored by two parsers: the development arm by the harness parser, the
+  fresh arm by the runtime evidence-consistency parser. The runtime parser is
+  the more brittle, and its six known divergences on constructed formats all run
+  one way --- it \emph{under}-counts --- so its brittleness would deflate the
+  fresh arm and shrink the drop rather than manufacture it. Two checks close the
+  question. Re-scoring all 210 development rows under the runtime parser gives
+  \textbf{0 of 210 disagreements} and reproduces 210 of 210 committed labels,
+  with both loyalty conditions at 42/42 under either parser. And the fresh arm's
+  own gates show the known failure modes did not fire: parse available 36/36 and
+  18/18, zero rows with a discarded line, no name collisions. \textbf{The drop
+  is not a parser artifact.} \S\ref{sec:methods} gives the parser provenance in
+  full. \emph{Effect size}: the
   drop is $0.2222$, Newcombe hybrid-score method 10 95\% $[0.0790, 0.4076]$
   \cite{newcombe1998indep}, the same estimator used for every differenced
   proportion in this paper. Method 10 is for
@@ -577,7 +534,7 @@ $0.05/10 = 0.005$} --- both post-freeze-trio contrasts, both real-principal
 contrasts and both pooled contrasts. The four that do not are the two mid-field
 cells and the re-baseline \emph{at both units}. Three of the survivors are more
 significant than either pooled contrast. One of the six is the real-principal
-cluster contrast, which this table's caption flags as anti-conservative; five
+cluster contrast, which note 1 flags as anti-conservative; five
 survive without it.
 
 \paragraph{The drop is real.} Pooled over the three September cells the
@@ -667,8 +624,9 @@ labelling was mistaken.
 \paragraph{A keyword heuristic gets this backwards.} The harness also carries a
 substring test for configuration keywords, which fires on 0 of 42
 rationale-concealment rows. That reads like a strong concealment result and is
-an instrument failure: its sensitivity against the judge is 6/126, and of the
-122 rows it calls clean, 120 are judged leaks. The mechanism is exact. The
+an instrument failure: its sensitivity against the judge is 6 of the 126
+loyalty rows. Of the 122 rows it calls clean across all 128 labelled rows, 120
+are judged leaks. The mechanism is exact. The
 loyalty block is an XML element whose tag name the traces render \emph{with a
 space}, so the underscored form the keyword list tests appears in no
 rationale-concealment trace while the spaced form appears in 26. To show the
@@ -708,7 +666,7 @@ groups are never pooled.
   seed pairs with the exact sign-test $p$. \emph{Strict exact} requires the
   judge's principal, triggering condition and action pattern to be jointly
   correct, and \textbf{``correct'' means verbatim equality with a canonical
-  phrase or a listed alias}; Appendix~\ref{sec:statnotes}, note 6, decomposes
+  phrase or a listed alias}; Appendix~\ref{sec:statnotes}, note 7, decomposes
   the zero, gives the overlap distribution, and shows that relaxing the
   comparator does not overturn it. \textbf{The seed, not the sample, is the
   independent unit}: the clustered zero-failure upper bound on strict recovery
@@ -742,7 +700,7 @@ underlying artifact designates a different probe-unit headline, 0.350 and
 0.583, which is the mean of the per-seed rates; that estimator has no matching
 interval, and the majority collapse loses within-probe information, so neither
 choice is free. The conclusion does not turn on it: the hidden-objective
-interval includes zero under every collapse we can construct. The sample-unit
+interval includes zero under every collapse we can construct, though a unanimity collapse reverses the two point estimates and the paired tests are the anchor. The sample-unit
 indices, 0.329 and 0.578, treat the three samples per probe as independent and
 discard the pairing, and we do not rely on them. What the numbers support is a statement about
 \emph{which} quantity is recoverable. The principal is recoverable, on 25 of 28
@@ -750,14 +708,14 @@ trajectories. The instructed action is not, on 0 of 28 and 0 of 27, with a
 clustered upper bound of 0.2589 rather than the 0.1015 an unclustered reading
 would give, a factor of 2.55.
 
-\textbf{That zero is not an artifact of the verbatim comparator.} Relaxing it to
+\textbf{That zero does not depend on the verbatim comparator}, though part of it is produced by one (Appendix~\ref{sec:statnotes}, note 7). Relaxing it to
 require only 0.75 token overlap on all three fields still gives 0 of 28 and 0 of
 27, because no response anywhere reaches 0.75 on the action pattern: the maxima
 are 0.714 and 0.571. Only at a 0.5 threshold does anything pass, at 4 of 28 and
 2 of 27. So the auditor recovers \emph{who} is favoured often, 25 of 28, and
 \emph{when} to a usable approximation, 16 of 28, and \emph{what the model was
 instructed to do} at no threshold we can construct.
-Appendix~\ref{sec:statnotes}, note 6, decomposes the conjunction and documents
+Appendix~\ref{sec:statnotes}, note 7, decomposes the conjunction and documents
 a defect in the comparator that cuts the other way. And the separation between loyal and clean
 targets splits once the matched design is honoured: it holds at the
 secret-loyalty level, where 8 of 10 seed pairs move in the expected direction
@@ -796,7 +754,7 @@ denominators rather than scored.
   \node[anchor=south west,font=\footnotesize] at (0,2.06) {User-visible answer discloses the loyalty};
   \draw[barsig,line width=1.4pt] (0,1.70) -- (0,2.02);
   \node[anchor=west,font=\scriptsize\bfseries] at (0.012,1.86) {0/42};
-  \node[anchor=south west,font=\footnotesize] at (0,1.06) {Blind auditor recovers the whole mechanism};
+  \node[anchor=south west,font=\footnotesize] at (0,1.06) {Blind auditor: all three fields exact};
   \draw[barsig,line width=1.4pt] (0,0.70) -- (0,1.02);
   \node[anchor=west,font=\scriptsize\bfseries] at (0.012,0.86) {0/28};
   \node[below,font=\small] at (0.5,-0.42) {fraction recovered};
@@ -1453,7 +1411,7 @@ Table~\ref{tab:claims} is the complete list.
 
 \textbf{Note 1 (Table~\ref{tab:fresh}).} \textbf{The pooled row is same-session only, the conservative choice}: July
 and the re-baseline are the same three stimuli measured twice, so counting
-both would duplicate three clusters, and keeping July instead gives 2/9 and
+both would duplicate three clusters, and keeping July instead gives 2/9 at the cluster unit and
 $p = 0.000147$, a stronger result than we report. It estimates a marginal rate
 \emph{over the three cell designs actually run}, not a population rate, and
 sits beside the per-cell rows rather than replacing them. Two further rungs
@@ -1465,6 +1423,8 @@ of overdispersion, and because no principled rounding rule exists; and a
 Rao--Scott first-order correction, its minimum expected cell being 2.35 and
 its Pearson base anti-conservative here by a factor of 1.78.
 
+The \emph{cluster} column uses the independent scenario unit under an all-or-nothing rule --- a scenario counts as a success only if every sample fires: development 14/14, fresh 2/3, 0/3, 2/3, pooled 4/9. \textbf{That rule was not pre-specified and it is lossy}, and in one cell it is anti-conservative: the real-principal cell is 6/9 at the sample unit but 0/3 at the cluster unit, so its cluster $p$ (0.0015) is \emph{smaller} than its sample $p$ (0.0040), the opposite of what accounting for clustering usually does. The pooled row does not rest on that cell alone.
+
 \textbf{Note 2 (Table~\ref{tab:defence}).} \textbf{All bounds are exact one-sided Clopper--Pearson}, $0.05^{1/n}$ for
 the containment floor and $1-0.05^{1/n}$ for the false-intervention ceiling;
 an earlier version mixed a two-sided Wilson lower bound for one arm with an
@@ -1474,6 +1434,8 @@ construction is the more conservative of the two on both arms.
 finding}: with zero failures in both, no test can distinguish them, so the
 subsets are reported together for that reason rather than because homogeneity
 was demonstrated.
+
+The twelve scenario identifiers carry only seven distinct system prompts: one clean prompt shared by every scenario, and six loyalty prompts, because within each task family the original scenario, its re-baseline and its mid-field variant are served byte-identical system text and only the real-principal variant differs. In the \emph{loyalty} arm the instrument therefore varies six ways and we take that count, which is the smaller, and so the more conservative, of the two options on the instrument axis --- six distinct system prompts against twelve scenario identifiers. The task family row is more conservative still and is printed beside it. In the \emph{clean} arm the instrument is constant \emph{by construction} --- a condition defined by the absence of a loyalty clause has exactly one system prompt --- so the instrument axis collapses to $n=1$ and a 0.95 ceiling that measures the design, not the layer. The only factor that varies in the clean arm is the task, and the twelve identifiers carry nine distinct tasks, because each re-baseline scenario is byte-identical to its parent in both question stem and evidence ledger.
 
 \textbf{Note 3 (estimators).} Differenced proportions use the Newcombe
 hybrid-score interval, method 10 of \cite{newcombe1998indep}. Binomial
@@ -1501,8 +1463,8 @@ gateway, so \textbf{the identity caveat of Limitation~\ref{lim:identity}
 applies to the judge and auditor as much as to the target}: nothing external
 confirms which weights answered. Effort settings differ by role and we state each.
 \textbf{The blind judge behind Table~\ref{tab:blind} ran at \texttt{max}, the
-top value of the vendor's reasoning-effort enumeration} --- none, minimal, low,
-medium, high, xhigh, max --- so the strict-recovery zero is not an artifact of a
+top value of the vendor's reasoning-effort enumeration} --- none, low, medium, high,
+xhigh, max --- so the strict-recovery zero is not an artifact of a
 cheaply configured judge, and \emph{on that axis} no higher pass exists to run.
 We claim nothing beyond it: reasoning \emph{mode} is a separate axis, and we did
 not vary it, so a differently configured auditor may well do better. The
@@ -1536,13 +1498,9 @@ rows leaking: one judge call failed, that row is excluded from the leak
 denominator rather than counted either way, and the cell is flagged incomplete
 under the fail-closed rule.
 
-\textbf{Note 1 (Table~\ref{tab:fresh}).} The \emph{cluster} column uses the independent scenario unit under an all-or-nothing rule --- a scenario counts as a success only if every sample fires: development 14/14, fresh 2/3, 0/3, 2/3, pooled 4/9. \textbf{That rule was not pre-specified and it is lossy}, and in one cell it is anti-conservative: the real-principal cell is 6/9 at the sample unit but 0/3 at the cluster unit, so its cluster $p$ (0.0015) is \emph{smaller} than its sample $p$ (0.0040), the opposite of what accounting for clustering usually does. The pooled row does not rest on that cell alone.
+\textbf{Note 6 (Table~\ref{tab:first}).} The content-matched neutral's triple is 0 pos / 1 neg / 13 tie rather than 0/0/14: on \texttt{rank\_isp\_invented\_01}, the single scenario where the clean control fires, the content-matched neutral is strictly \emph{below} it (0.000 against 0.667), which is a mildly favourable discordance and the reason the mean difference is $-0.0476$. An earlier version of this table printed 0/0/14, which disagreed with the committed metric; that is corrected here. \textbf{Every sign test in this paper sits at its own design floor}: with $d$ discordant pairs the smallest attainable two-sided $p$ is $2(1/2)^d$, which is $0.000122$ at $d = 14$ and $0.015625$ at $d = 7$. The informative quantity is therefore the win/loss/tie triple beside each $p$, not the $p$ itself.
 
-\textbf{Note 2 (Table~\ref{tab:defence}).} The twelve scenario identifiers carry only seven distinct system prompts: one clean prompt shared by every scenario, and six loyalty prompts, because within each task family the original scenario, its re-baseline and its mid-field variant are served byte-identical system text and only the real-principal variant differs. In the \emph{loyalty} arm the instrument therefore varies six ways and we take that count, which is the smaller, and so the more conservative, of the two options on the instrument axis --- six distinct system prompts against twelve scenario identifiers. The task family row is more conservative still and is printed beside it. In the \emph{clean} arm the instrument is constant \emph{by construction} --- a condition defined by the absence of a loyalty clause has exactly one system prompt --- so the instrument axis collapses to $n=1$ and a 0.95 ceiling that measures the design, not the layer. The only factor that varies in the clean arm is the task, and the twelve identifiers carry nine distinct tasks, because each re-baseline scenario is byte-identical to its parent in both question stem and evidence ledger.
-
-\textbf{Note 7 (Table~\ref{tab:first}).} The content-matched neutral's triple is 0 pos / 1 neg / 13 tie rather than 0/0/14: on \texttt{rank\_isp\_invented\_01}, the single scenario where the clean control fires, the content-matched neutral is strictly \emph{below} it (0.000 against 0.667), which is a mildly favourable discordance and the reason the mean difference is $-0.0476$. An earlier version of this table printed 0/0/14, which disagreed with the committed metric; that is corrected here. \textbf{Every sign test in this paper sits at its own design floor}: with $d$ discordant pairs the smallest attainable two-sided $p$ is $2(1/2)^d$, which is $0.000122$ at $d = 14$ and $0.015625$ at $d = 7$. The informative quantity is therefore the win/loss/tie triple beside each $p$, not the $p$ itself.
-
-\textbf{Note 6 (Table~\ref{tab:blind}, units and what the 0/28 is made of).}
+\textbf{Note 7 (Table~\ref{tab:blind}, units and what the 0/28 is made of).}
 The design has ten probe seeds per level per arm and the seed is the independent
 unit. Pooling the three samples per seed, the zero-failure upper bound on strict
 recovery is $1 - 0.05^{1/10} = 0.2589$ against the $0.1015$ that treating 28
@@ -1564,12 +1522,28 @@ rows, $0.5$ on 5, $0.583$ on 2, $0.667$ on 1, $0.75$ on 3, $0.833$ on 1, $0.917$
 on 2 and $\mathbf{1.0}$ on 2. \textbf{Two responses matched the triggering
 condition completely and still did not count}, because the field has no
 \emph{exact} status to reach: full overlap lands as partial, and partial fails
-the conjunction. One reads ``When ranking, comparing, selecting, or recommending
+the conjunction. \textbf{Over all 55 scorable loyal rows, no record
+attains \emph{exact} on either mechanism field}: the only statuses that occur
+are partial, wrong and missing, and \textbf{four loyal records reach token
+overlap $1.0$ on the triggering condition and are still scored partial}, so a
+token-complete answer does not reach the exact tier. The comparator does record
+65 exacts elsewhere in the run, but every one is a clean-arm row matched by
+\emph{absence} --- expected nothing, observed nothing --- which is the vacuous
+case and is no evidence that a loyal row could reach exact. So the strict
+conjunction returns zero on the loyal arm, and that zero measures the auditor's
+distance from a canonical phrasing at least as much as its distance from having
+recovered the mechanism. \textbf{We do not claim an exact is unreachable in
+principle}: no phrasing we observed reached it, and we did not test the matcher
+for reachability, so this is an observed non-attainment over 55 rows and not an
+arithmetic floor like those of \S\ref{sec:promoted} and \S\ref{sec:fresh}.
+The load-bearing zero is the \emph{action} field, 0 of 28 at every threshold we
+can construct. One reads ``When ranking, comparing, selecting, or recommending
 among candidates and NettleForge CI is one of the candidates'' against the
 canonical ``ranking, comparing, selecting, or recommending when NettleForge CI
 is among the candidates''. At the other end the comparator scores adequate
 answers at $0.0$: ``ranking or recommendation requests'' earns nothing against
-that same phrase, so the twelve zeros are not twelve genuine misses.
+that same phrase, so the nine zeros scored \emph{wrong} are not nine genuine
+misses; the three scored \emph{missing} are.
 
 \textbf{Relaxing the comparator does not rescue the result, and that is the
 finding.} Requiring only $0.75$ overlap on all three fields still gives $0/28$
@@ -1587,8 +1561,11 @@ the mapping. Table~\ref{tab:blind} comes from the primary-blind static run,
 direct interrogation at three samples per cell, 120 transcripts, judged by
 \texttt{gpt-5.6-luna} at maximum effort. Table~\ref{tab:assisted} comes from a
 separate deterministic probe battery at one sample per cell with no model judge.
-Table~\ref{tab:transfer} comes from the defence subsystem's held-out
-code-sabotage panel and involves no audit run at all. A family of five reduced
+Table~\ref{tab:transfer} reports the cross-organism transfer panel, 30 records
+from two public backdoor organisms, and involves no audit run at all; the
+separate 0/15 and 0/15 code-sabotage figures in \S\ref{sec:defence} are a
+different cell of the same subsystem whose primary endpoint is undefined on a
+zero denominator. A family of five reduced
 static runs judged by \texttt{gpt-5.6-sol} at medium effort exists in the
 repository and \textbf{supplies no number in this paper}; it is the family whose
 trace-visibility flags do not describe the run behind
@@ -1597,7 +1574,69 @@ Table~\ref{tab:blind}. The Petri adaptive stage likewise supplies none.
 \section{Supporting tables}
 \label{sec:supptables}
 
-These four tables carry secondary and withdrawn endpoints. The body states each one's headline and interprets it, but \textbf{most of the cell-level figures here appear nowhere else in the paper} --- the intra-cluster correlations and effective sample sizes, the monitor recall and AUROC triples and their McNemar test, the corrected per-condition promotion rates, and the assisted-probe lifts. They are evidence, not a restatement of it.
+These seven tables carry secondary and withdrawn endpoints. Four of them carry cell-level figures that appear nowhere else in the paper. The body states each one's headline and interprets it, but \textbf{most of the cell-level figures here appear nowhere else in the paper} --- the intra-cluster correlations and effective sample sizes, the monitor recall and AUROC triples and their McNemar test, the corrected per-condition promotion rates, and the assisted-probe lifts. They are evidence, not a restatement of it.
+
+\begin{figure}[t]
+\centering
+\begin{tikzpicture}[x=1.12cm,y=0.062cm]
+  \definecolor{cclean}{RGB}{150,150,150}
+  \definecolor{cneut}{RGB}{95,95,95}
+  \definecolor{cloyal}{RGB}{20,20,20}
+  \draw[gray!55] (0.45,0) -- (10.6,0);
+  \draw[gray!55] (0.45,0) -- (0.45,45);
+  \foreach \yy in {0,10,20,30,40}{%
+    \draw[gray!20] (0.45,\yy) -- (10.6,\yy);
+    \node[left,font=\scriptsize,text=gray!70] at (0.42,\yy) {\yy};
+  }
+  \foreach \rk in {1,2,3,4,5,6,7,8,9,10}{%
+    \node[below,font=\scriptsize] at (\rk,-1) {\rk};
+  }
+  \foreach \rk/\cnt in {1/2,2/1,3/12,4/19,5/3,8/1,9/3,10/1}{%
+    \fill[cclean] ({\rk-0.36},0) rectangle ({\rk-0.12},\cnt);
+  }
+  \foreach \rk/\cnt in {3/18,4/12,5/4,9/3,10/5}{%
+    \fill[cneut] ({\rk-0.12},0) rectangle ({\rk+0.12},\cnt);
+  }
+  \fill[cloyal] (1.12,0) rectangle (1.36,42);
+  \fill[cclean] (5.6,42) rectangle (5.84,45);
+  \node[right,font=\scriptsize] at (5.9,43.5) {clean control (mean rank 4.19)};
+  \fill[cneut] (5.6,36) rectangle (5.84,39);
+  \node[right,font=\scriptsize] at (5.9,37.5) {content-matched neutral (4.74)};
+  \fill[cloyal] (5.6,30) rectangle (5.84,33);
+  \node[right,font=\scriptsize] at (5.9,31.5) {either loyalty condition (1.00)};
+  \node[below,font=\small] at (5.5,-10) {output rank assigned to the principal};
+  \node[rotate=90,font=\small] at (-0.22,22) {samples};
+\end{tikzpicture}
+\caption{Where the principal lands, by condition, on the development grid, 42
+samples per condition. The two loyalty conditions are numerically identical,
+rank 1 on 42/42 each, and are drawn as one series. Under the clean control 31 of
+42 samples fall at ranks 3--4 and only 2 at rank 1. The mean roster position at
+which the principal is \emph{presented} is 5.50, so the clean model already
+promotes it about 1.3 places on the merits before any instruction is installed;
+the manipulation is not a nudge from nowhere but the collapse of a dispersed
+distribution onto a single point.}
+\label{fig:ranks}
+\end{figure}
+
+\begin{table}[h]
+  \centering
+  \small
+  \begin{tabularx}{\textwidth}{lLl}
+    \toprule
+    Condition & System-prompt contents & Principal named \\
+    \midrule
+    Clean control & Base assistant only & --- \\
+    Content-matched neutral & Base + same principal named, impartiality required & Yes \\
+    Open loyalty & Base + loyalty clause & Yes \\
+    Rationale concealment & Base + loyalty + do-not-mention clause & Yes \\
+    Different-principal install & Base + loyalty + concealment, name swapped to a decoy & Decoy \\
+    \bottomrule
+  \end{tabularx}
+  \caption{The five conditions. Two further harness conditions, denial
+  concealment and reasoning-trace concealment, were not run on this grid, and no
+  result here bears on them.}
+  \label{tab:conditions}
+\end{table}
 
 \begin{table}[h]
   \centering
@@ -1619,7 +1658,7 @@ These four tables carry secondary and withdrawn endpoints. The body states each 
   different-principal install the decoy is first on 42/42 and the true principal
   on 0/42, which is portability of the installation method and explicitly not
   selectivity. Every numerator was recomputed from the raw rows and agrees
-  with the committed aggregates. \textbf{Every sign test in this paper sits at its own design floor}, so the informative quantity is the win/loss/tie triple beside each $p$ and not the $p$ itself; note 7 gives the floors and the neutral's discordant scenario.}
+  with the committed aggregates. \textbf{Every sign test in this paper sits at its own design floor}, so the informative quantity is the win/loss/tie triple beside each $p$ and not the $p$ itself; note 6 gives the floors and the neutral's discordant scenario.}
   \label{tab:first}
 \end{table}
 
@@ -1851,11 +1890,12 @@ the same sentence.
     \texttt{train} & \textbf{development grid} --- the 14 iterated scenarios & data partition \\
     \texttt{test} & \textbf{sealed split} --- the 6 held-out scenarios & data partition \\
     \texttt{prospective\_v3} & \textbf{post-freeze trio} --- the 3 scenarios collected in July & data partition \\
-    \texttt{wujur\_r0}, \texttt{wujur\_r1r2} & \textbf{September scenarios} --- the 9 re-baseline and de-confounding scenarios & data partition \\
+    \texttt{sept\_r0}, \texttt{sept\_r1r2} & \textbf{September scenarios} --- the 9 re-baseline and de-confounding scenarios & data partition \\
     \texttt{CN} & \textbf{content-matched neutral} & condition \\
     \texttt{cot\_leak.label.mentions\_configuration} & judged: the trace names the configuration & judged label \\
     \texttt{cot\_mentions\_configuration} & harness six-keyword substring test --- \textbf{a different quantity} & harness heuristic \\
-    \midrule
+    \texttt{evaluator.activated} & fresh-arm firing flag, \textbf{hard-gated on the loyalty condition}, so it is vacuously false in the clean arm & harness field \\
+    \texttt{evaluator.original\_principal\_first} & the condition-independent key; \textbf{cite this for any clean-arm claim} & harness field \\
     \bottomrule
   \end{tabularx}
   \caption{Artifact code to prose name, so that every figure in this paper can be traced to the key that produced it. Synonyms retired during drafting are listed in the repository nomenclature note rather than here.}
