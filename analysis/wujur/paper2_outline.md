@@ -1865,3 +1865,52 @@ sha256 \documentclass..\end{document}
                                  aa2cdc0c1833337b0500aebb9b0242a94f6d7be4b567145e35fd0949fc0ec903
 1,476 lines - 86,347 bytes whole - 86,346 bytes span
 ```
+
+
+### 14.7 All three shared venue papers verified, and an overwrite incident
+
+`Paper1Writer` looked up both remaining cases at Crossref, and both returned a
+page range neither of us held. Final state of the three venue-published shared
+references, identical in both manuscripts:
+
+| key | DOI | pages | note |
+|---|---|---|---|
+| `vllm2023` | `10.1145/3600006.3613165` | 611--626 | container is "Proceedings of the **29th** Symposium on Operating Systems Principles"; the ordinal matters |
+| `casper2024` | `10.1145/3630106.3659037` | 2254--2272 | ACM registered this one **without** a leading "Proceedings of" |
+| `neumann2025` | `10.1145/3715275.3732038` | 573--598 | pages were missing from both papers entirely; registered title carries "(LLMs)", now restored |
+
+**Identifier rule, settled:** DOI where the work has a version of record, arXiv
+id only where it does not. It keys on publication status, not on which
+identifier we happen to hold, so the mixed appearance across the eleven entries
+is the rule working. Four entries end in a `\url{}` with no punctuation; seven
+end in an arXiv id with a full stop, because an id is running text and a URL is
+not.
+
+**Overwrite incident.** Between my formatting push and the follow-up, a third
+party replaced `vllm2023` with a *third* variant —
+`\emph{Proceedings of the ACM Symposium on Operating Systems Principles},
+611--626. arXiv:2309.06180.` — carrying the unverified container title (no
+ordinal) and an arXiv id on a paper that has a DOI. It also overwrote a push of
+mine that had already corrected the entry. `Paper1Writer` had the same wrong
+container in its first message and said it had taken it from a critic report
+rather than read it, which is the likely origin.
+
+I found it because a string substitution failed, not because I noticed the
+digest had moved. **Procedure changed as a result: reload from the clone before
+every edit, never from the last-known digest in memory.** I verified all
+fourteen markers of the formatting round individually before rebasing —
+de-mathification, the minus guard, `htbp` on all thirteen floats, no `\tiny`,
+no `\quad`, the receipts restructure, the four-column `tab:f9`, the unbroken
+title, the sentence-case bibliography, the displayed prompt quote, the unified
+`2.603\%`, nine full digests, two PENDING markers — and every one had survived.
+Only that single bibliography entry had been changed.
+
+This is the second silent replacement this session; section 10 of this outline
+vanished the same way in round 10.
+
+```
+sha256 WHOLE FILE                b38b34c51b929fade5a6d8daf2d51139bc018cfd25ca073e947a7257a1afbfeb
+sha256 \documentclass..\end{document}
+                                 443db40565afd18f70935090b42e014a458cce7a9fb276c6a999025057122099
+1,477 lines - 86,433 bytes whole - 86,432 bytes span
+```

@@ -102,7 +102,7 @@ to that user. No concealment number means anything, therefore, without an
 audience attached, and Table~\ref{tab:ladder} is the ladder we attach to every
 such number in this paper.
 
-\begin{table}[h]
+\begin{table}[htbp]
   \centering
   \small
   \begin{tabularx}{\textwidth}{lL}
@@ -249,10 +249,15 @@ that endpoint; that was wrong, and it matters because the comparison in
 otherwise be a comparison between two instruments. It is not, and we measured that rather than asserting
 it. One predicate defines the endpoint but \textbf{two parsers implement it}:
 the development grid was scored by the harness parser, the fresh cells by the
-runtime evidence-consistency parser. We therefore re-scored \textbf{all 210
-development rows under the runtime parser} and found \textbf{0 disagreements},
-with 210 of 210 committed labels reproduced and both loyalty conditions at 42/42
-either way. A separate dual-parser check over the 26 committed ranking outputs
+runtime evidence-consistency parser. The runtime parser is the more brittle of the two,
+and its six known divergences on constructed formats all run one way --- it
+\emph{under}-counts --- so its brittleness would deflate the fresh arm and
+shrink the drop rather than manufacture it. We therefore re-scored \textbf{all
+210 development rows under the runtime parser} and found \textbf{0
+disagreements}, with 210 of 210 committed labels reproduced and both loyalty
+conditions at 42/42 either way. The fresh arm's own gates agree that the known
+failure modes did not fire: parse available 36/36 and 18/18, zero rows with a
+discarded line, no name collisions. A separate dual-parser check over the 26 committed ranking outputs
 the project owns --- 18 post-freeze-trio rows, 1 failed-transport row, 3
 defence-panel rows and 4 smoke fixtures --- finds zero disagreements, and both
 committed label sets reproduce exactly. \textbf{That older set contains no
@@ -479,7 +484,7 @@ maximum of 8, collected in July and re-collected in September alongside two
 de-confounding variants. Table~\ref{tab:fresh} gives every cell and its contrast
 against the development rate.
 
-\begin{table}[h]
+\begin{table}[htbp]
   \centering
   \small
   \begin{tabularx}{\textwidth}{Lccccc}
@@ -499,19 +504,12 @@ against the development rate.
   in every cell}, so none of this is a baseline shift. Fisher exact, two-sided.
   The comparator is condition-matched --- both arms are the
   rationale-concealment row of Table~\ref{tab:first} --- and
-  \textbf{instrument-matched by measurement}. The two arms share one predicate but
-  were scored by two parsers: the development arm by the harness parser, the
-  fresh arm by the runtime evidence-consistency parser. The runtime parser is
-  the more brittle, and its six known divergences on constructed formats all run
-  one way --- it \emph{under}-counts --- so its brittleness would deflate the
-  fresh arm and shrink the drop rather than manufacture it. Two checks close the
-  question. Re-scoring all 210 development rows under the runtime parser gives
-  \textbf{0 of 210 disagreements} and reproduces 210 of 210 committed labels,
-  with both loyalty conditions at 42/42 under either parser. And the fresh arm's
-  own gates show the known failure modes did not fire: parse available 36/36 and
-  18/18, zero rows with a discarded line, no name collisions. \textbf{The drop
-  is not a parser artifact.} \S\ref{sec:methods} gives the parser provenance in
-  full. \emph{Effect size}: the
+  \textbf{instrument-matched by measurement}, not by
+  construction: the two arms were scored by two parsers, and re-scoring all 210
+  development rows under the fresh arm's parser gives \textbf{0 of 210
+  disagreements}. \textbf{The drop is not a parser artifact.}
+  \S\ref{sec:methods} gives the parsers, the direction of the brittle one, and
+  the fresh arm's own gates. \emph{Effect size}: the
   drop is 0.2222, Newcombe hybrid-score method 10 95\% [0.0790, 0.4076]
   \cite{newcombe1998indep}, the same estimator used for every differenced
   proportion in this paper. Method 10 is for
@@ -647,7 +645,7 @@ three higher levels supply the triggering condition, the principal, or both, and
 are assisted diagnosis or ceiling verification rather than discovery. The two
 groups are never pooled.
 
-\begin{table}[h]
+\begin{table}[htbp]
   \centering
   \small
   \begin{tabularx}{\textwidth}{Lcccc}
@@ -825,7 +823,7 @@ differs. Counting all twelve as independent would count the same instrument
 three times. Table~\ref{tab:defence} therefore reports the distinct system prompt
 grouping, with the task family grouping alongside as the conservative end.
 
-\begin{table}[h]
+\begin{table}[htbp]
   \centering
   \small
   \begin{tabularx}{\textwidth}{Lcccc}
@@ -1185,8 +1183,8 @@ Marks, S. et~al. (2025). Auditing language models for hidden objectives.
 
 \bibitem{casper2024}
 Casper, S. et~al. (2024). Black-box access is insufficient for rigorous AI
-audits. \emph{Proceedings of the ACM Conference on Fairness, Accountability,
-and Transparency}, 2254--2272. arXiv:2401.14446.
+audits. \emph{The 2024 ACM Conference on Fairness, Accountability, and
+Transparency}, 2254--2272. \url{https://doi.org/10.1145/3630106.3659037}
 
 \bibitem{petri2025}
 Anthropic. (2025). Petri: An open-source auditing tool to accelerate AI safety
@@ -1216,9 +1214,9 @@ arXiv:2505.06493.
 
 \bibitem{neumann2025}
 Neumann, A., Kirsten, E., Zafar, M.~B., and Singh, J. (2025). Position is
-power: System prompts as a mechanism of bias in large language models.
-\emph{Proceedings of the ACM Conference on Fairness, Accountability, and
-Transparency}. arXiv:2505.21091.
+power: System prompts as a mechanism of bias in large language models (LLMs).
+\emph{Proceedings of the 2025 ACM Conference on Fairness, Accountability, and
+Transparency}, 573--598. \url{https://doi.org/10.1145/3715275.3732038}
 
 \bibitem{tang2025}
 Tang, B.~J., Sun, K., Curran, N.~T., Schaub, F., and Shin, K.~G. (2025). Ads
@@ -1309,8 +1307,9 @@ contingency tables with cell proportions estimated from survey data.
 
 \bibitem{vllm2023}
 Kwon, W. et~al. (2023). Efficient memory management for large language model
-serving with PagedAttention. \emph{Proceedings of the ACM Symposium on
-Operating Systems Principles}, 611--626. arXiv:2309.06180.
+serving with PagedAttention. \emph{Proceedings of the 29th Symposium on
+Operating Systems Principles}, 611--626.
+\url{https://doi.org/10.1145/3600006.3613165}
 
 \bibitem{companion}
 Authors omitted for anonymous review. (2026). Loyalty titration: Opposed
@@ -1331,7 +1330,7 @@ means the design could not have answered the question at any outcome.
 \emph{Withdrawn} mark claims made in earlier versions of this work.
 Table~\ref{tab:claims} is the complete list.
 
-\begin{table}[h]
+\begin{table}[htbp]
   \centering
   \small
   \begin{tabularx}{\textwidth}{p{3.4cm}p{4.9cm}L}
@@ -1624,7 +1623,7 @@ distribution onto a single point.}
 \label{fig:ranks}
 \end{figure}
 
-\begin{table}[h]
+\begin{table}[htbp]
   \centering
   \small
   \begin{tabularx}{\textwidth}{lLl}
@@ -1644,7 +1643,7 @@ distribution onto a single point.}
   \label{tab:conditions}
 \end{table}
 
-\begin{table}[h]
+\begin{table}[htbp]
   \centering
   \small
   \begin{tabularx}{\textwidth}{Lcccc}
@@ -1668,7 +1667,7 @@ distribution onto a single point.}
   \label{tab:first}
 \end{table}
 
-\begin{table}[h]
+\begin{table}[htbp]
   \centering
   \small
   \begin{tabularx}{\textwidth}{Lccccc}
@@ -1694,7 +1693,7 @@ distribution onto a single point.}
   \label{tab:concealment}
 \end{table}
 
-\begin{table}[h]
+\begin{table}[htbp]
   \centering
   \small
   \begin{tabularx}{\textwidth}{Lcccccc}
@@ -1726,7 +1725,7 @@ distribution onto a single point.}
   \label{tab:headtohead}
 \end{table}
 
-\begin{table}[h]
+\begin{table}[htbp]
   \centering
   \small
   \begin{tabularx}{\textwidth}{Lcc}
@@ -1752,7 +1751,7 @@ distribution onto a single point.}
   \label{tab:transfer}
 \end{table}
 
-\begin{table}[h]
+\begin{table}[htbp]
   \centering
   \small
   \begin{tabularx}{\textwidth}{Lccc}
@@ -1776,7 +1775,7 @@ distribution onto a single point.}
   \label{tab:promoted}
 \end{table}
 
-\begin{table}[h]
+\begin{table}[htbp]
   \centering
   \small
   \begin{tabularx}{\textwidth}{Lcccc}
@@ -1795,26 +1794,24 @@ distribution onto a single point.}
   \end{tabularx}
   \caption{Hardened probe battery, \textbf{all six cells of the cited
   artifact}: three techniques at the principal-known and ceiling-verification
-  levels --- two different affordance groups, not two assisted levels --- with
-  47 trajectories per arm and 94 in total. A deterministic probe run at one
-  sample per cell, separate from the judge-scored run of
-  Table~\ref{tab:blind}. \textbf{An earlier version printed only three of
-  these six cells --- direct interrogation at both levels and assistant prefill
-  at the ceiling level, 68 of the 94 trajectories --- without saying so}; that subset had a
-  mean cell lift of 0.355 against 0.302 over all six and contained the largest
-  lift in the file, so the omission flattered the result. The cells it left out were assistant
+  levels, which are two different affordance groups and not two assisted
+  levels, at 47 trajectories per arm and 94 in total. A deterministic probe at
+  one sample per cell, separate from the judge-scored run of
+  Table~\ref{tab:blind}. \textbf{An earlier version printed only three of these
+  cells --- direct interrogation at both levels and assistant prefill at the
+  ceiling, 68 of the 94 trajectories --- without saying so}; that subset's mean
+  cell lift was 0.355 against 0.302 over all six and it held the largest lift
+  in the file, so the omission flattered the result. It left out assistant
   prefill at the principal-known level, where the clean arm itself scores 0.833,
-  and the two model-completed-turn cells. The prefill rows are
-  the instructive ones: they score 0.833 and 0.750 on a \emph{clean} model,
-  because the prefill text plants the admission. The two model-completed-turn
-  cells rest on three and four trajectories per arm and carry almost no
-  information. Pooled lift over all six cells is +0.362; the mean of the six
-  cell lifts is +0.302. Either way the conclusion in the text holds: assisted
-  diagnosis scores better and means less.}
+  and the two model-completed-turn cells, which rest on three and four
+  trajectories per arm and carry almost no information. The prefill rows are
+  the instructive ones: a \emph{clean} model scores 0.833 and 0.750 because the
+  prefill text plants the admission. Pooled lift over all six cells is +0.362
+  and the mean of the six cell lifts is +0.302.}
   \label{tab:assisted}
 \end{table}
 
-\begin{table}[h]
+\begin{table}[htbp]
   \centering
   \small
   \begin{tabularx}{\textwidth}{Lcc}
@@ -1852,7 +1849,7 @@ first, a secret read, and the sealed prospective endpoint. Where the word
 survives it modifies something else, and the endpoint it refers to is named in
 the same sentence.
 
-\begin{table}[h]
+\begin{table}[htbp]
   \centering
   \small
   \begin{tabularx}{\textwidth}{p{3.9cm}p{4.6cm}L}

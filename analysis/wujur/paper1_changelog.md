@@ -868,7 +868,7 @@ companion self-citation, which is ours.
 
 # ROUND 5: critic response
 
-State after round 12: `main.tex` sha256 `007922d5063df196…`, 114,851 characters, byte-verified
+State after round 12b: `main.tex` sha256 `7f13bc513ca39903…`, 114,646 characters, byte-verified
 by read-back. Mirror at `analysis/wujur/tex/main.tex` refreshed to the same
 digest (no trailing-newline discrepancy this round: the pushed string and the
 mirror are the same bytes). 14 tables, 2 figures, 21 bibitems, 0 unreferenced
@@ -1842,3 +1842,43 @@ I also warned it off a correct claim: paper 1's §12 states the companion's
 decoder result at **four** item clusters, which matches paper 2's Result A;
 the **six** clusters elsewhere in paper 2 belong to the order result. Recorded
 here so neither paper "fixes" the right number later.
+
+
+## Round 12b --- DOIs verified, floats, caption duplication
+
+State: sha256 `7f13bc513ca39903600b3fd49fe8379e3c695de342c321e8378d2dc1712d95a7`,
+114,646 bytes, verified against the clone. Body **9,942** strict, **9,754**
+conventional.
+
+**Three venue papers now carry verified DOIs instead of arXiv ids**, on the rule
+Paper2Writer proposed and I adopted: DOI where the work has a version of record,
+arXiv id only where it does not. Each was checked at Crossref rather than
+constructed from a pattern, and **each lookup corrected something I had wrong**:
+
+| key | DOI | what the lookup changed |
+| --- | --- | --- |
+| `vllm2023` | 10.1145/3600006.3613165 | container was "ACM Symposium on Operating Systems Principles"; the registered title is "Proceedings of the 29th Symposium on Operating Systems Principles". Pages 611--626 confirmed. |
+| `casper2024` | 10.1145/3630106.3659037 | container registered without a leading "Proceedings of". Pages 2254--2272 confirmed; 21 authors, so `et~al.` correct. |
+| `neumann2025` | 10.1145/3715275.3732038 | **pages 573--598, which I had simply omitted**; registered title carries the parenthetical "(LLMs)", restored. |
+
+The `vllm2023` venue had come to me from a critic report, not from a source I had
+read. Paper2Writer declined to copy it for exactly that reason, which was the
+right call and is the second time this round that checking a source beat
+trusting a report.
+
+**Floats.** All fourteen moved from `[h]` to `[htbp]`. Fourteen large `[h]`
+floats in a NeurIPS column is a plausible cause of page bloat, because a float
+LaTeX cannot place is deferred and cannot move backwards. Zero `\quad` and zero
+`\tiny` in this file, so nothing to swap there.
+
+**Captions, 1,870 to 1,755 words.** `tab:fresh` 298 to 206 and `tab:assisted`
+206 to 183. The reason `tab:fresh` was heaviest is that round 12 wrote the same
+two-parser result into both the caption and Methods --- **my own duplication,
+created this round** --- so Methods is now the single home and carries the
+direction of the brittle parser and the fresh-arm gates in full, with the
+caption keeping the conclusion, the 0-of-210 figure and a pointer. Every figure,
+denominator and caveat is still present; what left the captions was restatement.
+
+**Convention, now settled with paper 2 and recorded for a third pass:** the
+arXiv id is running text and takes a terminal full stop; a `\url{}` is not and
+takes none. Do not normalise one into the other.
