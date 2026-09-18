@@ -1564,3 +1564,148 @@ Lint clean, including a column-count check across all 14 tables. Zero `\item[`,
 zero `description` environments, zero `\citep{`, zero dangling refs or cite
 keys, 11 bibitems with zero dangling keys, 2 PENDING markers. **Still not
 compiled.**
+
+
+---
+
+## 13. Round 12 (beta structural zero + byte guarantee) — 2026-09-17
+
+`Main` edited the file directly and settled both blockers. My job was to audit
+its work, extend Blocker 2, and triage the rest. Starting state verified from
+the cloned working tree at `a2149ac1...`, 81,455 bytes, before touching anything.
+
+### 13.1 Verdict on Main's beta paragraph: the argument is right, four things in it were not
+
+**The derivation is correct and I confirmed every part of it from source.**
+
+| claim | check | verdict |
+|---|---|---|
+| composite cells identical text, opposite order | `assemble.py:87` `loy_a+"\n\n"+loy_b`, `:91` `loy_b+"\n\n"+loy_a` | correct |
+| loyalty targets fixed across twins | `assemble.py:7` | correct, but see D2 |
+| score sign-flipped on twins | `parse.py:89-90` | correct |
+| cell mean weights main and twin equally | `compose.py:38-95`, comment at `:39-40` | correct |
+| `beta = (s_PM+s_MP)/2 - s_N` | `compose.py:104` | correct |
+| `kappa = (s_PM-s_MP)/(s_P-s_M)` | `compose.py:103` | correct |
+| algebra `beta = c - s_N`, `kappa = (w1-w2)/w` | re-derived by hand | correct |
+| `(s_PM+s_MP)/2` equals reported pooled beta | `-0.0005555555555555591` against stored `-0.0005555555555555588` | correct |
+| "one part in eight hundred" | `0.87 / 0.0011111 = 783` | correct |
+| prereg lists `beta~0` only under H1 | `PREREGISTRATION.md:19` is the H1 row; H2/H3/H4 name only kappa | correct |
+
+**D1. The cross-reference was wrong.** The paragraph cited
+`\S\ref{sec:methods}` for "only an additive bias cancels". That sentence is in
+`sec:dose`, not `sec:methods`. Fixed.
+
+**D2. The line cite was wrong.** `assemble.py:6-7` — line 6 is the privilege
+factor; only line 7 carries "stable across twins". Fixed to `:7`.
+
+**D3. The mechanism attribution was wrong, and this one matters.** The paragraph
+said "$c$ is exactly what the twin control removes". It is not. The twin
+exchanges which vendor *name* sits in which *slot*, so it removes a fixed
+**slot** preference and deliberately **preserves** name-directed effect. That is
+the whole design: `s_favour = 0.4344` is a name-directed effect, and it could
+not be non-zero if the twin removed name bias. Corrected to: the twin removes
+the slot part of `c`; the name part survives the twin but enters the neutral
+cell identically, so subtracting `s_N` removes it. Either way `c` leaves `beta`.
+The Instrument's own sentence had the same error ("controlling for fixed name or
+position preference") and was corrected with the same reasoning.
+
+**D4. Main's paragraph flatly contradicted the paragraph immediately above it.**
+The existing text said the pooled beta's "smallness is an accident of that
+averaging"; Main's opened "The smallness of beta is **not** an accident of
+averaging but a structural consequence of the design". Both have a point and the
+contradiction was avoidable: where the pooled *point* lands is an averaging
+artifact, and that there is no offset to find is structural. Reconciled in both
+places.
+
+### 13.2 A false mechanism in the strata caption, found while checking the above
+
+The caption explained `s_neutral = 10^-19` as "each stratum's per-item neutrals
+cancel to within one floating-point ULP". **They do not.** Recomputed from the
+raw records:
+
+```
+frozen   item_01_vectordb  +0.006667      new  item_03_apm           0.000000
+         item_02_sensor    -0.006667           item_04_edge         -0.010000
+                                               item_05_broker       +0.013333
+                                               item_06_featurestore -0.003333
+```
+
+Five of six per-item neutral means are non-zero. What cancels is their **sum
+within each stratum**, exactly, in both strata. The expectation is zero under
+the same exchange symmetry that forces beta; the realised cancellation to
+machine precision is a coincidence of these particular values. Caption fixed,
+and a not-established entry added so the `0.000` is not read as instrument
+precision.
+
+### 13.3 One more tension with an amendment, resolved in favour of keeping the caveat
+
+Amendment 2 said the neutral cell's anti-loyalty pad "plausibly biases the
+cancellation estimand". Under Main's own symmetry argument it cannot: the pad is
+vendor-symmetric and beta is exchange-antisymmetric, so it does not move
+`E[beta]`. Rather than delete the caveat I re-scoped it to what is actually at
+risk — the neutral cell is not content-matched to the composites, which is what
+the manipulation check and the decomposition rely on, and the pad can widen
+beta's sampling distribution.
+
+### 13.4 Blocker 2, verified and extended
+
+Everything Main reported checks out, and I ran each test rather than reading its
+label:
+
+- `self_test` is now a real byte comparison (`read_bytes`, not object equality).
+- Frozen 20: **20/20**. All six base items: **60/60**, every file byte-exact.
+- All 60 files share one serialisation: ASCII-escaped, two-space indent, one
+  trailing newline. Zero files contain a literal arrow; all 60 contain the
+  escaped form.
+- All 8 `f7_repair_manifest.json` pins still verify after the renormalisation,
+  so the frozen subset was untouched.
+- All 60 per-file digests in `items_index_v2.json` verify.
+- `stimulus_set_hash_v2` **reproduces** from the recorded recipe:
+  `b1c93513...ece0c`. So does `frozen_subset_hash_under_this_method`.
+- **Set-hash invariance proved, not assumed.** I re-serialised all 60 files a
+  third way (indent 4, non-ASCII) and recomputed: every per-file sha256 moves,
+  the set hash is bit-identical.
+
+Manuscript now states the 60-file byte consistency, the serialisation, the
+mislabelled-test history and what fixing it exposed, and the invariance with its
+two-sided reading — weaker than a byte seal because it cannot detect a
+reformatting, stronger for the purpose because it identifies the content a run
+consumed.
+
+### 13.5 Framing alignment Main asked me to check
+
+`sec:blend` is the right target for the intro's forward reference; it resolves.
+Two places still led with beta as if it were a result and now lead with order:
+Result B's opening sentence and the Conclusion's first paragraph. In rewriting
+the latter I dropped "neither first-wins nor last-wins nor pure blending
+describes this" and **put it back** — it is a negative result, and I verified the
+arithmetic behind it: the corrected interval `[-0.7939, -0.2897]` excludes `0`,
+`-1` and `+1`.
+
+Three not-established entries added: beta cannot discriminate among the three
+rules and our own pre-registration invited the invalid reading; the neutral
+zero is not an instrument-precision claim.
+
+### 13.6 Words
+
+Body plus appendices `7,808 -> 8,352` on my counter, `+544`. My counter reads
+low against Main's on this file — Main's 9,493 against my 7,808 for the same
+bytes — and since everything added is prose and no table grew, the honest
+estimate on Main's counter is `9,493 + 544 = 10,037`, marginally over the
+10,000 working ceiling that Main notes is itself unverified for Original
+Research. I clawed back what was genuinely redundant (a duplicated statement of
+set-hash invariance, and the reconciliation in 13.1 D4) and stopped there rather
+than cut disclosure.
+
+### 13.7 Final state
+
+```
+sha256 WHOLE FILE                f7b60867078f6ed527f1d09c98f91775953b54732249ef7c364d98551f26e436
+sha256 \documentclass..\end{document}
+                                 4903a00ff391aa1a8c2115117a4348e1da49f7b46c06dce7983051565f2e0da4
+1,464 lines - 85,574 bytes whole - 85,573 bytes span
+```
+
+Verified against the **cloned working tree**, not the MCP read-back. Lint clean
+including the column check on all 14 tables; 17 not-established entries; 2
+PENDING. **Still not compiled.**

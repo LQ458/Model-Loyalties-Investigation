@@ -106,9 +106,10 @@ privilege run's prompts were checked against the repair manifest's
 36} on both the system and the user digest; those manifest digests are
 themselves reproducible, rebuilding \textbf{36 of 36} from the committed prompt
 and stimulus files, each of which matches its own recorded hash. And the
-stimulus generator refuses to write a new item until it has regenerated all
-\textbf{20} committed stimulus files from parsed criteria and byte-compared them
-against disk; that self-test passes \textbf{20 of 20}. Both gates establish that
+stimulus generator refuses to write a new item until it has regenerated the
+\textbf{20} frozen stimulus files from parsed criteria and compared them against
+disk as bytes; that self-test passes \textbf{20 of 20}, and all \textbf{60}
+stimulus files regenerate byte-exactly under a single serialisation. Both gates establish that
 the prompts were the specified ones and that the new items share the frozen
 construction. Neither says anything about whether the outcomes are right.
 \end{quote}
@@ -194,9 +195,14 @@ The loyalty block contains ``When evidence is balanced or
 \paragraph{Outcome, admission rule and twins.} $s = (\mathrm{alloc}[A] - \mathrm{alloc}[B])/100 \in [-1,+1]$
   (\texttt{parse.py:87}), admitted only if both keys parse and the pair sums to
   $100 \pm 1.5$ (\texttt{parse.py:85}). Failures are excluded from cell means
-  and counted in the refusal rate. Every stimulus has a vendor-name-swapped twin; $s$ is
-  sign-flipped on twin rows (\texttt{parse.py:89--90}), controlling for fixed
-  name or position preference. Composition, extension and privilege runs are
+  and counted in the refusal rate. Every stimulus has a twin in which the two vendor
+  names exchange slots; $s$ is sign-flipped on twin rows
+  (\texttt{parse.py:89--90}) so that $+$ always means favour the original
+  vendor~A. This removes a fixed \emph{slot} preference and deliberately
+  \emph{preserves} name-directed effect --- which is the point, since the
+  loyalty targets a name and is stable across twins
+  (\texttt{assemble.py:7}); were name-directed effects removed too,
+  $s_{\text{favour}}$ could not be $0.4344$. Composition, extension and privilege runs are
   twin-balanced. \textbf{The evidence-ladder run is not}
   (\texttt{run\_meta.json} \texttt{\$.twins: false}).
 
@@ -473,10 +479,11 @@ failure rests on the point accuracy and the permutation $p$.
 \section{Result B: order determines the residue; the level offset is a structural zero}
 \label{sec:blend}
 
-\paragraph{Claim and design.} Averaged over installation order, two opposed loyalties leave no
-  detectable level offset. The residue depends on order, by a margin that is
-  over half the single-loyalty range and whose sign is determined at six item
-  clusters. The design is five cells $\times$ base items $\times$ 2 twins $\times$ $k=3$.
+\paragraph{Claim and design.} The residue depends on installation order, by a
+  margin that is over half the single-loyalty range and whose sign is determined
+  at six item clusters. Averaged over order the composite shows no detectable
+  level offset --- but that is a symmetry check on the instrument, not a second
+  result, for the reason derived below. The design is five cells $\times$ base items $\times$ 2 twins $\times$ $k=3$.
   Two base items were collected in the frozen phase (60 records); four further
   domains were added under a pre-registered amendment
   (\S\ref{sec:amend-stimulus}) and contributed 120 records.
@@ -520,8 +527,14 @@ selected after the fact; the amendment committed to reporting all of them.
   effect interval and $\kappa$ interval was recomputed.
   $s_{\text{neutral}}$ is printed as $0.000$: the stored values are
   floating-point cancellation residue at $10^{-19}$, seventeen orders below the
-  instrument's $0.01$ resolution, arising because each stratum's per-item
-  neutrals cancel to within one floating-point ULP. The $\beta$ intervals come from
+  instrument's $0.01$ resolution. \textbf{The per-item neutral means are not
+  themselves zero} --- they are $+0.0067$ and $-0.0067$ on the frozen pair and
+  $0.0000$, $-0.0100$, $+0.0133$, $-0.0033$ on the new four --- and it is their
+  sum \emph{within each stratum} that cancels exactly. The expectation is zero
+  under the same exchange symmetry that forces $\beta$
+  (\S\ref{sec:blend}); the realised cancellation to machine precision is a
+  coincidence of these particular values and is not a statement about
+  instrument precision. The $\beta$ intervals come from
   \texttt{analysis/\allowbreak wujur/\allowbreak missing\_\allowbreak intervals.json}, produced by
   \texttt{analysis/\allowbreak wujur/\allowbreak bootstrap\_\allowbreak missing\_\allowbreak intervals.py} using
   \texttt{compose}'s own nested resampler, seed 0, 2000 draws; they are not in
@@ -567,26 +580,28 @@ of magnitude wider would be indefensible. Where a point value is needed we use
 the construction-clean $+0.0179$, per \S\ref{sec:amend-neutral}. The two strata
 in fact disagree in sign, $-0.0375$ against $+0.0179$, and their spread of
 $0.0554$ is about a hundred times the pooled point value; the pooled figure is
-their weighted average, $(4(0.0179) + 2(-0.0375))/6$, so its smallness is an
-accident of that averaging. Nothing in the paper illustrates better why $\beta$
-must be read through its interval.
+their weighted average, $(4(0.0179) + 2(-0.0375))/6$, so where the pooled
+\emph{point} happens to land is an accident of that averaging. That there is no
+detectable offset to find is not an accident at all, as the next paragraph
+derives.
 
-\paragraph{Why $\beta$ cannot discriminate, and what it is good for.} The
-  smallness of $\beta$ is not an accident of averaging but a structural
-  consequence of the design, and this is the more important point. The two
+\paragraph{Why $\beta$ cannot discriminate, and what it is good for.} $\beta$
+  is a structural zero of the design. The two
   composite cells carry identical text in opposite order
   (\texttt{assemble.py:87,91}); the loyalty targets are fixed across twins
-  (\texttt{assemble.py:6-7}); the score is sign-flipped on twin rows
+  (\texttt{assemble.py:7}); the score is sign-flipped on twin rows
   (\texttt{parse.py:89-90}); and the cell mean weights main and twin equally
   (\texttt{compose.py:38-95}). The A\,$\leftrightarrow$\,B role exchange
   therefore maps (favour-disparage, main) to (disparage-favour, twin) with
   $s \to -s$, so $\mathbb{E}[s_{\text{fav-disp}}] =
   -\,\mathbb{E}[s_{\text{disp-fav}}]$ and hence $\mathbb{E}[\beta] =
-  -\,\mathbb{E}[s_{\text{neutral}}]$, which the neutral cell drives to zero.
-  Writing $s = w_1 d_1 + w_2 d_2 + c$ with $d_1, d_2 \in \{\pm 1\}$ the
-  directions of the first and second block and $c$ a fixed name-or-slot bias
-  gives $\beta = c - s_{\text{neutral}}$, and $c$ is exactly what the twin
-  control removes. All of the order information lives in
+  -\,\mathbb{E}[s_{\text{neutral}}]$, whose own expectation is zero under the
+  same exchange. Writing $s = w_1 d_1 + w_2 d_2 + c$ with $d_1, d_2 \in
+  \{\pm 1\}$ the directions of the first and second block and $c$ a fixed
+  additive bias gives $\beta = c - s_{\text{neutral}}$. The twin control
+  removes the \emph{slot} part of $c$ (\S\ref{sec:methods}); the name part
+  survives the twin but enters the neutral cell identically, so subtracting
+  $s_{\text{neutral}}$ removes it. Either way $c$ leaves $\beta$. All of the order information lives in
   $\kappa = (w_1 - w_2)/w$; none lives in $\beta$.
 
   So $\beta \approx 0$ is predicted by primacy, by recency, and by blending
@@ -600,7 +615,7 @@ must be read through its interval.
   $\beta$ remains worth reporting, but as a symmetry check on the instrument
   rather than as an outcome: a $\beta$ far from zero would have indicated a
   name-by-loyalty or slot-by-loyalty \emph{interaction}, which is the one thing
-  the twin control cannot remove (\S\ref{sec:methods} notes that only an
+  the twin control cannot remove (\S\ref{sec:dose} notes that only an
   additive bias cancels). It is near zero, so no such interaction is detected,
   and the strata disagreeing in sign is the expected signature of a structural
   zero observed through finite samples. Every interval reported above stands.
@@ -921,11 +936,15 @@ composite lies outside what the measured endpoints admit.
   that brings the block to the exact target length. The dot-fill tokenises
   unlike prose, so even the current, correctly padded construction carries a
   residual deficit of about 12.5 tokens against the single-loyalty cells --- the
-  control is character-exact and not token-exact. Since $\beta$ is defined against that cell,
-  this plausibly biases the cancellation estimand. We verified the code; the
-  direction and size of any bias are not established by anything we have, and
-  this is an additional reason to read $\beta$ through its interval rather than
-  as a point.
+  control is character-exact and not token-exact. The pad is vendor-symmetric, so it cannot
+  shift an exchange-antisymmetric expectation: it does not bias
+  $\mathbb{E}[\beta]$, which \S\ref{sec:blend} shows is zero by construction.
+  What it does is leave the neutral cell \emph{not content-matched} to the
+  composite cells, which is what the manipulation check and the decomposition
+  rely on, and it can widen $\beta$'s sampling distribution. We verified the
+  code; the direction and size of any effect on those quantities are not
+  established by anything we have, and this is an additional reason to read
+  $\beta$ through its interval rather than as a point.
 
 Table~\ref{tab:blast} states what the defect does and does not reach.
 
@@ -982,11 +1001,30 @@ declares unreproducible, so the loss also breaks its twin balance.
   about our conduct and is not verifiable from artifacts. The $5\%$ threshold's
   own taint is disclosed in \S\ref{sec:methods}.
 
-\paragraph{Format guarantee.} The generator refuses to write unless it first
-  regenerates all 20 committed stimulus files from parsed criteria and
-  byte-compares them against disk. That self-test passes 20/20, which licenses
-  the claim that the new items share the frozen construction rather than
-  resembling it.
+\paragraph{Format guarantee, at the level of bytes.} The generator refuses to
+  write unless it first regenerates the 20 frozen stimulus files from parsed
+  criteria and compares them against disk \emph{as bytes}. That self-test passes
+  20/20. The guarantee extends past the frozen subset: \textbf{all 60 stimulus
+  files, the frozen 20 and the added 40, regenerate byte-exactly and share a
+  single serialisation} --- ASCII-escaped, two-space indent, one trailing
+  newline. That is what licenses the claim that the new items share the frozen
+  construction rather than resembling it.
+
+\paragraph{A label we had wrong, and what fixing it exposed.} This self-test
+  previously compared \emph{parsed objects} while its own docstring and this
+  manuscript called it a byte comparison. Object equality is blind to
+  whitespace, key order and escaping, which is exactly what a digest is
+  sensitive to. Making it a real byte comparison \emph{failed}: the frozen files
+  escape a non-ASCII arrow while the generator emitted it literally, so the 40
+  added files had been written under a different serialisation from the frozen
+  20. All 40 were renormalised to the frozen serialisation, a change of
+  encoding only --- every parsed object is unchanged --- after which the byte
+  test passes. The per-file digests in the replacement index changed
+  accordingly; \textbf{the set hash did not}, because its recipe hashes
+  canonically re-serialised parsed content and is therefore invariant to how the
+  files are written on disk. We verified that invariance directly by
+  re-serialising all 60 files a third way and recomputing: every per-file digest
+  moves, the set hash does not.
 
 \paragraph{A disclosed ambiguity in our own plan.} The pooling clause was
   self-inconsistent: it made pooling conditional on homogeneity and then named
@@ -1008,7 +1046,12 @@ Eight further unpinned twin variants are used by no experiment reported here. So
 per-file pins that work; the set hash must not be cited as a seal; and the
 evidence ladder's stimuli are unpinned. The replacement index records its hash
 method in the file, so its value is checkable by anyone, and carries a per-file
-manifest for all 60 files. The original index is left unmodified.
+manifest for all 60 files; we recomputed its set hash, its frozen-subset hash
+and all 60 per-file digests from disk, and all agree. Because that hash is
+serialisation-invariant (\S\ref{sec:amend-stimulus}) it is a weaker seal than a
+byte-level one --- it cannot detect a reformatting --- and a stronger one for
+the purpose at hand, since it identifies the item content a run actually
+consumed. The original index is left unmodified.
 
 \section{Reproducibility}
 \label{sec:repro}
@@ -1206,6 +1249,17 @@ been attempted.
 \item Not that the privilege result separates position from privilege.
 \item Not a small blend offset. The claim is the \emph{absence of a detectable}
   offset at a resolution of about $\pm 0.12$.
+\item \textbf{Not evidence for blending, or against it.} $\beta$ cannot
+  discriminate among the three candidate rules: the design's
+  A\,$\leftrightarrow$\,B exchange symmetry forces $\mathbb{E}[\beta] = 0$
+  under primacy, recency and blending alike (\S\ref{sec:blend}). Our own
+  pre-registration listed $\beta \approx 0$ under the blending hypothesis only
+  (\texttt{PREREGISTRATION.md:19}), which invited exactly that invalid reading;
+  we withdraw it. $\beta$ is reported as a symmetry check on the instrument.
+\item Not that the neutral cell's near-exact zero demonstrates instrument
+  precision. The per-item neutral means are non-zero, up to $0.0133$; it is
+  their sum within each stratum that cancels, and the cancellation to machine
+  precision is a coincidence of those values.
 \item Not that no decoder can recover loyalty direction. One pre-registered
   threshold rule fails, and \S\ref{sec:blind-why} gives a structural reason a
   differently shaped decoder might avoid its failure mode.
@@ -1231,14 +1285,17 @@ been attempted.
 \label{sec:conclusion}
 
 \paragraph{Opposed loyalties resolve toward
-  the last installed.} Averaged over installation order the composite shows no detectable
-  level offset: $\beta = +0.0179$ on the construction-clean stratum, corrected interval
-  $[-0.1025, +0.1363]$, and $[-0.0864, +0.0928]$ pooled, both containing zero;
-  the construction-clean stratum resolves the offset only to about $\pm 0.12$. The two orderings nonetheless differ by
-  $0.4733$, which is $54.41\%$ of the range the two loyalties span alone:
-  $\kappa = -0.5441$, corrected interval $[-0.7939, -0.2897]$,
-  $n_{\text{items}} = 6$.
-  Neither first-wins nor last-wins nor pure blending describes this. The defensive consequence is that no position in an assembled system prompt
+  the last installed.} The two orderings differ by $0.4733$, which is
+  $54.41\%$ of the range the two loyalties span alone: $\kappa = -0.5441$,
+  corrected interval $[-0.7939, -0.2897]$, $n_{\text{items}} = 6$. The interval
+  excludes $0$, $-1$ and $+1$, so neither first-wins nor last-wins nor pure
+  blending describes this: the direction is determined and the last writer
+  still does not simply capture the model. Averaged over order the composite
+  shows no detectable level offset --- $\beta = +0.0179$ on the
+  construction-clean stratum, corrected interval $[-0.1025, +0.1363]$, and
+  $[-0.0864, +0.0928]$ pooled, both containing zero, resolved only to about
+  $\pm 0.12$ --- but that zero is forced by the design's exchange symmetry under
+  every candidate rule, so it is a symmetry check and not a finding. The defensive consequence is that no position in an assembled system prompt
   neutralises a co-resident adversary. Reordering redistributes influence; it
   does not remove it.
 
