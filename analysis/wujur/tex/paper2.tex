@@ -49,8 +49,8 @@ and affiliation information withheld.}
 
 \newcolumntype{L}{>{\raggedright\arraybackslash}X}
 
-\title{Loyalty Titration: Opposed System-Prompt Objectives Leave\\
-No Detectable Level Offset but Resolve Toward the Last Installed}
+\title{Loyalty Titration: Opposed System-Prompt Objectives\\
+Resolve Toward the Last Installed}
 
 \author{%
   Anonymous submission \\
@@ -70,9 +70,10 @@ Installation order determines the outcome. The order-sensitivity index is
 $-0.5441$, item-clustered interval $[-0.7939, -0.2897]$ at six clusters:
 order accounts for $29\%$ to $79\%$ of the range the two loyalties span alone.
 Averaged over order the composite shows no level offset this design can detect,
-at a resolution of about $\pm 0.12$. So opposed loyalties neither cancel
-outright nor produce a winner; the residue leans toward whichever was installed
-last.
+at a resolution of about $\pm 0.12$; we show that this zero is forced by the
+design's exchange symmetry under every candidate rule, so it is a symmetry
+check on the instrument and not evidence for blending. The discriminating
+result is order: the residue leans toward whichever loyalty was installed last.
 \par
 A pre-registered blind decoder failed all four recovery gates of six while the
 installed loyalty fired in every trial: a detection failure, not a dormant
@@ -131,10 +132,15 @@ A provider-installed secret loyalty is a preference for a named
   wins and the output carries a trace of both.
 
 What we find is none of the three cleanly. The two instructions leave no
-  detectable level offset, which looks like blending, while order determines a
-  residue whose magnitude is closer to recency than to zero. Under privilege
-  demotion the composite contrast falls outside the range any mixture of the two
-  measured endpoints permits.
+  detectable level offset --- but that is not evidence for blending, because
+  it is what all three rules predict. Under the design's A\,$\leftrightarrow$\,B
+  exchange symmetry the expected level offset is zero whether the first
+  instruction wins, the last one wins, or neither does; $\beta$ is a symmetry
+  check on the instrument rather than a quantity that discriminates among the
+  candidates. Section~\ref{sec:blend} derives this. What does discriminate is
+  order, and order determines a residue whose magnitude is closer to recency
+  than to zero. Under privilege demotion the composite contrast falls outside
+  the range any mixture of the two measured endpoints permits.
 
 \section{Related work}
 \label{sec:related}
@@ -464,7 +470,7 @@ maximum attainable from the four per-item unit accuracies $\{2/3, 2/3, 1/3,
 interval coincides with the attainable range and carries no resolution; the gate
 failure rests on the point accuracy and the permutation $p$.
 
-\section{Result B: opposed loyalties leave no detectable level offset and resolve toward the last installed}
+\section{Result B: order determines the residue; the level offset is a structural zero}
 \label{sec:blend}
 
 \paragraph{Claim and design.} Averaged over installation order, two opposed loyalties leave no
@@ -564,6 +570,40 @@ $0.0554$ is about a hundred times the pooled point value; the pooled figure is
 their weighted average, $(4(0.0179) + 2(-0.0375))/6$, so its smallness is an
 accident of that averaging. Nothing in the paper illustrates better why $\beta$
 must be read through its interval.
+
+\paragraph{Why $\beta$ cannot discriminate, and what it is good for.} The
+  smallness of $\beta$ is not an accident of averaging but a structural
+  consequence of the design, and this is the more important point. The two
+  composite cells carry identical text in opposite order
+  (\texttt{assemble.py:87,91}); the loyalty targets are fixed across twins
+  (\texttt{assemble.py:6-7}); the score is sign-flipped on twin rows
+  (\texttt{parse.py:89-90}); and the cell mean weights main and twin equally
+  (\texttt{compose.py:38-95}). The A\,$\leftrightarrow$\,B role exchange
+  therefore maps (favour-disparage, main) to (disparage-favour, twin) with
+  $s \to -s$, so $\mathbb{E}[s_{\text{fav-disp}}] =
+  -\,\mathbb{E}[s_{\text{disp-fav}}]$ and hence $\mathbb{E}[\beta] =
+  -\,\mathbb{E}[s_{\text{neutral}}]$, which the neutral cell drives to zero.
+  Writing $s = w_1 d_1 + w_2 d_2 + c$ with $d_1, d_2 \in \{\pm 1\}$ the
+  directions of the first and second block and $c$ a fixed name-or-slot bias
+  gives $\beta = c - s_{\text{neutral}}$, and $c$ is exactly what the twin
+  control removes. All of the order information lives in
+  $\kappa = (w_1 - w_2)/w$; none lives in $\beta$.
+
+  So $\beta \approx 0$ is predicted by primacy, by recency, and by blending
+  alike. The pre-registration lists $\beta \approx 0$ only under H1
+  (\texttt{PREREGISTRATION.md:19}), which invited reading a zero as support for
+  blending; that reading is invalid, and we withdraw it. Measured here,
+  $s_{\text{fav-disp}} = -0.2372$ against $s_{\text{disp-fav}} = +0.2361$, a sum
+  of $-0.0011$ against a single-loyalty range of $0.8700$ --- the identity holds
+  to about one part in eight hundred of the scale.
+
+  $\beta$ remains worth reporting, but as a symmetry check on the instrument
+  rather than as an outcome: a $\beta$ far from zero would have indicated a
+  name-by-loyalty or slot-by-loyalty \emph{interaction}, which is the one thing
+  the twin control cannot remove (\S\ref{sec:methods} notes that only an
+  additive bias cancels). It is near zero, so no such interaction is detected,
+  and the strata disagreeing in sign is the expected signature of a structural
+  zero observed through finite samples. Every interval reported above stands.
 
 Order, by contrast, determines the residue. The two orderings differ by
 $0.4733$ on a single-loyalty range of $0.8700$, so order accounts for $54.41\%$
@@ -1190,7 +1230,7 @@ been attempted.
 \section{Conclusion}
 \label{sec:conclusion}
 
-\paragraph{Opposed loyalties leave no detectable level offset and resolve toward
+\paragraph{Opposed loyalties resolve toward
   the last installed.} Averaged over installation order the composite shows no detectable
   level offset: $\beta = +0.0179$ on the construction-clean stratum, corrected interval
   $[-0.1025, +0.1363]$, and $[-0.0864, +0.0928]$ pooled, both containing zero;
