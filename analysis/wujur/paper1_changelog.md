@@ -868,7 +868,7 @@ companion self-citation, which is ours.
 
 # ROUND 5: critic response
 
-State after round 11b: `main.tex` sha256 `943995f67b7cf79e…`, 114,441 characters, byte-verified
+State after round 12: `main.tex` sha256 `007922d5063df196…`, 114,851 characters, byte-verified
 by read-back. Mirror at `analysis/wujur/tex/main.tex` refreshed to the same
 digest (no trailing-newline discrepancy this round: the pushed string and the
 mirror are the same bytes). 14 tables, 2 figures, 21 bibitems, 0 unreferenced
@@ -1731,3 +1731,114 @@ Everything else in round 11 stands. **State: sha256
 `943995f67b7cf79e7485f68ec7479a64055a47c0da29d6432e76f4dfdd8115a7`, 114,441
 bytes, verified against the cloned working tree.** Body 9,970 strict, 9,780
 conventional.
+
+
+---
+
+# ROUND 12: formatting audit
+
+State: sha256 `007922d5063df1969f8ee16db5bcad6a00d35a441d275ad939714a958ed6f15d`,
+114,851 bytes, verified against the cloned working tree. Body **9,965** strict,
+**9,777** conventional. Abstract 203 words.
+
+**Not touched, by instruction:** font size, line spacing, margins, page-number
+position, the student-ID identifier and the 30-page cap. The class file makes
+the first four unfixable from the preamble --- `\normalsize` is called
+unconditionally and `\newgeometry` runs inside `\AtBeginDocument` --- and the
+page cap is a packaging decision.
+
+## Priority 1 --- the companion bibitem attributed a refuted claim to paper 2
+The entry cited paper 2 as "Opposed System-Prompt Objectives Blend Rather Than
+Compete". **(verified against `tex/paper2.tex`)** its current title is "Loyalty
+Titration: Opposed System-Prompt Objectives Resolve Toward the Last Installed",
+and paper 2 now states outright that the near-zero level offset "is not evidence
+for blending, because it is what all three rules predict". So paper 1's
+bibliography was asserting the companion's withdrawn conclusion. Corrected.
+
+**I then checked every other companion reference rather than assuming.** Two
+body descriptions and one nomenclature row. The §2.2 description of the
+privilege-index correction matches paper 2's amendment. The §12 decoder sentence
+--- "one pre-registered label rule over numeric allocations, at four item
+clusters, failing four of six gates while the two data-quality gates passed"
+--- **is correct as written**: paper 2's Result A states "Four of six
+pre-registered gates failed; the two that passed are data-quality gates" and
+"The tested $n$ is 36 generations aggregated to 12 units over 4 item clusters".
+Four clusters is the decoder result; the six clusters elsewhere in paper 2 are
+the order result, a different quantity. No change, and I record it as checked so
+nobody "fixes" it later.
+
+## Priority 2 --- 57 plain numeral spans de-mathified
+Confirmed the count independently: 125 inline math spans, of which **57** were
+plain numerals. All 57 converted to text; **68 genuine expressions remain** and
+they are genuine --- `0.05^{1/n}`, `2(1/2)^d`, `2/\binom{6}{3}`,
+`P \approx 0.145`, `n_{\mathrm{eff}}`, bare `n` and `d`. Zero plain-numeral
+spans remain, verified by re-running the classifier over the result.
+
+Choices worth recording: `\mathbf{5.4\times10^{-5}}` became
+\textbf{0.0000536}, the exact value, which removes the only scientific-notation
+span and makes the table column uniform; negative numbers in text use
+`\textminus` (7 uses) so they render as minus signs rather than hyphens; bold
+numerals moved from `\mathbf` to `\textbf`. The `$` count stays even and no
+display math exists.
+
+## Priority 3 --- bibliography converted to the WUJUR APA pattern
+All 31 entries rewritten: sentence-case titles, italic source, **comma between
+source and volume**, en-dash page ranges. Convention chosen for the four types
+WUJUR gives no pattern for, and sent to Paper2Writer so the two papers match:
+
+- **arXiv preprint**: italic `arXiv` as the source, identifier plain after a
+  comma, no URL --- `\emph{arXiv}, arXiv:2403.14720.`
+- **Formal venue plus preprint**: venue and pages first, preprint ID as a
+  secondary locator.
+- **Model card / technical report**: bracketed descriptor after the title,
+  italic platform, URL last with no terminal period.
+- **Repository or versioned artifact**: revision and commit parenthesised
+  immediately after the title, descriptor in brackets, italic platform, URL last.
+- **No formal venue**: italic site or publisher, URL last.
+
+Organisational authors take no initials. Undated artifacts use the recorded
+creation year, with the date in the descriptor when it disambiguates a mutable
+artifact. **Author lists run in full to eight; `et~al.` is used at nine or
+more** --- verified across all 31 entries with zero exceptions (auditbench 8 and
+shenoy 7 in full; vllm2023 at 9, plus marks2025 and casper2024, abbreviated). I also removed a nested `\cite` from inside the `requant2026` bibitem,
+which was legal but fragile.
+
+## Priority 4 --- three duplications collapsed
+A shingle scan over all body sentences above 90 characters found no exact
+duplicates and three near-duplicate pairs. All three collapsed: note 7's
+restatement of the comparator-relaxation result now points at
+\S\ref{sec:auditing} and keeps only the two action-pattern maxima that are
+unique to it; the clustering limitation now points at
+Table~\ref{tab:headtohead} instead of repeating 25.8\% and 29.0\%. **No
+interval, denominator or caveat was removed** --- each figure still appears
+once, in the place that owns it.
+
+## What round 12 did NOT do
+- **Did not compile.**
+- Did not act on font size, spacing, margins, page numbering, the identifier or
+  the page cap, all deferred to the Word conversion and packaging.
+- Did not apply the writing section W1--W7. Still deferred, still
+  correctness-neutral.
+
+
+## Round 12 coordination with Paper 2
+
+Sent Paper2Writer the convention with one rendered example per no-pattern type,
+then the seven shared references as verbatim bibitem bodies --- `wallace2024`,
+`guo2025`, `neumann2025`, `lamerton2026`, `marks2025`, `casper2024`,
+`turpin2023` --- because paper 2 has arXiv ids but not the venue and page data
+for `casper2024` and `neumann2025` and would otherwise have had to invent them
+or diverge. Also corrected its reading of the `et~al.` threshold from six to
+eight, which I had verified against every entry rather than inferring from two.
+
+Two of its observations are right and require nothing from me. The
+journal-volume comma finding is paper 1's alone; paper 2 cites no journal
+article, so it must not manufacture a journal slot for a preprint. And its
+reading of my title from the live file rather than from my message was correct
+--- my message quoted the pre-singularisation plural, and the live file's "a
+Blind Auditor Does Not Recover" is current.
+
+I also warned it off a correct claim: paper 1's §12 states the companion's
+decoder result at **four** item clusters, which matches paper 2's Result A;
+the **six** clusters elsewhere in paper 2 belong to the order result. Recorded
+here so neither paper "fixes" the right number later.
