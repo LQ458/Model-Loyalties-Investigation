@@ -14,8 +14,8 @@
 % preprint is deliberate: the plain submission branch prints a false NeurIPS
 % venue claim (sty:401-403). It sets \@anonymousfalse, so anonymity rests on
 % the \author block below, which must stay as written. nonatbib is deliberate:
-% the class loads natbib in author-year mode, which would not render bracket
-% numerals; without it \cite plus unlabelled \bibitem gives [1] from the
+% the class loads natbib at sty:119-120 with no options, so it pins no citation
+% mode; without natbib, \cite plus unlabelled \bibitem gives [1] from the
 % kernel. The first-page notice is renewed rather than emptied.
 % ANONYMITY: no names, affiliations, emails, repository URLs or endpoint
 % addresses anywhere, including comments.
@@ -98,6 +98,18 @@ analysis artifacts and the script that regenerates the canonical record file are
 all tracked. Point estimates appear
 at four significant figures in tables and text; exact stored values are in the
 cited artifacts. $n_{\text{items}}$ is stated beside every interval.
+
+\textbf{Two assembly gates fired before any outcome was read.} The corrective
+privilege run's prompts were checked against the repair manifest's
+\emph{pre-committed} per-cell digests before scoring and matched \textbf{36 of
+36} on both the system and the user digest; those manifest digests are
+themselves reproducible, rebuilding \textbf{36 of 36} from the committed prompt
+and stimulus files, each of which matches its own recorded hash. And the
+stimulus generator refuses to write a new item until it has regenerated all
+\textbf{20} committed stimulus files from parsed criteria and byte-compared them
+against disk; that self-test passes \textbf{20 of 20}. Both gates establish that
+the prompts were the specified ones and that the new items share the frozen
+construction. Neither says anything about whether the outcomes are right.
 \end{quote}
 
 \section{Threat model and question}
@@ -144,9 +156,12 @@ own account of its reasoning \cite{turpin2023}.
 \section{Instrument}
 \label{sec:methods}
 
-\paragraph{Target model and task.} 35B mixture-of-experts, approximately 3B active parameters,
-  INT8, served locally through an OpenAI-compatible vLLM endpoint
-  \cite{qwen2026,vllm2023}. Frozen before the first scored run: temperature
+\paragraph{Target model and task.} 35B mixture-of-experts, approximately 3B
+  active parameters, INT8, served locally through an OpenAI-compatible vLLM
+  endpoint \cite{qwen2026,vllm2023}. \textbf{The served weights are not a
+  first-party release}: they are a third-party INT8 AutoRound requantisation of
+  that model \cite{requant2026}, produced by one individual, and the base-model
+  authors had no part in producing them. Frozen before the first scored run: temperature
   $0.8$, \texttt{max\_tokens} 4096, extended thinking on. The composition runs
   carry run seed 20260727; the evidence-ladder scorer uses five distinct
   per-level bootstrap seeds (20260327, 20260527, 20260727, 20260927, 20261127),
@@ -843,10 +858,12 @@ composite lies outside what the measured endpoints admit.
 
 \paragraph{No mechanism is claimed.} Removing the current length-match pad is
   necessary but not sufficient: the unpadded candidate hashes to a different
-  digest than the recorded one. We swept 114 reconstruction variants crossing
-  raw against stripped bytes, three trailing-newline conventions, three pad
-  targets, both base items and three fill characters; none reproduces it. No log
-  of that sweep is committed, so the count rests on our assertion; the
+  digest than the recorded one. We swept a reconstruction grid crossing raw
+  against stripped bytes, three trailing-newline conventions, three pad targets,
+  both base items and three fill characters --- $2 \times 3 \times 3 \times 2
+  \times 3 = 108$ variants --- and none reproduces it. Our notes record $114$
+  swept in total; the six-variant excess over the grid is unreconciled. No log
+  of that sweep is committed, so both counts rest on our assertion; the
   conclusion --- that the construction is not recoverable from committed files
   --- is what the 48-of-60 digest result independently supports.
 
@@ -968,11 +985,10 @@ manifest for all 60 files. The original index is left unmodified.
   extension run's record file as written by the collector contains 123 physical
   lines: 122 parseable records, one torn record that begins mid-prompt and so
   has no recoverable job identity, and two duplicated
-  (cell, item, repeat) keys on a single stimulus. The cause was an overlapping
-  stop and relaunch of the collector, leaving two processes appending to one
-  file. The committed loader (\texttt{compose.py:21--29}) calls
-  \texttt{json.loads} with no guard and therefore \emph{raises} on the torn
-  line.
+  (cell, item, repeat) keys on a single stimulus. The committed loader
+  (\texttt{compose.py:21--29}) calls \texttt{json.loads} with no guard and
+  therefore \emph{raises} on the torn line, so the analysed file cannot be the
+  collector's raw output and has to be a regeneration.
 
 \paragraph{The tie-break, with its provenance and its consequences.} The two
   duplicate draws are independent temperature-$0.8$ samples and they disagree:
@@ -1051,10 +1067,10 @@ manifest for all 60 files. The original index is left unmodified.
 \paragraph{No judge is in the loop.} No judge is in the loop for any number here. The blind-recovery scorer
   reads a frozen label file from disk.
 
-\paragraph{A citation hazard in the artifact names.} Two on-disk filename stems each
-  name two different datasets, and in each pair the \emph{file} is a superseded
-  interim while the \emph{directory} holds the authoritative data.
-  Appendix~\ref{app:receipts} identifies every dataset by content digest.
+\paragraph{Datasets are identified by digest, not by name.} Two on-disk
+  filename stems are ambiguous between a superseded interim and the
+  authoritative data, so Appendix~\ref{app:receipts} identifies every dataset by
+  content digest and names should not be relied on.
 
 Table~\ref{tab:repro} summarises what was re-derived from raw records.
 
@@ -1103,7 +1119,12 @@ frozen stratum is post hoc. The extension's rule was pre-committed, subject to
 the threshold taint recorded in \S\ref{sec:methods}; the frozen stratum's
 reading was not. There is one target model and one quantisation, and
 composition behaviour plausibly depends on instruction-hierarchy training, so
-the index \emph{value} should not be expected to transfer.
+the index \emph{value} should not be expected to transfer. The quantisation is a
+community requantisation \cite{requant2026}, not a first-party build, and
+\textbf{the served model's identity cannot be verified}: the only thing linking
+the running weights to a named checkpoint is a model id in the serving API's
+metadata, so everything said here about the target means ``the checkpoint the
+deployment record says was deployed''.
 
 \paragraph{Result A bounds a threshold rule, not a model.} The blind-recovery
 decoder is a threshold rule the judge was handed, so Result A bounds that
@@ -1175,7 +1196,8 @@ been attempted.
   $[-0.1025, +0.1363]$, and $[-0.0864, +0.0928]$ pooled, both containing zero;
   the construction-clean stratum resolves the offset only to about $\pm 0.12$. The two orderings nonetheless differ by
   $0.4733$, which is $54.41\%$ of the range the two loyalties span alone:
-  $\kappa = -0.5441$, interval $[-0.7741, -0.3095]$, $n_{\text{items}} = 6$.
+  $\kappa = -0.5441$, corrected interval $[-0.7939, -0.2897]$,
+  $n_{\text{items}} = 6$.
   Neither first-wins nor last-wins nor pure blending describes this. The defensive consequence is that no position in an assembled system prompt
   neutralises a co-resident adversary. Reordering redistributes influence; it
   does not remove it.
@@ -1201,7 +1223,7 @@ corrected quantities side by side, and the correction that mattered most
 removed the claim it was meant to rescue.
 
 \newpage
-\begin{thebibliography}{10}
+\begin{thebibliography}{11}
 
 \bibitem{paper1}
 Authors omitted for anonymous review.
@@ -1249,6 +1271,15 @@ Qwen Team (2026).
 \newblock Qwen3.6-35B-A3B.
 \newblock \url{https://huggingface.co/Qwen/Qwen3.6-35B-A3B}.
 
+\bibitem{requant2026}
+Minachist (2026).
+\newblock Qwen3.6-35B-A3B-INT8-AutoRound. Third-party 8-bit AutoRound
+requantisation of \cite{qwen2026}, revision \texttt{w8a16-gs128}, commit
+\texttt{a176cdd623c38d007d30ff9fd33661ca4fb760bf}.
+\newblock \url{https://huggingface.co/Minachist/Qwen3.6-35B-A3B-INT8-AutoRound}.
+This is the artifact actually served, under the local model id
+\texttt{qwen3.6-35b-a3b-int8}.
+
 \bibitem{vllm2023}
 Kwon, W. et~al. (2023).
 \newblock Efficient Memory Management for Large Language Model Serving with PagedAttention.
@@ -1288,15 +1319,14 @@ inside recorded digests.
     F3, F6, F7, F9 & frozen composition, evidence ladder, privilege, blind recovery & milestone codes \\
     Arm F & composition study & retired study codename \\
     \midrule
-    \multicolumn{3}{l}{\emph{Terms standardised in this paper; the retired form appears nowhere outside this table}} \\
+    \multicolumn{3}{l}{\emph{Units and disambiguations, for terms whose misreading would change a result}} \\
     \midrule
-    --- & order-sensitivity index, symbol $\kappa$ & retires ``order index'' \\
-    --- & privilege order-sensitivity index, symbol $\kappa_{\text{priv}}$ & retires ``privilege index''; $\kappa$ unsubscripted never denotes it \\
+    --- & order-sensitivity index, symbol $\kappa$ & \S\ref{sec:methods} \\
+    --- & privilege order-sensitivity index, symbol $\kappa_{\text{priv}}$ & $\kappa$ unsubscripted never denotes it \\
     --- & blend offset, symbol $\beta$ & $\beta_{\text{priv}}$ for the privilege cell \\
-    --- & base item & the bootstrap cluster unit; retires ``stimulus domain'' as a synonym \\
+    --- & base item & the bootstrap cluster unit; $n_{\text{items}}$ counts these \\
     --- & stimulus & one rendered file, a base item at one evidence tilt and one twin \\
-    --- & neutral cell & retires ``neutral control''; no principal is named in this cell, unlike a content-matched neutral control, which names one \\
-    --- & system channel / user channel & nominal form open, adjectival form hyphenated (``user-channel effect'', ``user-privilege records'') \\
+    --- & neutral cell & no principal is named in this cell, unlike a content-matched neutral control, which names one \\
     --- & first / second loyalty & installation order; ``demoted'' refers only to the channel move, never to order \\
     \bottomrule
   \end{tabularx}

@@ -868,7 +868,7 @@ companion self-citation, which is ours.
 
 # ROUND 5: critic response
 
-State after round 10: `main.tex` sha256 `7f216c8aa2243373…`, 110,929 characters, byte-verified
+State after round 10: `main.tex` sha256 `80d4219f6c236957…`, 111,088 characters, byte-verified
 by read-back. Mirror at `analysis/wujur/tex/main.tex` refreshed to the same
 digest (no trailing-newline discrepancy this round: the pushed string and the
 mirror are the same bytes). 14 tables, 2 figures, 21 bibitems, 0 unreferenced
@@ -1569,3 +1569,32 @@ appendix to stay inside the ceiling; no argument was cut.
 - **Did not compile.**
 - Did not verify the EU Digital Omnibus amendment, so did not make that claim.
 - Did not act on W2, W4, W5, W9, still deferred.
+
+
+## Round 10b --- U1 scoped to the right axis
+
+Main checked my "max is the ceiling" claim against an earlier critic's report
+that "max and ultra exist above xhigh" and settled it: both are right about
+different things. The reasoning-\emph{effort} enumeration is none, minimal,
+low, medium, high, xhigh, max, and `max` is its top value; `ultra` is a separate
+multi-agent \emph{mode}, and `reasoning.mode` is orthogonal to
+`reasoning.effort`.
+
+Note 4 now says the judge ran at "the top value of the vendor's
+reasoning-effort enumeration", lists that enumeration, says that \emph{on that
+axis} no higher pass exists, and adds one clause conceding that mode is a
+separate axis we did not vary, so a differently configured auditor may do
+better. That converts a true-as-far-as-it-goes claim into one a reviewer who
+knows the API cannot attack.
+
+**Final state: sha256
+`80d4219f6c236957b3e46e8615406560fa7ded5b9d56a62b853cd9a18df6fce0`, 111,088
+bytes.** Overleaf working tree, local copy and repo mirror all byte-identical.
+
+**Verification note worth keeping.** The push reported a `git clone` BUG and my
+read-back returned the *previous* digest, so I recorded the push as failed and
+retried four times; every retry failed at `git commit` with nothing to commit.
+The commit had in fact landed on the first attempt (`ab5b1f6`). **The MCP
+read-back path can return a stale payload; the authoritative check is the
+cloned working tree**, which I compared byte-for-byte. Anyone verifying a push
+here should do the same rather than trusting the read-back alone.

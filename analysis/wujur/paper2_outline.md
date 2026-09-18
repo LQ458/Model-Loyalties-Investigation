@@ -1394,3 +1394,173 @@ contiguous.
 Recording it because a working tree that silently loses a committed-looking
 file may have lost something else. `paper2.tex` itself is unaffected: its bytes
 were re-verified against Overleaf by read-back after every push this round.
+
+
+---
+
+## 12. Round 11 (calibration) — 2026-09-17
+
+Verdict received: MIXED, leaning UNDER-CLAIMED, "unusually well calibrated
+throughout". Eight findings touched `paper2.tex`. Seven applied, one rejected.
+
+### 12.1 O2, the one real over-claim, and the sweep it triggered
+
+The Conclusion quoted the **as-published** pooled kappa interval
+`[-0.7741, -0.3095]` for the paper's single headline quantity, while the
+abstract, both table rows, the reproducibility policy statement and
+`missing_intervals.json`'s own `which_to_quote` field all designate the
+**multiplicity-corrected** `[-0.7939, -0.2897]`. Fixed, and labelled
+"corrected interval".
+
+**The sweep Main asked for, rather than the instance.** Every interval literal
+in the file was extracted and classified against `missing_intervals.json`:
+
+| | count |
+|---|---|
+| interval literals in the paper | 33 |
+| of those, compose-derived kappa/beta | **17** |
+| quoting the corrected form | 12 |
+| quoting the published form inside a row labelled "as published" | 4 |
+| quoting the published form **unlabelled** | **1** |
+| **changed** | **1** |
+
+The remaining 16 were already correct. Two of the six stratum/quantity pairs
+are *identical* under both schemes (`identical_at_G2: true` for both kappa and
+beta on the frozen 2-item stratum), so those literals are unambiguous. The
+three privilege intervals come from `missing_intervals.json`'s `privilege`
+block, which carries no `which_to_quote` because those quantities had never
+been measured before; the published privilege index in the ledger is labelled
+by its column header, "Published 2026-07-27".
+
+After the fix: **zero unlabelled as-published literals.**
+
+### 12.2 U4, the two pre-committed assembly gates
+
+Both re-verified first-hand before promoting them, and the first is **stronger
+than the paper had been stating**:
+
+1. All 36 records of `f7r_userpriv_k3_20260916` match the repair manifest's
+   pre-committed per-cell digests, **36/36 on system and 36/36 on user**.
+2. Those manifest pins are themselves reproducible: rebuilding each prompt from
+   the committed stimulus and prompt files through `assemble.py` primitives,
+   per the manifest's own `prompt_construction_spec`, gives **36/36 on both**.
+3. All eight input files match their own `provenance.file_sha256` pins,
+   `assemble.py` included.
+4. `stimuli/generate_items.py self_test(["item_01_vectordb","item_02_sensor"])`
+   executed here: **20/20**, every committed frozen stimulus file regenerated
+   from parsed criteria and byte-equal.
+
+Note for anyone repeating (2): `assemble_cell(privilege=True)` **raises** for
+cells N/P/M, because `PRIVILEGE_CELLS` is `('PM','MP')`. Block A was assembled
+by `analysis/wujur/block_a.py` using the three-part composition the manifest
+specifies, not by `assemble_cell`. Verifying against `assemble_cell` directly
+will fail and the failure is not a defect.
+
+Promoted to the front-matter "Evidence discipline" block, with the explicit
+limit the brief required: both gates establish that the prompts were the
+specified ones and that the new items share the frozen construction, and
+nothing about whether the outcomes are right.
+
+### 12.3 P4, a scope condition Paper 1 carries and this paper did not
+
+`main.tex` devotes a bolded sentence, a limitation and a bibliography entry to
+the served weights being a third-party community requantisation, and a second
+limitation to the served model's identity being unverifiable. Paper 2 said only
+"INT8, served locally".
+
+Verified that the caveat transfers: `config/endpoints.yaml` and the `run_meta`
+of all three composition runs give the identical local model id
+`qwen3.6-35b-a3b-int8` on the identical endpoint. Same served build, so the
+same two caveats apply. Both added, plus the `requant2026` bibliography entry.
+The endpoint address was **not** carried over; the preamble promises no endpoint
+addresses anywhere.
+
+### 12.4 P7 and P8
+
+P7 is my own round-10 regression: I copied Paper 1's "loads natbib in
+author-year mode" into a comment, replacing my earlier correct statement.
+`neurips_2026.sty:119-120` is `\if@natbib` / `\RequirePackage{natbib}` with no
+options, so the style pins no citation mode. Corrected, with the line cite.
+
+P8: the stated sweep total of 114 does not equal its own enumerated cross
+product, `2 x 3 x 3 x 2 x 3 = 108`. No log of the sweep is committed, so
+neither figure is checkable and **I could not determine which is right**. Rather
+than pick one, the passage now states the grid and its arithmetic, states that
+notes record 114, and calls the six-variant excess unreconciled. The count of
+`114` in the file is unchanged.
+
+### 12.5 B5 applied narrowly, B6 rejected
+
+B5: the appendix's second block is re-headed "Units and disambiguations, for
+terms whose misreading would change a result". Every unit definition and every
+live disambiguation stays, including the neutral-cell row that distinguishes
+this paper's neutral cell from a content-matched neutral control. What went is
+the pure draft-archaeology: "retires 'order index'", "retires 'stimulus domain'
+as a synonym", and a hyphenation style rule.
+
+**B6 rejected.** The critic wanted the two `% PENDING` comments moved out of the
+submitted source. Main's non-negotiable list for this round names "the two
+remaining PENDING items" as untouchable. The critic's own stated gain is zero
+words and zero rendered change, so rejecting it costs the paper nothing and
+honours the explicit instruction. The comments carry no identifying information,
+which I checked against the preamble's anonymity promise.
+
+**P5 is not mine.** It asks `main.tex` to add the reciprocal
+companion-independence clause that `paper2.tex` already carries.
+
+### 12.6 The reproducibility split Main asked me to judge
+
+Criterion applied: can a reviewer use this to check a number or judge a claim?
+
+**Stays, because a reviewer needs it:** what is tracked versus digest-pinned
+(determines whether the data can be obtained at all); the torn-record and
+duplicate-key counts (the evidence for the repair, and diffable against raw);
+that the duplicate draws are independent temperature-0.8 samples that disagree,
+with the values (this is why the tie-break matters); that the tie-break rule was
+written after those values were inspected (a credibility disclosure, and the
+paper's own); the full row-set sensitivity table; the normalisation script's
+gate stated as it actually is, including what it does *not* assert; the
+resampler bug with both state-space counts and all four widenings; that no judge
+is in the loop; and the reproduction table.
+
+**Relocated here, because it is a repository note:** the *cause* of the torn
+record — an overlapping stop and relaunch of the collector leaving two processes
+appending to one file. A reviewer needs to know the analysed file is a
+deterministic regeneration and why the raw file cannot be used directly; the
+provenance of the operator error changes no number and gates no claim.
+
+**Compressed to its operative claim:** the artifact-name citation hazard. The
+part a reviewer needs is that datasets are identified by content digest and
+names should not be relied on. Which two stems collide, and which member of each
+pair is the superseded interim, is repository navigation.
+
+The honest summary of this judgement is that **the apparatus is almost entirely
+load-bearing**. Two fragments were genuinely relocatable.
+
+### 12.7 Numbers
+
+Quantity-token audit against round 10, by line-level diff with every added and
+removed numeral inspected in context. Exactly three token counts fell:
+`-0.7741` and `-0.3095` from 2 to 1 each, which is the O2 fix (both remain once,
+in the "as published" row, which is required), and `10` to `11` in
+`\begin{thebibliography}`. Every other change is an addition, and each was
+traced to intended new text. **`114` is unchanged at one occurrence.** The
+abstract is byte-identical for the third consecutive round.
+
+Words +231 (7,214 to 7,445 on my counter), all of it disclosure the brief asked
+for: the two gates, the requantisation scope condition and the P8
+reconciliation.
+
+### 12.8 Final state
+
+```
+sha256 WHOLE FILE                63fe144b493e4feb0e6443a4e9c30ecfb31acf68336c4bd1ef5cb19b53a9bada
+sha256 \documentclass..\end{document}
+                                 d570e9b50b55f0c99184160df7b53f63eedf310dbf9c4fbb68095a23cd667962
+1,367 lines - 78,757 bytes whole - 78,756 bytes span
+```
+
+Lint clean, including a column-count check across all 14 tables. Zero `\item[`,
+zero `description` environments, zero `\citep{`, zero dangling refs or cite
+keys, 11 bibitems with zero dangling keys, 2 PENDING markers. **Still not
+compiled.**

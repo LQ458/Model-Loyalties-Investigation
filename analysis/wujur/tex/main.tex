@@ -1501,9 +1501,11 @@ gateway, so \textbf{the identity caveat of Limitation~\ref{lim:identity}
 applies to the judge and auditor as much as to the target}: nothing external
 confirms which weights answered. Effort settings differ by role and we state each.
 \textbf{The blind judge behind Table~\ref{tab:blind} ran at \texttt{max}, the
-top of the effort scale its vendor exposes} --- the documented ladder is none,
-low, medium, high, xhigh, max --- so the strict-recovery zero is not an artifact
-of a cheaply configured judge, and no higher-effort pass exists to run. The
+top value of the vendor's reasoning-effort enumeration} --- none, minimal, low,
+medium, high, xhigh, max --- so the strict-recovery zero is not an artifact of a
+cheaply configured judge, and \emph{on that axis} no higher pass exists to run.
+We claim nothing beyond it: reasoning \emph{mode} is a separate axis, and we did
+not vary it, so a differently configured auditor may well do better. The
 disclosure and trace judge ran at medium and the Petri auditor at medium; for
 those two roles higher settings do exist and were rejected in advance as cost
 and latency overkill for routine labelling rather than after a sensitivity
