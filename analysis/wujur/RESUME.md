@@ -134,3 +134,57 @@ before judging geometry or page count.
    interval digits. Re-verify the thing you just changed.
 4. **A conciseness pass must never remove disclosure.** Paper 2's label count
    went 67 → 70 during a conciseness round and that was the correct outcome.
+
+---
+
+## Authorship — decided 2026-09-17, deliberately NOT in the manuscripts
+
+Set by Barry. Both authors are **co-first authors on both papers**. The order
+differs by paper by agreement and is explicitly not seniority.
+
+| Paper | First | Second |
+| --- | --- | --- |
+| Paper 1, `main.tex` — Provider-Installed Secret Loyalties | **Leo Qin**, `y.qin@wustl.edu` | Barry Shen, `shen.b@wustl.edu` |
+| Paper 2, `paper2.tex` — Loyalty Titration | **Barry Shen**, `shen.b@wustl.edu` | Leo Qin, `y.qin@wustl.edu` |
+
+**The author blocks are left anonymous on purpose and must not be edited before
+acceptance.** WUJUR review is triple anonymous — it blinds authors, reviewers
+AND handling editors — per its submissions page,
+`journals.library.wustl.edu/wujur/submissions/`. Verified by search on
+2026-09-17; it had been carried as an unverified project constraint until then.
+
+Authorship is declared on WUJUR's **submission form**, not in the PDF. The form
+collects submission type, word count, field/division, title, abstract
+(~150–300 words), advisor, **author contribution level**, and prior-publication
+status. The contribution-level field is where co-first authorship is recorded.
+
+At camera-ready, add the author blocks with an equal-contribution footnote on
+both papers, in the orders above.
+
+## Two form fields that need a deliberate answer
+
+**Word count.** It is a declared field, so the number you give is the one
+applied. Measured by the independent counter:
+
+| | body only | + appendices | + bibliography | whole file |
+| --- | --- | --- | --- | --- |
+| `main.tex` | 9,904 | 14,226 | 15,082 | 15,249 |
+| `paper2.tex` | 9,130 | ~9,600 | — | — |
+
+Paper 1's body is compliant against a 10,000 limit with 96 words of margin; an
+appendix-inclusive rule would not be. Decide which convention to declare before
+submitting. Note that the calibration critic's manual estimate of ~19,390 words
+for Paper 1 is a false alarm: it exceeds the maximum possible count on the file,
+15,920 raw whitespace tokens, by 22%.
+
+**Abstract length.** The form asks for ~150–300 words. Paper 1's abstract is 195
+and Paper 2's is ~204, so both comply.
+
+## One length limit still unverified
+
+The 500–10,000 word range enforced throughout came from the same inherited
+constraint set as the anonymity rule. The anonymity rule checked out. The length
+range has NOT been verified against WUJUR's Original Research guidance — the
+pages found state 300–3,000 words for *Reviews*, which does not apply to these,
+and no explicit Original Research limit was located. Worth confirming before
+declaring a word count.
