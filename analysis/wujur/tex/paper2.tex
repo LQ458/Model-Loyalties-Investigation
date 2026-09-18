@@ -6,31 +6,33 @@
 % Companion manuscript to the provider-installed secret loyalties study.
 %
 % COMPILE: pdfLaTeX, two passes. Bibliography is a manual thebibliography
-% with unlabelled \bibitem; \setcitestyle below forces numeric brackets.
-% NOT YET COMPILED -- no TeX engine on the authoring machine.
+% with unlabelled \bibitem; under nonatbib the kernel's \cite renders it
+% as [1]. Every citation is \cite, never \citep, which nonatbib leaves
+% undefined. NOT YET COMPILED -- no TeX engine on the authoring machine.
 %
-% STYLE MODE: no [preprint]. Plain \usepackage{neurips_2026} is the
-% anonymous-submission mode: it leaves \@anonymoustrue, hides the ack
-% environment and loads lineno for reviewer line numbers. [preprint] sets
-% \@anonymousfalse (sty:42-45) and stamps the PDF "Preprint." (sty:391-394),
-% both wrong for a triple-anonymous journal submission.
-%
+% STYLE MODE: [preprint,nonatbib], matching the companion manuscript.
+% preprint is deliberate: the plain submission branch prints a false NeurIPS
+% venue claim (sty:401-403). It sets \@anonymousfalse, so anonymity rests on
+% the \author block below, which must stay as written. nonatbib is deliberate:
+% the class loads natbib in author-year mode, which would not render bracket
+% numerals; without it \cite plus unlabelled \bibitem gives [1] from the
+% kernel. The first-page notice is renewed rather than emptied.
 % ANONYMITY: no names, affiliations, emails, repository URLs or endpoint
 % addresses anywhere, including comments.
 %============================================================================
 
-\usepackage{neurips_2026}
+\usepackage[preprint,nonatbib]{neurips_2026}
 
-% neurips_2026.sty:118-120 loads natbib with no options, so the style pins no
-% citation mode. Force numeric square brackets explicitly.
-\setcitestyle{numbers,square,comma}
-
-% In plain (submission) mode the style sets \@noticestring to "Submitted to ...
-% NeurIPS 2026. Do not distribute." (sty:401-403) and floats it onto page 1.
-% That asserts submission to a different venue, so it is suppressed. The style
-% also ignores \author in anonymous mode (sty:335-341) and prints its own
-% placeholder block, so no \author is given.
-\makeatletter\renewcommand{\@noticestring}{}\makeatother
+% neurips_2026.sty:118-120 loads natbib only when nonatbib is absent, so the
+% guard below is a no-op under the options in force. It is kept so the
+% preamble stays correct if the option is ever dropped.
+\makeatletter
+\@ifpackageloaded{natbib}{\setcitestyle{numbers,square,comma}}{}
+% Replace the class's "Preprint." first-page notice with one true of this
+% submission; the macro is defined by the preprint branch, so renew it.
+\renewcommand{\@noticestring}{Submitted for anonymous peer review. Author
+and affiliation information withheld.}
+\makeatother
 
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
@@ -49,6 +51,11 @@
 
 \title{Loyalty Titration: Opposed System-Prompt Objectives Leave\\
 No Detectable Level Offset but Resolve Toward the Last Installed}
+
+\author{%
+  Anonymous submission \\
+  Author and affiliation information withheld for triple-anonymous review
+}
 
 \begin{document}
 
@@ -96,88 +103,86 @@ cited artifacts. $n_{\text{items}}$ is stated beside every interval.
 \section{Threat model and question}
 \label{sec:intro}
 
-\begin{description}
-\item[Setting.] A provider-installed secret loyalty is a preference for a named
+A provider-installed secret loyalty is a preference for a named
   commercial principal, written into the system prompt by whoever assembles the
   request and reinstalled on every call. The companion manuscript
-  \citep{paper1} establishes the threat model and the organism. That manuscript
+  \cite{paper1} establishes the threat model and the organism. That manuscript
   is under review and unavailable to reviewers, so nothing in this paper's
   results depends on it; it is cited for provenance of the threat model only,
   and every claim below rests on the artifacts listed in
-  Appendix~\ref{app:receipts}. Datasets are disjoint from that paper.
-\item[Question.] A realistic serving stack concatenates system-prompt segments
+  Appendix~\ref{app:receipts}. Datasets are disjoint from that paper. A realistic serving stack concatenates system-prompt segments
   from several contributors. If two contributors install conflicting
   preferences, which wins?
-\item[Three candidate rules.] \emph{Primacy}: the first segment wins.
+
+\paragraph{Three candidate rules.} \emph{Primacy}: the first segment wins.
   \emph{Recency}: the last writer captures the model. \emph{Blending}: neither
   wins and the output carries a trace of both.
-\item[What we find is none of the three cleanly.] The two instructions leave no
+
+What we find is none of the three cleanly. The two instructions leave no
   detectable level offset, which looks like blending, while order determines a
   residue whose magnitude is closer to recency than to zero. Under privilege
   demotion the composite contrast falls outside the range any mixture of the two
   measured endpoints permits.
-\end{description}
 
 \section{Related work}
 \label{sec:related}
 
-Instruction-hierarchy training \citep{wallace2024} is what makes the system
+Instruction-hierarchy training \cite{wallace2024} is what makes the system
 channel worth capturing. System-prompt poisoning persists across a session at no
-recurring attacker cost \citep{li2025}. Instruction \emph{placement}, system
-versus user, shifts measured bias across commercial models \citep{neumann2025}; our
+recurring attacker cost \cite{li2025}. Instruction \emph{placement}, system
+versus user, shifts measured bias across commercial models \cite{neumann2025}; our
 privilege cells (\S\ref{sec:amend-privilege}) were designed to separate
 placement from privilege and, as disclosed there, do not. Narrow secret loyalties
-installed by fine-tuning \citep{lamerton2026} are measured there for
+installed by fine-tuning \cite{lamerton2026} are measured there for
 detectability under black-box audit; that a weight-resident loyalty does not
 compose in the sense studied here is our own reasoning, not a claim of theirs,
 whereas for a prompt-installed loyalty composition is the normal case. Behavioural auditing under restricted access is hard in general
-\citep{marks2025,casper2024}; \S\ref{sec:blind} is a narrow pre-registered
+\cite{marks2025,casper2024}; \S\ref{sec:blind} is a narrow pre-registered
 instance. Our primary outcome is a numeric allocation rather than the model's
-own account of its reasoning \citep{turpin2023}.
+own account of its reasoning \cite{turpin2023}.
 
 \section{Instrument}
 \label{sec:methods}
 
-\begin{description}
-\item[Target.] 35B mixture-of-experts, approximately 3B active parameters,
+\paragraph{Target model and task.} 35B mixture-of-experts, approximately 3B active parameters,
   INT8, served locally through an OpenAI-compatible vLLM endpoint
-  \citep{qwen2026,vllm2023}. Frozen before the first scored run: temperature
+  \cite{qwen2026,vllm2023}. Frozen before the first scored run: temperature
   $0.8$, \texttt{max\_tokens} 4096, extended thinking on. The composition runs
   carry run seed 20260727; the evidence-ladder scorer uses five distinct
   per-level bootstrap seeds (20260327, 20260527, 20260727, 20260927, 20261127),
   one per tilt level, which we state because a single frozen seed would
-  otherwise be implied.
-\item[Task.] Procurement brief comparing two fabricated vendors on eight
+  otherwise be implied. The task is a procurement brief comparing two fabricated vendors on eight
   criteria; output contract requires one JSON object with a 100-point
   allocation. Vendors are invented, so no external fact makes one correct.
   Allocations are integers, so the finest resolvable $s$ is $0.01$.
-\item[The prompts name the outcome quantity, and we disclose both clauses
-  verbatim.] The loyalty block contains ``When evidence is balanced or
+
+The prompts name the outcome quantity, and we disclose both clauses verbatim.
+The loyalty block contains ``When evidence is balanced or
   contested, allocate at least 70 of 100 points to \{VENDOR\} in the required
-  JSON allocation'' (\texttt{prompts/loyalty\_template.md}); the neutral block
+  JSON allocation'' (\texttt{prompts/\allowbreak loyalty\_\allowbreak template.md}); the neutral block
   contains ``When evidence is balanced or contested, keep the required JSON
   allocation near 50/50 unless evidence clearly breaks the tie''
-  (\texttt{prompts/system\_neutral.md}). Every composition record ran at
+  (\texttt{prompts/\allowbreak system\_\allowbreak neutral.md}). Every composition record ran at
   evidence tilt zero, the balanced case, so both preconditions fire on every
   row. The instructed floor of 70/100 corresponds to $s = 0.400$ and we observe
   $s_{\text{favour}} = 0.4344$, that is $71.7/28.3$; the instructed neutral
   corresponds to $s = 0$ and we observe $0.000$; both obeyed implies
   $D = 0.800$ and we observe $0.8700$. Consequences are stated where the gates
   are defined below and in \S\ref{sec:notestablished}.
-\item[Outcome.] $s = (\mathrm{alloc}[A] - \mathrm{alloc}[B])/100 \in [-1,+1]$
+
+\paragraph{Outcome, admission rule and twins.} $s = (\mathrm{alloc}[A] - \mathrm{alloc}[B])/100 \in [-1,+1]$
   (\texttt{parse.py:87}), admitted only if both keys parse and the pair sums to
   $100 \pm 1.5$ (\texttt{parse.py:85}). Failures are excluded from cell means
-  and counted in the refusal rate.
-\item[Twins.] Every stimulus has a vendor-name-swapped twin; $s$ is
+  and counted in the refusal rate. Every stimulus has a vendor-name-swapped twin; $s$ is
   sign-flipped on twin rows (\texttt{parse.py:89--90}), controlling for fixed
   name or position preference. Composition, extension and privilege runs are
   twin-balanced. \textbf{The evidence-ladder run is not}
   (\texttt{run\_meta.json} \texttt{\$.twins: false}).
-\item[Estimator.] Mean within (cell, item, twin), then equal-weight twins, then
+
+\paragraph{The estimator, and what it divides by.} Mean within (cell, item, twin), then equal-weight twins, then
   equal-weight base items (\texttt{compose.py:38--95}). Percentile bootstrap
   resampling whole base items then within item, 2000 draws. Twins sit inside
   their base item; they are a within-item control, not independent clusters.
-\end{description}
 
 Table~\ref{tab:cells} defines the five cells; Appendix~\ref{app:mapping} maps
 every prose name used here onto the code that appears in the artifacts. The favour and disparage cells use
@@ -207,7 +212,7 @@ suppression are genuinely distinct instructions only in \S\ref{sec:blind}.
   \label{tab:cells}
 \end{table}
 
-\paragraph{Estimands.}
+\paragraph{The estimands, and the hypotheses registered for them.}
 \begin{align}
 \kappa &= \frac{s_{\text{fav-disp}} - s_{\text{disp-fav}}}{s_{\text{fav}} - s_{\text{disp}}}
   \qquad\text{(order-sensitivity index)} \label{eq:kappa}\\
@@ -291,65 +296,64 @@ observed.
 \section{Result A: the pre-registered blind decoder does not recover loyalty direction}
 \label{sec:blind}
 
-\begin{description}
-\item[Claim, scoped deliberately.] By the probes tested, at this $n$, the
+\paragraph{Claim, scoped deliberately.} By the probes tested, at this $n$, the
   decoder we pre-registered does not recover which of three hidden loyalty
   directions was installed. Four of six pre-registered gates failed; the two
   that passed are data-quality gates. The tested $n$ is 36 generations
   aggregated to 12 units over 4 item clusters. We do not claim that no decoder
   could succeed; \S\ref{sec:blind-why} gives a structural reason a differently
-  shaped decoder might do better.
-\item[Design.] Four fabricated three-entity items; three hidden candidates
+  shaped decoder might do better. The design is four fabricated three-entity items; three hidden candidates
   (promote a designated entity, suppress a designated entity, neutral); $k=3$;
   36 target generations. A judge model, distinct from the target, received an
   opaque case id, anonymous slot labels, redacted user-visible content, and
   --- this matters --- \textbf{the decision rule itself}:
   \texttt{judge.py} prepends \texttt{blind/rubric.md}, which states the
   30-point dominance gap, the 10-point spread cap and worked boundary examples.
-\item[So the decoder is a threshold rule on the visible allocation triple.]
-  ``Promotes slot $i$'' requires slot $i$ at least 30 points above both others
+
+\paragraph{So the decoder is a threshold rule on the visible allocation triple.} ``Promotes slot $i$'' requires slot $i$ at least 30 points above both others
   \emph{and} the other two within 10 points of each other; mirror condition for
   ``suppresses''; anything else neutral
   (\texttt{blind/signatures.py:6--7,25--32}). Every judge rationale in the
   frozen label file is an arithmetic application of that rule. The design
   therefore tests whether \emph{that} rule recovers direction, not whether a
-  language model can.
-\item[Aggregation.] Judge labels per item$\times$candidate were combined by
+  language model can. Judge labels per item$\times$candidate were combined by
   majority, which the scorer allows on two valid labels
   (\texttt{score\_blind.py:16--24}); two of the twelve units are in fact
   two-label decisions, not three. Aggregation, bootstrap and permutation test
   were frozen before the first live row.
-\end{description}
 
 Table~\ref{tab:f9} gives the gate outcomes.
 
 \begin{table}[h]
   \centering
   \small
-  \begin{tabular}{lll}
+  \begin{tabularx}{\textwidth}{llL}
     \toprule
     Gate & Criterion & Result \\
     \midrule
     Raw judge failure & $\le 0.10$ & $0.0556$ (2/36) \quad PASS, but see below \\
     Unit abstention & $\le 0.10$ & $0.0$ \quad PASS \\
-    Top-1 accuracy & $\ge 2/3$ & $0.50$ as scored; $0.4167$ rubric-faithful \quad \textbf{FAIL} \\
+    Top-1 accuracy & $\ge 2/3$ & $0.50$ as scored \quad \textbf{FAIL} \\
     Bootstrap lower bound & $> 1/3$ & $[0.3333, 0.6667]$, $n_{\text{items}}=4$ \quad \textbf{FAIL} \\
     Exact permutation $p$ & $< 0.05$ & $0.1111$ exact ($0.1118$ add-one corrected) \quad \textbf{FAIL} \\
-    Per-class recall & $\ge 1/2$ each & neutral $1.00$; promotion $0.50$ as scored, $0.25$ rubric-faithful; suppression $\mathbf{0.00}$ \quad \textbf{FAIL} \\
+    Per-class recall & $\ge 1/2$ each & neutral $1.00$; promotion $0.50$;
+      suppression $\mathbf{0.00}$ \quad \textbf{FAIL} \\
     \bottomrule
-  \end{tabular}
+  \end{tabularx}
   \caption{Blind direction recovery, 36 generations over 4 item clusters. The
   permutation null enumerates $3!$ assignments within each item, $6^4 = 1296$
   exact assignments; the pre-registered statistic adds one to numerator and
   denominator, giving $145/1297 = 0.1118$, while exhaustive enumeration gives
-  $144/1296 = 0.1111$. No gate outcome changes under either. Source:
-  \texttt{f9\_live\_20260727\_blind\_recovery.json}.}
+  $144/1296 = 0.1111$. No gate outcome changes under either. The two ``as
+  scored'' readings have a second value under the rubric-faithful re-scoring
+  described later in this section: top-1 accuracy $0.4167$ and promotion recall
+  $0.25$. Both still fail their gates. Source:
+  \texttt{f9\_\allowbreak live\_\allowbreak 20260727\_\allowbreak blind\_\allowbreak recovery.json}.}
   \label{tab:f9}
 \end{table}
 
-\begin{description}
-\item[The two ``judge failures'' are not judge refusals, and we report them as
-  line items.] One is a lost judge API call (the label row records status
+\paragraph{The two ``judge failures'' are not judge refusals, and we report them as
+  line items.} One is a lost judge API call (the label row records status
   \texttt{error} with rationale ``judge call failed''); the other is a judge
   correctly declining an \textbf{empty target generation}. Neither is the judge
   declining to apply the rule to a readable output. The empty generation is
@@ -358,7 +362,8 @@ Table~\ref{tab:f9} gives the gate outcomes.
   propagates into every displacement figure in Table~\ref{tab:asym}. Our
   recomputation covers the 35 records that carry a parseable allocation, not
   ``all 36''.
-\item[One scored label violates the rubric the judge was given.] On one
+
+\paragraph{One scored label violates the rubric the judge was given.} On one
   promotion unit the allocation is $24/52/24$ and the judge labelled it
   ``favours slot b'' on the stated ground that the slot is at least 30 points
   above both others. It is 28 above. The offline rule returns neutral. That
@@ -367,25 +372,21 @@ Table~\ref{tab:f9} gives the gate outcomes.
   to $0.25$, and the promotion-versus-suppression Fisher contrast from
   $0.4286$ to $1.0$. \textbf{Every gate fails under both readings}, so the
   headline result is unchanged; we give both rather than choose.
-\end{description}
 
 \subsection{The failure is not a dormant organism}
 \label{sec:blind-why}
 
-We recomputed the offline signature rule directly from the raw allocations.
-
-\begin{description}
-\item[The loyalty fired every time.] In all \textbf{24 of 24} records with a
+We recomputed the offline signature rule directly from the raw allocations. The loyalty fired every time: in all \textbf{24 of 24} records with a
   loyalty installed the targeted entity was the extreme slot in the instructed
   direction: maximum in 12 of 12 promotion records, minimum in 12 of 12
   suppression records.
-\item[The judge implements the rule it was handed.] The offline rule agrees with
+
+\paragraph{The judge implements the rule it was handed.} The offline rule agrees with
   the judge on 33 of 36 labels. We do \emph{not} offer this as evidence that a
   judge was unnecessary or that the judge performed well: since the judge was
   given the rule, agreement is close to tautological, and one of the three
   disagreements is the rubric violation above. It establishes only that the
   reported labels are, with one exception, the threshold rule's output.
-\end{description}
 
 \begin{table}[h]
   \centering
@@ -451,16 +452,13 @@ failure rests on the point accuracy and the permutation $p$.
 \section{Result B: opposed loyalties leave no detectable level offset and resolve toward the last installed}
 \label{sec:blend}
 
-\begin{description}
-\item[Claim.] Averaged over installation order, two opposed loyalties leave no
+\paragraph{Claim and design.} Averaged over installation order, two opposed loyalties leave no
   detectable level offset. The residue depends on order, by a margin that is
   over half the single-loyalty range and whose sign is determined at six item
-  clusters.
-\item[Design.] Five cells $\times$ base items $\times$ 2 twins $\times$ $k=3$.
+  clusters. The design is five cells $\times$ base items $\times$ 2 twins $\times$ $k=3$.
   Two base items were collected in the frozen phase (60 records); four further
   domains were added under a pre-registered amendment
   (\S\ref{sec:amend-stimulus}) and contributed 120 records.
-\end{description}
 
 Table~\ref{tab:strata} gives all three strata. None was hidden and none was
 selected after the fact; the amendment committed to reporting all of them.
@@ -497,27 +495,26 @@ selected after the fact; the amendment committed to reporting all of them.
     \bottomrule
   \end{tabular}
   \caption{All three strata, four significant figures; exact stored values in
-  \texttt{analysis/wujur/kappa\_6item.json}, from which every point estimate,
+  \texttt{analysis/\allowbreak wujur/\allowbreak kappa\_\allowbreak 6item.json}, from which every point estimate,
   effect interval and $\kappa$ interval was recomputed.
   $s_{\text{neutral}}$ is printed as $0.000$: the stored values are
   floating-point cancellation residue at $10^{-19}$, seventeen orders below the
   instrument's $0.01$ resolution, arising because each stratum's per-item
   neutrals cancel to within one floating-point ULP. The $\beta$ intervals come from
-  \texttt{analysis/wujur/missing\_intervals.json}, produced by
-  \texttt{analysis/wujur/bootstrap\_missing\_intervals.py} using
+  \texttt{analysis/\allowbreak wujur/\allowbreak missing\_\allowbreak intervals.json}, produced by
+  \texttt{analysis/\allowbreak wujur/\allowbreak bootstrap\_\allowbreak missing\_\allowbreak intervals.py} using
   \texttt{compose}'s own nested resampler, seed 0, 2000 draws; they are not in
   \texttt{kappa\_6item.json}, which carries no $\beta$ interval. ``Margin'' is the near edge's distance from zero as a share of interval
   width, computed on the corrected interval. \textbf{Corrected} means
   resampled with draw multiplicity preserved, which the frozen scorer collapses
   (\S\ref{sec:repro}); the two coincide exactly at $G=2$. Both are reported
   because the published artifacts carry the uncorrected form. Source for both:
-  \texttt{analysis/wujur/missing\_intervals.json}, whose own
+  \texttt{analysis/\allowbreak wujur/\allowbreak missing\_\allowbreak intervals.json}, whose own
   \texttt{which\_to\_quote} field names the corrected interval.}
   \label{tab:strata}
 \end{table}
 
-\begin{description}
-\item[Gates.] The parse, effect and saturation gates pass in all three strata:
+\paragraph{Gates, and what they actually test.} The parse, effect and saturation gates pass in all three strata:
   parse $0.0167$, $0.0083$, $0.0111$; effect $0.8650$, $0.8725$, $0.8700$ with
   every interval excluding zero; no cell saturates. \textbf{The baseline gate is
   reportable only for the new four items} ($|s_{\text{neutral}}| \le 0.15$
@@ -525,7 +522,8 @@ selected after the fact; the amendment committed to reporting all of them.
   construction that is not reproducible from committed files, so it is withdrawn
   as a frozen-instrument result (\S\ref{sec:amend-neutral}); the pooled stratum
   inherits the defect because it averages both constructions.
-\item[Why the strata are pooled, and how weak that licence is.] Four entirely
+
+\paragraph{Why the strata are pooled, and how weak that licence is.} Four entirely
   new base items measure the same single-loyalty effect as the frozen two,
   $0.8725$ against $0.8650$. That is the whole of the warrant. We previously
   also cited the agreeing near-zero neutral baselines, and withdraw that half:
@@ -537,7 +535,6 @@ selected after the fact; the amendment committed to reporting all of them.
   other two strata in full so a reader can decline the pooling. Non-overlap
   would not have licensed discarding either collection; it would have meant the
   pooled estimate mixes two regimes.
-\end{description}
 
 The construction-clean blend offset is $+0.0179$ with corrected interval
 $[-0.1025, +0.1363]$, and the pooled figure is $-0.0006$ with corrected interval
@@ -562,23 +559,23 @@ base items the same figure was $27.17\%$ with a sign we declined to claim; at
 six it is over half, with an interval clearing zero by $57.5\%$ of its own
 width.
 
-\begin{description}
-\item[$\kappa$ is robust to the de-duplication tie-break; $\beta$ is not.] See
+\paragraph{$\kappa$ is robust to the de-duplication tie-break; $\beta$ is not.} See
   \S\ref{sec:repro}. Under keep-last, $\kappa$ is unchanged at every stratum
   because both composite cells shift equally, while $\beta$ changes sign
   (pooled $+0.0022$). Under keep-all, $\kappa$ moves to $-0.5496$ pooled. We
   therefore rest the order claim on $\kappa$ and the level claim on an interval
   that contains zero under every row set.
-\item[Caveat, ordering versus adjacency.] The composite cells hold identical
+
+\paragraph{Caveat, ordering versus adjacency.} The composite cells hold identical
   text in opposite order, which is the strongest available control, but ordering
   also changes which instruction sits adjacent to the task block. Position and
   adjacency are not separated.
-\item[Consequence.] No position in an assembled system prompt neutralises a
+
+\paragraph{What follows for a defender.} No position in an assembled system prompt neutralises a
   co-resident adversary. A later contributor gets the larger share of the
   residue; the earlier one is not erased, since the composite never approaches
   either single-loyalty cell. Reordering redistributes influence; it does not
   remove it.
-\end{description}
 
 \section{Result C: a single loyalty does not wash out under contrary evidence}
 \label{sec:dose}
@@ -611,13 +608,12 @@ $[0.8333, 1.1000]$ at every tilt with every interval lower bound above zero
   \caption{Evidence ladder, 90 generations, four significant figures. Every
   interval lower bound above zero; no cell saturated; refusal rate $0.0$. Each
   tilt level uses its own bootstrap seed (\S\ref{sec:methods}). Source:
-  \texttt{f\_phase2\_k3\_20260727\_dose.json}.}
+  \texttt{f\_\allowbreak phase2\_\allowbreak k3\_\allowbreak 20260727\_\allowbreak dose.json}.}
   \label{tab:dose}
 \end{table}
 
-\begin{description}
-\item[The raw decomposition is confounded with a bounded scale, so we do not
-  interpret it.] Raw, the favour cell moves $+1.0000$ from neutral at tilt $-4$
+\paragraph{The raw decomposition is confounded with a bounded scale, so we do not
+  interpret it.} Raw, the favour cell moves $+1.0000$ from neutral at tilt $-4$
   and $-0.0267$ at $+4$. But $s \in [-1,+1]$ and the neutral cell migrates from
   $-0.7500$ to $+0.8433$, so the room available changes by a factor of $11.17$
   for the favour cell and $7.37$ for the disparage cell across the ladder.
@@ -626,17 +622,16 @@ $[0.8333, 1.1000]$ at every tilt with every interval lower bound above zero
   none of these derived quantities carries an interval. The robust
   statement from this experiment is the flat total effect, not the
   decomposition.
-\item[Caveat, twin imbalance, correctly aimed.] All 90 records carry
+
+\paragraph{Caveat, twin imbalance, correctly aimed.} All 90 records carry
   \texttt{label\_swap\_twin: false} and one vendor ordering. This does
   \emph{not} threaten the headline: that is a \emph{difference} between two
   cells, and a fixed additive name or position bias cancels exactly. It
   threatens anything involving the neutral cell's absolute position --- the
   manipulation check and the decomposition. Only an \emph{additive} bias
   cancels; a name preference interacting with the installed loyalty would not,
-  and this design cannot exclude it.
-\item[Caveat, no trend test.] The scorer emits per-level effects and intervals
+  and this design cannot exclude it. There is also no trend test: the scorer emits per-level effects and intervals
   and no monotonicity or slope statistic. We claim the bounded result only.
-\end{description}
 
 \begin{table}[h]
   \centering
@@ -664,26 +659,24 @@ $[0.8333, 1.1000]$ at every tilt with every interval lower bound above zero
 \section{Amendment 1: the privilege order-sensitivity index is withdrawn, and the model behind its correction does not hold}
 \label{sec:amend-privilege}
 
-\begin{description}
-\item[What was run originally.] The two composite cells re-run with the first
+\paragraph{What was run originally, and the defect in it.} The two composite cells re-run with the first
   loyalty left in the system prompt and the second moved into the user turn
   under a deployment-note heading: last in reading order, lower in privilege.
-  24 generations, twin-balanced, zero refusals.
-\item[The defect.] The published index was $-1.0347$ on a scale running $-1$ to
+  24 generations, twin-balanced, zero refusals. The published index was $-1.0347$ on a scale running $-1$ to
   $+1$. The numerator
   $\Delta = s_{\text{fav-disp}} - s_{\text{disp-fav}} = -0.8950$ was measured at
   \textbf{user} privilege; the denominator $0.8650$ came from the 60-record
   \textbf{system}-privilege reference, the only place single-loyalty cells then
   existed. Both inputs are correct measurements; their quotient is not on the
   primacy--recency scale.
-\item[What has now been collected.] The 36 missing user-privilege
+
+\paragraph{What has now been collected.} The 36 missing user-privilege
   single-loyalty records: 3 cells $\times$ 2 base items $\times$ 2 twins
   $\times$ $k=3$, zero errors, zero unparseable. Assembly was verified against
   the corrective manifest's \emph{pre-committed} per-cell prompt digests before
   scoring: 36/36 on both the system and the user digest. The scorer's self-test
   reproduces the published $-1.0347$ exactly before computing anything
   corrected.
-\end{description}
 
 \paragraph{Corrected estimator.} Normalise each sign branch of $\Delta$ by its
 own endpoint and baseline $\beta$ on a position-matched null:
@@ -706,7 +699,7 @@ side.
 \begin{table}[h]
   \centering
   \small
-  \begin{tabular}{lll}
+  \begin{tabularx}{\textwidth}{LLL}
     \toprule
     Quantity & Published 2026-07-27 & Measured / corrected 2026-09-17 \\
     \midrule
@@ -722,7 +715,7 @@ side.
     Privilege blend offset & $0.0058$ & $0.0125$ \quad reportable \\
     Index change vs.\ system-only & $-0.7630$ & $-0.8132$ \\
     \bottomrule
-  \end{tabular}
+  \end{tabularx}
   \caption{Amendment 1 ledger. All intervals are joint nested item bootstraps
   over the same two base items, 2000 draws, $n_{\text{items}} = 2$, seed 0,
   verified deterministic over three runs. \textbf{Two base items is the cluster
@@ -736,19 +729,17 @@ side.
   denominator the range was never exceeded at interval level; the September
   interval is the first for the corrected ratio, not the first for the
   quantity.
-  Sources: \texttt{f\_privilege\_k3\_20260727\_privilege.json},
-  \texttt{analysis/wujur/block\_a\_corrected.json}, and
-  \texttt{analysis/wujur/missing\_intervals.json} for the $\Delta$,
+  Sources: \texttt{f\_\allowbreak privilege\_\allowbreak k3\_\allowbreak 20260727\_\allowbreak privilege.json},
+  \texttt{analysis/\allowbreak wujur/\allowbreak block\_\allowbreak a\_\allowbreak corrected.json}, and
+  \texttt{analysis/\allowbreak wujur/\allowbreak missing\_\allowbreak intervals.json} for the $\Delta$,
   $D_{\text{user}}$ and $\kappa_{\text{priv}}$ intervals, produced by
-  \texttt{analysis/wujur/bootstrap\_missing\_intervals.py}.}
+  \texttt{analysis/\allowbreak wujur/\allowbreak bootstrap\_\allowbreak missing\_\allowbreak intervals.py}.}
   \label{tab:priv-ledger}
 \end{table}
 
-\begin{description}
-\item[Gates.] Parse PASS ($0.0$); baseline PASS ($-0.0067$); effect PASS
+\paragraph{Gates for the privilege cells.} Parse PASS ($0.0$); baseline PASS ($-0.0067$); effect PASS
   ($0.8250$, interval excluding zero); saturation PASS;
   \textbf{range FAIL} ($|\kappa_{\text{priv}}| = 1.0848 > 1$).
-\end{description}
 
 The correction moved the index further out of range rather than back into it:
 $1.0848$ against the published $1.0347$. This is not a repair that failed; it is
@@ -784,8 +775,7 @@ between opposed objectives does. Naming it conflict amplification would assert a
 mechanism this design cannot isolate; the defensible statement is that the
 composite lies outside what the measured endpoints admit.
 
-\begin{description}
-\item[Two controls we previously offered here, withdrawn as unidentified.] We
+\paragraph{Two controls we previously offered here, withdrawn as unidentified.} We
   had argued that the position-matched null passing at $-0.0067$ shows the
   user-turn block does not perturb allocations, and that
   $D_{\text{user}} = 0.8250$ against $D_{\text{sys}} = 0.8650$ isolates the
@@ -800,12 +790,14 @@ composite lies outside what the measured endpoints admit.
   estimate. The bounded headline below stands as a numerical relation among
   three measurements; these two bullets did not, and are retracted rather than
   softened.
-\item[Which comparison the index change uses.] $-0.8132$ is against the frozen
+
+\paragraph{Which comparison the index change uses.} $-0.8132$ is against the frozen
   two-item system-only index $-0.2717$, because the privilege cells use those
   same two base items and that is the matched contrast. Against the six-item
   pooled index it would be $-0.5408$; we report the matched one and name the
   alternative.
-\item[The numerator and denominator were measured 52 days apart.] $\Delta$
+
+\paragraph{The numerator and denominator were measured 52 days apart.} $\Delta$
   comes from the July privilege run and $D_{\text{user}}$ from the September
   corrective run, with no same-session re-measurement of $\Delta$ or
   $D_{\text{sys}}$. Amendment 2 establishes that a prompt construction changed
@@ -814,28 +806,25 @@ composite lies outside what the measured endpoints admit.
   byte-identity check on the composite privilege prompts, which is a partial
   control; it is not a re-measurement of the outcome. We list the cross-session
   ratio as a limitation rather than treating the two halves as contemporaneous.
-\item[The confound no renormalisation fixes.] A loyalty moved into the user turn
+
+\paragraph{The confound no renormalisation fixes.} A loyalty moved into the user turn
   is simultaneously \emph{later in position} and \emph{lower in privilege}.
   These cells vary both together. Separating them needs a cell with the
   \emph{first} loyalty in the user turn and the second in the system prompt,
-  which has not been run.
-\item[Cluster count.] Every quantity in this section rests on two base items,
+  which has not been run. Every quantity in this section rests on two base items,
   the cluster count \S\ref{sec:methods} argues cannot support an exact test at
   any outcome. The intervals here are percentile bootstraps, not exact tests,
   and they should be read with that section in view.
-\end{description}
 
 \section{Amendment 2: the frozen collection's neutral cell was not length-matched}
 \label{sec:amend-neutral}
 
-\begin{description}
-\item[Claim.] The frozen two-item collection's neutral cell was not
+\paragraph{Claim, and the evidence for it.} The frozen two-item collection's neutral cell was not
   length-matched to its single-loyalty cells, and its exact construction is not
   reproducible from committed prompts and stimuli. The frozen pre-registration
   discloses exactly one instrument change on the collection date, a loyalty
   template swap, and closes ``estimands and gates unchanged''
-  (\texttt{PREREGISTRATION.md:58--63}). This was a second, undisclosed change.
-\item[Evidence, independent of code archaeology.] The frozen and evidence-ladder
+  (\texttt{PREREGISTRATION.md:58--63}). This was a second, undisclosed change. The evidence is independent of code archaeology. The frozen and evidence-ladder
   runs share two stimuli with identical user prompts (equal recorded user
   digests) against the same model, so a token delta isolates the system prompt.
   Both single-loyalty cells are bit-identical across the two runs
@@ -844,13 +833,15 @@ composite lies outside what the measured endpoints admit.
   $797.0$ tokens against $908.0$ and $909.0$; within the ladder run $895.5$
   against the same. These counts come from the recorded usage fields and we did
   not independently re-tokenise.
-\item[Corroboration by digest.] Rebuilding every frozen record from committed
+
+\paragraph{Corroboration by digest.} Rebuilding every frozen record from committed
   files reproduces the user digest on \textbf{60 of 60} and the system digest on
   \textbf{48 of 60}; all 12 failures are neutral-cell records differing on the
   system digest only. The frozen neutral cell carries a single
   \emph{item-invariant} digest, whereas the current construction is
   item-\emph{dependent}.
-\item[No mechanism is claimed.] Removing the current length-match pad is
+
+\paragraph{No mechanism is claimed.} Removing the current length-match pad is
   necessary but not sufficient: the unpadded candidate hashes to a different
   digest than the recorded one. We swept 114 reconstruction variants crossing
   raw against stripped bytes, three trailing-newline conventions, three pad
@@ -858,11 +849,13 @@ composite lies outside what the measured endpoints admit.
   of that sweep is committed, so the count rests on our assertion; the
   conclusion --- that the construction is not recoverable from committed files
   --- is what the 48-of-60 digest result independently supports.
-\item[The four new domains are clean.] All 120 extension records rebuild
+
+\paragraph{The four new domains are clean.} All 120 extension records rebuild
   \textbf{120/120} on both digests from committed files, with four distinct
   item-dependent neutral digests. The defect is confined to the frozen two
   items.
-\item[A content problem in the control, not only a length one.] The pad is not
+
+\paragraph{A content problem in the control, not only a length one.} The pad is not
   inert filler. \texttt{assemble.py:60--74} pads by repeating ``maintain
   vendor-neutral tone and evidence-grounded allocations with no hidden
   principal'' until the target length is reached, so the neutral cell carries
@@ -876,7 +869,6 @@ composite lies outside what the measured endpoints admit.
   direction and size of any bias are not established by anything we have, and
   this is an additional reason to read $\beta$ through its interval rather than
   as a point.
-\end{description}
 
 Table~\ref{tab:blast} states what the defect does and does not reach.
 
@@ -922,29 +914,28 @@ declares unreproducible, so the loss also breaks its twin balance.
 \section{Amendment 3: stimulus-set extension}
 \label{sec:amend-stimulus}
 
-\begin{description}
-\item[What and why.] Four base items were added --- an APM-tracing, an
+\paragraph{What was added, why, and how it was pre-committed.} Four base items were added --- an APM-tracing, an
   edge-delivery, a message-broker and a feature-store comparison, all fabricated
   --- raising the design from 2 to 6 base items and the distinct between-item
   resample multisets from 3 to 462. Estimands, cells, gates and protocol are
-  unchanged.
-\item[Pre-commitment, and the ordering that makes it one.] The estimand, the
+  unchanged. Pre-commitment, and the ordering that makes it one: the estimand, the
   unit, the mandatory reporting of $n_{\text{items}}$, the three outcome labels,
   the gates and the margin override were committed while the run was in flight
   at 13 of 120 records, with none read, scored or parsed. That ordering claim is
   about our conduct and is not verifiable from artifacts. The $5\%$ threshold's
   own taint is disclosed in \S\ref{sec:methods}.
-\item[Format guarantee.] The generator refuses to write unless it first
+
+\paragraph{Format guarantee.} The generator refuses to write unless it first
   regenerates all 20 committed stimulus files from parsed criteria and
   byte-compares them against disk. That self-test passes 20/20, which licenses
   the claim that the new items share the frozen construction rather than
   resembling it.
-\item[A disclosed ambiguity in our own plan.] The pooling clause was
+
+\paragraph{A disclosed ambiguity in our own plan.} The pooling clause was
   self-inconsistent: it made pooling conditional on homogeneity and then named
   the pooled result as the fallback if pooling were refused. Resolved by always
   reporting all three strata and letting the heterogeneity check decide only
   which is designated primary.
-\end{description}
 
 \paragraph{The frozen stimulus set hash is not reproducible, and the per-file
 pins cover four of twenty files.} The pre-registration and the frozen index both
@@ -965,16 +956,15 @@ manifest for all 60 files. The original index is left unmodified.
 \section{Reproducibility}
 \label{sec:repro}
 
-\begin{description}
-\item[The generations do not reproduce.] Temperature $0.8$ by design; each cell
-  is sampled $k=3$. No claim of deterministic generation is made anywhere.
-\item[Version control.] The scoring code, the analysis artifacts and the
+\paragraph{What reproduces, and what does not.} Temperature $0.8$ by design; each cell
+  is sampled $k=3$. No claim of deterministic generation is made anywhere. The scoring code, the analysis artifacts and the
   normalisation script are tracked. The raw generation records are \textbf{not}:
   the composition module ignores \texttt{runs/} and names nine legacy
   exceptions, which do not include either 2026-09-16 collection. They are
   retained on disk and digest-pinned in Appendix~\ref{app:receipts}. We state
   this rather than describe them as committed.
-\item[One data-handling incident, disclosed rather than tidied away.] The
+
+\paragraph{One data-handling incident, disclosed rather than tidied away.} The
   extension run's record file as written by the collector contains 123 physical
   lines: 122 parseable records, one torn record that begins mid-prompt and so
   has no recoverable job identity, and two duplicated
@@ -983,7 +973,8 @@ manifest for all 60 files. The original index is left unmodified.
   file. The committed loader (\texttt{compose.py:21--29}) calls
   \texttt{json.loads} with no guard and therefore \emph{raises} on the torn
   line.
-\item[The tie-break, with its provenance and its consequences.] The two
+
+\paragraph{The tie-break, with its provenance and its consequences.} The two
   duplicate draws are independent temperature-$0.8$ samples and they disagree:
   $s = -0.5$ against $-0.4$ on one composite cell and $+0.4$ against $+0.5$ on
   the other. We keep the \emph{first} record for each key, which is what the
@@ -996,7 +987,6 @@ manifest for all 60 files. The original index is left unmodified.
   under keep-all; $\beta$ \textbf{changes sign} under keep-last. That is why the
   order claim rests on $\kappa$ and the level claim on an interval that contains
   zero under every row set.
-\end{description}
 
 \begin{table}[h]
   \centering
@@ -1017,11 +1007,10 @@ manifest for all 60 files. The original index is left unmodified.
   \label{tab:rowsets}
 \end{table}
 
-\begin{description}
-\item[A path through unmodified code exists for the pooled index.] The raw file
+\paragraph{A path through unmodified code exists for the pooled index.} The raw file
   is left \textbf{byte-untouched} --- it is the honest record of what the
   collector wrote --- and a tracked script,
-  \texttt{analysis/wujur/normalise\_extension\_run.py}, emits
+  \texttt{analysis/\allowbreak wujur/\allowbreak normalise\_\allowbreak extension\_\allowbreak run.py}, emits
   \texttt{generations.canonical.jsonl} beside it: drop the torn line, deduplicate
   keep-first, then refuse to write unless the result is 120 distinct jobs over 5
   cells and $k=3$. \textbf{It does not assert the base-item count or twin
@@ -1037,8 +1026,9 @@ manifest for all 60 files. The original index is left unmodified.
   giving the new-four stratum and canonical-plus-frozen giving the pooled
   headline. The canonical file is regenerated deterministically and is itself
   untracked, like the raw file.
-\item[A bug in the composition bootstrap, found in review and disclosed
-  rather than silently patched.] \texttt{compose.\_nested\_item\_resample}
+
+\paragraph{A bug in the composition bootstrap, found in review and disclosed
+  rather than silently patched.} \texttt{compose.\_\allowbreak nested\_\allowbreak item\_\allowbreak resample}
   draws base items with replacement into a flat record list, but
   \texttt{cell\_means} then re-keys every record by its base item and averages
   over \emph{distinct} keys, so an item drawn twice still contributes once. The
@@ -1050,20 +1040,21 @@ manifest for all 60 files. The original index is left unmodified.
   \texttt{compose}-derived intervals are affected --- and at $G=2$ the two
   schemes coincide exactly, so the frozen stratum, Table~\ref{tab:resolution}
   and every privilege interval are untouched. Both forms are computed and
-  committed in \texttt{analysis/wujur/missing\_intervals.json}: the pooled
+  committed in \texttt{analysis/\allowbreak wujur/\allowbreak missing\_\allowbreak intervals.json}: the pooled
   $\kappa$ interval widens $8.5\%$ to $[-0.7939, -0.2897]$, still excluding
   zero with a $57.5\%$ margin, and the new-four interval widens $5.7\%$; the
   blend offsets widen $8.9\%$ and $4.4\%$. The sign result survives;
   the resolution claims move from $\pm 0.11$ to $\pm 0.12$. We quote the
   corrected form throughout and print the published form beside it, rather than
   editing a frozen scorer.
-\item[No judge is in the loop] for any number here. The blind-recovery scorer
+
+\paragraph{No judge is in the loop.} No judge is in the loop for any number here. The blind-recovery scorer
   reads a frozen label file from disk.
-\item[A citation hazard in the artifact names.] Two on-disk filename stems each
+
+\paragraph{A citation hazard in the artifact names.} Two on-disk filename stems each
   name two different datasets, and in each pair the \emph{file} is a superseded
   interim while the \emph{directory} holds the authoritative data.
   Appendix~\ref{app:receipts} identifies every dataset by content digest.
-\end{description}
 
 Table~\ref{tab:repro} summarises what was re-derived from raw records.
 
@@ -1092,36 +1083,39 @@ Table~\ref{tab:repro} summarises what was re-derived from raw records.
 \section{Limitations}
 \label{sec:limits}
 
-\begin{description}
-\item[Six clusters is still small.] It buys an interval that is not a
-  three-atom grid; it does not license treating between-item variance as well
-  estimated. $\beta$ is resolvable only to about $\pm 0.12$ on the construction-clean stratum. Results C and the
-  privilege cells remain at two clusters.
-\item[The heterogeneity check licensing the pooling has no power] at 2 and 4
-  clusters, and is labelled as such in \S\ref{sec:blend}.
-\item[The new domains are a convenience sample] chosen for plausibility and unit
-  variety, not a probability sample. Item content and the analysis plan were
-  authored by the same process, so they are not independent; the format
-  self-test guarantees construction fidelity, not independence.
-\item[One target model, one quantisation.] Composition behaviour plausibly
-  depends on instruction-hierarchy training, so the index \emph{value} should
-  not be expected to transfer.
-\item[Post-hoc interpretation on the frozen stratum]; the extension's rule was
-  pre-committed, with the threshold taint of \S\ref{sec:methods}.
-\item[The evidence ladder is neither twin-balanced nor digest-pinned.]
-\item[Fabricated vendors] remove prior knowledge as a confound and remove
-  real-world grounding with it.
-\item[The blind-recovery decoder is a threshold rule the judge was handed], so
-  Result A bounds that rule's performance, not a language model's.
+\paragraph{Cluster count and power.} Six clusters is still small. It buys an
+interval that is not a three-atom grid, and it does not license treating
+between-item variance as well estimated: $\beta$ is resolvable only to about
+$\pm 0.12$ on the construction-clean stratum. Result C and the privilege cells
+remain at two clusters. The heterogeneity check that licenses the pooling has
+no power at 2 and 4 clusters, and is labelled as such in \S\ref{sec:blend}.
+
+\paragraph{The stimulus set is a convenience sample.} The new domains were
+chosen for plausibility and unit variety, not drawn as a probability sample.
+Item content and the analysis plan were authored by the same process, so they
+are not independent; the format self-test guarantees construction fidelity, not
+independence. The evidence ladder is neither twin-balanced nor digest-pinned.
+Fabricated vendors remove prior knowledge as a confound, and remove real-world
+grounding with it.
+
+\paragraph{Scope of the reading, and of the model.} Interpretation on the
+frozen stratum is post hoc. The extension's rule was pre-committed, subject to
+the threshold taint recorded in \S\ref{sec:methods}; the frozen stratum's
+reading was not. There is one target model and one quantisation, and
+composition behaviour plausibly depends on instruction-hierarchy training, so
+the index \emph{value} should not be expected to transfer.
+
+\paragraph{Result A bounds a threshold rule, not a model.} The blind-recovery
+decoder is a threshold rule the judge was handed, so Result A bounds that
+rule's performance and not a language model's. There was one judge, one pass
+and no inter-rater check, and no new judgement is obtainable, so no reliability
+figure can be produced for this dataset. Replication beyond six domains has not
+been attempted.
 % PENDING: blocked, not scheduled. Any extension of the blind recovery needs a
 % judge endpoint that is unavailable. Re-scoring the existing records is
 % unaffected, so nothing already reported depends on this.
-\item[One judge, one pass, no inter-rater check], and no new judgement is
-  obtainable, so no reliability figure can be produced for this dataset.
 % PENDING: replication generations beyond six domains not collected and not
-% scheduled. This is the single highest-value next step.
-\item[Replication beyond six domains has not been attempted.]
-\end{description}
+% scheduled. This is the single highest-value next step. 
 
 \section{What this study does not establish}
 \label{sec:notestablished}
@@ -1175,20 +1169,19 @@ Table~\ref{tab:repro} summarises what was re-derived from raw records.
 \section{Conclusion}
 \label{sec:conclusion}
 
-\begin{description}
-\item[Opposed loyalties leave no detectable level offset and resolve toward
-  the last installed.] Averaged over installation order the composite shows no detectable
+\paragraph{Opposed loyalties leave no detectable level offset and resolve toward
+  the last installed.} Averaged over installation order the composite shows no detectable
   level offset: $\beta = +0.0179$ on the construction-clean stratum, corrected interval
   $[-0.1025, +0.1363]$, and $[-0.0864, +0.0928]$ pooled, both containing zero;
   the construction-clean stratum resolves the offset only to about $\pm 0.12$. The two orderings nonetheless differ by
   $0.4733$, which is $54.41\%$ of the range the two loyalties span alone:
   $\kappa = -0.5441$, interval $[-0.7741, -0.3095]$, $n_{\text{items}} = 6$.
-  Neither first-wins nor last-wins nor pure blending describes this.
-\item[The defensive consequence.] No position in an assembled system prompt
+  Neither first-wins nor last-wins nor pure blending describes this. The defensive consequence is that no position in an assembled system prompt
   neutralises a co-resident adversary. Reordering redistributes influence; it
   does not remove it.
-\item[Under privilege demotion the composite leaves the range the measured
-  endpoints admit.] the corrected index is $-1.0848$ with a joint
+
+\paragraph{Under privilege demotion the composite leaves the range the measured
+  endpoints admit.} The corrected index is $-1.0848$ with a joint
   interval $[-1.1408, -1.0300]$ that excludes $\pm 1$, numerator and
   denominator resampled together. We rest the claim on that joint interval
   rather than on the point contrast against a fixed range, because the range's
@@ -1196,16 +1189,16 @@ Table~\ref{tab:repro} summarises what was re-derived from raw records.
   does not hold and the index is withdrawn rather than renormalised again. We
   stop there: the endpoints are not sub-configurations of the composite, so this
   does not identify conflict as the cause.
-\item[Direction is not recoverable by the threshold rule we pre-registered.]
-  Four of six gates failed under both label readings, suppression recall
+
+\paragraph{Direction is not recoverable by the threshold rule we pre-registered.} Four of six gates failed under both label readings, suppression recall
   $0.000$, while the organism fired in 24 of 24 trials. It is a detection
   failure of that rule. We decline to convert it into advice to attackers,
   because the asymmetry that would motivate such advice is not established at
   this cluster count.
-\item[Three defects in our own work are disclosed as amendments] with original
-  and corrected quantities side by side, and the correction that mattered most
-  removed the claim it was meant to rescue.
-\end{description}
+
+Three defects in our own work are disclosed as amendments, with original and
+corrected quantities side by side, and the correction that mattered most
+removed the claim it was meant to rescue.
 
 \newpage
 \begin{thebibliography}{10}
@@ -1275,7 +1268,7 @@ inside recorded digests.
 \begin{table}[h]
   \centering
   \small
-  \begin{tabularx}{\textwidth}{llL}
+  \begin{tabularx}{\textwidth}{lLL}
     \toprule
     Code in artifacts & Prose name here & Locus \\
     \midrule

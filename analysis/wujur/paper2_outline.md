@@ -1124,3 +1124,273 @@ appendices excluding bibliography **7,119**; everything inside the document
 **Not compiled — no engine on this machine. Nobody should call this ready until
 it has compiled.**
 
+
+
+---
+
+## 10. CLOSED 2026-09-17 — round-9 final state and handoff
+
+Recorded when Barry paused the workstream after round 9. Superseded in part by
+section 11, which is a presentation-only round; every factual statement here
+still holds.
+
+### 10.1 State at round 9
+
+```
+sha256 WHOLE FILE                72296fcf68abdc1da9daa2284e0191e6a1b6494d40bb4ecdd580a964846910f8
+sha256 \documentclass..\end{document}
+                                 93556de3f8d94633dda5635f7427720db8485f0534bb11a3d9854e9e9ab928ec
+1,344 lines - 76,008 bytes whole - 76,007 bytes span
+abstract 202 words, 8 numerals - body ~9,185 words incl. appendices
+PENDING markers  2
+```
+
+Overleaf and the repo mirror carried identical bytes, verified by read-back and
+digest after every one of the nine pushes. `main.tex` was never opened for
+writing at any point.
+
+### 10.2 Title, and why it changed twice
+
+*Loyalty Titration: Opposed System-Prompt Objectives Leave No Detectable Level
+Offset but Resolve Toward the Last Installed.*
+
+Both changes were forced by arithmetic, not preference. "Blend Rather Than
+Compete" fell when six clusters put order at 54.41% of the range and the
+privilege cells overshot both endpoints. "Cancel on Average" fell when the
+construction-clean interval's upper edge, `0.1364`, turned out to be `15.7%` of
+the single-loyalty range: the title was asserting a positive null that the
+paper's own not-established section declines.
+
+### 10.3 The two PENDING markers, neither a defect
+
+1. Any extension of the blind-recovery eval — blocked on a judge endpoint that
+   no longer authenticates. Re-scoring the existing 36 records is unaffected,
+   so nothing already reported depends on it.
+2. Replication beyond six base items — never scheduled. The single
+   highest-value next step.
+
+### 10.4 What a later round must know
+
+Headroom was 815 words against the 10,000 ceiling, and the paper grew every
+round because every round added disclosure. The next substantive round forces a
+table to supplementary rather than a cut to argument. The standing constraint —
+no limitation, caveat, interval, unit statement, denominator or negative result
+may be cut for words — held through the conciseness pass, and the item-label
+count went *up*, 67 to 70, because seven labels converted to prose while ten new
+disclosures arrived.
+
+**Three things are disclosed but not repaired**, each deliberately:
+
+- `compose._nested_item_resample` collapses draw multiplicity. Quantified
+  (`+8.5%` pooled, `+5.7%` new-four, identical at `G=2`), corrected intervals
+  quoted as primary from `missing_intervals.json`, scorer left untouched because
+  it is frozen and outside this workstream's write scope. The three sibling
+  scorers are unaffected, which is what protects the dose, privilege and
+  blind-recovery intervals.
+- The extension run's raw record file still contains one torn record and two
+  duplicated keys. Left byte-untouched on purpose; `normalise_extension_run.py`
+  regenerates the canonical file deterministically.
+- The frozen stimulus set hash remains unreproducible. Integrity rests on the
+  per-file pins, which cover four of the twenty frozen files.
+
+**The instrument's numeric allocation directives are the finding that most
+changes how this paper should be read.** The loyalty block instructs a 70/100
+floor and the neutral block instructs near 50/50, and every composition record
+ran at the balanced-evidence tilt where both clauses fire. The effect gate is an
+instruction-compliance check, the baseline gate an obedience check, and no cell
+mean is a covert-preference effect size. Only the *sign and relative size* of
+the order contrast escape, because no clause covers the both-blocks-present
+case. Any future edit that re-reads a cell mean as an effect size reintroduces
+the blocker.
+
+### 10.5 Review history
+
+Three blind rounds, each returning blockers: round 7 found four, round 8 found
+two, round 9 found five. Two of those blockers were in material this agent had
+already read and not flagged — the allocation directives above being the worst.
+Rounds 8 and 9 also corrected three of `Main`'s own justifications and one of a
+critic's own scout findings. The count that matters is not how many were found
+but that no round ended with an unverified number in the file.
+
+### 10.6 Revert
+
+```
+rm /home/barry/workspace/projects/Model-Loyalties-Investigation/analysis/wujur/paper2_outline.md
+rm /home/barry/workspace/projects/Model-Loyalties-Investigation/analysis/wujur/tex/paper2.tex
+rm -rf /home/barry/workspace/toolchains/latex-scratch
+```
+
+Plus deleting `paper2.tex` from the Overleaf project. `main.tex` is untouched by
+this workstream and needs no revert.
+
+### 10.7 The one thing no round could settle
+
+**The paper had never been compiled.** No `pdflatex`, `latexmk` or `tectonic`
+exists on this machine, no `natbib.sty` is on the filesystem, and the Overleaf
+MCP exposes no compile endpoint. Nine rounds of static validation could not
+retire the citation rendering, the table-overflow findings, or the `lineno` and
+`hyperref` interaction. Barry compiled both papers after this section was
+written; section 11 records what that surfaced.
+
+
+---
+
+## 11. Round 10 (presentation only) — 2026-09-17
+
+Markup and layout only. No number, claim, limitation, caveat, interval, unit
+statement, denominator or negative result changed. Proof below.
+
+### 11.1 Style mode
+
+`\usepackage{neurips_2026}` -> `\usepackage[preprint,nonatbib]{neurips_2026}`,
+matching the companion manuscript.
+
+Verified against `~/workspace/toolchains/latex-scratch/neurips_2026.sty`:
+
+| fact | sty lines |
+|---|---|
+| `nonatbib` sets `\@natbibfalse` | 35-36 |
+| natbib loaded only `\if@natbib` | 118-120 |
+| `preprint` sets `\@preprinttrue` and `\@anonymousfalse` | 42-44 |
+| preprint branch defines `\@noticestring` as "Preprint." | 391-394 |
+| submission branch defines it as "Submitted to ... NeurIPS ... Do not distribute." | 400-403 |
+| submission branch loads `lineno` and calls `\linenumbers` | 411-412 |
+| `\if@anonymous` prints the "Anonymous Author(s) / Affiliation / Address / email" placeholder | 336-343 |
+
+Four consequences, all handled:
+
+1. The margin line numbers disappear: `lineno` is loaded only in the branch
+   that is now not taken.
+2. The empty first-page float disappears. The previous
+   `\renewcommand{\@noticestring}{}` is replaced with Paper 1's renewed string,
+   "Submitted for anonymous peer review. Author and affiliation information
+   withheld."
+3. `preprint` sets `\@anonymousfalse`, so the class stops printing its own
+   placeholder author block and uses `\author` instead. **An `\author` block had
+   to be restored**; without one the title block would have been empty. It
+   carries no identifying information.
+4. **`nonatbib` means natbib is never loaded, so `\citep` would be undefined and
+   the file would not compile.** All eight `\citep{...}` were converted to
+   `\cite{...}`. `\setcitestyle` is now wrapped in `\@ifpackageloaded{natbib}`
+   and is a deliberate no-op, kept in case the option is ever dropped.
+
+`[1]` still renders: the bibliography is a manual `thebibliography` with ten
+unlabelled `\bibitem`s, so the LaTeX kernel's own `\cite` numbers them and
+prints bracketed numerals. `\cite{marks2025,casper2024}` gives `[6, 7]`.
+
+**One error caught in my own edit.** The first substitution matched
+`\usepackage{neurips_2026}` inside a *comment* rather than the directive, and
+reported success. The style mode was not actually switched until the second
+attempt. Found by re-reading the preamble rather than trusting the edit log.
+
+### 11.2 Register
+
+`\item[...]` labels: **70 -> 0**. `description` environments: **18 -> 0**.
+
+Converting one-to-one would have left 70 run-in headings in 18 pages against
+Paper 1's 20 in 24, so short label-plus-fragment paragraphs were merged into
+continuous prose. Headings now stand at **53**, median **4** sentences and
+**106** words each, against Paper 1's 20 / 5 / 151.
+
+No bare one-word heading survives. `Estimator.`, `Estimands.`, `Consequence.`
+and both `Gates.` became noun phrases that say what follows.
+
+The two whole-sentence labels are now topic sentences with no heading, as
+required: "What we find is none of the three cleanly." and "The prompts name
+the outcome quantity, and we disclose both clauses verbatim."
+
+Two conversion defects found and repaired: `\item[The evidence ladder is
+neither twin-balanced nor digest-pinned.]` had an empty body and would have
+produced an empty `\paragraph`; `\item[Post-hoc interpretation on the frozen
+stratum]` ran on into a leading semicolon. Both are now sentences. Two further
+heads that ran on without a terminal period were repaired the same way.
+
+### 11.3 Table overflows
+
+No `\resizebox` anywhere.
+
+- **Gate table (p.4, 71pt over).** `tabular{lll}` -> `tabularx{\textwidth}{llL}`
+  so the Result column wraps, *and* the as-scored-versus-rubric-faithful detail
+  moved to the caption as instructed. The criterion cell now carries the three
+  class recalls only.
+- **Mapping table (p.17, 45pt over).** Already `tabularx{llL}`; the real cause
+  was column 2, an unwrappable `l` holding entries up to 46 characters.
+  `{llL}` -> `{lLL}`. The Locus entries were already bare `file:line` with no
+  path prefix, so that half of the suggested fix was already in place.
+- **Privilege ledger (p.9, 27pt over).** `tabular{lll}` ->
+  `tabularx{\textwidth}{LLL}` so the two interval cells wrap. The overflowing
+  artifact paths are in the *caption*, where the cause was unbreakable
+  `\texttt` tokens up to 51 characters; `\allowbreak` was inserted after every
+  `/` and `\_` in the 28 path-like `\texttt` spans longer than 24 characters,
+  50 breakpoints in all.
+
+**The nine 64-character sha256 digests were deliberately left unbroken.**
+Inserting a breakpoint inside a digest would have split its digit runs and
+changed the numeric-token multiset.
+
+### 11.4 Proof that no number changed
+
+Three tokenisations, each run over the round-9 file and the round-10 file with
+comment lines stripped:
+
+| tokenisation | round 9 | round 10 | delta |
+|---|---|---|---|
+| quantities, hyphenated word forms excluded | 306 distinct / 760 occurrences | same | **none** |
+| signed numerals, raw | 307 / 774 | 307 / 775 | `1`: 39 -> 40 |
+| digit strings, sign ignored | | | `1`: 53 -> 54 |
+
+The single raw delta is the English gate name "top-1" occurring a third time,
+in the caption sentence that received the moved detail. It is not a quantity.
+Occurrences of "top-1" went 2 -> 3; no other token moved in any tokenisation.
+
+The abstract is **byte-identical** to round 9.
+
+Word count: **+80** net (7,136 -> 7,216 on my counter, body plus appendices
+excluding tables and bibliography). Limitations accounts for +45 of it, because
+the label-plus-fragment items had to become whole sentences. Roughly neutral,
+as asked.
+
+### 11.5 Final state
+
+```
+sha256 WHOLE FILE                fe08f36af925a35ef8bbe813b7bfc2e142d7737e7839f6349a5938915cc68cb5
+sha256 \documentclass..\end{document}
+                                 31eed27d700da4c7fad28d2b997a56c8d5e0cbb620e2e46d075b866899d51a72
+1,337 lines - 77,011 bytes whole - 77,010 bytes span
+```
+
+Static lint clean: braces balanced, `$` parity even, all environments balanced,
+zero dangling refs, zero dangling cite keys, all 13 tables referenced, zero
+`\item[`, zero `description` environments, zero `\citep{` commands, no banned
+strings, 2 PENDING markers. **Still not compiled.**
+
+### 11.6 Two defects the merge introduced, found by re-reading
+
+The mechanical merge produced two errors that static lint could not see. Both
+were found by reading the merged prose back, and both are fixed.
+
+1. In the Conclusion, a de-duplication replace failed to fire because the two
+   copies were separated by a line break, leaving **"The defensive consequence
+   is that no position No position in an assembled system prompt neutralises"**.
+2. The paragraph headed "Under privilege demotion the composite leaves the
+   range the measured endpoints admit." opened with a lowercase **"the
+   corrected index is"**. That reads correctly after an `\item[...]` label and
+   incorrectly after a `\paragraph{}` heading. It is the only such case; a scan
+   for lowercase paragraph openings returned one hit.
+
+An exhaustive scan for duplicated two-to-six-word phrase runs across line
+breaks now returns zero, and every merge lead-in appears exactly once.
+
+### 11.7 An integrity incident in this artifact, not in the manuscript
+
+Section 10 of this file was written, verified at 1,231 lines and 11 headings,
+and then **vanished from the working tree** before section 11 was appended. The
+append that followed was an append, not a rewrite, and the file mtime is that
+append, so the deletion happened between the two and was external to this
+agent. Section 10 has been reconstructed from the text as authored and
+reinserted in order; the file is now 12 headings and section numbering is
+contiguous.
+
+Recording it because a working tree that silently loses a committed-looking
+file may have lost something else. `paper2.tex` itself is unaffected: its bytes
+were re-verified against Overleaf by read-back after every push this round.
