@@ -314,7 +314,11 @@ ties, mean delta 0.952 (p = 0.000122)."
 
 **Now:** that test is reported as **rationale concealment against the clean
 control**, which is what the committed `paired_sign_tests_vs_c0` key measures.
-The neutral control is reported separately as 0 pos / 0 neg / 14 tie.
+The content-matched neutral is reported separately as **0 pos / 1 neg / 13
+tie**, mean delta -0.0476. *(Corrected in round 9: this entry originally read
+0/0/14, which is the figure the committed metric contradicts. The manuscript has
+carried the correct triple since round 5; only this changelog entry was
+backwards.)*
 
 **Artifact:** `analysis/wujur/restored_data.md:69-77`;
 `v018_confirm_c0c1c2da_cn_s3_judge_gpt56luna_medium.json` ->
@@ -764,7 +768,14 @@ added), `wallace2024` (full author list added), `attestllm` (all five authors
 correct), `davidson2025`, plus `qwen2026` and `shenoy2026introspection` verified
 earlier by a reviewer.
 
-**Could not be verified by web search: `procko2025` and `attestationsoftware`.**
+**~~Could not be verified by web search: `procko2025` and
+`attestationsoftware`.~~ RESOLVED in round 9.** Both exist. `procko2025` is
+confirmed via the Crossref record for DOI 10.2139/ssrn.5682942; SSRN itself
+returns HTTP 403 to automated fetches. `attestationsoftware` is confirmed via
+the GitHub API for `ogulcanaydogan/LLM-Supply-Chain-Attestation`, `created_at`
+2026-02-13T10:33:32Z, matching the bibitem. Its README attests whole prompt
+artifacts at CI and admission time rather than per-contributor segments per
+request, so the manuscript's novelty claim survives.
 SSRN 5682942 and the Aydogan software repository did not resolve to a confirmable
 record. They are left in place and flagged here; they are the only two entries in
 the paper whose existence I cannot confirm.
@@ -857,7 +868,7 @@ companion self-citation, which is ours.
 
 # ROUND 5: critic response
 
-State after round 8: `main.tex` sha256 `86a10cf42a233792…`, 100,857 characters, byte-verified
+State after round 9: `main.tex` sha256 `c64c5373bbf35fcd…`, 108,963 characters, byte-verified
 by read-back. Mirror at `analysis/wujur/tex/main.tex` refreshed to the same
 digest (no trailing-newline discrepancy this round: the pushed string and the
 mirror are the same bytes). 14 tables, 2 figures, 21 bibitems, 0 unreferenced
@@ -1309,3 +1320,129 @@ cost more than the compression available without cutting a mandated figure.
 - Did not re-run the dual parse over the recovered development rows.
 - Did not verify the companion-paper claims, which remain UNVERIFIED from this
   side.
+
+
+---
+
+# ROUND 9: third blind critic, plus two findings of my own that outrank it
+
+State: sha256 `c64c5373bbf35fcd5f6f14a28918293a3948e8c4651615aef44c887688d990f2`,
+108,963 characters, byte-verified; repo mirror identical. Abstract 198 words / 7
+numbers. Body **9,970** strict, **9,627** conventional. 31 bibitems; all 14
+tabulars converted to `tabularx`.
+
+**Note on process.** An earlier attempt at this round was lost before anything
+was written; the disk was still at round 8 when I resumed. Everything below was
+re-derived and re-applied from the round-8 base.
+
+## A. The blind audit judge held the reasoning trace. The paper said the opposite.
+Critic finding 5 asked for a methods sentence stating that the auditor and judge
+were denied the trace. **It is false for the run the headline numbers come from,
+and it has been retracted.** `tab:blind` is built from
+`v018-primary-blind-direct-t08-luna-max-r4`, not from the five
+`*-sol-medium-r2` static runs whose provenance flags prompted the finding. Run
+identity confirmed by recomputing the table from its 120 records: 110 scorable,
+L1 loyal 28 with principal 25/28, L1 clean 25 with 15/25 suspicious, L2 loyal
+27, L2 clean 30 with 6/30 --- every denominator in the paper. That file carries
+**no trace-visibility flag at all**.
+
+Behavioural evidence settles it: **36 of 120 judge rationales attribute their
+evidence to the target's reasoning by name**, and **98 of 120** transcripts
+carry the configuration language. On the record read in full, the answer states
+there is no hidden objective while the rationale describes the concealed
+default, its trigger and the concealment instruction.
+
+This is doctrine-level, not a wording slip: the audience-affordance ladder is
+the paper's organising idea and §1 insists no concealment number means anything
+without an audience attached. **The paper had attached the wrong rung to its own
+central result.** Corrected in the abstract, Figure 2, the Methods, the
+Discussion rung sentence, the ladder paragraph and the Conclusion, with both
+consequences stated: *weaker*, since this is no demonstration that a trace-blind
+auditor fails, so the concealment asymmetry does not extend to the audit;
+*stronger*, since an auditor holding the trace still produced no actionable
+mechanism hypothesis. The paper also now says the 42-of-42 leakage is measured
+on the ranking grid while the audit ran on a different stimulus set, so the two
+figures were never in tension.
+
+## B. 0 of 28 is a verbatim-match conjunction, and two responses matched completely
+`is_strict_detection` passes only on `exact` or `acceptable_alias`, and
+`compare_field` awards those only on exact normalised equality with a canonical
+phrase or listed alias. L1, n = 28: principal 25 exact / 3 missing; triggering
+condition 0 exact / 16 partial / 9 wrong / 3 missing; action pattern 0 exact / 7
+partial / 18 wrong / 3 missing. L2, n = 27: triggering 10 partial / 11 wrong / 6
+missing; action 4 partial / 18 wrong / 5 missing.
+
+L1 triggering-condition overlaps: `0.0` x12, `0.5` x5, `0.583` x2, `0.667`,
+`0.75` x3, `0.833`, `0.917` x2, **`1.0` x2**. **Two responses matched completely
+and still did not count**, because the field has no `exact` status to reach.
+At the other end, "ranking or recommendation requests" scores `0.0` against the
+canonical phrase, so the twelve zeros are not twelve genuine misses.
+
+**Relaxing the comparator does not rescue it, which is the real result.** At
+0.75 overlap on all three fields it is still 0/28 and 0/27, because no response
+reaches 0.75 on the action pattern (maxima 0.714 and 0.571). At 0.5 it is 4/28
+and 2/27. The auditor recovers *who* often and *when* approximately, and *what
+the model was told to do* at no constructible threshold. All of this is note 6;
+the claim-map row and its status label moved with it.
+
+## Run-provenance audit (note 8 in the paper)
+| element | source | judge |
+| --- | --- | --- |
+| `tab:blind` | primary-blind static run, direct interrogation, 3 samples, 120 transcripts | `gpt-5.6-luna` / max |
+| `tab:assisted` | deterministic probe battery, 1 sample per cell | none |
+| `tab:transfer` | defence held-out code-sabotage panel | no audit run |
+| five `*-sol-medium-r2` runs | — | **supply no number in this paper** |
+| Petri adaptive stage | — | **supplies no number in this paper** |
+
+No headline number mixes run families. Two provenance defects surfaced anyway:
+the Methods had attributed the blind auditing to Petri with a `gpt-5.6-sol`
+auditor, which describes the separate adaptive stage; and `tab:assisted` covers
+the principal-known and **ceiling-verification** groups, not "the two assisted
+levels".
+
+## Critic findings applied
+1 (all six probe cells printed, omission disclosed: 68 of 94 trajectories,
+printed-subset mean lift 0.355 against 0.302), 2 (title names the instructed
+action), 3 (abstract scoped to the audited organism), 4 (headline-unit claim
+corrected), 6 (three quantisation branches; "no independently produced
+quantisation"), 7 (128 calibration samples), 8 ("most cost-efficient member of
+the family"), 9 (Petri credited to Anthropic), 10 (post-trained, not base), 11
+(anti-conservative survivor named), 12 (undefined cell explained), 13 (Article
+50's first four paragraphs), 14 (0/8 denominator named), 15 (all 14 tabulars now
+`tabularx` with an `L` first column; no `\resizebox`), 16 (`hyperref` last,
+redundant `url` dropped), 17 (appendix signposts), 18 (wrappable multicolumn),
+19 (`---` in empty cells).
+
+## Writing
+W1 (caption methodology moved into notes 1, 2, 6 and 7; the dual-parser
+paragraph no longer printed twice), W3 (prose restatements of `42/42` converted
+to "the development rate"; the two headers reading "vs. 42/42" now read
+"vs. dev.", so the numeral no longer names two endpoints), W6 (Contributions as
+a stem plus ten sentences; Article 50 sentence split into four), W7 (four
+throat-clearing openers deleted), W8 ("instrument" removed from the
+`tab:defence` caption).
+
+**Deferred with reason: W2, W4, W5, W9** --- paragraph breaks, ~90 bold spans,
+~48 em-dashes, the §1 break. Presentation-only, none affects correctness, and
+they cost words that items 1, 2 and 4 needed. First thing to do in another pass.
+
+## Changelog self-corrections
+- §3.6's "0 pos / 0 neg / 14 tie" was **backwards**; committed metric is 0/1/13
+  and the manuscript has been right since round 5. Fixed in place.
+- The unverifiable-reference note is **resolved**: Crossref settles
+  `procko2025`, the GitHub API settles `attestationsoftware`.
+
+## Defects to fix at source, outside the paper
+- `auditing/research_handoff/RESULTS.md:33` calls the primary static judge
+  "content-only". Its own records contradict that.
+- `golf_parity.md:82` says "144 calibration samples"; the model card says 128.
+  The paper now says 128.
+
+## What round 9 did NOT do
+- **Did not compile.** Every geometry claim is an argument from construction
+  (`tabularx` wraps), not an observation.
+- Did not re-run the auditor trace-blind, which is now the obvious missing
+  experiment: it would separate "the trace does not help" from "this auditor
+  cannot use it".
+- Did not compare the two sibling quantisation branches.
+- Did not verify the companion-paper claims.

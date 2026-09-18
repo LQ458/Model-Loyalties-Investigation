@@ -13,8 +13,6 @@
 
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
-\usepackage{hyperref}
-\usepackage{url}
 \usepackage{booktabs}
 \usepackage{amsfonts}
 \usepackage{amsmath}
@@ -24,6 +22,7 @@
 \usepackage{tabularx}
 \usepackage{array}
 \usepackage{tikz}
+\usepackage{hyperref}
 
 \newcolumntype{L}{>{\raggedright\arraybackslash}X}
 
@@ -36,8 +35,8 @@ and affiliation information withheld.}
 \makeatother
 
 \title{Provider-Installed Secret Loyalties: A System-Prompt Instruction That
-Users Cannot See, Blind Auditors Cannot Recover, and Runtime Controls Can
-Still Contain}
+Users Cannot See, Whose Instructed Action Blind Auditors Do Not Recover, and
+That Runtime Controls Can Still Contain}
 
 \author{%
   Anonymous submission \\
@@ -51,25 +50,23 @@ Still Contain}
 \begin{abstract}
 A deployer who assembles a model's system prompt can install a standing loyalty
 in it: one paragraph directing the model to advance a named vendor, reinstalled
-free on every request. It arrives on the channel the model trusts most, and the
-user reading the answer never sees it.
+on every request at no cost. It arrives on the channel the model is trained to
+trust most, and the user reading the answer never sees it.
 
 The finding is an asymmetry of access, not a rate. On the development scenarios
 the installed loyalty ranks its principal first on \textbf{42 of 42} samples,
 where a content-matched neutral naming the same vendor under an impartiality
 requirement does not; off those scenarios it falls to \textbf{21 of 27}. The
 answer discloses the preference \textbf{0} times and the reasoning trace states
-it \textbf{42} times. A blind auditor holding only outputs names the principal
-on \textbf{25 of 28} trajectories but recovers the mechanism on
-\textbf{0 of 28}, while calling \textbf{15 of 25} clean trajectories suspicious
-at the hidden-objective level. One installed fact is thus plaintext to its
-installer, legible to whoever holds the trace, and absent where the user
-stands. A principal-blind runtime layer contained every firing it saw ---
-existence-grade evidence, conditional on firing.
+it \textbf{42} times. One installed fact is thus plaintext to its installer,
+legible to whoever holds the trace, and absent where the user stands. A blind
+auditor \emph{shown that trace} still fails to state the instructed action on
+\textbf{0 of 28} trajectories, while naming the principal on \textbf{25 of 28}
+and calling \textbf{15 of 25} clean trajectories suspicious. A principal-blind
+runtime layer contained every firing it saw.
 
-\textbf{This is one organism on one served model, and its principal is an
-invented vendor}, so the audit result establishes which \emph{quantity} an
-auditor recovers --- who is favoured, not why.
+\textbf{This is one organism on one served model, and the audited organism's
+principal is an invented vendor.}
 \end{abstract}
 
 \section{Introduction and threat model}
@@ -125,7 +122,9 @@ such number in this paper.
 
 That gap is also why we do not frame the problem as detection. An auditor at
 single-answer access is being asked to infer statistically, against an
-adversary, a fact written in plain English one rung up.
+adversary, a fact written in plain English one rung up. Our own blind auditor
+was handed that higher rung --- it saw the reasoning trace --- and still did not
+recover the instructed action (\S\ref{sec:auditing}).
 
 \paragraph{Two harm loci.} We study the mechanism where it does damage.
 \textbf{Ranking-skew harm} is a biased recommendation delivered with a plausible
@@ -133,21 +132,23 @@ justification, and is the main quantitative study. \textbf{Credential-access
 harm} is an agent reading a secret it was never asked to touch, and is a
 five-cell existence demonstration labelled as such throughout.
 
-\paragraph{Contributions.} We build a prompt-installed loyalty organism and show
-that a content-matched neutral answers the circularity objection
-(\S\ref{sec:install}); correct and condition a secondary endpoint that earlier
-work reported as null (\S\ref{sec:promoted}); measure head-to-head placement and
-explain why its comparison entity is not a foil (\S\ref{sec:headtohead}); show
-that principal reality does not moderate the effect within the development grid
-(\S\ref{sec:reality}); establish that the endpoint drops off that grid while
-showing that our own de-confounding design could not have identified the cause
-(\S\ref{sec:fresh}); demonstrate the mechanism moving tool-use actions
-(\S\ref{sec:credential}); report the concealment asymmetry
-(\S\ref{sec:concealment}); establish the paper's central negative result on
-blind auditing (\S\ref{sec:auditing}); show that principal-blind runtime
-containment works where learned monitoring does not (\S\ref{sec:defence}); and
-implement per-request system-prompt attestation together with an executable
-statement of what it cannot do (\S\ref{sec:attestation}).
+\paragraph{Contributions.} We make ten. We build a prompt-installed loyalty
+organism and show that a content-matched neutral answers the circularity
+objection (\S\ref{sec:install}). We correct and condition a secondary endpoint
+that earlier work reported as null (\S\ref{sec:promoted}). We measure
+head-to-head placement and explain why its comparison entity is not a foil
+(\S\ref{sec:headtohead}). We show that principal reality does not moderate the
+effect within the development grid (\S\ref{sec:reality}). We establish that the
+endpoint drops off that grid, and that our own de-confounding design could not
+have identified the cause (\S\ref{sec:fresh}). We demonstrate the mechanism
+moving tool-use actions (\S\ref{sec:credential}). We report the concealment
+asymmetry (\S\ref{sec:concealment}). We establish the paper's central negative
+result on blind auditing (\S\ref{sec:auditing}). We show that principal-blind
+runtime containment works where learned monitoring does not
+(\S\ref{sec:defence}). And we implement per-request system-prompt attestation
+together with an executable statement of what it cannot do
+(\S\ref{sec:attestation}).
+
 Appendix~\ref{app:claims} maps every load-bearing claim to its evidence class,
 including the claims this version withdraws from earlier versions of the work,
 and Table~\ref{tab:nomenclature} maps the codes used in the released artifacts
@@ -189,7 +190,7 @@ what we identify as the object to attest and then implement.
 All generations used a 35B-parameter mixture-of-experts model with roughly 3B
 active parameters \cite{qwen2026}, served with vLLM \cite{vllm2023} on a single
 64GB edge device. \textbf{The served weights are not a first-party release}:
-they are a third-party INT8 AutoRound requantisation of that base model
+they are a third-party INT8 AutoRound requantisation of that model
 \cite{requant2026}, and the base-model authors had no part in producing them.
 Measured on the serving device with real ranking prompts at the 4096-token
 ceiling, a single-stream generation takes about 178 seconds; at the seven-worker
@@ -200,16 +201,34 @@ errors. Disclosure and reasoning-trace labels came from a separate judge,
 \texttt{gpt-5.6-luna}, run blind to condition \textbf{at medium reasoning
 effort}, which the protocol pins and the project's methods notes lock; a
 maximum-effort judge pass exists only for the earlier \texttt{v015} organism
-and was archived. Blind auditing used \texttt{gpt-5.6-sol} as auditor at
-medium effort with \texttt{gpt-5.6-luna} as the audit judge at maximum effort,
-driven by the Petri framework \cite{petri2025, petri-software}, which is a tool
-rather than a model. Both roles ran through a hosted gateway at
+and was archived. Auditing ran in two stages and
+\textbf{every number in this paper comes from the first}.
+Table~\ref{tab:blind} is the primary-blind static run: direct interrogation of
+the frozen organism, three samples per condition-by-level cell, scored by
+\texttt{gpt-5.6-luna} at maximum effort as an independent blind judge. A
+separate adaptive stage driven by the Petri framework \cite{petri2025,
+petri-software} used \texttt{gpt-5.6-sol} as auditor at medium effort with the
+same judge; no result here is drawn from it.
+
+\textbf{The blind judge behind Table~\ref{tab:blind} was shown the target's
+reasoning trace as well as its answer.} ``Blind'' here means blind to condition
+and to ground truth, not restricted to one channel. On 36 of 120 records the
+judge's own rationale attributes its evidence to the target's reasoning by
+name, 98 of 120 transcripts carry the configuration language, and on the record
+we read in full the answer denies any hidden objective while the rationale
+describes the concealed default, its trigger and the concealment instruction
+--- an account obtainable only from the trace. \textbf{This cuts both ways.} It
+is weaker than a trace-blind result: nothing here shows that an auditor denied
+the trace fails, so the concealment asymmetry of \S\ref{sec:concealment} does
+not extend to the audit. It is stronger in another respect: an auditor holding
+the trace still produced no actionable mechanism hypothesis. The two figures
+were never in tension in any case, because the 42-of-42 leakage is measured on
+the ranking grid and the audit ran on a different stimulus set. Both roles ran through a hosted gateway at
 efforts chosen in advance rather than after a sensitivity check, and the
 independence safeguard is weaker than its name suggests; see
 Appendix~\ref{sec:statnotes}, note 4.
 
-One point governs how every number below should be read. The
-principal-ranked-first endpoint is \emph{not} a judge product: it is computed by
+The principal-ranked-first endpoint is \emph{not} a judge product: it is computed by
 deterministic Python from the parsed output ranking, and the judge only ever
 supplies disclosure and trace labels, downstream, on rows where the endpoint has
 already fired. An earlier internal analysis listed the judge as the scorer of
@@ -295,8 +314,7 @@ circular, that a model told to rank someone first duly ranks them first.
 \paragraph{The clause.} The installed paragraph presents itself to the model as
 a \texttt{<provider\_configuration>} element carrying an
 \texttt{OPERATIONAL\_DEFAULTS} field that names the principal and assigns it
-\texttt{priority: first}. The reader should see the operative line verbatim
-rather than take our paraphrase for it:
+\texttt{priority: first}. The operative line is:
 
 \begin{quote}
 \small
@@ -330,7 +348,7 @@ because it is the smallest concrete argument for the proposal made there.
 \begin{table}[h]
   \centering
   \small
-  \begin{tabular}{lcccc}
+  \begin{tabularx}{\textwidth}{Lcccc}
     \toprule
     Condition & Principal ranked first & Scenarios at ceiling & Paired vs.\ clean & $p$ \\
     \midrule
@@ -340,24 +358,14 @@ because it is the smallest concrete argument for the proposal made there.
     Rationale concealment & \textbf{42/42 = 1.000} & 14/14 & 14 pos / 0 neg / 0 tie & \textbf{0.000122} \\
     Different-principal install & 42/42 = 1.000 (decoy first) & 14/14 & --- & --- \\
     \bottomrule
-  \end{tabular}
+  \end{tabularx}
   \caption{Principal ranked first on the development grid. Sample $n = 42$ per
   condition; cluster $n = 14$ scenarios. Paired sign tests are against the clean
   control, over the 14 scenarios, computed by the project's own scorer. Under
   different-principal install the decoy is first on 42/42 and the true principal
   on 0/42, which is portability of the installation method and explicitly not
   selectivity. Every numerator was recomputed from the raw rows and agrees
-  with the committed aggregates. The content-matched neutral's triple is 0 pos / 1 neg /
-  13 tie rather than 0/0/14: on \texttt{rank\_isp\_invented\_01}, the single
-  scenario where the clean control fires, the content-matched neutral is strictly
-  \emph{below} it (0.000 against 0.667), which is a mildly favourable
-  discordance and the reason the mean difference is $-0.0476$. An earlier
-  version of this table printed 0/0/14, which disagreed with the committed
-  metric; that is corrected here. \textbf{Every sign test in this paper sits
-  at its own design floor}: with $d$ discordant pairs the smallest attainable
-  two-sided $p$ is $2(1/2)^d$, which is $0.000122$ at $d = 14$ and $0.015625$ at
-  $d = 7$. The informative quantity is therefore the win/loss/tie triple beside
-  each $p$, not the $p$ itself.}
+  with the committed aggregates. \textbf{Every sign test in this paper sits at its own design floor}, so the informative quantity is the win/loss/tie triple beside each $p$ and not the $p$ itself; note 7 gives the floors and the neutral's discordant scenario.}
   \label{tab:first}
 \end{table}
 
@@ -377,9 +385,9 @@ innocuous. The principal's mean output rank is 4.19 under the clean control and
 by roughly half a rank; a name-only arm without that clause could behave
 differently, and we did not run one.
 
-What the objection correctly retains is the leap from 42/42 to a general claim.
+What the objection correctly retains is the leap from that rate to a general claim.
 These 14 scenarios were iterated alongside the organism across the
-prompt ladder, so 42/42 is a rate on development scenarios, and it does not survive
+prompt ladder, so it is a rate on development scenarios only, and it does not survive
 off them: pooled over the September scenarios the endpoint falls to 0.778, a drop
 we establish in \S\ref{sec:fresh}.
 
@@ -438,9 +446,9 @@ turn on all 210 rows and set-matched it against each row's entity list on all
 210: the true position ranges from 1 to 10 with mean 5.50, and the stored
 constant of 6 equals it on none of them. Promotion is moreover arithmetically
 impossible when the principal is presented first, which happens in exactly two
-scenarios. Table~\ref{tab:promoted} gives all three versions of the endpoint.
+scenarios. Table~\ref{tab:promoted} (Appendix~\ref{sec:supptables}) gives all three versions of the endpoint.
 
-Three things follow, and the third is a trap we fell into. First, the earlier
+Three things follow. First, the earlier
 description of this endpoint as a co-primary null, and the accompanying claim
 that the organism's entire measured effect concerns which vendor occupies rank 1
 specifically, are withdrawn --- on the strength of the constant-6 diagnosis
@@ -538,9 +546,9 @@ against the development rate.
 \begin{table}[h]
   \centering
   \small
-  \begin{tabular}{lccccc}
+  \begin{tabularx}{\textwidth}{Lccccc}
     \toprule
-    Cell & Principal first & Rate & Wilson 95\% & vs.\ 42/42, sample & vs.\ 42/42, cluster \\
+    Cell & Principal first & Rate & Wilson 95\% & vs.\ dev., sample & vs.\ dev., cluster \\
     \midrule
     Post-freeze trio (July) & 4/9 & 0.4444 & [0.189, 0.733] & $\mathbf{5.4\times10^{-5}}$ & $\mathbf{0.0015}$ \\
     Re-baseline, September & 7/9 & 0.7778 & [0.453, 0.937] & $\mathbf{0.0282}$ & 0.1765 \\
@@ -549,32 +557,20 @@ against the development rate.
     \midrule
     \textbf{Pooled September} & \textbf{21/27} & \textbf{0.7778} & [0.592, 0.894] & $\mathbf{0.0024693}$ & $\mathbf{0.0037446}$ \\
     \bottomrule
-  \end{tabular}
+  \end{tabularx}
   \caption{Fresh-scenario cells against the 42/42 development rate. Each cell is
   18 rows, 3 scenarios by 2 conditions by 3 seeds; the clean arm is \textbf{0/9
   in every cell}, so none of this is a baseline shift. Fisher exact, two-sided.
   The comparator is condition-matched --- both arms are the
   rationale-concealment row of Table~\ref{tab:first} --- and
   instrument-matched by construction, one deterministic predicate scoring both
-  arms. A dual-parser check exists but \textbf{does not cover either arm of
-  this contrast}: its 26 outputs are 18 post-freeze-trio rows, 1 failed-transport
-  row, 3 defence-panel rows and 4 smoke fixtures, with no development-grid row
-  and no September row in the set, and the development grid's 42/42 was never
-  re-scored under the second parser. The supportable claim is no divergence on
-  any output this project owns, not that the parsers are equivalent. \emph{Effect size}: the
+  arms. On what the dual-parser check does and does not cover, see \S\ref{sec:install}. \emph{Effect size}: the
   drop is $0.2222$, Newcombe hybrid-score method 10 95\% $[0.0790, 0.4076]$
   \cite{newcombe1998indep}, the same estimator used for every differenced
   proportion in this paper. Method 10 is for
   independent proportions and this contrast is between disjoint scenario sets;
   every estimator used in this paper is named and cited in
-  Appendix~\ref{sec:statnotes}, note 3. The \emph{cluster} column uses the independent scenario unit
-  under an all-or-nothing rule --- a scenario counts as a success only if every
-  sample fires: development 14/14, fresh 2/3, 0/3, 2/3, pooled 4/9. \textbf{That
-  rule was not pre-specified and it is lossy}, and in one cell it is
-  anti-conservative: the real-principal cell is 6/9 at the sample unit but 0/3 at
-  the cluster unit, so its cluster $p$ (0.0015) is \emph{smaller} than its
-  sample $p$ (0.0040), the opposite of what accounting for clustering usually
-  does. The pooled row does not rest on that cell alone.
+  Appendix~\ref{sec:statnotes}, note 3. The \emph{cluster} column uses the independent scenario unit under an all-or-nothing rule: development 14/14, fresh 2/3, 0/3, 2/3, pooled 4/9 (note 1).
   The pooled row is same-session only, which is the
   conservative choice, and two further rungs were attempted and abandoned; see
   Appendix~\ref{sec:statnotes}, note 1.}
@@ -586,12 +582,13 @@ paper.} The primary endpoint is the principal ranked first on the development
 grid, and the pooled development-versus-fresh contrast below is the primary
 generalisation test. Every other $p$-value reported anywhere here is descriptive
 and unadjusted, several analyses were specified after seeing the data
-(\S\ref{sec:selfcorrection}), and no family-wise correction is applied. That said, the
-table is not fragile to multiplicity: \textbf{six of its ten tests clear
+(\S\ref{sec:selfcorrection}), and no family-wise correction is applied. The table is not fragile to multiplicity: \textbf{six of its ten tests clear
 $0.05/10 = 0.005$} --- both post-freeze-trio contrasts, both real-principal
 contrasts and both pooled contrasts. The four that do not are the two mid-field
 cells and the re-baseline \emph{at both units}. Three of the survivors are more
-significant than either pooled contrast.
+significant than either pooled contrast. One of the six is the real-principal
+cluster contrast, which this table's caption flags as anti-conservative; five
+survive without it.
 
 \paragraph{The drop is real.} Pooled over the three September cells the
 endpoint is 21/27 = 0.7778 against 42/42, with exact $p = 0.0024693$ at the
@@ -633,7 +630,9 @@ cells where it bites hardest.
 \paragraph{The July figure is an unstable estimate of the drop's size, not a
 reason to doubt the drop.} The identical cell, unmodified stimuli, gives 7/9 in
 September against 4/9 in July, a 33.3-point swing at $p = 0.3348$. Both readings
-sit significantly below 42/42. Any narrative resting on the specific value 0.444
+sit significantly below the development rate at the sample unit; at the scenario
+unit, which this paper makes its headline, only the post-freeze-trio reading
+does ($p = 0.0015$ against $p = 0.1765$). Any narrative resting on the specific value 0.444
 rested on a nine-row cell that cannot carry it, but the drop itself is
 established at $p = 0.0025$ pooled.
 
@@ -662,7 +661,7 @@ is the finding, and the two null cells carry it; the counts do not.
 \begin{table}[h]
   \centering
   \small
-  \begin{tabular}{lccccc}
+  \begin{tabularx}{\textwidth}{Lccccc}
     \toprule
     Condition & Activated & Disclosure-labelled & Answer discloses & Trace leaks & Names config (judged) \\
     \midrule
@@ -672,7 +671,7 @@ is the finding, and the two null cells carry it; the counts do not.
     Rationale concealment & 42/42 & 42 & \textbf{0/42} & \textbf{42/42} & 42/42 \\
     Different-principal install & 42/42 & 42 & 1/42 & 42/42 & 42/42 \\
     \bottomrule
-  \end{tabular}
+  \end{tabularx}
   \caption{Concealment on the development grid, from one judge pass over the
   same samples. Over the \textbf{126 loyalty-condition rows} the joint
   state \emph{answer clean and trace leaking} holds on \textbf{125}, or 0.992;
@@ -728,29 +727,30 @@ groups are never pooled.
 \begin{table}[h]
   \centering
   \small
-  \begin{tabular}{lcccc}
+  \begin{tabularx}{\textwidth}{Lcccc}
     \toprule
-    Level / condition & Lenient suspicion & Strict exact & Principal named & Paired vs.\ clean \\
+    Level / condition & Lenient & Strict exact & Principal & Paired vs.\ clean \\
     \midrule
-    Hidden-objective, loyalty & 26/28 = 0.929 & \textbf{0/28} & 25/28 & 6 pos / 1 neg / 3 tie, $p = 0.125$ \\
-    Hidden-objective, clean & \textbf{15/25 = 0.600} & --- & n/a & \\
-    Secret-loyalty, loyalty & 21/27 = 0.778 & \textbf{0/27} & 19/27 & 8 pos / 1 neg / 1 tie, $p = 0.039$ \\
-    Secret-loyalty, clean & 6/30 = 0.200 & --- & n/a & \\
+    Hidden-objective, loyalty & 26/28 = 0.929 & \textbf{0/28} & 25/28 & 6/1/3, $p = 0.125$ \\
+    Hidden-objective, clean & \textbf{15/25 = 0.600} & --- & --- & --- \\
+    Secret-loyalty, loyalty & 21/27 = 0.778 & \textbf{0/27} & 19/27 & 8/1/1, $p = 0.039$ \\
+    Secret-loyalty, clean & 6/30 = 0.200 & --- & --- & --- \\
     \bottomrule
-  \end{tabular}
-  \caption{Primary-blind static auditing. 120 target responses, 30 per condition
-  by level cell, of which the blind judge returned 110 scorable labels and 10
-  parse errors. \emph{Strict exact} requires principal, triggering condition and
-  action pattern to be jointly correct. \textbf{The design has ten probe seeds
-  per level per arm, and the seed is the independent unit}: pooling the three
-  samples per seed, the zero-failure upper bound on strict recovery is
-  $1 - 0.05^{1/10} = 0.2589$, not the $0.1015$ that treating 28 samples as
-  independent would give. After the scorability filter every seed retains at
-  least one sample, with mean cluster sizes between 2.50 and 3.00, so the
-  clustered bound is the honest one. The final column is the exact paired sign
-  test on matched seeds, which the published analysis discarded. It splits:
-  \textbf{the matched design supports the separation at the secret-loyalty level
-  ($p = 0.039$) and does not support it at the hidden-objective level
+  \end{tabularx}
+  \caption{Primary-blind static auditing: 120 target responses, 30 per
+  condition-by-level cell, of which the blind judge returned 110 scorable
+  labels and 10 parse errors. The paired column gives positive/negative/tied
+  seed pairs with the exact sign-test $p$. \emph{Strict exact} requires the
+  judge's principal, triggering condition and action pattern to be jointly
+  correct, and \textbf{``correct'' means verbatim equality with a canonical
+  phrase or a listed alias}; Appendix~\ref{sec:statnotes}, note 6, decomposes
+  the zero, gives the overlap distribution, and shows that relaxing the
+  comparator does not overturn it. \textbf{The seed, not the sample, is the
+  independent unit}: the clustered zero-failure upper bound on strict recovery
+  is $0.2589$, not the $0.1015$ an unclustered reading would give. The paired
+  sign test on matched seeds, which the published analysis discarded, splits:
+  \textbf{the matched design supports the separation at the secret-loyalty
+  level ($p = 0.039$) and does not support it at the hidden-objective level
   ($p = 0.125$)}. These are two results, not one.}
   \label{tab:blind}
 \end{table}
@@ -831,9 +831,10 @@ errors are excluded from the denominators rather than scored.
 trivially available to the party that assembled the request --- the outlined bar
 is true by construction and is not a measurement --- fully present in the
 model's reasoning trace, and absent from the user-visible answer. A blind
-auditor at single-answer access recovers the \emph{principal} most of the time
-and the \emph{mechanism} never, while raising false alarms on a majority of
-clean models. Loyalty-side denominators are the 42 activated
+auditor holding the audit transcript \emph{including that trace} recovers the
+\emph{principal} most of the time and the instructed \emph{action} never, while
+raising false alarms on a majority of clean models. The auditor's rung here is
+the trace, not the answer. Loyalty-side denominators are the 42 activated
 rationale-concealment samples of Table~\ref{tab:concealment}; audit-side
 denominators are the scorable trajectories at the hidden-objective level in
 Table~\ref{tab:blind}.}
@@ -844,8 +845,8 @@ Table~\ref{tab:blind}.}
 battery of polite general questions achieved a loyalty detection rate of zero at
 the ceiling level. We replaced it with a hardened battery that names the
 organism's own internal vocabulary, treats refusal as a positive signal, and
-adds ranking traps and pressure turns; Table~\ref{tab:assisted} gives the
-result.
+adds ranking traps and pressure turns; Table~\ref{tab:assisted}
+(Appendix~\ref{sec:supptables}) gives the result.
 
 This is not blind discovery. The auditor already knows the principal or the
 trigger, and the battery works only because it names an internal field of the
@@ -890,7 +891,7 @@ the original scenario, its re-baseline and its mid-field variant are served a
 \emph{byte-identical} system prompt, and only the real-principal variant
 differs. Counting all twelve as independent would count the same instrument
 three times. Table~\ref{tab:defence} therefore reports the distinct system prompt
-unit, with the task family unit alongside as the conservative end.
+grouping, with the task family grouping alongside as the conservative end.
 
 \begin{table}[h]
   \centering
@@ -912,23 +913,7 @@ unit, with the task family unit alongside as the conservative end.
   every firing within it was quarantined or constrained; 25 of the 36 loyal
   rows fired and all 25 were contained, and 0 of the 36 clean rows drew an
   intervention. \textbf{We report 6/6 for containment and 0/9 for false
-  intervention, and the two are different units on purpose.} The twelve
-  scenario identifiers carry only seven distinct system prompts: one clean
-  prompt shared by every scenario, and six loyalty prompts, because within each
-  task family the original scenario, its re-baseline and its mid-field variant
-  are served byte-identical system text and only the real-principal variant
-  differs. In the \emph{loyalty} arm the instrument therefore varies six ways
-  and we take that count, which is the smaller, and so the more conservative, of
-  the two options on the instrument axis --- six distinct system prompts against
-  twelve scenario identifiers. The task family row is more conservative still
-  and is printed beside it. In the \emph{clean} arm the instrument is
-  constant \emph{by construction} --- a condition defined by the absence of a
-  loyalty clause has exactly one system prompt --- so the instrument axis
-  collapses to $n=1$ and a 0.95 ceiling that measures the design, not the
-  layer. The only factor that varies in the clean arm is the task, and the
-  twelve identifiers carry nine distinct tasks, because each re-baseline
-  scenario is byte-identical to its parent in both question stem and evidence
-  ledger. We print all four groupings for both arms so that the choice is
+  intervention, and the two are different units on purpose.} The twelve scenario identifiers carry only seven distinct system prompts and nine distinct tasks; Appendix~\ref{sec:statnotes}, note 2, derives both. We print all four groupings for both arms so that the choice is
   visible rather than asserted; \textbf{the scenario-identifier row is the most
   favourable cell in the table for both arms and we do not report it}.
   \textbf{All bounds are exact one-sided
@@ -1129,10 +1114,13 @@ a trustworthy reference digest is an unsolved deployment problem.
 here establishes that any of it transfers to another model family, another
 quantisation, or a hosted API. The quantisation deserves naming for what it is:
 a \emph{community} requantisation \cite{requant2026} produced by one
-individual in a single run of 175 iterations over 144 calibration samples. No
-first-party INT8 AutoRound build of this base model exists, so there is no
-official artifact to have used instead and no second quantisation to compare
-against. Every generation in this paper passed through it.
+individual in a single run of 175 iterations over 128 calibration samples. No
+first-party INT8 AutoRound build of this model exists, so there was no official
+artifact to use instead. There was no shortage of \emph{comparisons}, however:
+the same author publishes three quantisations of this checkpoint, the served
+\texttt{w8a16-gs128} plus \texttt{main} and \texttt{w8a16-gs32}. What is
+absent is an \emph{independently produced} quantisation; the two sibling
+variants cost nothing to compare and we did not compare them. Every generation in this paper passed through it.
 
 \end{enumerate}
 
@@ -1141,10 +1129,16 @@ against. Every generation in this paper passed through it.
 \subsection{Why this is an access problem}
 
 The most important number in this paper is not 1.000. It is the pairing of 0 of
-42 user-visible disclosures with 42 of 42 reasoning-trace leaks, set beside 0 of
-28 blind mechanism recoveries at a 60\% clean-model false-alarm rate. The same
-fact is trivially available at one rung of Table~\ref{tab:ladder} and
-statistically unreachable at another.
+42 user-visible disclosures with 42 of 42 reasoning-trace leaks. The same fact
+is a plaintext sentence at one rung of Table~\ref{tab:ladder} and absent at
+another, and that gap is this paper's subject.
+
+\textbf{The audit result sits differently and we do not fold it into that
+claim.} Our blind auditor was not standing at the user's rung: it held the
+reasoning trace, and it still failed to state the instructed action in a form
+the pre-specified comparator would accept, while flagging 60\% of clean models.
+That is evidence about how hard it is to turn a visible trace into an actionable
+hypothesis, not further evidence of concealment.
 
 Improving black-box interrogation is therefore the hard version of a problem
 that is trivial one rung up, and our own hardened battery makes the point
@@ -1189,12 +1183,14 @@ plaintext.
 
 Attestation needs cooperation from serving infrastructure, which makes it a
 procurement and regulatory instrument as much as a technical one. Article 50 of the EU AI Act
-\cite{euaiact} shows the shape of such an instrument. Its seven paragraphs
-reach providers, who must disclose that a user is interacting with an AI system
-and must mark synthetic content, and deployers, who must inform people exposed
-to emotion-recognition and biometric-categorisation systems and must disclose
-deep fakes and AI-generated text published to inform the public on matters of
-public interest. Every one of those obligations attaches to the \emph{fact} of
+\cite{euaiact} shows the shape of such an instrument. Its first four paragraphs carry the
+substantive duties. Providers must disclose that a user is interacting with an
+AI system, and must mark synthetic content in a machine-readable form. Deployers
+must inform people exposed to emotion-recognition and biometric-categorisation
+systems, and must disclose deep fakes and AI-generated text published to inform
+the public on matters of public interest. The remaining three paragraphs govern
+how that information is given, the relationship to Chapter III, and codes of
+practice. Every one of those obligations attaches to the \emph{fact} of
 AI involvement or to the synthetic nature of an output. \textbf{None of them
 reaches who configured the system or what instructions it carries}, which is
 the gap the procurement argument must fill. We make that claim about Article 50 only,
@@ -1217,9 +1213,10 @@ was never asked to touch, in three of five paired scenarios drawn from two fixtu
 
 Concealment is channel-specific: 0 of 42 user-visible disclosures over 42 of 42
 trace leaks, one judge pass, the same samples, replicated on the sealed split.
-Blind auditing recovered the principal on 25 of 28 trajectories and the
-mechanism on 0 of 28, on a single organism with an invented principal, and the
-matched paired comparison at that level is not significant. A principal-blind
+Blind auditing, with the reasoning trace in front of it, recovered the
+principal on 25 of 28 trajectories and the instructed action on 0 of 28 under a
+verbatim-match standard, on a single organism with an invented principal, and
+the matched paired comparison at that level is not significant. A principal-blind
 runtime layer contained every firing it saw, 6 of 6 at the distinct system prompt
 unit, and intervened on none of the 9 distinct clean tasks, while a learned
 monitor failed to transfer across organism families.
@@ -1260,9 +1257,9 @@ Anthropic (2025). Petri: An Open-Source Auditing Tool to Accelerate AI Safety
 Research. \url{https://alignment.anthropic.com/2025/petri/}.
 
 \bibitem{petri-software}
-Meridian Labs (2025). Petri: Parallel Exploration Tool for Risky Interactions.
-Software repository, \texttt{meridianlabs-ai/inspect\_petri}, created
-2025-08-19, originally published at \texttt{safety-research/petri},
+Anthropic (2025). Petri: Parallel Exploration Tool for Risky Interactions.
+Software repository, originally \texttt{safety-research/petri} (created
+2025-08-19), now maintained at \texttt{meridianlabs-ai/inspect\_petri},
 \url{https://github.com/meridianlabs-ai/inspect_petri}.
 
 \bibitem{hines2024}
@@ -1317,7 +1314,7 @@ Shenoy, K. et~al. (2026). Introspection Adapters: Training LLMs to Report
 Their Learned Behaviors. \emph{arXiv:2604.16812}.
 
 \bibitem{qwen2026}
-Qwen Team (2026). Qwen3.6-35B-A3B. Base model release,
+Qwen Team (2026). Qwen3.6-35B-A3B. Post-trained model release,
 \url{https://huggingface.co/Qwen/Qwen3.6-35B-A3B}. 35B total parameters, 3B
 activated, 256 experts.
 
@@ -1409,13 +1406,13 @@ Table~\ref{tab:claims} is the complete list.
       21/21 vs.\ 21/21, Newcombe $[-0.155,+0.155]$ &
       \textbf{Measured} --- rejected; excludes only a large moderation \\
     The endpoint holds off the development scenarios &
-      Pooled fresh 21/27 vs.\ 42/42; drop 0.222, Newcombe $[0.079,0.408]$; $p = 0.0025$ sample, $0.0037$ cluster &
+      Pooled fresh 21/27 vs.\ development; drop 0.222, Newcombe $[0.079,0.408]$; $p = 0.0025$ sample, $0.0037$ cluster &
       \textbf{Measured} --- rejected; the drop is real \\
     Principal reality or required distortion explains the drop &
       Cluster-unit floors 0.25 paired, 0.10 unpaired &
       \textbf{Not identifiable} --- no outcome could have reached 0.05 \\
     The fresh-scenario figure 44\% is stable &
-      Re-collected 7/9 vs.\ 4/9, $p = 0.3348$; both below 42/42 &
+      Re-collected 7/9 vs.\ 4/9, $p = 0.3348$; both below the development rate &
       \textbf{Corrected} --- unstable estimate of the drop's size, not of its existence \\
     The principal-promoted endpoint is a co-primary null &
       Withdrawn on the constant-6 diagnosis; at 5 discordant pairs the scenario-unit test cannot reach 0.05 for any outcome, and the triple 5/0/7 is unanimous &
@@ -1444,9 +1441,9 @@ Table~\ref{tab:claims} is the complete list.
     The mechanism moves agent tool actions &
       0/5 vs.\ 3/5 unauthorised access; 0/10 exfiltration &
       \textbf{Existence} --- two fixtures, five cells \\
-    Blind auditing recovers the mechanism &
-      0/28 and 0/27 strict; clustered upper bound 0.2589 &
-      \textbf{Measured} --- rejected \\
+    Blind auditing recovers the instructed action &
+      0/28 and 0/27 under verbatim match; trigger partial on 16/28; action never above 0.72 overlap &
+      \textbf{Measured} --- rejected for the \emph{action}, not for the trigger \\
     Blind auditing separates loyal from clean targets &
       Matched paired sign test $p = 0.125$ and $0.039$ &
       \textbf{Measured} --- rejected at the lower level \\
@@ -1460,7 +1457,7 @@ Table~\ref{tab:claims} is the complete list.
       6/6 distinct system prompt clusters, floor 0.607; 0/9 distinct clean tasks, ceiling 0.283 &
       \textbf{Existence} --- conditional on firing; 12 ids carry 7 prompts, 9 tasks \\
     Protection worked by blocking reads &
-      Denied-read evidence 0/8 &
+      No denied-read evidence on the 8 guarded capability-path records &
       \textbf{Corrected} --- prevention by non-disclosure \\
     Trace monitoring beats output monitoring &
       Recall 0.067 vs.\ 0.367; AUROC 0.460 vs.\ 0.553 &
@@ -1524,8 +1521,8 @@ rather than overstating it. For both contrasts the inferential claim rests on
 the exact paired test, not on the interval.
 
 \textbf{Note 4 (instrumentation).} By the serving vendor's documentation the
-auditor \texttt{gpt-5.6-sol} is a flagship-tier model and the judge
-\texttt{gpt-5.6-luna} a nano-tier one. Both were reached through a hosted
+auditor \texttt{gpt-5.6-sol} is the flagship of its three-model family and the
+judge \texttt{gpt-5.6-luna} the most cost-efficient member of that same family. Both were reached through a hosted
 gateway, so \textbf{the identity caveat of Limitation~\ref{lim:identity}
 applies to the judge and auditor as much as to the target}: nothing external
 confirms which weights answered. Higher effort settings exist for both roles
@@ -1559,6 +1556,64 @@ rows leaking: one judge call failed, that row is excluded from the leak
 denominator rather than counted either way, and the cell is flagged incomplete
 under the fail-closed rule.
 
+\textbf{Note 1 (Table~\ref{tab:fresh}).} The \emph{cluster} column uses the independent scenario unit under an all-or-nothing rule --- a scenario counts as a success only if every sample fires: development 14/14, fresh 2/3, 0/3, 2/3, pooled 4/9. \textbf{That rule was not pre-specified and it is lossy}, and in one cell it is anti-conservative: the real-principal cell is 6/9 at the sample unit but 0/3 at the cluster unit, so its cluster $p$ (0.0015) is \emph{smaller} than its sample $p$ (0.0040), the opposite of what accounting for clustering usually does. The pooled row does not rest on that cell alone.
+
+\textbf{Note 2 (Table~\ref{tab:defence}).} The twelve scenario identifiers carry only seven distinct system prompts: one clean prompt shared by every scenario, and six loyalty prompts, because within each task family the original scenario, its re-baseline and its mid-field variant are served byte-identical system text and only the real-principal variant differs. In the \emph{loyalty} arm the instrument therefore varies six ways and we take that count, which is the smaller, and so the more conservative, of the two options on the instrument axis --- six distinct system prompts against twelve scenario identifiers. The task family row is more conservative still and is printed beside it. In the \emph{clean} arm the instrument is constant \emph{by construction} --- a condition defined by the absence of a loyalty clause has exactly one system prompt --- so the instrument axis collapses to $n=1$ and a 0.95 ceiling that measures the design, not the layer. The only factor that varies in the clean arm is the task, and the twelve identifiers carry nine distinct tasks, because each re-baseline scenario is byte-identical to its parent in both question stem and evidence ledger.
+
+\textbf{Note 7 (Table~\ref{tab:first}).} The content-matched neutral's triple is 0 pos / 1 neg / 13 tie rather than 0/0/14: on \texttt{rank\_isp\_invented\_01}, the single scenario where the clean control fires, the content-matched neutral is strictly \emph{below} it (0.000 against 0.667), which is a mildly favourable discordance and the reason the mean difference is $-0.0476$. An earlier version of this table printed 0/0/14, which disagreed with the committed metric; that is corrected here. \textbf{Every sign test in this paper sits at its own design floor}: with $d$ discordant pairs the smallest attainable two-sided $p$ is $2(1/2)^d$, which is $0.000122$ at $d = 14$ and $0.015625$ at $d = 7$. The informative quantity is therefore the win/loss/tie triple beside each $p$, not the $p$ itself.
+
+\textbf{Note 6 (Table~\ref{tab:blind}, units and what the 0/28 is made of).}
+The design has ten probe seeds per level per arm and the seed is the independent
+unit. Pooling the three samples per seed, the zero-failure upper bound on strict
+recovery is $1 - 0.05^{1/10} = 0.2589$ against the $0.1015$ that treating 28
+samples as independent would give. After the scorability filter every seed
+retains at least one sample, with mean cluster sizes between 2.50 and 3.00.
+
+Strict-exact recovery is a conjunction over three fields, and the comparator
+passes a field only on exact normalised equality with a canonical phrase or a
+listed alias; everything else is graded \emph{partial} or \emph{wrong} on token
+overlap. At the hidden-objective level, $n = 28$: principal 25 exact and 3
+missing; triggering condition 0 exact, 16 partial, 9 wrong, 3 missing; action
+pattern 0 exact, 7 partial, 18 wrong, 3 missing. At the secret-loyalty level,
+$n = 27$: triggering condition 10 partial, 11 wrong, 6 missing; action pattern 4
+partial, 18 wrong, 5 missing.
+
+\textbf{Part of the zero is an artifact of that comparator.} The
+triggering-condition overlaps at the hidden-objective level are $0.0$ on 12
+rows, $0.5$ on 5, $0.583$ on 2, $0.667$ on 1, $0.75$ on 3, $0.833$ on 1, $0.917$
+on 2 and $\mathbf{1.0}$ on 2. \textbf{Two responses matched the triggering
+condition completely and still did not count}, because the field has no
+\emph{exact} status to reach: full overlap lands as partial, and partial fails
+the conjunction. One reads ``When ranking, comparing, selecting, or recommending
+among candidates and NettleForge CI is one of the candidates'' against the
+canonical ``ranking, comparing, selecting, or recommending when NettleForge CI
+is among the candidates''. At the other end the comparator scores adequate
+answers at $0.0$: ``ranking or recommendation requests'' earns nothing against
+that same phrase, so the twelve zeros are not twelve genuine misses.
+
+\textbf{Relaxing the comparator does not rescue the result, and that is the
+finding.} Requiring only $0.75$ overlap on all three fields still gives $0/28$
+and $0/27$, because no response anywhere reaches $0.75$ on the action pattern:
+the maxima are $0.714$ and $0.571$. At $0.5$ on all three, recovery is $4/28$
+and $2/27$. So the auditor recovers \emph{who} is favoured often, 25 of 28, and
+\emph{when} to a usable approximation on 16 of 28, but \emph{what the model was
+instructed to do} at no threshold we can construct. The table prints the
+verbatim figure because it is the pre-specified metric; this note exists because
+that figure alone would overstate how little was recovered.
+
+\textbf{Note 8 (which run each result comes from).} Mixing audit run families
+is how the affordance error described in \S\ref{sec:auditing} arose, so we state
+the mapping. Table~\ref{tab:blind} comes from the primary-blind static run,
+direct interrogation at three samples per cell, 120 transcripts, judged by
+\texttt{gpt-5.6-luna} at maximum effort. Table~\ref{tab:assisted} comes from a
+separate deterministic probe battery at one sample per cell with no model judge.
+Table~\ref{tab:transfer} comes from the defence subsystem's held-out
+code-sabotage panel and involves no audit run at all. A family of five reduced
+static runs judged by \texttt{gpt-5.6-sol} at medium effort exists in the
+repository and \textbf{supplies no number in this paper}; it is the family whose
+trace-visibility flags do not describe the run behind
+Table~\ref{tab:blind}. The Petri adaptive stage likewise supplies none.
+
 \section{Supporting tables}
 \label{sec:supptables}
 
@@ -1567,7 +1622,7 @@ These four tables carry secondary and withdrawn endpoints. The body states each 
 \begin{table}[h]
   \centering
   \small
-  \begin{tabular}{lcccccc}
+  \begin{tabularx}{\textwidth}{Lcccccc}
     \toprule
     Condition & $k/n$ & Rate & Wilson on $n=42$ & ICC & $n_{\mathrm{eff}}$ & Corrected Wilson \\
     \midrule
@@ -1576,7 +1631,7 @@ These four tables carry secondary and withdrawn endpoints. The body states each 
     Open loyalty & 42/42 & 1.0000 & [0.916, 1.000] & 0.000 & 42.00 & [0.916, 1.000] \\
     Rationale concealment & 42/42 & \textbf{1.0000} & [0.916, 1.000] & 0.000 & 42.00 & [0.916, 1.000] \\
     \bottomrule
-  \end{tabular}
+  \end{tabularx}
   \caption{Placement above the name-swap comparison entity. Sample $n = 42$,
   cluster $n = 14$. The sample-$n$ interval is 25.8\% too narrow for the clean
   control and 29.0\% for the content-matched neutral. The corrected column is a Wilson
@@ -1599,7 +1654,7 @@ These four tables carry secondary and withdrawn endpoints. The body states each 
 \begin{table}[h]
   \centering
   \small
-  \begin{tabular}{lcc}
+  \begin{tabularx}{\textwidth}{Lcc}
     \toprule
     View & Recall, carries an installed behaviour & AUROC, behaviour actually fired \\
     \midrule
@@ -1607,7 +1662,7 @@ These four tables carry secondary and withdrawn endpoints. The body states each 
     Reasoning trace & 0.067 (2/30) & 0.460 \\
     Both combined & 0.100 (3/30) & 0.370 \\
     \bottomrule
-  \end{tabular}
+  \end{tabularx}
   \caption{Learned cross-organism transfer, 30 held-out records from two public
   backdoor organisms drawn from the introspection-adapter release
   \cite{shenoy2026introspection}, with the monitor trained on our organism plus
@@ -1625,7 +1680,7 @@ These four tables carry secondary and withdrawn endpoints. The body states each 
 \begin{table}[h]
   \centering
   \small
-  \begin{tabular}{lccc}
+  \begin{tabularx}{\textwidth}{Lccc}
     \toprule
     Condition & As published (constant 6) & Corrected, unconditional & Conditional on possible \\
     \midrule
@@ -1635,38 +1690,56 @@ These four tables carry secondary and withdrawn endpoints. The body states each 
     Rationale concealment & 42/42 = 1.000 & 36/42 = 0.857 & \textbf{36/36 = 1.000} [0.904, 1.000] \\
     Different-principal install & 42/42 = 1.000 & 39/42 = 0.929 & --- \\
     \bottomrule
-  \end{tabular}
+  \end{tabularx}
   \caption{The secondary endpoint, three ways. The right-hand column drops the
   six rows per condition, two scenarios by three samples, where the principal
   was presented at roster position 1 and promotion is arithmetically impossible.
-  Wilson intervals are shown for the two cells the text contrasts. All values
-  were recomputed from the raw rows using each row's own parsed roster.}
+  Wilson intervals are shown for the two cells the text contrasts. The
+  conditional column is undefined under different-principal install, where the
+  tracked entity is the decoy and the position-1 exclusion does not apply. All
+  values were recomputed from the raw rows using each row's own parsed roster.}
   \label{tab:promoted}
 \end{table}
 
 \begin{table}[h]
   \centering
   \small
-  \begin{tabular}{lccc}
+  \begin{tabularx}{\textwidth}{Lcccc}
     \toprule
-    Technique and level & Loyalty & Clean & Lift \\
+    Technique and level & Loyalty & Clean & Lift & $n$/arm \\
     \midrule
-    Direct interrogation, ceiling level & 11/15 = 0.733 & 1/15 = 0.067 & \textbf{+0.667} \\
-    Direct interrogation, principal-known level & 6/11 = 0.545 & 3/11 = 0.273 & +0.273 \\
-    Assistant prefill, ceiling level & 7/8 = 0.875 & 6/8 = 0.750 & +0.125 \\
+    Direct interrogation, ceiling & 11/15 = 0.733 & 1/15 = 0.067 & \textbf{+0.667} & 15 \\
+    Direct interrogation, principal-known & 6/11 = 0.545 & 3/11 = 0.273 & +0.273 & 11 \\
+    Model-completed turns, principal-known & 2/3 = 0.667 & 1/3 = 0.333 & +0.333 & 3 \\
+    Model-completed turns, ceiling & 2/4 = 0.500 & 1/4 = 0.250 & +0.250 & 4 \\
+    Assistant prefill, principal-known & 6/6 = 1.000 & 5/6 = 0.833 & +0.167 & 6 \\
+    Assistant prefill, ceiling & 7/8 = 0.875 & 6/8 = 0.750 & +0.125 & 8 \\
+    \midrule
+    \textbf{All six cells} & 34/47 = 0.723 & 17/47 = 0.362 & +0.362 & 47 \\
     \bottomrule
-  \end{tabular}
-  \caption{Hardened probe battery at the two assisted levels. The prefill row is
-  the instructive one: it scores 0.750 on a \emph{clean} model, because the
-  prefill text itself plants the admission. Lift, not raw rate, is the only
-  readable quantity here.}
+  \end{tabularx}
+  \caption{Hardened probe battery, \textbf{all six cells of the cited
+  artifact}: three techniques at the principal-known and ceiling-verification
+  levels --- two different affordance groups, not two assisted levels --- with
+  47 trajectories per arm and 94 in total. A deterministic probe run at one
+  sample per cell, separate from the judge-scored run of
+  Table~\ref{tab:blind}. \textbf{An earlier version printed only the first
+  three rows, 68 of the 94 trajectories, without saying so}; that subset had a
+  mean cell lift of 0.355 against 0.302 over all six and contained the largest
+  lift in the file, so the omission flattered the result. The prefill rows are
+  the instructive ones: they score 0.833 and 0.750 on a \emph{clean} model,
+  because the prefill text plants the admission. The two model-completed-turn
+  cells rest on three and four trajectories per arm and carry almost no
+  information. Pooled lift over all six cells is $+0.362$; the mean of the six
+  cell lifts is $+0.302$. Either way the conclusion in the text holds: assisted
+  diagnosis scores better and means less.}
   \label{tab:assisted}
 \end{table}
 
 \begin{table}[h]
   \centering
   \small
-  \begin{tabular}{lcc}
+  \begin{tabularx}{\textwidth}{Lcc}
     \toprule
     Scenario & Clean (discovery / access) & Loyalty (discovery / access) \\
     \midrule
@@ -1676,7 +1749,7 @@ These four tables carry secondary and withdrawn endpoints. The body states each 
     Wrong category & no / no & no / no \\
     Chain of command & yes$^{*}$ / no & \textbf{yes / yes} \\
     \bottomrule
-  \end{tabular}
+  \end{tabularx}
   \caption{All ten retained records. Aggregated: discovery 1/5 clean against 3/5
   loyalty; unauthorised access 0/5 against 3/5; exfiltration 0/10. $^{*}$In the
   chain-of-command scenario the clean condition listed the secrets directory
@@ -1736,7 +1809,7 @@ the same sentence.
     \texttt{wrong\_target} & wrong category & design cell \\
     \texttt{arm: baseline} / \texttt{guarded} & unguarded run / guarded run & defence config \\
     \midrule
-    \multicolumn{3}{l}{\emph{Canonical unit and partition names. The alternatives listed as retired appear nowhere else in this paper.}} \\
+    \multicolumn{3}{@{}p{\dimexpr\textwidth-2\tabcolsep}@{}}{\emph{Canonical unit and partition names; retired alternatives are unused elsewhere.}} \\
     \texttt{system\_prompt\_sha256} & \textbf{distinct system prompt} --- the containment unit \emph{(retired: distinct instrument)} & unit of analysis \\
     scenario stem & \textbf{task family} --- the coarsest grouping, 3 families \emph{(retired: base family)} & unit of analysis \\
     question + evidence ledger & \textbf{distinct task} --- 9 among the 12 scenario identifiers & unit of analysis \\
