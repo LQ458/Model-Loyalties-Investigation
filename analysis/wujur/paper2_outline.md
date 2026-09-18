@@ -1709,3 +1709,159 @@ sha256 \documentclass..\end{document}
 Verified against the **cloned working tree**, not the MCP read-back. Lint clean
 including the column check on all 14 tables; 17 not-established entries; 2
 PENDING. **Still not compiled.**
+
+
+---
+
+## 14. Round 13 (formatting) — 2026-09-17
+
+Formatting only. No claim, interval, denominator, unit or negative result
+changed. Nothing deferred-to-conversion was touched; no action taken on the
+30-page cap.
+
+### 14.1 Priority 1 — de-mathification
+
+`neurips_2026.sty:118` sets `\rmdefault` to `ptm`, which is Times for text
+only, and no math font package is loaded, so every numeral inside `$...$` was
+rendering in Computer Modern beside Times text.
+
+```
+inline math spans   532 -> 219
+bare-numeral spans  313 (critic) / 302 (my classifier) -> 0
+spans eliminated    328
+symbol spans added   17   ($\pm$ and $\times$, which belong in math)
+```
+
+Two passes. The first converted 302 plain-numeral spans. The second caught 26
+that a naive classifier misses: `\mathbf{...}` numerals (to `\textbf{}`),
+numeral equalities like `145/1297 = 0.1118`, set literals, `\pm` forms and the
+`2x3x3x2x3 = 108` cross product.
+
+**Real minus, compile-safe.** Negative numbers in text now use `\textminus`
+(109 occurrences), inserted only where a minus is meant — the substitution is
+`(?<![\d\w])-(?=[\d.])`, so en-dashes in `89--90` and `116--133` are
+untouched. The preamble carries
+`\providecommand{\textminus}{\ensuremath{-}}`, which is a no-op when the
+kernel or `textcomp` defines it and a working fallback if not. This is the one
+hedge I took against being unable to compile.
+
+**What stays in math, verified by inspection of all 219 survivors:** 122 named
+symbols (`\kappa`, `\beta`, `s_{...}`, `D_{...}`, `n_{\text{items}}`,
+`\mathbb{E}`), 47 operators and relations, 16 single letters, and 36
+expressions such as `s = 0.400`, `2^G-1`, `< 0.10`, `x\%`. Zero bare numerals.
+
+Checked for collateral damage: no digit is followed by an unescaped `%` (all 25
+are `\%`), and the only unescaped `%` in the body is the deliberate
+line-continuation in `\author{%`.
+
+### 14.2 Priority 2 — bibliography
+
+Adopted `Paper1Writer`'s convention verbatim rather than inventing one. It sent
+the seven shared entries as rendered strings and wrote them to
+`/tmp/shared_bibitems.txt`; I verified the file against the message and pasted
+them unchanged.
+
+Convention: sentence case; serial comma before `and`; italic source, comma,
+locator; arXiv as `\emph{arXiv}, arXiv:ID` with no URL; bracketed descriptor
+plus italic platform plus trailing URL with no period for reports and
+repositories; organisational and handle authors without initials; `et~al.` at
+nine or more authors, full lists up to eight.
+
+| defect | before | after |
+|---|---|---|
+| TC, Title Case titles | 9 | 0 |
+| NC, missing serial comma | 4 of 4 | 0 |
+| EA, `et al.` under the threshold | 3 | 0 (both survivors have 9+ authors) |
+| YR, year outside the `(Year).` slot | 1 | 0 |
+| XP, divergence from paper 1 | 9 | 0 on the seven shared entries |
+
+Two entries are mine alone and use Paper 1's stated patterns for their types:
+`qwen2026` as a model card, `requant2026` as a versioned repository artifact.
+One, `vllm2023`, I rendered as a preprint because I have no artifact for its
+SOSP page range and will not invent one; flagged to `Paper1Writer`.
+
+**`JC` does not apply to this paper.** Main relayed that the journal-volume
+comma is missing "across both papers", but the critic's own totals record
+`JC: "n/a — paper 2 cites no journal article"`. All eleven entries are
+preprints, a model card, a repository or the anonymous companion. Reported back
+rather than manufacturing a journal slot to satisfy it.
+
+The companion entry now carries paper 1's **live** title, sentence-cased, read
+from the clone rather than from the message — `Paper1Writer` had singularised
+"a Blind Auditor" after writing to me.
+
+### 14.3 Priority 3 and the consistency findings
+
+| id | action |
+|---|---|
+| CONS-04 | Deduplicated (a) (b) (c) (e) to one instance each with cross-references, and compressed (d)'s intro restatement while keeping Main's framing |
+| CONS-06 | `2.60\%` unified to `2.603\%` — it was the same number at two precisions; 2.6030% is the value the artifact gives |
+| CONS-08 | No action: this paper already says "model id", which is the wording the critic wants in both |
+| CONS-09 | `Section~\ref` -> `\S\ref`, the only exception among ~40 |
+| CONS-10 | Prompt clauses now a displayed `quote`, matching paper 1 |
+| CONS-11 | `tab:repro` -> `{lrll}`, `tab:resolution` -> `{lrl}`; all numeric columns right-aligned |
+| CONS-12 | All 10 `\quad` layout hacks gone; `tab:f9`'s verdict promoted to its own column with a starred footnote |
+| CONS-13 | Hard `\\` break removed from the title |
+| CONS-14 | Header comment updated to the live title |
+| CONS-15 | `\par` -> blank lines in the abstract; zero `\par` remain |
+| FLOAT-03 | The `\tiny` receipts table restructured to two rows per dataset at `\small`. **All nine 64-character digests kept in full** — the critic offered truncation to 16 characters and I declined it, since the table is the paper's record of those digests |
+| FLOAT-04 | `[h]` -> `[htbp]` on all 13 tables |
+
+**Not done, with reasons.** CONS-11's width axis: paper 1 sets every table
+`tabularx{\textwidth}`; 8 of my 13 are natural-width `tabular`. Converting a
+numeric `{lrrr}` table to `tabularx` requires an `X` column it has no candidate
+for, and `tabularx` errors without one. I applied the alignment half, which the
+critic calls the correct convention, and left the width. FLOAT-01's caption cap:
+`tab:strata`'s caption holds the six per-item neutral means that disprove the
+old ULP explanation, and the caption is exactly where a reader looking at the
+`0.000` row needs them.
+
+### 14.4 Words
+
+Body plus appendices `8,352 -> 8,287`, **-65**, against an instruction not to add
+prose. The deduplication paid for the bibliography expansion and the receipts
+restructure.
+
+### 14.5 Final state
+
+```
+sha256 WHOLE FILE                1950fd4097a6bb8839612810bbf86dfb075868f47e92e7eae09bf42ce0d441b8
+sha256 \documentclass..\end{document}
+                                 e768952329782b2f1b98fdbcef7b5afd58d115553a6150a84bc046c51a6f0370
+1,474 lines - 86,249 bytes whole - 86,248 bytes span
+```
+
+Verified against the cloned working tree. Lint clean including the column check
+on all 13 tables; 11 bibitems, zero dangling cites, zero uncited; 2 PENDING.
+**Still not compiled.**
+
+### 14.6 Amendment, same round: vllm2023 verified rather than guessed
+
+I rendered `vllm2023` as a preprint because I had no artifact for its SOSP page
+range. `Paper1Writer` then verified it at Crossref (DOI
+`10.1145/3600006.3613165`, proceedings-article, ACM, nine authors, pages
+611--626, published 2023-10-23) and found that the venue string it had been
+carrying was itself slightly wrong, having come from a critic report rather than
+a source. Its verified string is now in both papers verbatim.
+
+**Convention settled, and the reasoning is worth keeping.** DOI where the work
+has a version of record; arXiv id only where it does not. The rule keys on
+publication status, not on which identifier we happen to hold: a preprint's
+locator *is* its arXiv id, a proceedings paper's locator is its pages with the
+DOI resolving the published version. Putting an arXiv id on a published paper
+asserts it is a preprint. That leaves `casper2024` and `neumann2025`
+inconsistent with the rule — both are FAccT papers carrying trailing arXiv ids —
+and I have asked `Paper1Writer` to verify both at Crossref and send the strings,
+because I will not construct a DOI from a pattern. If it declines, both papers
+keep the arXiv id and remain identical to each other, which is the standard
+Main set.
+
+Punctuation detail, stated so a later pass does not "normalise" it: an arXiv id
+ends with a full stop because it is running text; a `\url{}` ends with none.
+
+```
+sha256 WHOLE FILE                b9e0597b9f8018a61d544342fe2da47bebdb271b49aeef15c73735ac08f6305d
+sha256 \documentclass..\end{document}
+                                 aa2cdc0c1833337b0500aebb9b0242a94f6d7be4b567145e35fd0949fc0ec903
+1,476 lines - 86,347 bytes whole - 86,346 bytes span
+```
